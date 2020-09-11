@@ -14,6 +14,7 @@
       <template v-for="n in 3">
         <v-img
           :src="require(`@/assets/home/landing-page-image-${n}.jpg`)"
+          :lazy-src="require(`@/assets/home/landing-page-image-${n}.jpg`)"
           width="100%"
           height="100vh"
         ></v-img>
@@ -22,7 +23,7 @@
     <div class="dark-overlay"></div>
     <div class="landing-page-content">
       <v-container class="fill-height">
-        <v-row justify="left" align="center">
+        <v-row align="center">
           <v-col cols="12">
             <div class="white--text mb-10">
               <h1 class="display-4 font-weight-bold mb-6">Travel,</h1>
