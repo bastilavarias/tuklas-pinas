@@ -27,15 +27,21 @@
     </v-app-bar>
     <home-landing-header></home-landing-header>
     <home-search-destination-section></home-search-destination-section>
+    <home-popular-itineraries-section></home-popular-itineraries-section>
   </v-app>
 </template>
 
 <script>
 import HomeLandingHeader from "@/components/home/LandingHeader";
 import HomeSearchDestinationSection from "@/components/home/SearchDestinationSection";
+import HomePopularItinerariesSection from "@/components/home/PopularItinerariesSection";
 export default {
   name: "Home",
-  components: { HomeSearchDestinationSection, HomeLandingHeader },
+  components: {
+    HomePopularItinerariesSection,
+    HomeSearchDestinationSection,
+    HomeLandingHeader,
+  },
 
   data() {
     return {

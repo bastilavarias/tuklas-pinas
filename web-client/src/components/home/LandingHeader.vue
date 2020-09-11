@@ -67,16 +67,25 @@
         </v-row>
       </v-container>
     </div>
+    <v-btn fixed fab bottom right color="secondary" @click="goToSearchSection">
+      <v-icon>mdi-magnify</v-icon>
+    </v-btn>
   </header>
 </template>
 
 <script>
-import carousel from "vue-owl-carousel";
+import Carousel from "vue-owl-carousel";
 
 export default {
   name: "landing-header",
 
-  components: { carousel },
+  components: { Carousel },
+
+  methods: {
+    goToSearchSection() {
+      this.$vuetify.goTo("#home-destination-section");
+    },
+  },
 };
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <section class="pt-1 pt-md-7">
+  <section class="pt-1 pt-md-7 grey--background" id="home-destination-section">
     <v-container>
       <h1 class="title mb-5">
         <span class="mr-1">Search your next destination</span>
