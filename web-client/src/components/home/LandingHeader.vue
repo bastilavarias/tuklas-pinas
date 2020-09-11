@@ -11,14 +11,24 @@
       autoplay
       :autoplay-timeout="5000"
     >
-      <template v-for="n in 3">
-        <v-img
-          :src="require(`@/assets/home/landing-page-image-${n}.jpg`)"
-          :lazy-src="require(`@/assets/home/landing-page-image-${n}.jpg`)"
-          width="100%"
-          height="100vh"
-        ></v-img>
-      </template>
+      <v-img
+        :src="require(`@/assets/home/landing-header-image-1.jpg`)"
+        :lazy-src="require(`@/assets/home/landing-header-image-1.jpg`)"
+        width="100%"
+        height="100vh"
+      ></v-img>
+      <v-img
+        :src="require(`@/assets/home/landing-header-image-2.jpeg`)"
+        :lazy-src="require(`@/assets/home/landing-header-image-2.jpeg`)"
+        width="100%"
+        height="100vh"
+      ></v-img>
+      <v-img
+        :src="require(`@/assets/home/landing-header-image-3.jpeg`)"
+        :lazy-src="require(`@/assets/home/landing-header-image-3.jpeg`)"
+        width="100%"
+        height="100vh"
+      ></v-img>
     </carousel>
     <div class="dark-overlay"></div>
     <div class="landing-page-content">
@@ -64,6 +74,8 @@
 import carousel from "vue-owl-carousel";
 
 export default {
+  name: "landing-header",
+
   components: { carousel },
 };
 </script>

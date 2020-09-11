@@ -28,16 +28,17 @@
         <v-icon large color="white">mdi-magnify</v-icon>
       </v-btn>
     </v-app-bar>
-    <home-landing-page></home-landing-page>
-    <div style="height: 500px"></div>
+    <home-landing-header></home-landing-header>
+    <home-content></home-content>
   </v-app>
 </template>
 
 <script>
-import HomeLandingPage from "@/components/home/LandingPage";
+import HomeLandingHeader from "@/components/home/LandingHeader";
+import HomeContent from "@/components/home/Content";
 export default {
   name: "Home",
-  components: { HomeLandingPage },
+  components: { HomeContent, HomeLandingHeader },
 
   data() {
     return {
