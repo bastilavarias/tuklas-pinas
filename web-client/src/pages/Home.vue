@@ -3,8 +3,8 @@
     <v-app-bar
       app
       fixed
-      :color="isScrollingDown ? 'black' : 'transparent'"
-      flat
+      :color="isScrollingDown ? 'primary' : 'transparent'"
+      :flat="!isScrollingDown"
       width="100%"
       style="z-index: 3"
     >
@@ -13,32 +13,29 @@
       </v-app-bar-nav-icon>
       <v-spacer> </v-spacer>
       <v-btn color="transparent" depressed class="text-capitalize white--text"
-        >About</v-btn
+        >Travel Stories</v-btn
       >
       <v-btn color="transparent" depressed class="text-capitalize white--text"
         >Itineraries</v-btn
       >
       <v-btn color="transparent" depressed class="text-capitalize white--text"
-        >Contacts</v-btn
+        >Hire a Guide</v-btn
       >
       <v-btn color="transparent" depressed class="text-capitalize white--text"
         >FAQs</v-btn
       >
-      <v-btn icon>
-        <v-icon large color="white">mdi-magnify</v-icon>
-      </v-btn>
     </v-app-bar>
     <home-landing-header></home-landing-header>
-    <home-content></home-content>
+    <home-search-destination-section></home-search-destination-section>
   </v-app>
 </template>
 
 <script>
 import HomeLandingHeader from "@/components/home/LandingHeader";
-import HomeContent from "@/components/home/Content";
+import HomeSearchDestinationSection from "@/components/home/SearchDestinationSection";
 export default {
   name: "Home",
-  components: { HomeContent, HomeLandingHeader },
+  components: { HomeSearchDestinationSection, HomeLandingHeader },
 
   data() {
     return {
