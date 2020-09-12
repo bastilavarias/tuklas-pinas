@@ -1,7 +1,7 @@
 <template>
   <section class="py-10" id="home-popular-itineraries-section">
     <v-container>
-      <div class="text-center mb-5">
+      <div class="text-center mb-10">
         <h1 class="display-1 mb-1">Popular Itineraries</h1>
         <div class="custom-divider"></div>
       </div>

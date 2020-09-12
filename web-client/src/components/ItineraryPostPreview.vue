@@ -1,5 +1,5 @@
 <template>
-  <v-card outlined tile class="px-3 py-3">
+  <v-card outlined tile class="px-3 py-3 custom-shadow">
     <div class="d-flex align-start justify-space-between mb-1">
       <div class="mr-2">
         <span class="caption d-block"

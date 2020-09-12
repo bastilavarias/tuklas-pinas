@@ -19,4 +19,12 @@ export default {
   background-color: #2980b9;
   display: inline-block;
 }
+
+.custom-shadow {
+  transition: 0.3s ease;
+}
+
+.custom-shadow:hover {
+  box-shadow: 5px 10px 18px #888888;
+}
 </style>
