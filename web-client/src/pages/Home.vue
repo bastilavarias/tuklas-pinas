@@ -26,9 +26,10 @@
       >
     </v-app-bar>
     <home-landing-header></home-landing-header>
-    <home-search-destination-section></home-search-destination-section>
     <home-popular-itineraries-section></home-popular-itineraries-section>
+    <home-search-destination-section></home-search-destination-section>
     <home-highest-rated-guides-section></home-highest-rated-guides-section>
+    <home-about-local-tour-guides-section></home-about-local-tour-guides-section>
   </v-app>
 </template>
 
@@ -37,9 +38,11 @@ import HomeLandingHeader from "@/components/home/LandingHeader";
 import HomeSearchDestinationSection from "@/components/home/SearchDestinationSection";
 import HomePopularItinerariesSection from "@/components/home/PopularItinerariesSection";
 import HomeHighestRatedGuidesSection from "@/components/home/HighestRatedGuidesSection";
+import HomeAboutLocalTourGuidesSection from "@/components/home/AboutLocalTourGuidesSection";
 export default {
   name: "Home",
   components: {
+    HomeAboutLocalTourGuidesSection,
     HomeHighestRatedGuidesSection,
     HomePopularItinerariesSection,
     HomeSearchDestinationSection,
