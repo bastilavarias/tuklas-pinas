@@ -16,18 +16,16 @@
         ></v-img>
       </v-avatar>
     </div>
-    <div class="d-flex align-center mb-10">
-      <v-rating
-        v-model="rating"
-        background-color="secondary"
-        color="secondary"
-        dense
-        hover
-        :size="18"
-        readonly
-      ></v-rating>
-      <span class="grey--text caption d-block"> ({{ rating }}) </span>
-    </div>
+    <v-rating
+      v-model="rating"
+      background-color="secondary"
+      color="secondary"
+      dense
+      hover
+      :size="18"
+      readonly
+      class="mb-10"
+    ></v-rating>
     <masonry :cols="3" :gutter="5">
       <template v-for="(image, index) in images">
         <v-img
