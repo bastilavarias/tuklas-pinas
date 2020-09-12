@@ -1,42 +1,68 @@
 <template>
-  <v-card outlined tile class="px-3 py-3 custom-shadow">
-    <div class="d-flex align-start justify-space-between mb-1">
-      <div class="mr-2">
-        <span class="caption d-block"
-          >Sebastian Curtis T. Lavarias - 6 hrs ago</span
-        >
-        <span class="title font-weight-bold"
-          >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic,
-          optio.</span
-        >
+  <v-card outlined tile class="custom-shadow">
+    <div class="px-3 py-3">
+      <div class="d-flex align-start justify-space-between mb-1">
+        <div class="mr-2">
+          <span class="caption d-block"
+            >Sebastian Curtis T. Lavarias - 6 hrs ago</span
+          >
+          <span class="title font-weight-bold"
+            >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic,
+            optio.</span
+          >
+        </div>
+        <v-avatar>
+          <v-img
+            src="https://bastilavarias.github.io/assets/img/sebastian-lavarias.5c3a8fdd.png"
+          ></v-img>
+        </v-avatar>
       </div>
-      <v-avatar>
-        <v-img
-          src="https://bastilavarias.github.io/assets/img/sebastian-lavarias.5c3a8fdd.png"
-        ></v-img>
-      </v-avatar>
+      <v-rating
+        v-model="rating"
+        background-color="secondary"
+        color="secondary"
+        dense
+        hover
+        :size="18"
+        readonly
+      ></v-rating>
+      <div class="pt-10 pb-5">
+        <masonry :cols="3" :gutter="5">
+          <template v-for="(image, index) in images">
+            <v-img
+              :key="index"
+              width="100%"
+              height="auto"
+              :src="image"
+              class="mb-1"
+            ></v-img>
+          </template>
+        </masonry>
+      </div>
     </div>
-    <v-rating
-      v-model="rating"
-      background-color="secondary"
-      color="secondary"
-      dense
-      hover
-      :size="18"
-      readonly
-      class="mb-10"
-    ></v-rating>
-    <masonry :cols="3" :gutter="5">
-      <template v-for="(image, index) in images">
-        <v-img
-          :key="index"
-          width="100%"
-          height="auto"
-          :src="image"
-          class="mb-1"
-        ></v-img>
-      </template>
-    </masonry>
+    <v-divider> </v-divider>
+    <div class="d-flex justify-space-between align-center">
+      <div class="d-flex align-center">
+        <v-btn small text tile>
+          <v-icon class="mr-1" small>mdi-heart</v-icon>
+          <span>(1k+)</span>
+        </v-btn>
+        <v-btn small text tile>
+          <v-icon class="mr-1" small>mdi-comment</v-icon>
+          <span>(1k+)</span>
+        </v-btn>
+        <v-btn small text tile>
+          <v-icon class="mr-1" small>mdi-bookmark</v-icon>
+          <span>(1k+)</span>
+        </v-btn>
+      </div>
+      <div class="d-flex align-center">
+        <v-btn small text tile>
+          <v-icon class="mr-1" small>mdi-eye</v-icon>
+          <span>(1k+)</span>
+        </v-btn>
+      </div>
+    </div>
   </v-card>
 </template>
 
