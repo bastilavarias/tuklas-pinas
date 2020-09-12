@@ -30,6 +30,7 @@
     <home-search-destination-section></home-search-destination-section>
     <home-highest-rated-guides-section></home-highest-rated-guides-section>
     <home-about-local-tour-guides-section></home-about-local-tour-guides-section>
+    <home-featured-travel-stories-section></home-featured-travel-stories-section>
   </v-app>
 </template>
 
@@ -39,9 +40,11 @@ import HomeSearchDestinationSection from "@/components/home/SearchDestinationSec
 import HomePopularItinerariesSection from "@/components/home/PopularItinerariesSection";
 import HomeHighestRatedGuidesSection from "@/components/home/HighestRatedGuidesSection";
 import HomeAboutLocalTourGuidesSection from "@/components/home/AboutLocalTourGuidesSection";
+import HomeFeaturedTravelStoriesSection from "@/components/home/FeaturedTravelStoriesSection";
 export default {
   name: "Home",
   components: {
+    HomeFeaturedTravelStoriesSection,
     HomeAboutLocalTourGuidesSection,
     HomeHighestRatedGuidesSection,
     HomePopularItinerariesSection,

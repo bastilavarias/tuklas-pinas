@@ -13,7 +13,7 @@
           <v-slide-item :key="n" v-slot:default="{ active, toggle }">
             <span @click="toggle">
               <guide-profile-preview
-                :class-name="`${n === 12 ? '' : 'mr-5'} mb-10`"
+                :class-name="`${n === 12 ? '' : 'mt-3 mr-5'} mb-10`"
               >
               </guide-profile-preview>
             </span>

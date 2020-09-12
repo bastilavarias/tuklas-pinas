@@ -1,5 +1,5 @@
 <template>
-  <v-card outlined :class="`${className} custom-shadow`">
+  <v-card outlined :class="`${className} custom-shadow`" width="400">
     <v-list-item two-line>
       <v-list-item-avatar :size="75">
         <v-img
@@ -15,15 +15,19 @@
           <span>Cavite, Tanza</span>
         </v-list-item-subtitle>
         <v-list-item-subtitle>
-          <v-rating
-            v-model="rating"
-            background-color="secondary"
-            color="secondary"
-            dense
-            hover
-            :size="18"
-            readonly
-          ></v-rating>
+          <span class="d-flex align-center">
+            <v-rating
+              v-model="rating"
+              background-color="secondary"
+              color="secondary"
+              dense
+              hover
+              :size="18"
+              readonly
+              class="mr-1"
+            ></v-rating>
+            <span class="caption">({{ rating }})</span>
+          </span>
         </v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>

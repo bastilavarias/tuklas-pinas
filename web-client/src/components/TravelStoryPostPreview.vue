@@ -6,9 +6,12 @@
           <span class="caption d-block"
             >Sebastian Curtis T. Lavarias - 6 hrs ago</span
           >
-          <span class="title font-weight-bold"
+          <span class="title font-weight-bold d-block mb-1"
             >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic,
             optio.</span
+          >
+          <span class="subtitle-2 d-block"
+            >Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet.</span
           >
         </div>
         <v-avatar>
@@ -17,37 +20,56 @@
           ></v-img>
         </v-avatar>
       </div>
-      <span class="d-flex align-center">
-        <v-rating
-          v-model="rating"
-          background-color="secondary"
-          color="secondary"
-          dense
-          hover
-          :size="18"
-          readonly
-          class="mr-1"
-        ></v-rating>
-        <span class="caption">({{ rating }})</span>
-      </span>
-      <div class="py-5">
-        <masonry :cols="3" :gutter="5">
+      <div class="pt-5">
+        <carousel
+          :items="1"
+          dots
+          :nav="false"
+          :autoplay="false"
+          :mouse-drag="false"
+          touch-drag
+          pull-drag
+          free-drag
+          style="position: relative"
+        >
           <template v-for="(image, index) in images">
             <v-img
               :key="index"
-              width="100%"
-              height="auto"
+              height="300"
               :src="image"
-              class="mb-1"
+              class="d-block mx-auto"
+              position="center"
+              contain
             ></v-img>
           </template>
-        </masonry>
+          <template slot="prev">
+            <v-btn fab color="white" small class="next-image-button">
+              <v-icon small color="black">mdi-chevron-left</v-icon>
+            </v-btn>
+          </template>
+          <template slot="next">
+            <v-btn fab color="white" small class="previous-image-button">
+              <v-icon small color="black">mdi-chevron-right</v-icon>
+            </v-btn>
+          </template>
+        </carousel>
       </div>
     </div>
     <v-divider> </v-divider>
-    <div class="px-3 py-1 d-flex justify-space-between align-center">
-      <span class="caption">Tour Guide: Tour Guide Name</span>
-      <v-icon small>mdi-account</v-icon>
+    <div class="px-3 py-2 d-flex">
+      <div>
+        <span class="caption d-block mb-2">Tags:</span>
+        <template v-for="n in 4">
+          <v-chip
+            label
+            color="primary"
+            small
+            :class="`${n === 1 ? 'mr-1 mb-1' : 'ma-1'} font-weight-bold`"
+            :key="n"
+            >FOOD</v-chip
+          >
+        </template>
+      </div>
     </div>
     <v-divider> </v-divider>
     <div class="px-3 py-1 d-flex justify-space-between align-center">
@@ -70,7 +92,7 @@
       </v-col>
       <v-col cols="4">
         <v-btn block large text tile>
-          <v-icon class="mr-1">mdi-bookmark</v-icon>
+          <v-icon class="mr-1">mdi-share</v-icon>
           <span>(1k+)</span>
         </v-btn>
       </v-col>
@@ -82,7 +104,7 @@
 import Carousel from "vue-owl-carousel";
 
 export default {
-  name: "itinerary-post-preview",
+  name: "travel-story-post-preview",
 
   components: { Carousel },
 
@@ -101,3 +123,21 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.next-image-button,
+.previous-image-button {
+  position: absolute;
+  z-index: 2;
+}
+
+.next-image-button {
+  top: 40%;
+  left: 1%;
+}
+
+.previous-image-button {
+  top: 40%;
+  right: 1%;
+}
+</style>
