@@ -31,6 +31,8 @@
     <home-highest-rated-guides-section></home-highest-rated-guides-section>
     <home-about-local-tour-guides-section></home-about-local-tour-guides-section>
     <home-featured-travel-stories-section></home-featured-travel-stories-section>
+    <home-how-it-works-section></home-how-it-works-section>
+    <home-generic-footer></home-generic-footer>
   </v-app>
 </template>
 
@@ -41,9 +43,13 @@ import HomePopularItinerariesSection from "@/components/home/PopularItinerariesS
 import HomeHighestRatedGuidesSection from "@/components/home/HighestRatedGuidesSection";
 import HomeAboutLocalTourGuidesSection from "@/components/home/AboutLocalTourGuidesSection";
 import HomeFeaturedTravelStoriesSection from "@/components/home/FeaturedTravelStoriesSection";
+import HomeHowItWorksSection from "@/components/home/HowItWorksSection";
+import HomeGenericFooter from "@/components/home/GenericFooter";
 export default {
   name: "Home",
   components: {
+    HomeGenericFooter,
+    HomeHowItWorksSection,
     HomeFeaturedTravelStoriesSection,
     HomeAboutLocalTourGuidesSection,
     HomeHighestRatedGuidesSection,
