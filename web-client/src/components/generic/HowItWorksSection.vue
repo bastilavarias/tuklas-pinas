@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  name: "home-how-it-works-section",
+  name: "generic-how-it-works-section",
 
   data() {
     return {

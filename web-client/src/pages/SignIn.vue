@@ -66,29 +66,38 @@
                 >Sign In</v-btn
               >
               <p class="text-center caption mb-15">Or, Sign In with Socials</p>
-              <v-btn color="#3B5998" block class="mb-5" depressed dark x-large>
-                <v-icon class="mr-2">mdi-facebook</v-icon>
-                <span class="text-capitalize">Sign In with Facebook</span>
-              </v-btn>
-              <v-btn color="#3cba54" block depressed dark x-large>
-                <v-icon class="mr-2">mdi-google</v-icon>
-                <span class="text-capitalize">Sign In with Google</span>
-              </v-btn>
+              <div>
+                <v-btn
+                  color="#3B5998"
+                  block
+                  class="mb-5"
+                  depressed
+                  dark
+                  x-large
+                >
+                  <v-icon class="mr-2">mdi-facebook</v-icon>
+                  <span class="text-capitalize">Sign In with Facebook</span>
+                </v-btn>
+                <v-btn color="#3cba54" block depressed dark x-large>
+                  <v-icon class="mr-2">mdi-google</v-icon>
+                  <span class="text-capitalize">Sign In with Google</span>
+                </v-btn>
+              </div>
             </v-col>
           </v-row>
         </v-container>
       </v-col>
     </v-row>
-    <generic-footer-partial></generic-footer-partial>
+    <generic-footer></generic-footer>
   </v-app>
 </template>
 
 <script>
 import CommonUtilities from "@/common/utilities";
-import GenericFooterPartial from "@/layouts/partials/GenericFooter";
+import GenericFooter from "@/components/generic/Footer";
 
 export default {
-  components: { GenericFooterPartial },
+  components: { GenericFooter },
   mixins: [CommonUtilities],
 };
 </script>
