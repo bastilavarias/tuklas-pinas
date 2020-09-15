@@ -59,13 +59,13 @@
       </v-container>
     </v-main>
     <generic-how-it-works-section></generic-how-it-works-section>
-    <generic-footer-partial></generic-footer-partial>
+    <generic-footer></generic-footer>
   </v-app>
 </template>
 <script>
-import GenericFooterPartial from "@/layouts/partials/GenericFooter";
 import GenericHowItWorksSection from "@/components/generic/HowItWorksSection";
+import GenericFooter from "@/components/generic/Footer";
 export default {
-  components: { GenericHowItWorksSection, GenericFooterPartial },
+  components: { GenericFooter, GenericHowItWorksSection },
 };
 </script>
