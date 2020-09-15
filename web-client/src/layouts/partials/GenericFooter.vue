@@ -4,7 +4,7 @@
       <div class="white--text">
         <div class="pt-2 text-center">
           <p class="caption">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi,
+            lorem ipsum dolor sit amet, consectetur adipisicing elit. eligendi,
             quisquam.
           </p>
         </div>
@@ -12,26 +12,26 @@
         <div class="py-5">
           <div class="d-flex align-center justify-space-between">
             <v-list dark color="transparent">
-              <v-subheader>COMPANY</v-subheader>
+              <v-subheader>company</v-subheader>
               <template v-for="n in 10">
                 <v-list-item :key="n" class="subtitle-2"
-                  >Link {{ n }}</v-list-item
+                  >link {{ n }}</v-list-item
                 >
               </template>
             </v-list>
             <v-list dark color="transparent">
-              <v-subheader>RESOURCES</v-subheader>
+              <v-subheader>resources</v-subheader>
               <template v-for="n in 10">
                 <v-list-item :key="n" class="subtitle-2"
-                  >Link {{ n }}</v-list-item
+                  >link {{ n }}</v-list-item
                 >
               </template>
             </v-list>
             <v-list dark color="transparent">
-              <v-subheader>ADVERTISEMENT</v-subheader>
+              <v-subheader>advertisement</v-subheader>
               <template v-for="n in 10">
                 <v-list-item :key="n" class="subtitle-2"
-                  >Link {{ n }}</v-list-item
+                  >link {{ n }}</v-list-item
                 >
               </template>
             </v-list>
@@ -40,7 +40,7 @@
         <v-divider dark></v-divider>
         <div class="py-3">
           <div class="d-flex align-content-center align-center">
-            <span class="caption mr-5">Follow Us</span>
+            <span class="caption mr-5">follow us</span>
             <template v-for="n in 5">
               <v-btn x-small fab color="primary" :key="n" class="mr-2">
                 <v-icon>mdi-facebook</v-icon>
@@ -50,7 +50,7 @@
         </div>
         <v-divider dark></v-divider>
         <div class="py-5 text-center">
-          <span class="caption"> © 2020 Tuklas Pinas® </span>
+          <span class="caption"> © 2020 tuklas pinas® </span>
         </div>
       </div>
     </v-container>
@@ -59,6 +59,6 @@
 
 <script>
 export default {
-  name: "home-generic-footer",
+  name: "generic-footer-partial",
 };
 </script>

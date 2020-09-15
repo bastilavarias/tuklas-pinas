@@ -32,7 +32,7 @@
     <home-about-local-tour-guides-section></home-about-local-tour-guides-section>
     <home-featured-travel-stories-section></home-featured-travel-stories-section>
     <home-how-it-works-section></home-how-it-works-section>
-    <home-generic-footer></home-generic-footer>
+    <generic-footer-partial></generic-footer-partial>
   </v-app>
 </template>
 
@@ -44,11 +44,15 @@ import HomeHighestRatedGuidesSection from "@/components/home/HighestRatedGuidesS
 import HomeAboutLocalTourGuidesSection from "@/components/home/AboutLocalTourGuidesSection";
 import HomeFeaturedTravelStoriesSection from "@/components/home/FeaturedTravelStoriesSection";
 import HomeHowItWorksSection from "@/components/home/HowItWorksSection";
-import HomeGenericFooter from "@/components/home/GenericFooter";
+import CommonUtilities from "@/common/utilities";
+import GenericFooterPartial from "@/layouts/partials/GenericFooter";
 export default {
   name: "Home",
+
+  mixins: [CommonUtilities],
+
   components: {
-    HomeGenericFooter,
+    GenericFooterPartial,
     HomeHowItWorksSection,
     HomeFeaturedTravelStoriesSection,
     HomeAboutLocalTourGuidesSection,
@@ -56,28 +60,6 @@ export default {
     HomePopularItinerariesSection,
     HomeSearchDestinationSection,
     HomeLandingHeader,
-  },
-
-  data() {
-    return {
-      isScrollingDown: false,
-    };
-  },
-
-  methods: {
-    scroll() {
-      window.onscroll = () => {
-        if (window.pageYOffset > 5) {
-          this.isScrollingDown = true;
-          return;
-        }
-        this.isScrollingDown = false;
-      };
-    },
-  },
-
-  mounted() {
-    this.scroll();
   },
 };
 </script>
