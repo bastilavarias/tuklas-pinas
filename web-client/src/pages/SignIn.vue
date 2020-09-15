@@ -88,16 +88,16 @@
         </v-container>
       </v-col>
     </v-row>
-    <generic-footer-partial></generic-footer-partial>
+    <generic-footer></generic-footer>
   </v-app>
 </template>
 
 <script>
 import CommonUtilities from "@/common/utilities";
-import GenericFooterPartial from "@/layouts/partials/GenericFooter";
+import GenericFooter from "@/components/generic/Footer";
 
 export default {
-  components: { GenericFooterPartial },
+  components: { GenericFooter },
   mixins: [CommonUtilities],
 };
 </script>

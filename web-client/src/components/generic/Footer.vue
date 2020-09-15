@@ -59,6 +59,6 @@
 
 <script>
 export default {
-  name: "generic-footer-partial",
+  name: "generic-footer",
 };
 </script>

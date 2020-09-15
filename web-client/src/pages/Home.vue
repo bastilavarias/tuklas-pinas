@@ -31,8 +31,8 @@
     <home-highest-rated-guides-section></home-highest-rated-guides-section>
     <home-about-local-tour-guides-section></home-about-local-tour-guides-section>
     <home-featured-travel-stories-section></home-featured-travel-stories-section>
-    <home-how-it-works-section></home-how-it-works-section>
-    <generic-footer-partial></generic-footer-partial>
+    <generic-how-it-works-section></generic-how-it-works-section>
+    <generic-footer></generic-footer>
   </v-app>
 </template>
 
@@ -43,17 +43,17 @@ import HomePopularItinerariesSection from "@/components/home/PopularItinerariesS
 import HomeHighestRatedGuidesSection from "@/components/home/HighestRatedGuidesSection";
 import HomeAboutLocalTourGuidesSection from "@/components/home/AboutLocalTourGuidesSection";
 import HomeFeaturedTravelStoriesSection from "@/components/home/FeaturedTravelStoriesSection";
-import HomeHowItWorksSection from "@/components/home/HowItWorksSection";
 import CommonUtilities from "@/common/utilities";
-import GenericFooterPartial from "@/layouts/partials/GenericFooter";
+import GenericHowItWorksSection from "@/components/generic/HowItWorksSection";
+import GenericFooter from "@/components/generic/Footer";
 export default {
   name: "Home",
 
   mixins: [CommonUtilities],
 
   components: {
-    GenericFooterPartial,
-    HomeHowItWorksSection,
+    GenericFooter,
+    GenericHowItWorksSection,
     HomeFeaturedTravelStoriesSection,
     HomeAboutLocalTourGuidesSection,
     HomeHighestRatedGuidesSection,
