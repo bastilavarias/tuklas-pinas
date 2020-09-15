@@ -61,6 +61,7 @@
                 class="text-capitalize"
                 text
                 rounded
+                :to="{ name: 'signup' }"
                 >Signup</v-btn
               >
             </div>

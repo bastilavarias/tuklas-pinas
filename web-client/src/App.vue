@@ -10,7 +10,7 @@ export default {
 
 <style>
 .grey--background {
-  background-color: #f2f2f2;
+  background-color: #f2f2f2 !important;
 }
 
 .custom-divider {
