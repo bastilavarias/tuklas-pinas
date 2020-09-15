@@ -50,6 +50,7 @@
                 x-large
                 class="text-capitalize"
                 rounded
+                :to="{ name: 'sign-in' }"
                 >Sign In</v-btn
               >
               <span class="mx-5 white--text">OR</span>
