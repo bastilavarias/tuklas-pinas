@@ -35,8 +35,8 @@
         ></v-img>
       </v-col>
       <v-col cols="12" sm="10">
-        <v-container>
-          <v-main>
+        <v-main>
+          <v-container>
             <v-card color="transparent" flat>
               <v-card-title>New User?</v-card-title>
               <v-card-subtitle
@@ -149,8 +149,8 @@
                 </p>
               </v-card-text>
             </v-card>
-          </v-main>
-        </v-container>
+          </v-container>
+        </v-main>
       </v-col>
     </v-row>
     <generic-footer></generic-footer>
