@@ -16,49 +16,143 @@
       <v-btn color="transparent" depressed class="text-capitalize white--text"
         >Hire a Guide</v-btn
       >
-      <v-btn color="transparent" depressed class="text-capitalize white--text"
-        >FAQs</v-btn
+      <v-btn
+        color="secondary"
+        class="text-capitalize"
+        depressed
+        tile
+        :to="{ name: 'sign-in' }"
+        >Sign In</v-btn
       >
     </v-app-bar>
-    <v-main class="grey--background">
-      <v-container class="fill-height">
-        <v-row justify="center" align-content="center">
-          <v-col cols="12" sm="10" md="8" lg="6" xl="4">
-            <v-card>
-              <v-card-title class="font-weight-bold">
-                Create an account for free!
-              </v-card-title>
+    <v-row no-gutters>
+      <v-col cols="12" sm="2" class="d-none d-sm-block">
+        <v-img
+          :src="require('@/assets/sign-in/sign-in-image.jpg')"
+          cover
+          height="100vh"
+          position="top"
+        ></v-img>
+      </v-col>
+      <v-col cols="12" sm="10">
+        <v-container>
+          <v-main>
+            <v-card color="transparent" flat>
+              <v-card-title>New User?</v-card-title>
+              <v-card-subtitle
+                >Use the form below to create your account.</v-card-subtitle
+              >
               <v-card-text>
-                <v-btn color="#3B5998" block class="mb-5" depressed dark>
-                  <v-icon class="mr-2">mdi-facebook</v-icon>
-                  <span class="text-capitalize">Continue with Facebook</span>
-                </v-btn>
-                <v-btn color="#3cba54" block depressed dark>
-                  <v-icon class="mr-2">mdi-google</v-icon>
-                  <span class="text-capitalize">Continue with Google</span>
-                </v-btn>
-              </v-card-text>
-              <p class="text-center caption my-5">
-                Or, use a regular Email instead
-              </p>
-              <v-card-text>
-                <v-text-field
-                  outlined
-                  label="Email"
-                  single-line
-                  color="primary"
-                  dense
-                ></v-text-field>
-                <v-btn block color="primary" depressed class="text-capitalize"
-                  >Continue with Email
-                </v-btn>
+                <v-row dense>
+                  <v-col cols="12" md="6">
+                    <v-text-field
+                      filled
+                      rounded
+                      label="First Name"
+                      single-line
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="6">
+                    <v-text-field
+                      filled
+                      rounded
+                      label="Last Name"
+                      single-line
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="6">
+                    <v-select
+                      filled
+                      rounded
+                      label="Nationality"
+                      single-line
+                    ></v-select>
+                  </v-col>
+                  <v-col cols="12" md="6">
+                    <v-select
+                      filled
+                      rounded
+                      label="E-mail"
+                      single-line
+                    ></v-select>
+                  </v-col>
+                  <v-col cols="12" md="6">
+                    <v-select
+                      filled
+                      rounded
+                      label="Date of Birth"
+                      single-line
+                    ></v-select>
+                  </v-col>
+                  <v-col cols="12" md="6">
+                    <v-select
+                      filled
+                      rounded
+                      label="Gender"
+                      single-line
+                    ></v-select>
+                  </v-col>
+                  <v-col cols="12" md="6">
+                    <v-text-field
+                      type="password"
+                      filled
+                      rounded
+                      label="Password"
+                      single-line
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="6">
+                    <v-text-field
+                      type="password"
+                      filled
+                      rounded
+                      label="Confirm Password"
+                      single-line
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-checkbox
+                      label="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id lobortis enim."
+                    ></v-checkbox>
+                  </v-col>
+                  <v-col cols="12">
+                    <div class="d-flex justify-space-between align-center">
+                      <div class="flex-grow-1"></div>
+                      <v-btn color="primary" large class="text-capitalize">
+                        Continue
+                      </v-btn>
+                    </div>
+                  </v-col>
+                </v-row>
+                <div class="my-15">
+                  <p class="caption">Or, Sign In with Social Accounts</p>
+                  <div class="d-flex align-center">
+                    <v-btn color="#3B5998" depressed rounded dark class="mr-5">
+                      <v-icon class="mr-2">mdi-facebook</v-icon>
+                      <span class="text-capitalize">Signup with Facebook</span>
+                    </v-btn>
+                    <v-btn color="#DB4437" depressed rounded dark class="mr-5">
+                      <v-icon class="mr-2">mdi-google</v-icon>
+                      <span class="text-capitalize">Signup with Google</span>
+                    </v-btn>
+                    <v-btn color="#1DA1F2" depressed rounded dark>
+                      <v-icon class="mr-2">mdi-twitter</v-icon>
+                      <span class="text-capitalize">Signup with Twitter</span>
+                    </v-btn>
+                  </div>
+                </div>
+                <p class="caption">
+                  Have an account?
+                  <span class="primary--text font-weight-bold"
+                    >Sign In here</span
+                  >
+                </p>
               </v-card-text>
             </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-main>
-    <generic-how-it-works-section></generic-how-it-works-section>
+          </v-main>
+        </v-container>
+      </v-col>
+    </v-row>
     <generic-footer></generic-footer>
   </v-app>
 </template>
