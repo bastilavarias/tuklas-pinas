@@ -27,18 +27,11 @@
         icon="mdi-bell"
         text="Notifications"
       ></custom-tooltip-button>
-      <v-spacer> </v-spacer>
       <main-toolbar-profile-menu-button></main-toolbar-profile-menu-button>
     </v-app-bar>
     <v-main>
       <v-container>
-        <v-row>
-          <v-col cols="12" md="3"> Some shit </v-col>
-          <v-col cols="12" md="6">
-            <router-view></router-view>
-          </v-col>
-          <v-col cols="12" md="3"> Another shit </v-col>
-        </v-row>
+        <router-view></router-view>
       </v-container>
     </v-main>
   </v-app>

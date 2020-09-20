@@ -8,7 +8,7 @@
       <v-row>
         <template v-for="n in 3">
           <v-col cols="12" :md="n === 3 ? '12' : '6'" lg="4" :key="n">
-            <travel-story-post-preview></travel-story-post-preview>
+            <travel-story-post-preview has-shadow></travel-story-post-preview>
           </v-col>
         </template>
       </v-row>

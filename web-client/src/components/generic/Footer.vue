@@ -1,5 +1,5 @@
 <template>
-  <footer class="dark">
+  <footer class="secondary">
     <v-container>
       <div class="white--text">
         <div class="pt-2 text-center">

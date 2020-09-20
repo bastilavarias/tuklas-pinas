@@ -18,7 +18,7 @@
             }}</v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action-text>
-            <v-icon large color="dark">{{ action.icon }}</v-icon>
+            <v-icon large color="secondary">{{ action.icon }}</v-icon>
           </v-list-item-action-text>
         </v-list-item>
       </template>

@@ -3,7 +3,7 @@
     <v-app-bar
       app
       fixed
-      :color="isScrollingDown ? 'primary' : 'transparent'"
+      :color="isScrollingDown ? 'secondary' : 'transparent'"
       :flat="!isScrollingDown"
       width="100%"
       style="z-index: 3"

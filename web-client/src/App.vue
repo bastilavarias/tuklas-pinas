@@ -16,7 +16,7 @@ export default {
 .custom-divider {
   width: 6rem;
   height: 0.3rem;
-  background-color: #2980b9;
+  background-color: #ff7557;
   display: inline-block;
 }
 

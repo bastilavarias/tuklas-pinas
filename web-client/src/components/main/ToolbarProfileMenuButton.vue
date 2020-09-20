@@ -37,7 +37,7 @@
           >Bug Report</v-list-item-title
         >
         <v-list-item-action-text>
-          <v-icon color="dark">mdi-bug</v-icon>
+          <v-icon color="secondary">mdi-bug</v-icon>
         </v-list-item-action-text>
       </v-list-item>
       <v-divider></v-divider>
@@ -47,7 +47,7 @@
             action.title
           }}</v-list-item-title>
           <v-list-item-action-text>
-            <v-icon color="dark">{{ action.icon }}</v-icon>
+            <v-icon color="secondary">{{ action.icon }}</v-icon>
           </v-list-item-action-text>
         </v-list-item>
       </template>
