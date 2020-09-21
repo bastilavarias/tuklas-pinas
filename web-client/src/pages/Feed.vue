@@ -44,6 +44,12 @@
           <v-col cols="12">
             <feed-events-card></feed-events-card>
           </v-col>
+          <v-col cols="12">
+            <feed-people-card></feed-people-card>
+          </v-col>
+          <v-col cols="12">
+            <feed-footer-card></feed-footer-card>
+          </v-col>
         </v-row>
       </v-col>
     </v-row>
@@ -56,8 +62,12 @@ import ItineraryPostPreview from "@/components/ItineraryPostPreview";
 import FeedProfilePreviewCard from "@/components/feed/ProfilePreviewCard";
 import FeedCategoryListCard from "@/components/feed/CategoryListCard";
 import FeedEventsCard from "@/components/feed/EventsCard";
+import FeedPeopleCard from "@/components/feed/PeopleCard";
+import FeedFooterCard from "@/components/feed/FooterCard";
 export default {
   components: {
+    FeedFooterCard,
+    FeedPeopleCard,
     FeedEventsCard,
     FeedCategoryListCard,
     FeedProfilePreviewCard,
