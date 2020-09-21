@@ -6,7 +6,7 @@
         <v-divider v-if="n <= 10"></v-divider>
         <v-list-item>
           <v-list-item-icon>
-            <v-icon large> mdi-food-apple-outline </v-icon>
+            <v-icon> mdi-food-apple-outline </v-icon>
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title> Category {{ n }} </v-list-item-title>
