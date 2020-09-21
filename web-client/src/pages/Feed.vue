@@ -2,7 +2,14 @@
   <section>
     <v-row>
       <v-col cols="12" md="3">
-        <feed-user-profile-preview></feed-user-profile-preview>
+        <v-row>
+          <v-col cols="12">
+            <feed-profile-preview-card></feed-profile-preview-card>
+          </v-col>
+          <v-col cols="12">
+            <feed-category-list-card></feed-category-list-card>
+          </v-col>
+        </v-row>
       </v-col>
       <v-col cols="12" md="6">
         <v-tabs
@@ -42,10 +49,12 @@
 <script>
 import TravelStoryPostPreview from "@/components/TravelStoryPostPreview";
 import ItineraryPostPreview from "@/components/ItineraryPostPreview";
-import FeedUserProfilePreview from "@/components/feed/UserProfilePreview";
+import FeedProfilePreviewCard from "@/components/feed/ProfilePreviewCard";
+import FeedCategoryListCard from "@/components/feed/CategoryListCard";
 export default {
   components: {
-    FeedUserProfilePreview,
+    FeedCategoryListCard,
+    FeedProfilePreviewCard,
     ItineraryPostPreview,
     TravelStoryPostPreview,
   },

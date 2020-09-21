@@ -1,5 +1,5 @@
 <template>
-  <v-card id="feed-user-profile-preview">
+  <v-card>
     <div id="display-photo-container">
       <v-img
         id="cover-photo"
@@ -47,14 +47,11 @@
 
 <script>
 export default {
-  name: "feed-user-profile-preview",
+  name: "feed-profile-preview-card",
 };
 </script>
 
 <style scoped>
-#generic-user-profile-preview {
-}
-
 #display-photo-container {
   position: relative;
   width: 100%;
