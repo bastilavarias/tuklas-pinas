@@ -40,7 +40,11 @@
         </template>
       </v-col>
       <v-col cols="12" md="3">
-        <h1>Some shits</h1>
+        <v-row>
+          <v-col cols="12">
+            <feed-events-card></feed-events-card>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
   </section>
@@ -51,8 +55,10 @@ import TravelStoryPostPreview from "@/components/TravelStoryPostPreview";
 import ItineraryPostPreview from "@/components/ItineraryPostPreview";
 import FeedProfilePreviewCard from "@/components/feed/ProfilePreviewCard";
 import FeedCategoryListCard from "@/components/feed/CategoryListCard";
+import FeedEventsCard from "@/components/feed/EventsCard";
 export default {
   components: {
+    FeedEventsCard,
     FeedCategoryListCard,
     FeedProfilePreviewCard,
     ItineraryPostPreview,
