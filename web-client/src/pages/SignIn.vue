@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" fixed width="100%" style="z-index: 3">
+    <v-app-bar app color="secondary" fixed width="100%" style="z-index: 3">
       <v-app-bar-nav-icon>
         <v-icon large color="white" @click="$router.push({ name: 'home' })">
           mdi-map-marker
@@ -17,7 +17,7 @@
         >Hire a Guide</v-btn
       >
       <v-btn
-        color="secondary"
+        color="primary"
         class="text-capitalize"
         depressed
         tile
@@ -72,6 +72,7 @@
                     class="text-capitalize"
                     large
                     rounded
+                    :to="{ name: 'feed' }"
                     >Sign In</v-btn
                   >
                 </div>

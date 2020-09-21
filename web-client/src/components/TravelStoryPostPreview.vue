@@ -1,5 +1,9 @@
 <template>
-  <v-card outlined tile class="custom-shadow">
+  <v-card
+    outlined
+    tile
+    :class="`${hasShadow ? 'custom-shadow' : ''} ${className}`"
+  >
     <div class="px-3 pt-3">
       <div class="d-flex align-start justify-space-between mb-2">
         <div class="mr-2">
@@ -107,6 +111,18 @@ export default {
   name: "travel-story-post-preview",
 
   components: { Carousel },
+
+  props: {
+    className: {
+      type: String,
+      required: false,
+    },
+
+    hasShadow: {
+      type: Boolean,
+      required: false,
+    },
+  },
 
   data() {
     return {
