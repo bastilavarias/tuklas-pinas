@@ -5,7 +5,7 @@
       <template v-for="(event, index) in events">
         <v-col cols="12" md="6" :key="index">
           <v-card flat min-height="8rem" dark :style="{ position: 'relative' }">
-            <div class="content d-flex align-center justify-center">
+            <div class="event-content d-flex align-center justify-center">
               <div class="text-center">
                 <span class="overline">{{ event.name }}</span>
               </div>
@@ -21,8 +21,14 @@
         </v-col>
       </template>
       <v-col cols="12" md="6">
-        <v-card flat min-height="8rem" color="secondary" dark>
-          <div class="content d-flex align-center justify-center">
+        <v-card
+          flat
+          min-height="8rem"
+          color="secondary"
+          dark
+          :to="{ name: 'events-explorer' }"
+        >
+          <div class="event-content d-flex align-center justify-center">
             <div class="text-center">
               <span class="d-block"
                 ><v-icon large>mdi-dots-horizontal-circle</v-icon></span
@@ -43,23 +49,23 @@ export default {
     return {
       events: [
         {
-          backgroundImage: require("@/assets/event-background-images/project-81.jpeg"),
+          backgroundImage: require("@/assets/generic/event-background-images/project-81.jpeg"),
           name: "Project 81",
         },
         {
-          backgroundImage: require("@/assets/event-background-images/chasing-waterfalls.jpeg"),
+          backgroundImage: require("@/assets/generic/event-background-images/chasing-waterfalls.jpeg"),
           name: "Chasing Waterfalls",
         },
         {
-          backgroundImage: require("@/assets/event-background-images/food-trippers.jpg"),
+          backgroundImage: require("@/assets/generic/event-background-images/food-trippers.jpg"),
           name: "Food Trippers",
         },
         {
-          backgroundImage: require("@/assets/event-background-images/backpackers.jpg"),
+          backgroundImage: require("@/assets/generic/event-background-images/backpackers.jpg"),
           name: "Backpackers",
         },
         {
-          backgroundImage: require("@/assets/event-background-images/mountaineers.jpeg"),
+          backgroundImage: require("@/assets/generic/event-background-images/mountaineers.jpeg"),
           name: "Mountaineers",
         },
       ],
@@ -78,7 +84,7 @@ export default {
   z-index: 1;
 }
 
-.content {
+.event-content {
   position: absolute;
   width: 100%;
   height: 100%;
