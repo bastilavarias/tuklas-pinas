@@ -31,6 +31,11 @@ const routes = [
         name: "feed",
         component: () => import("../pages/Feed"),
       },
+      {
+        path: "events-explorer",
+        name: "events-explorer",
+        component: () => import("../pages/EventsExplorer"),
+      },
     ],
   },
 ];
