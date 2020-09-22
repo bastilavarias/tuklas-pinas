@@ -42,7 +42,7 @@
       <v-col cols="12" md="3">
         <v-row>
           <v-col cols="12">
-            <feed-events-card></feed-events-card>
+            <feed-events-preview-card></feed-events-preview-card>
           </v-col>
           <v-col cols="12">
             <feed-people-card></feed-people-card>
@@ -61,14 +61,14 @@ import TravelStoryPostPreview from "@/components/TravelStoryPostPreview";
 import ItineraryPostPreview from "@/components/ItineraryPostPreview";
 import FeedProfilePreviewCard from "@/components/feed/ProfilePreviewCard";
 import FeedCategoryListCard from "@/components/feed/CategoryListCard";
-import FeedEventsCard from "@/components/feed/EventsCard";
 import FeedPeopleCard from "@/components/feed/PeopleCard";
 import FeedFooterCard from "@/components/feed/FooterCard";
+import FeedEventsPreviewCard from "@/components/feed/EventsPreviewCard";
 export default {
   components: {
+    FeedEventsPreviewCard,
     FeedFooterCard,
     FeedPeopleCard,
-    FeedEventsCard,
     FeedCategoryListCard,
     FeedProfilePreviewCard,
     ItineraryPostPreview,
