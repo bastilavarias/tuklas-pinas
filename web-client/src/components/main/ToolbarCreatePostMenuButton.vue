@@ -1,10 +1,22 @@
 <template>
   <v-menu offset-y>
-    <template v-slot:activator="{ on, attrs }">
-      <v-btn depressed v-bind="attrs" v-on="on" :class="buttonClassName" icon>
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
+    <template v-slot:activator="{ on: menu, attrs }">
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on: tooltip }">
+          <v-btn
+            depressed
+            v-bind="attrs"
+            v-on="{ ...tooltip, ...menu }"
+            :class="buttonClassName"
+            icon
+          >
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+        </template>
+        <span>Create</span>
+      </v-tooltip>
     </template>
+
     <v-card>
       <v-card-title class="font-weight-bold">Create</v-card-title>
       <template v-for="(action, index) in actions">
