@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import ItineraryPostPreview from "@/components/ItineraryPostPreview";
+import ItineraryPostPreview from "@/components/generic/ItineraryPostPreview";
 import GenericTravelStoryPostPreview from "@/components/generic/TravelStoryPostPreview";
 export default {
   name: "home-featured-travel-stories-section",

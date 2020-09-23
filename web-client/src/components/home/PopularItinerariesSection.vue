@@ -8,7 +8,9 @@
       <v-row>
         <template v-for="n in 3">
           <v-col cols="12" :md="n === 3 ? '12' : '6'" lg="4" :key="n">
-            <itinerary-post-preview></itinerary-post-preview>
+            <generic-itinerary-post-preview
+              has-shadow
+            ></generic-itinerary-post-preview>
           </v-col>
         </template>
       </v-row>
@@ -17,9 +19,9 @@
 </template>
 
 <script>
-import ItineraryPostPreview from "@/components/ItineraryPostPreview";
+import GenericItineraryPostPreview from "@/components/generic/ItineraryPostPreview";
 export default {
   name: "home-popular-itineraries-section",
-  components: { ItineraryPostPreview },
+  components: { GenericItineraryPostPreview },
 };
 </script>
