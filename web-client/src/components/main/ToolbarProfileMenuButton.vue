@@ -1,21 +1,26 @@
 <template>
   <v-menu offset-y>
-    <template v-slot:activator="{ on, attrs }">
-      <v-btn
-        color="transparent"
-        depressed
-        v-bind="attrs"
-        v-on="on"
-        :class="buttonClassName"
-      >
-        <v-avatar class="mr-2" :size="30">
-          <v-img
-            src="https://bastilavarias.github.io/assets/img/sebastian-lavarias.5c3a8fdd.png"
-          ></v-img>
-        </v-avatar>
-        <span class="text-capitalize mr-1">Sebastian</span>
-        <v-icon small>mdi-menu-down</v-icon>
-      </v-btn>
+    <template v-slot:activator="{ on: menu, attrs }">
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on: tooltip }">
+          <v-btn
+            color="transparent"
+            depressed
+            v-bind="attrs"
+            v-on="{ ...tooltip, ...menu }"
+            :class="buttonClassName"
+          >
+            <v-avatar class="mr-2" :size="30">
+              <v-img
+                src="https://bastilavarias.github.io/assets/img/sebastian-lavarias.5c3a8fdd.png"
+              ></v-img>
+            </v-avatar>
+            <span class="text-capitalize mr-1">Sebastian</span>
+            <v-icon small>mdi-menu-down</v-icon>
+          </v-btn>
+        </template>
+        <span>Profile</span>
+      </v-tooltip>
     </template>
     <v-card>
       <v-list-item two-line>
