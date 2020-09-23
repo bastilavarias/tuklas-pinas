@@ -10,9 +10,8 @@
       "dev:web-client": "npm run serve --prefix web-client",
       "generate:development-seeds": "ts-node src/components/database/seeds/index.ts",
       "generate:production-seeds": "node dist/database/seeds/index.js",
-      "build:source": "tsc",
-      "build:web-client": "npm run build --prefix web-client",
-      "build:production": "concurrently \"npm run build:source\" \"npm run build:web-client\""
+      "build:staging": "concurrently \"tsc\" \"npm run build:staging --prefix web-client\"",
+      "build:production": "concurrently \"tsc\" \"npm run build:production --prefix web-client\""
    },
    "repository": {
       "type": "git",
