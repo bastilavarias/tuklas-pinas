@@ -29,10 +29,10 @@
               </template>
             </v-tabs>
             <template v-for="n in [1, 2, 3]">
-              <travel-story-post-preview
+              <generic-travel-story-post-preview
                 :key="n"
                 class-name="mb-5"
-              ></travel-story-post-preview>
+              ></generic-travel-story-post-preview>
             </template>
             <template v-for="n in [4, 5, 6]">
               <itinerary-post-preview
@@ -61,22 +61,22 @@
 </template>
 
 <script>
-import TravelStoryPostPreview from "@/components/TravelStoryPostPreview";
 import ItineraryPostPreview from "@/components/ItineraryPostPreview";
 import FeedProfilePreviewCard from "@/components/feed/ProfilePreviewCard";
 import FeedCategoryListCard from "@/components/feed/CategoryListCard";
 import FeedPeopleCard from "@/components/feed/PeopleCard";
 import FeedFooterCard from "@/components/feed/FooterCard";
 import FeedEventsPreviewCard from "@/components/feed/EventsPreviewCard";
+import GenericTravelStoryPostPreview from "@/components/generic/TravelStoryPostPreview";
 export default {
   components: {
+    GenericTravelStoryPostPreview,
     FeedEventsPreviewCard,
     FeedFooterCard,
     FeedPeopleCard,
     FeedCategoryListCard,
     FeedProfilePreviewCard,
     ItineraryPostPreview,
-    TravelStoryPostPreview,
   },
   data() {
     return {
