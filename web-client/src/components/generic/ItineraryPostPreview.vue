@@ -92,10 +92,35 @@
           </v-btn>
         </v-col>
         <v-col cols="4">
-          <v-btn block large text tile color="secondary">
-            <v-icon class="mr-1">mdi-share-outline</v-icon>
-            <span class="caption font-weight-bold">1k+</span>
-          </v-btn>
+          <v-menu>
+            <template v-slot:activator="{ on: menu, attrs }">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on: tooltip }">
+                  <v-btn
+                    block
+                    large
+                    text
+                    tile
+                    color="secondary"
+                    v-bind="attrs"
+                    v-on="{ ...tooltip, ...menu }"
+                    ><v-icon>mdi-dots-vertical</v-icon></v-btn
+                  >
+                </template>
+                <span>More Actions</span>
+              </v-tooltip>
+            </template>
+            <v-card>
+              <v-btn block large text tile color="secondary">
+                <v-icon class="mr-1">mdi-bookmark-outline</v-icon>
+                <span class="caption font-weight-bold">1k+</span>
+              </v-btn>
+              <v-btn block large text tile color="secondary">
+                <v-icon class="mr-1">mdi-share-outline</v-icon>
+                <span class="caption font-weight-bold">1k+</span>
+              </v-btn>
+            </v-card>
+          </v-menu>
         </v-col>
       </v-row>
     </div>
