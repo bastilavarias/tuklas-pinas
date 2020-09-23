@@ -4,7 +4,7 @@
     tile
     :class="`${hasShadow ? 'custom-shadow' : ''} ${className}`"
   >
-    <div class="px-3 pt-3">
+    <div class="px-3 pt-3 mb-5">
       <div class="d-flex align-start justify-space-between mb-2">
         <div class="mr-2">
           <div>
@@ -43,43 +43,29 @@
           ></v-img>
         </v-avatar>
       </div>
-      <carousel
-        :items="1"
-        dots
-        :nav="false"
-        :autoplay="false"
-        :mouse-drag="false"
-        touch-drag
-        pull-drag
-        free-drag
-        style="position: relative"
-      >
+      <masonry :cols="3" :gutter="5">
         <template v-for="(image, index) in images">
           <v-img
             :key="index"
-            height="300"
+            width="100%"
+            height="auto"
             :src="image"
-            class="d-block mx-auto"
-            position="center"
-            cover
+            class="mb-1"
           ></v-img>
         </template>
-        <template slot="prev">
-          <v-btn fab color="white" small class="next-image-button">
-            <v-icon small color="black">mdi-chevron-left</v-icon>
-          </v-btn>
-        </template>
-        <template slot="next">
-          <v-btn fab color="white" small class="previous-image-button">
-            <v-icon small color="black">mdi-chevron-right</v-icon>
-          </v-btn>
-        </template>
-      </carousel>
+      </masonry>
     </div>
     <div>
       <v-divider> </v-divider>
       <div class="px-3 py-1 d-flex justify-space-between align-center">
         <span class="caption">Event: Project 81</span>
+      </div>
+      <v-divider> </v-divider>
+      <div class="px-3 py-1 d-flex justify-space-between align-center">
+        <span class="caption"
+          >Tour Guide: <span class="font-italic"> Tour Guide Name </span></span
+        >
+        <v-icon small color="primary">mdi-account-cowboy-hat</v-icon>
       </div>
       <v-divider> </v-divider>
       <div class="px-3 py-1 d-flex justify-space-between align-center">
@@ -120,7 +106,7 @@
 import Carousel from "vue-owl-carousel";
 
 export default {
-  name: "generic-travel-story-post-preview",
+  name: "generic-itinerary-post-preview",
 
   components: { Carousel },
 
@@ -151,21 +137,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.next-image-button,
-.previous-image-button {
-  position: absolute;
-  z-index: 2;
-}
-
-.next-image-button {
-  top: 40%;
-  left: 1%;
-}
-
-.previous-image-button {
-  top: 40%;
-  right: 1%;
-}
-</style>
