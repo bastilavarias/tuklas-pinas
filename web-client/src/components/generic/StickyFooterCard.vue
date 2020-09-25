@@ -1,17 +1,17 @@
 <template>
-  <v-card outlined id="feed-footer-card">
+  <v-card outlined id="generic-sticky-footer-card">
     <v-card-subtitle>Sticky Footer</v-card-subtitle>
   </v-card>
 </template>
 
 <script>
 export default {
-  name: "feed-footer-card",
+  name: "generic-sticky-footer-card",
 };
 </script>
 
 <style scoped>
-#feed-footer-card {
+#generic-sticky-footer-card {
   position: sticky;
   position: -webkit-sticky;
   top: 0;

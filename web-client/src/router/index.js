@@ -9,19 +9,16 @@ const routes = [
     name: "home",
     component: () => import("../pages/Home"),
   },
-
   {
     path: "/sign-in",
     name: "sign-in",
     component: () => import("../pages/SignIn"),
   },
-
   {
     path: "/signup",
     name: "signup",
     component: () => import("../pages/Signup"),
   },
-
   {
     path: "/main",
     component: () => import("../layouts/Main"),
@@ -35,6 +32,11 @@ const routes = [
         path: "events-explorer",
         name: "events-explorer",
         component: () => import("../pages/EventsExplorer"),
+      },
+      {
+        path: "travel-story-post-editor/:action",
+        name: "travel-story-post-editor",
+        component: () => import("../pages/TravelStoryPostEditor"),
       },
     ],
   },

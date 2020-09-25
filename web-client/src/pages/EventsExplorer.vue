@@ -65,7 +65,7 @@ import FeedProfilePreviewCard from "@/components/feed/ProfilePreviewCard";
 import FeedCategoryListCard from "@/components/feed/CategoryListCard";
 import FeedEventsPreviewCard from "@/components/feed/EventsPreviewCard";
 import FeedPeopleCard from "@/components/feed/PeopleCard";
-import FeedFooterCard from "@/components/feed/FooterCard";
+import FeedFooterCard from "@/components/generic/StickyFooterCard";
 export default {
   components: {
     FeedFooterCard,
