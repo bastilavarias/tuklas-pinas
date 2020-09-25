@@ -20,7 +20,7 @@
     <v-card>
       <v-card-title class="font-weight-bold">Create</v-card-title>
       <template v-for="(action, index) in actions">
-        <v-list-item two-line :key="index">
+        <v-list-item two-line :key="index" :to="action.to" exact>
           <v-list-item-content>
             <v-list-item-title class="font-weight-bold">{{
               action.title
@@ -56,6 +56,10 @@ export default {
           title: "Travel Story Post",
           description: "Lorem ipsum dolor sit amet.",
           icon: "mdi-post",
+          to: {
+            name: "travel-story-post-editor",
+            params: { action: "submit" },
+          },
         },
         {
           title: "Itinerary Post",

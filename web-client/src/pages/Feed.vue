@@ -52,7 +52,7 @@
             <feed-people-card></feed-people-card>
           </v-col>
           <v-col cols="12">
-            <feed-footer-card></feed-footer-card>
+            <generic-sticky-footer-card></generic-sticky-footer-card>
           </v-col>
         </v-row>
       </v-col>
@@ -64,16 +64,16 @@
 import FeedProfilePreviewCard from "@/components/feed/ProfilePreviewCard";
 import FeedCategoryListCard from "@/components/feed/CategoryListCard";
 import FeedPeopleCard from "@/components/feed/PeopleCard";
-import FeedFooterCard from "@/components/feed/FooterCard";
 import FeedEventsPreviewCard from "@/components/feed/EventsPreviewCard";
 import GenericTravelStoryPostPreview from "@/components/generic/TravelStoryPostPreview";
 import GenericItineraryPostPreview from "@/components/generic/ItineraryPostPreview";
+import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
 export default {
   components: {
+    GenericStickyFooterCard,
     GenericItineraryPostPreview,
     GenericTravelStoryPostPreview,
     FeedEventsPreviewCard,
-    FeedFooterCard,
     FeedPeopleCard,
     FeedCategoryListCard,
     FeedProfilePreviewCard,
