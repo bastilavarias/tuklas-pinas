@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="d-flex justify-space-between align-center mb-5">
-      <span class="subtitle-1">Itinerary</span>
+      <span class="subtitle-1">Itinerary Timeline</span>
       <div>
         <v-btn
           icon

@@ -12,15 +12,22 @@
       <v-tab-item>
         <itinerary-post-editor-personal-restaurant-review-form></itinerary-post-editor-personal-restaurant-review-form>
       </v-tab-item>
+      <v-tab-item>
+        <itinerary-post-editor-personal-lodging-review-form></itinerary-post-editor-personal-lodging-review-form>
+      </v-tab-item>
     </v-tabs-items>
   </div>
 </template>
 
 <script>
 import ItineraryPostEditorPersonalRestaurantReviewForm from "@/components/itinerary-post-editor/personal-reviews-field/forms/Restaurant";
+import ItineraryPostEditorPersonalLodgingReviewForm from "@/components/itinerary-post-editor/personal-reviews-field/forms/Lodging";
 export default {
   name: "itinerary-post-editor-personal-reviews-field",
-  components: { ItineraryPostEditorPersonalRestaurantReviewForm },
+  components: {
+    ItineraryPostEditorPersonalLodgingReviewForm,
+    ItineraryPostEditorPersonalRestaurantReviewForm,
+  },
   data() {
     return {
       tab: null,

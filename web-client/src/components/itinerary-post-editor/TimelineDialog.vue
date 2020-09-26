@@ -8,7 +8,6 @@
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-card-title>
-
       <v-card-subtitle>Lorem ipsum dolor sit amet.</v-card-subtitle>
       <v-card-text>
         <v-row dense>
@@ -62,7 +61,6 @@
           </v-col>
         </v-row>
       </v-card-text>
-
       <v-card-text>
         <v-row dense>
           <v-col cols="12">

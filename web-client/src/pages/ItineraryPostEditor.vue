@@ -18,7 +18,7 @@
                   <v-col cols="12">
                     <v-text-field
                       outlined
-                      label="Type itinerary name (E.g, 4 Nights in Amazing Paris)"
+                      label="Itinerary name (E.g, 4 Nights in Amazing Paris) *"
                       single-line
                       color="primary"
                     ></v-text-field>
