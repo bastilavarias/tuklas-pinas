@@ -34,7 +34,7 @@
                 <v-list-item-subtitle class="secondary--text">
                   <span class="font-weight-bold">Day {{ n }}</span>
                   <span class="mx-1">-</span>
-                  <span>Lorem ipsum dolor sit amet.</span>
+                  <span class="font-italic">Lorem ipsum dolor sit amet.</span>
                 </v-list-item-subtitle>
               </v-list-item-content>
               <v-list-item-action>

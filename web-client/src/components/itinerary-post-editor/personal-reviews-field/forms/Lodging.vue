@@ -10,7 +10,7 @@
     <template v-for="n in 6">
       <v-list-item two-line :key="n">
         <v-list-item-content>
-          <v-list-item-title>
+          <v-list-item-subtitle class="secondary--text">
             <span class="mr-1"
               >{{ n }}. <span class="font-weight-bold">Lodging Name</span></span
             >
@@ -21,7 +21,7 @@
               class="text-uppercase font-weight-bold"
               >Awesome</v-chip
             >
-          </v-list-item-title>
+          </v-list-item-subtitle>
           <v-list-item-subtitle
             >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid,
             nam.</v-list-item-subtitle

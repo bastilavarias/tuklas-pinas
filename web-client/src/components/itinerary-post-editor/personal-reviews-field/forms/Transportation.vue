@@ -1,7 +1,7 @@
 <template>
   <v-card flat color="transparent">
     <v-card-title>
-      <span>Restaurant Review</span>
+      <span>Transportation Review</span>
       <div class="flex-grow-1"></div>
       <v-btn icon @click="isDialogOpen = true">
         <v-icon>mdi-plus</v-icon>
@@ -13,7 +13,7 @@
           <v-list-item-subtitle class="secondary--text">
             <span class="mr-1"
               >{{ n }}.
-              <span class="font-weight-bold">Restaurant Name</span></span
+              <span class="font-weight-bold">Transport Type</span></span
             >
             <v-chip
               color="success"
@@ -80,11 +80,7 @@
         <v-card-text>
           <v-row dense>
             <v-col cols="12">
-              <v-text-field
-                outlined
-                single-line
-                label="Restaurant Name"
-              ></v-text-field>
+              <v-select outlined single-line label="Transport Type"></v-select>
             </v-col>
             <v-col cols="12">
               <v-textarea outlined single-line label="Review"></v-textarea>
@@ -137,7 +133,7 @@
 
 <script>
 export default {
-  name: "itinerary-post-editor-personal-restaurant-review-form",
+  name: "itinerary-post-editor-personal-transportation-review-form",
 
   data() {
     return {

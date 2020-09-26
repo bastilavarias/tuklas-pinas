@@ -20,8 +20,14 @@
                       outlined
                       label="Itinerary name (E.g, 4 Nights in Amazing Paris) *"
                       single-line
-                      color="primary"
                     ></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-select
+                      outlined
+                      label="Categories *"
+                      single-line
+                    ></v-select>
                   </v-col>
                   <v-col cols="12">
                     <v-textarea

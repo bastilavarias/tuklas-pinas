@@ -4,7 +4,10 @@
       <v-list-item-subtitle>
         <span>
           <v-icon small class="mr-1">mdi-clock-outline</v-icon>
-          <span>10:00 AM - Lorem ipsum dolor sit amet.</span>
+          <span
+            >10:00 AM -
+            <span class="font-italic">Lorem ipsum dolor sit amet.</span></span
+          >
         </span>
       </v-list-item-subtitle>
       <v-list-item-title class="font-weight-bold">

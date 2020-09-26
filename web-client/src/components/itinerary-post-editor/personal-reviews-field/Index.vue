@@ -15,6 +15,18 @@
       <v-tab-item>
         <itinerary-post-editor-personal-lodging-review-form></itinerary-post-editor-personal-lodging-review-form>
       </v-tab-item>
+      <v-tab-item>
+        <itinerary-post-editor-personal-transportation-review-form></itinerary-post-editor-personal-transportation-review-form>
+      </v-tab-item>
+      <v-tab-item>
+        <itinerary-post-editor-personal-internet-access-review-form></itinerary-post-editor-personal-internet-access-review-form>
+      </v-tab-item>
+      <v-tab-item>
+        <itinerary-post-editor-personal-activities-review-form></itinerary-post-editor-personal-activities-review-form>
+      </v-tab-item>
+      <v-tab-item>
+        <itinerary-post-editor-personal-finance-review-form></itinerary-post-editor-personal-finance-review-form>
+      </v-tab-item>
     </v-tabs-items>
   </div>
 </template>
@@ -22,9 +34,17 @@
 <script>
 import ItineraryPostEditorPersonalRestaurantReviewForm from "@/components/itinerary-post-editor/personal-reviews-field/forms/Restaurant";
 import ItineraryPostEditorPersonalLodgingReviewForm from "@/components/itinerary-post-editor/personal-reviews-field/forms/Lodging";
+import ItineraryPostEditorPersonalTransportationReviewForm from "@/components/itinerary-post-editor/personal-reviews-field/forms/Transportation";
+import ItineraryPostEditorPersonalInternetAccessReviewForm from "@/components/itinerary-post-editor/personal-reviews-field/forms/InternetAccess";
+import ItineraryPostEditorPersonalActivitiesReviewForm from "@/components/itinerary-post-editor/personal-reviews-field/forms/Activities";
+import ItineraryPostEditorPersonalFinanceReviewForm from "@/components/itinerary-post-editor/personal-reviews-field/forms/Finance";
 export default {
   name: "itinerary-post-editor-personal-reviews-field",
   components: {
+    ItineraryPostEditorPersonalFinanceReviewForm,
+    ItineraryPostEditorPersonalActivitiesReviewForm,
+    ItineraryPostEditorPersonalInternetAccessReviewForm,
+    ItineraryPostEditorPersonalTransportationReviewForm,
     ItineraryPostEditorPersonalLodgingReviewForm,
     ItineraryPostEditorPersonalRestaurantReviewForm,
   },
@@ -45,11 +65,11 @@ export default {
           icon: "mdi-train-car",
         },
         {
-          text: "Internet & Mobile Data",
+          text: "Internet Access",
           icon: "mdi-wifi",
         },
         {
-          text: "Sights/Activities",
+          text: "Activities",
           icon: "mdi-hiking",
         },
         {
@@ -57,11 +77,11 @@ export default {
           icon: "mdi-cash-multiple",
         },
         {
-          text: "Favorite/Tips",
+          text: "Tips",
           icon: "mdi-heart",
         },
         {
-          text: "Things that didn't work",
+          text: "Avoid",
           icon: "mdi-alert",
         },
       ],
