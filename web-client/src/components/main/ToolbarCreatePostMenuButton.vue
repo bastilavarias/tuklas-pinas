@@ -65,6 +65,10 @@ export default {
           title: "Itinerary Post",
           description: "Lorem ipsum dolor sit amet.",
           icon: "mdi-book-open",
+          to: {
+            name: "itinerary-post-editor",
+            params: { action: "submit" },
+          },
         },
       ],
     };

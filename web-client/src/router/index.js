@@ -38,6 +38,11 @@ const routes = [
         name: "travel-story-post-editor",
         component: () => import("../pages/TravelStoryPostEditor"),
       },
+      {
+        path: "itinerary-post-editor/:action",
+        name: "itinerary-post-editor",
+        component: () => import("../pages/ItineraryPostEditor"),
+      },
     ],
   },
 ];
