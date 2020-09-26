@@ -4,18 +4,101 @@
       <span class="subtitle-1">Activities</span>
       <div>
         <v-btn icon>
+          <v-icon>mdi-sort</v-icon>
+        </v-btn>
+        <v-btn icon @click="isDialogOpen = true">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </div>
     </div>
     <template v-for="n in 5">
-      <v-list-item :key="n">Lorem ipsum dolor.</v-list-item>
+      <itinerary-post-editor-dialog-activity-list-item
+        :key="n"
+      ></itinerary-post-editor-dialog-activity-list-item>
     </template>
+    <v-dialog width="600" v-model="isDialogOpen">
+      <v-card>
+        <v-card-title>
+          <span>Create Activity 1</span>
+          <div class="flex-grow-1"></div>
+          <v-btn icon @click="isDialogOpen = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-card-subtitle>Lorem ipsum dolor sit amet.</v-card-subtitle>
+        <v-card-text>
+          <v-row dense>
+            <v-col cols="12">
+              <span class="subtitle-1">Activity Details</span>
+            </v-col>
+            <v-col cols="4">
+              <v-text-field label="Time" single-line outlined></v-text-field>
+            </v-col>
+            <v-col cols="8">
+              <v-text-field
+                label="Activity"
+                single-line
+                outlined
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                label="Location"
+                single-line
+                outlined
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-textarea
+                label="Additional Details"
+                single-line
+                outlined
+              ></v-textarea>
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-card-text>
+          <v-row dense>
+            <v-col cols="12">
+              <span class="subtitle-1">Transportation Details</span>
+            </v-col>
+            <v-col cols="8">
+              <v-select
+                label="Type of Transportation"
+                single-line
+                outlined
+              ></v-select>
+            </v-col>
+            <v-col cols="4">
+              <v-text-field label="Fare" single-line outlined></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-textarea
+                label="Additional Details"
+                single-line
+                outlined
+              ></v-textarea>
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-card-actions>
+          <div class="flex-grow-1"></div>
+          <v-btn color="secondary" depressed>Add Activity</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
+import ItineraryPostEditorDialogActivityListItem from "@/components/itinerary-post-editor/DialogActivityListItem";
 export default {
   name: "itinerary-post-editor-dialog-activity-list",
+  components: { ItineraryPostEditorDialogActivityListItem },
+  data() {
+    return {
+      isDialogOpen: false,
+    };
+  },
 };
 </script>

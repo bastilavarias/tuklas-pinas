@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       files: [],
-      layout: "default",
+      layout: "list",
     };
   },
 };

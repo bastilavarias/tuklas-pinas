@@ -8,6 +8,8 @@
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-card-title>
+
+      <v-card-subtitle>Lorem ipsum dolor sit amet.</v-card-subtitle>
       <v-card-text>
         <v-row dense>
           <v-col cols="12">
@@ -20,7 +22,7 @@
           <v-col cols="12" :md="isLocationTwoWay ? '6' : '12'">
             <v-text-field
               outlined
-              :label="isLocationTwoWay ? 'From location' : 'Location'"
+              :label="isLocationTwoWay ? 'From Location' : 'Location'"
               single-line
             ></v-text-field>
           </v-col>
@@ -32,22 +34,54 @@
             ></v-text-field>
           </v-col>
           <v-col cols="12">
-            <v-text-field label="Date" single-line outlined></v-text-field>
+            <v-text-field outlined label="Date" single-line></v-text-field>
           </v-col>
+        </v-row>
+      </v-card-text>
+      <v-card-text>
+        <v-row dense>
+          <v-col cols="12">
+            <span class="subtitle-1">Transportation Details</span>
+          </v-col>
+          <v-col cols="8">
+            <v-select
+              label="Type of Transportation"
+              single-line
+              outlined
+            ></v-select>
+          </v-col>
+          <v-col cols="4">
+            <v-text-field label="Fare" single-line outlined></v-text-field>
+          </v-col>
+          <v-col cols="12">
+            <v-textarea
+              label="Additional Details"
+              single-line
+              outlined
+            ></v-textarea>
+          </v-col>
+        </v-row>
+      </v-card-text>
+
+      <v-card-text>
+        <v-row dense>
           <v-col cols="12">
             <itinerary-post-editor-dialog-activity-list></itinerary-post-editor-dialog-activity-list>
           </v-col>
-          <!--          <v-col cols="12">-->
-          <!--            <custom-file-dropzone-->
-          <!--              label="Images or Videos"-->
-          <!--            ></custom-file-dropzone>-->
-          <!--          </v-col>-->
-          <!--          -->
+        </v-row>
+      </v-card-text>
+      <v-card-text>
+        <v-row dense>
+          <v-col cols="12">
+            <custom-file-dropzone
+              label="Images or Videos"
+            ></custom-file-dropzone>
+          </v-col>
         </v-row>
       </v-card-text>
       <v-card-actions>
         <div class="flex-grow-1"></div>
-        <v-btn color="primary" depressed>Create</v-btn>
+        <v-btn color="primary" depressed>Create Day 1</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

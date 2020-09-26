@@ -20,9 +20,7 @@
     <v-row dense>
       <template v-for="n in 6">
         <v-col cols="12" md="6" :key="n">
-          <v-card outlined>
-            <v-card-title>sdfdsf</v-card-title>
-          </v-card>
+          <itinerary-post-editor-day-card></itinerary-post-editor-day-card>
         </v-col>
       </template>
     </v-row>
@@ -34,10 +32,11 @@
 
 <script>
 import ItineraryPostEditorDialog from "@/components/itinerary-post-editor/Dialog";
+import ItineraryPostEditorDayCard from "@/components/itinerary-post-editor/DayCard";
 export default {
   name: "itinerary-post-editor-dropzone",
 
-  components: { ItineraryPostEditorDialog },
+  components: { ItineraryPostEditorDayCard, ItineraryPostEditorDialog },
 
   data() {
     return {
