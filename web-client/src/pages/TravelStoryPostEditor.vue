@@ -30,7 +30,9 @@
                     ></v-textarea>
                   </v-col>
                   <v-col cols="12">
-                    <custom-dropzone label="Images or Videos"></custom-dropzone>
+                    <custom-file-dropzone
+                      label="Images or Videos"
+                    ></custom-file-dropzone>
                   </v-col>
                 </v-row>
               </v-card-text>
@@ -78,10 +80,10 @@
 </template>
 
 <script>
-import CustomDropzone from "@/components/custom/Dropzone";
 import GenericFooter from "@/components/generic/Footer";
 import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
+import CustomFileDropzone from "@/components/custom/FileDropzone";
 export default {
-  components: { GenericStickyFooterCard, GenericFooter, CustomDropzone },
+  components: { CustomFileDropzone, GenericStickyFooterCard, GenericFooter },
 };
 </script>
