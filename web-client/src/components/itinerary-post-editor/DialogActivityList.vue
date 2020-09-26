@@ -11,10 +11,11 @@
         </v-btn>
       </div>
     </div>
-    <template v-for="n in 5">
+    <template v-for="n in 6">
       <itinerary-post-editor-dialog-activity-list-item
         :key="n"
       ></itinerary-post-editor-dialog-activity-list-item>
+      <v-divider v-if="n !== 6"></v-divider>
     </template>
     <v-dialog width="600" v-model="isDialogOpen">
       <v-card>

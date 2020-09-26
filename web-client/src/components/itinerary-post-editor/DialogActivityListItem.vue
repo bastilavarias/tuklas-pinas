@@ -27,8 +27,22 @@
           </v-tooltip>
         </template>
         <v-list>
-          <v-list-item>Edit</v-list-item>
-          <v-list-item>Remove</v-list-item>
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-pencil</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Edit</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-trash-can</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>Delete</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
         </v-list>
       </v-menu>
     </v-list-item-action>
