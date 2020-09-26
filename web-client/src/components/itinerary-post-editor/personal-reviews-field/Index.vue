@@ -27,6 +27,9 @@
       <v-tab-item>
         <itinerary-post-editor-personal-finance-review-form></itinerary-post-editor-personal-finance-review-form>
       </v-tab-item>
+      <v-tab-item>
+        <itinerary-post-editor-personal-tips-form></itinerary-post-editor-personal-tips-form>
+      </v-tab-item>
     </v-tabs-items>
   </div>
 </template>
@@ -38,9 +41,11 @@ import ItineraryPostEditorPersonalTransportationReviewForm from "@/components/it
 import ItineraryPostEditorPersonalInternetAccessReviewForm from "@/components/itinerary-post-editor/personal-reviews-field/forms/InternetAccess";
 import ItineraryPostEditorPersonalActivitiesReviewForm from "@/components/itinerary-post-editor/personal-reviews-field/forms/Activities";
 import ItineraryPostEditorPersonalFinanceReviewForm from "@/components/itinerary-post-editor/personal-reviews-field/forms/Finance";
+import ItineraryPostEditorPersonalTipsForm from "@/components/itinerary-post-editor/personal-reviews-field/forms/Tips";
 export default {
   name: "itinerary-post-editor-personal-reviews-field",
   components: {
+    ItineraryPostEditorPersonalTipsForm,
     ItineraryPostEditorPersonalFinanceReviewForm,
     ItineraryPostEditorPersonalActivitiesReviewForm,
     ItineraryPostEditorPersonalInternetAccessReviewForm,
