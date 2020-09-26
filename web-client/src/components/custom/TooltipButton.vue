@@ -1,7 +1,7 @@
 <template>
   <v-tooltip bottom>
     <template v-slot:activator="{ on }">
-      <v-btn v-on="on" icon :color="color"
+      <v-btn v-on="on" icon :color="color" @click="action"
         ><v-icon>{{ icon }}</v-icon></v-btn
       >
     </template>
@@ -12,6 +12,7 @@
 <script>
 export default {
   name: "custom-tooltip-button",
+
   props: {
     icon: {
       type: String,
@@ -24,6 +25,11 @@ export default {
     color: {
       type: String,
       required: false,
+    },
+    action: {
+      type: Function,
+      required: false,
+      default: () => 1,
     },
   },
 };

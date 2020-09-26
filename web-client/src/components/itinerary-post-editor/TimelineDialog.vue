@@ -21,19 +21,19 @@
           <v-col cols="12" :md="isLocationTwoWay ? '6' : '12'">
             <v-text-field
               outlined
-              :label="isLocationTwoWay ? 'From Location' : 'Location'"
+              :label="isLocationTwoWay ? 'From Location *' : 'Location *'"
               single-line
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="6" v-if="isLocationTwoWay">
             <v-text-field
               outlined
-              label="To Location"
+              label="To Location *"
               single-line
             ></v-text-field>
           </v-col>
           <v-col cols="12">
-            <v-text-field outlined label="Date" single-line></v-text-field>
+            <v-text-field outlined label="Date *" single-line></v-text-field>
           </v-col>
         </v-row>
       </v-card-text>
@@ -44,7 +44,7 @@
           </v-col>
           <v-col cols="8">
             <v-select
-              label="Type of Transportation"
+              label="Type of Transportation *"
               single-line
               outlined
             ></v-select>

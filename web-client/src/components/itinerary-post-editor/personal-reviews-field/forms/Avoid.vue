@@ -1,7 +1,7 @@
 <template>
   <v-card flat color="transparent">
     <v-card-title>
-      <span>Helpful Tips</span>
+      <span>What to Avoid</span>
       <div class="flex-grow-1"></div>
       <v-btn icon @click="isDialogOpen = true">
         <v-icon>mdi-plus</v-icon>
@@ -11,16 +11,7 @@
       <v-list-item two-line :key="n">
         <v-list-item-content>
           <v-list-item-subtitle class="secondary--text">
-            <span class="mr-1"
-              >{{ n }}. <span class="font-weight-bold">Tip Name</span></span
-            >
-            <v-chip
-              color="success"
-              x-small
-              label
-              class="text-uppercase font-weight-bold"
-              >You should do</v-chip
-            >
+            {{ n }}. <span class="font-weight-bold">Avoid</span>
           </v-list-item-subtitle>
           <v-list-item-subtitle
             >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid,
@@ -79,35 +70,10 @@
         <v-card-text>
           <v-row dense>
             <v-col cols="12">
-              <v-text-field outlined single-line label="Tip"></v-text-field>
+              <v-text-field outlined single-line label="Avoid"></v-text-field>
             </v-col>
             <v-col cols="12">
               <v-textarea outlined single-line label="Description"></v-textarea>
-            </v-col>
-            <v-col cols="12">
-              <span class="subtitle-1">Recommendation</span>
-              <v-radio-group row>
-                <v-radio>
-                  <template v-slot:label>
-                    <v-chip
-                      label
-                      color="success"
-                      class="white--text font-weight-bold text-uppercase"
-                      >You should do</v-chip
-                    >
-                  </template>
-                </v-radio>
-                <v-radio>
-                  <template v-slot:label>
-                    <v-chip
-                      label
-                      color="grey"
-                      class="white--text font-weight-bold text-uppercase"
-                      >Optional</v-chip
-                    >
-                  </template>
-                </v-radio>
-              </v-radio-group>
             </v-col>
           </v-row>
         </v-card-text>
@@ -122,7 +88,7 @@
 
 <script>
 export default {
-  name: "itinerary-post-editor-personal-tips-form",
+  name: "itinerary-post-editor-personal-avoid-form",
 
   data() {
     return {

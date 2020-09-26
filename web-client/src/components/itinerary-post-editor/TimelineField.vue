@@ -3,26 +3,27 @@
     <div class="d-flex justify-space-between align-center mb-5">
       <span class="subtitle-1">Itinerary Timeline</span>
       <div>
-        <v-btn
-          icon
+        <custom-tooltip-button
+          icon="mdi-card-outline"
+          text="Change to card layout"
+          :action="() => (this.itineraryLayout = 'card')"
           v-if="itineraryLayout !== 'card'"
-          @click="itineraryLayout = 'card'"
-        >
-          <v-icon>mdi-card-outline</v-icon>
-        </v-btn>
-        <v-btn
-          icon
+        ></custom-tooltip-button>
+        <custom-tooltip-button
+          icon="mdi-view-list-outline"
+          text="Change to list layout"
+          :action="() => (this.itineraryLayout = 'list')"
           v-if="itineraryLayout !== 'list'"
-          @click="itineraryLayout = 'list'"
-        >
-          <v-icon>mdi-view-list-outline</v-icon>
-        </v-btn>
-        <v-btn icon>
-          <v-icon>mdi-sort</v-icon>
-        </v-btn>
-        <v-btn icon @click="isTimelineDialogOpen = true">
-          <v-icon>mdi-plus</v-icon>
-        </v-btn>
+        ></custom-tooltip-button>
+        <custom-tooltip-button
+          icon="mdi-sort"
+          text="Sort"
+        ></custom-tooltip-button>
+        <custom-tooltip-button
+          icon="mdi-plus"
+          text="Create New Day"
+          :action="() => (this.isTimelineDialogOpen = true)"
+        ></custom-tooltip-button>
       </div>
     </div>
     <v-row dense v-if="itineraryLayout === 'card'">
@@ -138,10 +139,11 @@
 
 <script>
 import ItineraryPostEditorTimelineDialog from "@/components/itinerary-post-editor/TimelineDialog";
+import CustomTooltipButton from "@/components/custom/TooltipButton";
 export default {
   name: "itinerary-post-editor-timeline-field",
 
-  components: { ItineraryPostEditorTimelineDialog },
+  components: { CustomTooltipButton, ItineraryPostEditorTimelineDialog },
 
   data() {
     return {

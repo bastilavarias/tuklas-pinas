@@ -3,12 +3,15 @@
     <div class="d-flex justify-space-between align-center">
       <span class="subtitle-1">Activities</span>
       <div>
-        <v-btn icon>
-          <v-icon>mdi-sort</v-icon>
-        </v-btn>
-        <v-btn icon @click="isDialogOpen = true">
-          <v-icon>mdi-plus</v-icon>
-        </v-btn>
+        <custom-tooltip-button
+          icon="mdi-sort"
+          text="Sort"
+        ></custom-tooltip-button>
+        <custom-tooltip-button
+          icon="mdi-plus"
+          text="Add New Activity"
+          :action="() => (this.isDialogOpen = true)"
+        ></custom-tooltip-button>
       </div>
     </div>
     <template v-for="n in 6">
@@ -33,18 +36,18 @@
               <span class="subtitle-1">Activity Details</span>
             </v-col>
             <v-col cols="4">
-              <v-text-field label="Time" single-line outlined></v-text-field>
+              <v-text-field label="Time *" single-line outlined></v-text-field>
             </v-col>
             <v-col cols="8">
               <v-text-field
-                label="Activity"
+                label="Activity *"
                 single-line
                 outlined
               ></v-text-field>
             </v-col>
             <v-col cols="12">
               <v-text-field
-                label="Location"
+                label="Location *"
                 single-line
                 outlined
               ></v-text-field>
@@ -65,7 +68,7 @@
             </v-col>
             <v-col cols="8">
               <v-select
-                label="Type of Transportation"
+                label="Type of Transportation *"
                 single-line
                 outlined
               ></v-select>
@@ -93,10 +96,14 @@
 
 <script>
 import ItineraryPostEditorTimelineDialogActivityListItem from "@/components/itinerary-post-editor/TimelineDialogActivityListItem";
+import CustomTooltipButton from "@/components/custom/TooltipButton";
 export default {
   name: "itinerary-post-editor-timeline-dialog-activity-list",
 
-  components: { ItineraryPostEditorTimelineDialogActivityListItem },
+  components: {
+    CustomTooltipButton,
+    ItineraryPostEditorTimelineDialogActivityListItem,
+  },
 
   data() {
     return {

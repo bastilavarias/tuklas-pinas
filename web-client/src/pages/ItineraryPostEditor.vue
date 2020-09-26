@@ -23,16 +23,30 @@
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
-                    <v-select
+                    <v-autocomplete
+                      outlined
+                      label="Events *"
+                      single-line
+                    ></v-autocomplete>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-autocomplete
                       outlined
                       label="Categories *"
                       single-line
-                    ></v-select>
+                    ></v-autocomplete>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-autocomplete
+                      outlined
+                      label="Tour Guides"
+                      single-line
+                    ></v-autocomplete>
                   </v-col>
                   <v-col cols="12">
                     <v-textarea
                       outlined
-                      label="Description (optional)"
+                      label="Description"
                       single-line
                       color="primary"
                     ></v-textarea>
