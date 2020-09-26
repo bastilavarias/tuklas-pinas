@@ -66,7 +66,7 @@
       <v-card-text>
         <v-row dense>
           <v-col cols="12">
-            <itinerary-post-editor-dialog-activity-list></itinerary-post-editor-dialog-activity-list>
+            <itinerary-post-editor-timeline-dialog-activity-list></itinerary-post-editor-timeline-dialog-activity-list>
           </v-col>
         </v-row>
       </v-card-text>
@@ -81,7 +81,7 @@
       </v-card-text>
       <v-card-actions>
         <div class="flex-grow-1"></div>
-        <v-btn color="primary" depressed>Create Day 1</v-btn>
+        <v-btn color="primary" depressed>Create</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -89,10 +89,15 @@
 
 <script>
 import CustomFileDropzone from "@/components/custom/FileDropzone";
-import ItineraryPostEditorDialogActivityList from "@/components/itinerary-post-editor/DialogActivityList";
+import ItineraryPostEditorTimelineDialogActivityList from "@/components/itinerary-post-editor/TimelineDialogActivityList";
 export default {
-  name: "itinerary-post-editor-dialog",
-  components: { ItineraryPostEditorDialogActivityList, CustomFileDropzone },
+  name: "itinerary-post-editor-timeline-dialog",
+
+  components: {
+    ItineraryPostEditorTimelineDialogActivityList,
+    CustomFileDropzone,
+  },
+
   props: {
     isOpen: {
       type: Boolean,

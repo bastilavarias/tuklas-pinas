@@ -12,15 +12,15 @@
       </div>
     </div>
     <template v-for="n in 6">
-      <itinerary-post-editor-dialog-activity-list-item
+      <itinerary-post-editor-timeline-dialog-activity-list-item
         :key="n"
-      ></itinerary-post-editor-dialog-activity-list-item>
+      ></itinerary-post-editor-timeline-dialog-activity-list-item>
       <v-divider v-if="n !== 6"></v-divider>
     </template>
     <v-dialog width="600" v-model="isDialogOpen">
       <v-card>
         <v-card-title>
-          <span>Create Activity 1</span>
+          <span>Add Activity 1</span>
           <div class="flex-grow-1"></div>
           <v-btn icon @click="isDialogOpen = false">
             <v-icon>mdi-close</v-icon>
@@ -84,7 +84,7 @@
         </v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="secondary" depressed>Add Activity</v-btn>
+          <v-btn color="secondary" depressed>Add</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -92,10 +92,12 @@
 </template>
 
 <script>
-import ItineraryPostEditorDialogActivityListItem from "@/components/itinerary-post-editor/DialogActivityListItem";
+import ItineraryPostEditorTimelineDialogActivityListItem from "@/components/itinerary-post-editor/TimelineDialogActivityListItem";
 export default {
-  name: "itinerary-post-editor-dialog-activity-list",
-  components: { ItineraryPostEditorDialogActivityListItem },
+  name: "itinerary-post-editor-timeline-dialog-activity-list",
+
+  components: { ItineraryPostEditorTimelineDialogActivityListItem },
+
   data() {
     return {
       isDialogOpen: false,

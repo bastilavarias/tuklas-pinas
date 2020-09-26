@@ -32,7 +32,17 @@
                     ></v-textarea>
                   </v-col>
                   <v-col cols="12">
-                    <itinerary-post-editor-dropzone></itinerary-post-editor-dropzone>
+                    <itinerary-post-editor-timeline-field></itinerary-post-editor-timeline-field>
+                  </v-col>
+                </v-row>
+              </v-card-text>
+              <v-card-text>
+                <v-row dense>
+                  <v-col cols="12">
+                    <span class="subtitle-1">Personal Reviews</span>
+                  </v-col>
+                  <v-col cols="12">
+                    <itinerary-post-editor-personal-reviews-field></itinerary-post-editor-personal-reviews-field>
                   </v-col>
                 </v-row>
               </v-card-text>
@@ -76,11 +86,13 @@ import CustomDropzone from "@/components/custom/FileDropzone";
 import GenericFooter from "@/components/generic/Footer";
 import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
 import GenericPostingGuidelinesList from "@/components/generic/PostingGuidelinesList";
-import ItineraryPostEditorDropzone from "@/components/itinerary-post-editor/Dropzone";
+import ItineraryPostEditorPersonalReviewsField from "@/components/itinerary-post-editor/personal-reviews-field/Index";
+import ItineraryPostEditorTimelineField from "@/components/itinerary-post-editor/TimelineField";
 
 export default {
   components: {
-    ItineraryPostEditorDropzone,
+    ItineraryPostEditorTimelineField,
+    ItineraryPostEditorPersonalReviewsField,
     GenericPostingGuidelinesList,
     GenericStickyFooterCard,
     GenericFooter,

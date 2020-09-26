@@ -20,7 +20,7 @@
         <v-btn icon>
           <v-icon>mdi-sort</v-icon>
         </v-btn>
-        <v-btn icon @click="isItineraryPostEditorOpen = true">
+        <v-btn icon @click="isTimelineDialogOpen = true">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </div>
@@ -120,7 +120,7 @@
                     <v-icon>mdi-trash-can</v-icon>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>Delete</v-list-item-title>
+                    <v-list-item-title>Remove</v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list>
@@ -130,24 +130,23 @@
         <v-divider v-if="n !== 6"></v-divider>
       </template>
     </v-list>
-
-    <itinerary-post-editor-dialog
-      :is-open.sync="isItineraryPostEditorOpen"
-    ></itinerary-post-editor-dialog>
+    <itinerary-post-editor-timeline-dialog
+      :is-open.sync="isTimelineDialogOpen"
+    ></itinerary-post-editor-timeline-dialog>
   </div>
 </template>
 
 <script>
-import ItineraryPostEditorDialog from "@/components/itinerary-post-editor/Dialog";
+import ItineraryPostEditorTimelineDialog from "@/components/itinerary-post-editor/TimelineDialog";
 export default {
-  name: "itinerary-post-editor-dropzone",
+  name: "itinerary-post-editor-timeline-field",
 
-  components: { ItineraryPostEditorDialog },
+  components: { ItineraryPostEditorTimelineDialog },
 
   data() {
     return {
       itineraryLayout: "card",
-      isItineraryPostEditorOpen: false,
+      isTimelineDialogOpen: false,
     };
   },
 };

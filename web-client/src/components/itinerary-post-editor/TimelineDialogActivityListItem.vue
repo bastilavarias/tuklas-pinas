@@ -51,7 +51,7 @@
 
 <script>
 export default {
-  name: "itinerary-post-editor-dialog-activity-list-item",
+  name: "itinerary-post-editor-timeline-dialog-activity-list-item",
 
   data() {
     return {
