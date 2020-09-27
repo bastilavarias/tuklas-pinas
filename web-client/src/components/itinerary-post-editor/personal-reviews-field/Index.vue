@@ -10,19 +10,19 @@
     </v-tabs>
     <v-tabs-items v-model="tab">
       <v-tab-item>
-        <itinerary-post-editor-personal-restaurant-review-form></itinerary-post-editor-personal-restaurant-review-form>
+        <itinerary-post-editor-personal-restaurants-review-form></itinerary-post-editor-personal-restaurants-review-form>
       </v-tab-item>
       <v-tab-item>
-        <itinerary-post-editor-personal-lodging-review-form></itinerary-post-editor-personal-lodging-review-form>
+        <itinerary-post-editor-personal-lodgings-review-form></itinerary-post-editor-personal-lodgings-review-form>
       </v-tab-item>
       <v-tab-item>
         <itinerary-post-editor-personal-transportation-review-form></itinerary-post-editor-personal-transportation-review-form>
       </v-tab-item>
       <v-tab-item>
-        <itinerary-post-editor-personal-internet-access-review-form></itinerary-post-editor-personal-internet-access-review-form>
+        <itinerary-post-editor-personal-activities-review-form></itinerary-post-editor-personal-activities-review-form>
       </v-tab-item>
       <v-tab-item>
-        <itinerary-post-editor-personal-activities-review-form></itinerary-post-editor-personal-activities-review-form>
+        <itinerary-post-editor-personal-internet-access-review-form></itinerary-post-editor-personal-internet-access-review-form>
       </v-tab-item>
       <v-tab-item>
         <itinerary-post-editor-personal-finance-review-form></itinerary-post-editor-personal-finance-review-form>
@@ -38,36 +38,36 @@
 </template>
 
 <script>
-import ItineraryPostEditorPersonalRestaurantReviewForm from "@/components/itinerary-post-editor/personal-reviews-field/forms/Restaurant";
-import ItineraryPostEditorPersonalLodgingReviewForm from "@/components/itinerary-post-editor/personal-reviews-field/forms/Lodging";
 import ItineraryPostEditorPersonalTransportationReviewForm from "@/components/itinerary-post-editor/personal-reviews-field/forms/Transportation";
 import ItineraryPostEditorPersonalInternetAccessReviewForm from "@/components/itinerary-post-editor/personal-reviews-field/forms/InternetAccess";
 import ItineraryPostEditorPersonalActivitiesReviewForm from "@/components/itinerary-post-editor/personal-reviews-field/forms/Activities";
 import ItineraryPostEditorPersonalFinanceReviewForm from "@/components/itinerary-post-editor/personal-reviews-field/forms/Finance";
 import ItineraryPostEditorPersonalTipsForm from "@/components/itinerary-post-editor/personal-reviews-field/forms/Tips";
 import ItineraryPostEditorPersonalAvoidForm from "@/components/itinerary-post-editor/personal-reviews-field/forms/Avoid";
+import ItineraryPostEditorPersonalRestaurantsReviewForm from "@/components/itinerary-post-editor/personal-reviews-field/forms/Restaurants";
+import ItineraryPostEditorPersonalLodgingsReviewForm from "@/components/itinerary-post-editor/personal-reviews-field/forms/Lodgings";
 export default {
   name: "itinerary-post-editor-personal-reviews-field",
   components: {
+    ItineraryPostEditorPersonalLodgingsReviewForm,
+    ItineraryPostEditorPersonalRestaurantsReviewForm,
     ItineraryPostEditorPersonalAvoidForm,
     ItineraryPostEditorPersonalTipsForm,
     ItineraryPostEditorPersonalFinanceReviewForm,
     ItineraryPostEditorPersonalActivitiesReviewForm,
     ItineraryPostEditorPersonalInternetAccessReviewForm,
     ItineraryPostEditorPersonalTransportationReviewForm,
-    ItineraryPostEditorPersonalLodgingReviewForm,
-    ItineraryPostEditorPersonalRestaurantReviewForm,
   },
   data() {
     return {
       tab: null,
       tabs: [
         {
-          text: "Restaurant",
+          text: "Restaurants",
           icon: "mdi-silverware",
         },
         {
-          text: "Lodging",
+          text: "Lodgings",
           icon: "mdi-bed",
         },
         {
@@ -75,12 +75,12 @@ export default {
           icon: "mdi-train-car",
         },
         {
-          text: "Internet Access",
-          icon: "mdi-wifi",
-        },
-        {
           text: "Activities",
           icon: "mdi-hiking",
+        },
+        {
+          text: "Internet Access",
+          icon: "mdi-wifi",
         },
         {
           text: "Money Exchange & Credit/Debit",
