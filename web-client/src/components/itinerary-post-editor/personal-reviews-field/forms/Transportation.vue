@@ -10,10 +10,14 @@
     <template v-for="n in 6">
       <v-list-item two-line :key="n">
         <v-list-item-content>
-          <v-list-item-subtitle class="secondary--text">
+          <v-list-item-subtitle>
             <span class="mr-1"
               >{{ n }}.
-              <span class="font-weight-bold">Transport Type</span></span
+              <span class="font-weight-bold secondary--text"
+                >To Activity Location</span
+              >
+              -
+              <span class="font-italic">Type of Transporation</span></span
             >
             <v-chip
               color="success"

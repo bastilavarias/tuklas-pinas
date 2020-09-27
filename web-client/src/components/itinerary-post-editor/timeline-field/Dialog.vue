@@ -40,30 +40,6 @@
       <v-card-text>
         <v-row dense>
           <v-col cols="12">
-            <span class="subtitle-1">Transportation Details</span>
-          </v-col>
-          <v-col cols="8">
-            <v-select
-              label="Type of Transportation *"
-              single-line
-              outlined
-            ></v-select>
-          </v-col>
-          <v-col cols="4">
-            <v-text-field label="Fare" single-line outlined></v-text-field>
-          </v-col>
-          <v-col cols="12">
-            <v-textarea
-              label="Additional Details"
-              single-line
-              outlined
-            ></v-textarea>
-          </v-col>
-        </v-row>
-      </v-card-text>
-      <v-card-text>
-        <v-row dense>
-          <v-col cols="12">
             <itinerary-post-editor-timeline-dialog-activity-list></itinerary-post-editor-timeline-dialog-activity-list>
           </v-col>
         </v-row>
@@ -87,7 +63,7 @@
 
 <script>
 import CustomFileDropzone from "@/components/custom/FileDropzone";
-import ItineraryPostEditorTimelineDialogActivityList from "@/components/itinerary-post-editor/TimelineDialogActivityList";
+import ItineraryPostEditorTimelineDialogActivityList from "@/components/itinerary-post-editor/timeline-field/DialogActivityList";
 export default {
   name: "itinerary-post-editor-timeline-dialog",
 

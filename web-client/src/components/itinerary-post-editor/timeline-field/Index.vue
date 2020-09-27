@@ -138,7 +138,7 @@
 </template>
 
 <script>
-import ItineraryPostEditorTimelineDialog from "@/components/itinerary-post-editor/TimelineDialog";
+import ItineraryPostEditorTimelineDialog from "@/components/itinerary-post-editor/timeline-field/Dialog";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
 export default {
   name: "itinerary-post-editor-timeline-field",
