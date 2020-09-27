@@ -11,7 +11,7 @@
         </span>
       </v-list-item-subtitle>
       <v-list-item-title class="font-weight-bold">
-        Lorem ipsum dolor sit amet.
+        Lorem ipsum dolor sit amet. - &#8369; 40.00
       </v-list-item-title>
       <v-list-item-subtitle
         >Via Lorem ipsum dolor sit amet. - &#8369; 40.00</v-list-item-subtitle

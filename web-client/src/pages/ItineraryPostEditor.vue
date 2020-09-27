@@ -107,7 +107,7 @@ import GenericFooter from "@/components/generic/Footer";
 import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
 import GenericPostingGuidelinesList from "@/components/generic/PostingGuidelinesList";
 import ItineraryPostEditorPersonalReviewsField from "@/components/itinerary-post-editor/personal-reviews-field/Index";
-import ItineraryPostEditorTimelineField from "@/components/itinerary-post-editor/TimelineField";
+import ItineraryPostEditorTimelineField from "@/components/itinerary-post-editor/timeline-field/Index";
 
 export default {
   components: {

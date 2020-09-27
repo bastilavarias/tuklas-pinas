@@ -95,7 +95,7 @@
 </template>
 
 <script>
-import ItineraryPostEditorTimelineDialogActivityListItem from "@/components/itinerary-post-editor/TimelineDialogActivityListItem";
+import ItineraryPostEditorTimelineDialogActivityListItem from "@/components/itinerary-post-editor/timeline-field/DialogActivityListItem";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
 export default {
   name: "itinerary-post-editor-timeline-dialog-activity-list",
