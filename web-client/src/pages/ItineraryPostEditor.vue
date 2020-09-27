@@ -69,7 +69,7 @@
               <v-card-text>
                 <v-row dense>
                   <v-col cols="12">
-                    <span class="subtitle-1">Summary</span>
+                    <span class="subtitle-1">Summaries</span>
                   </v-col>
                   <v-col cols="12">
                     <itinerary-post-editor-summary-field></itinerary-post-editor-summary-field>
