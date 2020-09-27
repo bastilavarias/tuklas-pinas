@@ -18,6 +18,6 @@
 
 <script>
 export default {
-  name: "itinerary-post-editor-timeline-dialog-activity-list-lodging-form",
+  name: "itinerary-post-editor-timeline-dialog-timestamp-list-lodging-form",
 };
 </script>

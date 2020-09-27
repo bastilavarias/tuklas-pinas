@@ -9,21 +9,20 @@
         ></custom-tooltip-button>
         <custom-tooltip-button
           icon="mdi-plus"
-          text="Add New Activity"
+          text="Add New Timestamp"
           :action="() => (this.isDialogOpen = true)"
         ></custom-tooltip-button>
       </div>
     </div>
     <template v-for="n in 6">
-      <itinerary-post-editor-timeline-dialog-activity-list-item
-        :key="n"
-      ></itinerary-post-editor-timeline-dialog-activity-list-item>
+      <itinerary-post-editor-timeline-dialog-timestamp-list-item :key="n">
+      </itinerary-post-editor-timeline-dialog-timestamp-list-item>
       <v-divider v-if="n !== 6"></v-divider>
     </template>
     <v-dialog width="600" v-model="isDialogOpen">
       <v-card>
         <v-card-title>
-          <span>Add Activity 1</span>
+          <span>Add Timestamp #1</span>
           <div class="flex-grow-1"></div>
           <v-btn icon @click="isDialogOpen = false">
             <v-icon>mdi-close</v-icon>
@@ -66,16 +65,16 @@
         <v-card-text>
           <v-tabs-items v-model="tab">
             <v-tab-item>
-              <itinerary-post-editor-timeline-dialog-activity-list-restaurant-form></itinerary-post-editor-timeline-dialog-activity-list-restaurant-form>
+              <itinerary-post-editor-timeline-dialog-timestamp-list-restaurant-form></itinerary-post-editor-timeline-dialog-timestamp-list-restaurant-form>
             </v-tab-item>
             <v-tab-item>
-              <itinerary-post-editor-timeline-dialog-activity-list-lodging-form></itinerary-post-editor-timeline-dialog-activity-list-lodging-form>
+              <itinerary-post-editor-timeline-dialog-timestamp-list-lodging-form></itinerary-post-editor-timeline-dialog-timestamp-list-lodging-form>
             </v-tab-item>
             <v-tab-item>
-              <itinerary-post-editor-timeline-dialog-activity-list-transportation-form></itinerary-post-editor-timeline-dialog-activity-list-transportation-form>
+              <itinerary-post-editor-timeline-dialog-timestamp-list-transportation-form></itinerary-post-editor-timeline-dialog-timestamp-list-transportation-form>
             </v-tab-item>
             <v-tab-item>
-              <itinerary-post-editor-timeline-dialog-activity-list-activity-form></itinerary-post-editor-timeline-dialog-activity-list-activity-form>
+              <itinerary-post-editor-timeline-dialog-timestamp-list-activity-form></itinerary-post-editor-timeline-dialog-timestamp-list-activity-form>
             </v-tab-item>
           </v-tabs-items>
         </v-card-text>
@@ -89,22 +88,22 @@
 </template>
 
 <script>
-import ItineraryPostEditorTimelineDialogActivityListItem from "@/components/itinerary-post-editor/timeline-field/dialog-activity-list/Item";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
-import ItineraryPostEditorTimelineDialogActivityListRestaurantForm from "@/components/itinerary-post-editor/timeline-field/dialog-activity-list/forms/Restaurant";
-import ItineraryPostEditorTimelineDialogActivityListLodgingForm from "@/components/itinerary-post-editor/timeline-field/dialog-activity-list/forms/Lodging";
-import ItineraryPostEditorTimelineDialogActivityListTransportationForm from "@/components/itinerary-post-editor/timeline-field/dialog-activity-list/forms/Transportation";
-import ItineraryPostEditorTimelineDialogActivityListActivityForm from "@/components/itinerary-post-editor/timeline-field/dialog-activity-list/forms/Activity";
+import ItineraryPostEditorTimelineDialogTimestampListItem from "@/components/itinerary-post-editor/timeline-field/dialog-timestamp-list/Item";
+import ItineraryPostEditorTimelineDialogTimestampListRestaurantForm from "@/components/itinerary-post-editor/timeline-field/dialog-timestamp-list/forms/Restaurant";
+import ItineraryPostEditorTimelineDialogTimestampListLodgingForm from "@/components/itinerary-post-editor/timeline-field/dialog-timestamp-list/forms/Lodging";
+import ItineraryPostEditorTimelineDialogTimestampListTransportationForm from "@/components/itinerary-post-editor/timeline-field/dialog-timestamp-list/forms/Transportation";
+import ItineraryPostEditorTimelineDialogTimestampListActivityForm from "@/components/itinerary-post-editor/timeline-field/dialog-timestamp-list/forms/Activity";
 export default {
-  name: "itinerary-post-editor-timeline-dialog-activity-list",
+  name: "itinerary-post-editor-timeline-dialog-timestamp-list",
 
   components: {
-    ItineraryPostEditorTimelineDialogActivityListActivityForm,
-    ItineraryPostEditorTimelineDialogActivityListTransportationForm,
-    ItineraryPostEditorTimelineDialogActivityListLodgingForm,
-    ItineraryPostEditorTimelineDialogActivityListRestaurantForm,
+    ItineraryPostEditorTimelineDialogTimestampListActivityForm,
+    ItineraryPostEditorTimelineDialogTimestampListTransportationForm,
+    ItineraryPostEditorTimelineDialogTimestampListLodgingForm,
+    ItineraryPostEditorTimelineDialogTimestampListRestaurantForm,
+    ItineraryPostEditorTimelineDialogTimestampListItem,
     CustomTooltipButton,
-    ItineraryPostEditorTimelineDialogActivityListItem,
   },
 
   data() {

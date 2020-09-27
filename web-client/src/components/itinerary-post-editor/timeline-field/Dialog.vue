@@ -40,7 +40,7 @@
       <v-card-text>
         <v-row dense>
           <v-col cols="12">
-            <itinerary-post-editor-timeline-dialog-activity-list></itinerary-post-editor-timeline-dialog-activity-list>
+            <itinerary-post-editor-timeline-dialog-timestamp-list></itinerary-post-editor-timeline-dialog-timestamp-list>
           </v-col>
         </v-row>
       </v-card-text>
@@ -63,12 +63,12 @@
 
 <script>
 import CustomFileDropzone from "@/components/custom/FileDropzone";
-import ItineraryPostEditorTimelineDialogActivityList from "@/components/itinerary-post-editor/timeline-field/dialog-activity-list/Index";
+import ItineraryPostEditorTimelineDialogTimestampList from "@/components/itinerary-post-editor/timeline-field/dialog-timestamp-list/Index";
 export default {
   name: "itinerary-post-editor-timeline-dialog",
 
   components: {
-    ItineraryPostEditorTimelineDialogActivityList,
+    ItineraryPostEditorTimelineDialogTimestampList,
     CustomFileDropzone,
   },
 
