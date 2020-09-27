@@ -33,21 +33,28 @@
         <v-card-text>
           <v-row dense>
             <v-col cols="12">
-              <span class="subtitle-1">Activity Details</span>
-            </v-col>
-            <v-col cols="4">
               <v-text-field label="Time *" single-line outlined></v-text-field>
             </v-col>
-            <v-col cols="8">
+            <v-col cols="12">
+              <span class="subtitle-1">Activity Details</span>
+            </v-col>
+            <v-col cols="12">
               <v-text-field
                 label="Activity *"
                 single-line
                 outlined
               ></v-text-field>
             </v-col>
-            <v-col cols="12">
+            <v-col cols="12" md="8">
               <v-text-field
                 label="Location *"
+                single-line
+                outlined
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="4">
+              <v-text-field
+                label="Expenses *"
                 single-line
                 outlined
               ></v-text-field>
@@ -95,7 +102,7 @@
 </template>
 
 <script>
-import ItineraryPostEditorTimelineDialogActivityListItem from "@/components/itinerary-post-editor/TimelineDialogActivityListItem";
+import ItineraryPostEditorTimelineDialogActivityListItem from "@/components/itinerary-post-editor/timeline-field/DialogActivityListItem";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
 export default {
   name: "itinerary-post-editor-timeline-dialog-activity-list",

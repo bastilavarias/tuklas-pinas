@@ -27,6 +27,7 @@
               >Awesome</v-chip
             >
           </v-list-item-subtitle>
+
           <v-list-item-subtitle
             >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid,
             nam.</v-list-item-subtitle
