@@ -83,6 +83,7 @@
 import GenericFooter from "@/components/generic/Footer";
 import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
 import CustomFileDropzone from "@/components/custom/FileDropzone";
+
 export default {
   components: { CustomFileDropzone, GenericStickyFooterCard, GenericFooter },
 };

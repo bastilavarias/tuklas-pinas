@@ -137,7 +137,7 @@
 
 <script>
 export default {
-  name: "itinerary-post-editor-personal-restaurant-review-form",
+  name: "itinerary-post-editor-personal-restaurants-review-form",
 
   data() {
     return {
