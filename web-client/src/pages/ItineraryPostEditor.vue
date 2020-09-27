@@ -66,6 +66,16 @@
                   </v-col>
                 </v-row>
               </v-card-text>
+              <v-card-text>
+                <v-row dense>
+                  <v-col cols="12">
+                    <span class="subtitle-1">Summary</span>
+                  </v-col>
+                  <v-col cols="12">
+                    <itinerary-post-editor-summary-field></itinerary-post-editor-summary-field>
+                  </v-col>
+                </v-row>
+              </v-card-text>
               <v-card-actions>
                 <div class="flex-grow-1"></div>
                 <v-btn
@@ -108,9 +118,11 @@ import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
 import GenericPostingGuidelinesList from "@/components/generic/PostingGuidelinesList";
 import ItineraryPostEditorPersonalReviewsField from "@/components/itinerary-post-editor/personal-reviews-field/Index";
 import ItineraryPostEditorTimelineField from "@/components/itinerary-post-editor/timeline-field/Index";
+import ItineraryPostEditorSummaryField from "@/components/itinerary-post-editor/summary-field/Index";
 
 export default {
   components: {
+    ItineraryPostEditorSummaryField,
     ItineraryPostEditorTimelineField,
     ItineraryPostEditorPersonalReviewsField,
     GenericPostingGuidelinesList,
