@@ -1,20 +1,21 @@
 <template>
-  <v-list-item>
+  <v-list-item three-line>
     <v-list-item-content>
       <v-list-item-subtitle>
         <span>
           <v-icon small class="mr-1">mdi-clock-outline</v-icon>
-          <span
-            >10:00 AM -
-            <span class="font-italic">Lorem ipsum dolor sit amet.</span></span
-          >
+          <span>10:00 AM - <span class="font-italic">Location Name</span></span>
         </span>
       </v-list-item-subtitle>
-      <v-list-item-title class="font-weight-bold">
-        Lorem ipsum dolor sit amet. - &#8369; 40.00
+      <v-list-item-title>
+        <span class="font-weight-bold">Activity Name</span> Via Transportation
+        Type
       </v-list-item-title>
       <v-list-item-subtitle
-        >Via Lorem ipsum dolor sit amet. - &#8369; 40.00</v-list-item-subtitle
+        >Total Expenses:
+        <span class="font-weight-bold"
+          >&#8369; 40.00</span
+        ></v-list-item-subtitle
       >
     </v-list-item-content>
     <v-list-item-action>
@@ -43,7 +44,7 @@
               <v-icon>mdi-trash-can</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title>Delete</v-list-item-title>
+              <v-list-item-title>Remove</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
