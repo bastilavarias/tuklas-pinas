@@ -19,10 +19,10 @@
         <itinerary-post-editor-personal-transportation-review-form></itinerary-post-editor-personal-transportation-review-form>
       </v-tab-item>
       <v-tab-item>
-        <itinerary-post-editor-personal-internet-access-review-form></itinerary-post-editor-personal-internet-access-review-form>
+        <itinerary-post-editor-personal-activities-review-form></itinerary-post-editor-personal-activities-review-form>
       </v-tab-item>
       <v-tab-item>
-        <itinerary-post-editor-personal-activities-review-form></itinerary-post-editor-personal-activities-review-form>
+        <itinerary-post-editor-personal-internet-access-review-form></itinerary-post-editor-personal-internet-access-review-form>
       </v-tab-item>
       <v-tab-item>
         <itinerary-post-editor-personal-finance-review-form></itinerary-post-editor-personal-finance-review-form>
@@ -75,12 +75,12 @@ export default {
           icon: "mdi-train-car",
         },
         {
-          text: "Internet Access",
-          icon: "mdi-wifi",
-        },
-        {
           text: "Activities",
           icon: "mdi-hiking",
+        },
+        {
+          text: "Internet Access",
+          icon: "mdi-wifi",
         },
         {
           text: "Money Exchange & Credit/Debit",

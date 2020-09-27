@@ -63,7 +63,7 @@
 
 <script>
 import CustomFileDropzone from "@/components/custom/FileDropzone";
-import ItineraryPostEditorTimelineDialogActivityList from "@/components/itinerary-post-editor/timeline-field/DialogActivityList";
+import ItineraryPostEditorTimelineDialogActivityList from "@/components/itinerary-post-editor/timeline-field/dialog-activity-list/Index";
 export default {
   name: "itinerary-post-editor-timeline-dialog",
 
