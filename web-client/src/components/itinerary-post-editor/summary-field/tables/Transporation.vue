@@ -3,16 +3,16 @@
     <template v-slot:default>
       <thead>
         <tr>
-          <th class="text-left">Transportation</th>
+          <th class="text-left">Location</th>
           <th class="text-left">Type</th>
-          <th class="text-left">Expenses</th>
+          <th class="text-left">Fare</th>
           <th class="text-left">Rating</th>
         </tr>
       </thead>
       <tbody>
         <template v-for="n in 10">
           <tr :key="n">
-            <td>To Activity Location</td>
+            <td>From Location -> To Location</td>
             <td>Bus</td>
             <td>&#8369; 40.00</td>
             <td>
