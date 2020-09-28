@@ -3,37 +3,37 @@
     <v-card color="transparent" flat>
       <v-row no-gutters>
         <v-col cols="12" md="9">
-          <carousel
-            :items="1"
-            :nav="false"
-            :dots="false"
-            :autoplay="false"
-            :mouse-drag="false"
-            touch-drag
-            pull-drag
-            free-drag
-            :style="{ height: '80vh', position: 'relative' }"
+          <v-card
+            :style="{
+              width: '100%',
+              height: '80vh',
+              position: 'relative',
+              backgroundImage:
+                'url(https://images.pexels.com/photos/2604843/pexels-photo-2604843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)',
+            }"
+            class="image-background"
+            tile
           >
-            <template v-for="(image, index) in images">
-              <div
-                :style="{ backgroundImage: `url(${image})` }"
-                class="image-background d-flex align-content-center justify-center"
-                :key="index"
-              >
-                <v-img :src="image" width="500" height="auto" contain></v-img>
+            <div class="fill-height d-flex justify-center align-center">
+              <div :style="{ width: 'auto', height: '100%' }">
+                <v-img
+                  src="https://images.pexels.com/photos/2604843/pexels-photo-2604843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                  width="100%"
+                  height="100%"
+                  contain
+                ></v-img>
               </div>
-            </template>
-            <template slot="prev">
-              <v-btn fab color="white" small class="next-image-button">
-                <v-icon small color="black">mdi-chevron-left</v-icon>
-              </v-btn>
-            </template>
-            <template slot="next">
-              <v-btn fab color="white" small class="previous-image-button">
-                <v-icon small color="black">mdi-chevron-right</v-icon>
-              </v-btn>
-            </template>
-          </carousel>
+            </div>
+            <v-btn fab color="white" small class="next-image-button">
+              <v-icon small color="black">mdi-chevron-left</v-icon>
+            </v-btn>
+            <v-btn fab color="white" small class="previous-image-button">
+              <v-icon small color="black">mdi-chevron-right</v-icon>
+            </v-btn>
+            <v-btn icon small class="close-button" @click="isOpen = false">
+              <v-icon color="white">mdi-close</v-icon>
+            </v-btn>
+          </v-card>
         </v-col>
         <v-col cols="12" md="3">
           <v-card
@@ -117,21 +117,28 @@ export default {
 
 <style scoped>
 .next-image-button,
-.previous-image-button {
+.previous-image-button,
+.close-button {
   position: absolute;
   z-index: 2;
 }
 
 .next-image-button {
   top: 50%;
-  left: 3%;
+  left: 2%;
   transform: translateY(-50%);
 }
 
 .previous-image-button {
   top: 50%;
-  right: 3%;
+  right: 2%;
   transform: translateY(-50%);
+}
+
+.close-button {
+  top: 2%;
+  left: 1%;
+  transform: translateY(-1%);
 }
 
 .image-background {
