@@ -5,9 +5,11 @@
         <v-row>
           <v-col cols="12">
             <v-card outlined>
-              <v-card-title class="font-weight-bold"
-                >Submit Travel Story</v-card-title
-              >
+              <v-card-title>
+                <span class="font-weight-bold">Submit Travel Story</span>
+                <div class="flex-grow-1"></div>
+                <v-chip color="secondary">Drafts 5</v-chip>
+              </v-card-title>
               <v-card-subtitle
                 >Lorem ipsum dolor sit amet, consectetur.</v-card-subtitle
               >
@@ -16,7 +18,7 @@
                   <v-col cols="12">
                     <v-text-field
                       outlined
-                      label="Title (optional)"
+                      label="Title"
                       single-line
                       color="primary"
                     ></v-text-field>
@@ -24,10 +26,31 @@
                   <v-col cols="12">
                     <v-textarea
                       outlined
-                      label="Text"
+                      label="Text *"
                       single-line
                       color="primary"
                     ></v-textarea>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-autocomplete
+                      outlined
+                      label="Location *"
+                      single-line
+                    ></v-autocomplete>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-autocomplete
+                      outlined
+                      label="Events *"
+                      single-line
+                    ></v-autocomplete>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-autocomplete
+                      outlined
+                      label="Categories *"
+                      single-line
+                    ></v-autocomplete>
                   </v-col>
                   <v-col cols="12">
                     <custom-file-dropzone
@@ -38,6 +61,13 @@
               </v-card-text>
               <v-card-actions>
                 <div class="flex-grow-1"></div>
+                <v-btn
+                  color="secondary"
+                  depressed
+                  class="text-capitalize"
+                  outlined
+                  >Save as Draft</v-btn
+                >
                 <v-btn color="primary" depressed>Post</v-btn>
               </v-card-actions>
             </v-card>

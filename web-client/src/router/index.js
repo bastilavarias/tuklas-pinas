@@ -36,7 +36,19 @@ const routes = [
       {
         path: "travel-story-post-editor/:action",
         name: "travel-story-post-editor",
-        component: () => import("../pages/TravelStoryPostEditor"),
+        component: () => import("../pages/travel-story/Editor"),
+      },
+      {
+        path: "travel-story-post/:postID",
+        name: "travel-story-post",
+        component: () => import("../pages/travel-story/Post"),
+        children: [
+          {
+            path: "images/:imageID",
+            name: "travel-story-post-images",
+            component: () => import("../pages/travel-story/ImageGallery"),
+          },
+        ],
       },
       {
         path: "itinerary-post-editor/:action",
