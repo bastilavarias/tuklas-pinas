@@ -79,8 +79,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.active {
-}
-</style>
