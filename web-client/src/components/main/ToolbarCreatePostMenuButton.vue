@@ -19,21 +19,25 @@
 
     <v-card>
       <v-card-title class="font-weight-bold">Create</v-card-title>
-      <template v-for="(action, index) in actions">
-        <v-list-item two-line :key="index" :to="action.to" exact>
-          <v-list-item-content>
-            <v-list-item-title class="font-weight-bold">{{
-              action.title
-            }}</v-list-item-title>
-            <v-list-item-subtitle>{{
-              action.description
-            }}</v-list-item-subtitle>
-          </v-list-item-content>
-          <v-list-item-action-text>
-            <v-icon large color="secondary">{{ action.icon }}</v-icon>
-          </v-list-item-action-text>
-        </v-list-item>
-      </template>
+      <v-list flat>
+        <template v-for="(action, index) in actions">
+          <v-list-item
+            two-line
+            :key="index"
+            :to="action.to"
+            active-class="primary--text"
+          >
+            <v-list-item-content>
+              <v-list-item-title class="font-weight-bold"
+                >{{ action.title }} {{ active }}</v-list-item-title
+              >
+              <v-list-item-subtitle>{{
+                action.description
+              }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </template>
+      </v-list>
     </v-card>
   </v-menu>
 </template>
