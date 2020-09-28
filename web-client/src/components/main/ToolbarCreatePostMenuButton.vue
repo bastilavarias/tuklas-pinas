@@ -28,9 +28,9 @@
             active-class="primary--text"
           >
             <v-list-item-content>
-              <v-list-item-title class="font-weight-bold"
-                >{{ action.title }} {{ active }}</v-list-item-title
-              >
+              <v-list-item-title class="font-weight-bold">{{
+                action.title
+              }}</v-list-item-title>
               <v-list-item-subtitle>{{
                 action.description
               }}</v-list-item-subtitle>
