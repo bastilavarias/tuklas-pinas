@@ -128,12 +128,8 @@
 </template>
 
 <script>
-import Carousel from "vue-owl-carousel";
-
 export default {
   name: "generic-itinerary-post-preview",
-
-  components: { Carousel },
 
   props: {
     className: {

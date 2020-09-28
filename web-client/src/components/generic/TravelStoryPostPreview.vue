@@ -13,9 +13,13 @@
             >
           </div>
           <div class="mb-1">
-            <span class="title font-weight-bold"
-              >Lorem ipsum dolor sit amet.</span
+            <custom-router-link
+              :to="{ name: 'travel-story-post', params: { postID: 1 } }"
             >
+              <span class="title font-weight-bold secondary--text"
+                >Lorem ipsum dolor sit amet.</span
+              >
+            </custom-router-link>
           </div>
           <div class="mb-3">
             <span class="subtitle-2"
@@ -118,11 +122,12 @@
 
 <script>
 import Carousel from "vue-owl-carousel";
+import CustomRouterLink from "@/components/custom/RouterLink";
 
 export default {
   name: "generic-travel-story-post-preview",
 
-  components: { Carousel },
+  components: { CustomRouterLink, Carousel },
 
   props: {
     className: {

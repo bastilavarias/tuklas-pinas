@@ -38,4 +38,8 @@ export default {
   opacity: 0.5;
   z-index: 2;
 }
+
+.blur-effect {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+}
 </style>
