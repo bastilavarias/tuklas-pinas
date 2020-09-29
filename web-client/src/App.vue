@@ -9,7 +9,7 @@ export default {
 </script>
 
 <style>
-.grey--background {
+.grey-background {
   background-color: #f2f2f2 !important;
 }
 
@@ -41,5 +41,9 @@ export default {
 
 .blur-effect {
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 </style>

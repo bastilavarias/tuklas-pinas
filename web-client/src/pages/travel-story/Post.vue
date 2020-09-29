@@ -15,7 +15,7 @@
         <v-row>
           <v-col cols="12">
             <v-card outlined tile class="mb-5">
-              <div class="px-3 pt-3">
+              <div class="px-4 pt-3">
                 <div class="d-flex align-start justify-space-between mb-2">
                   <div class="mr-2">
                     <div>
@@ -116,13 +116,13 @@
               <div>
                 <v-divider> </v-divider>
                 <div
-                  class="px-3 py-1 d-flex justify-space-between align-center"
+                  class="px-4 py-1 d-flex justify-space-between align-center"
                 >
                   <span class="caption">Event: Project 81</span>
                 </div>
                 <v-divider> </v-divider>
                 <div
-                  class="px-3 py-1 d-flex justify-space-between align-center"
+                  class="px-4 py-1 d-flex justify-space-between align-center"
                 >
                   <span class="caption"
                     >Destination:
@@ -155,8 +155,51 @@
                 </v-row>
               </div>
             </v-card>
+            <v-card outlined tile class="mb-5">
+              <div class="px-4 pt-3">
+                <span class="caption"
+                  >Type your comment as Sebastian Curtis T. Lavarias</span
+                >
+              </div>
+              <v-card-text>
+                <v-row no-gutters>
+                  <v-col cols="12">
+                    <v-textarea
+                      label="Type your comment here"
+                      single-line
+                      outlined
+                    ></v-textarea>
+                  </v-col>
+                  <v-col cols="12">
+                    <div class="d-flex align-center justify-space-between">
+                      <div class="flex-grow-1"></div>
+                      <v-btn color="secondary">Comment</v-btn>
+                    </div>
+                  </v-col>
+                </v-row>
+              </v-card-text>
+            </v-card>
             <v-card outlined tile>
-              <v-card-title>Comments</v-card-title>
+              <v-card-title>
+                <span>Comments</span>
+                <div class="flex-grow-1"></div>
+                <div>
+                  <v-btn icon>
+                    <v-icon>mdi-sort</v-icon>
+                  </v-btn>
+                </div>
+              </v-card-title>
+              <template v-for="n in 5">
+                <generic-comment-media :key="n" class-name="pb-1">
+                  <template v-for="n2 in 5">
+                    <generic-comment-reply-media
+                      :key="n2"
+                    ></generic-comment-reply-media>
+                    <v-divider v-if="n2 !== 5"></v-divider>
+                  </template>
+                </generic-comment-media>
+                <v-divider v-if="n !== 5"></v-divider>
+              </template>
             </v-card>
           </v-col>
         </v-row>
@@ -187,9 +230,13 @@ import FeedPeopleCard from "@/components/feed/PeopleCard";
 import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
 import Carousel from "vue-owl-carousel";
 import CustomRouterLink from "@/components/custom/RouterLink";
+import GenericCommentMedia from "@/components/generic/CommentMedia";
+import GenericCommentReplyMedia from "@/components/generic/CommentReplyMedia";
 
 export default {
   components: {
+    GenericCommentReplyMedia,
+    GenericCommentMedia,
     CustomRouterLink,
     GenericStickyFooterCard,
     FeedPeopleCard,

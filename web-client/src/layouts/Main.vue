@@ -1,5 +1,5 @@
 <template>
-  <v-app class="grey--background">
+  <v-app class="grey-background">
     <v-app-bar app color="dark" fixed width="100%" style="z-index: 5" dark>
       <v-app-bar-nav-icon>
         <v-icon large color="white" @click="$router.push({ name: 'feed' })">
