@@ -53,7 +53,12 @@ const routes = [
       {
         path: "itinerary-post-editor/:action",
         name: "itinerary-post-editor",
-        component: () => import("../pages/ItineraryPostEditor"),
+        component: () => import("../pages/itinerary/Editor"),
+      },
+      {
+        path: "itinerary-post/:postID",
+        name: "itinerary-post",
+        component: () => import("../pages/itinerary/Post"),
       },
     ],
   },
