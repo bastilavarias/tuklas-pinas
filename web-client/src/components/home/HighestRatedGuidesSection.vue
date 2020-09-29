@@ -1,8 +1,5 @@
 <template>
-  <section
-    class="py-10 grey--background"
-    id="home-highest-rated-guides-section"
-  >
+  <section class="py-10 grey-background" id="home-highest-rated-guides-section">
     <v-container>
       <div class="text-center mb-10">
         <h1 class="display-1 mb-1">Highest Rated Guides</h1>
