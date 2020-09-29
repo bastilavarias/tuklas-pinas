@@ -4,7 +4,7 @@
     tile
     :class="`${hasShadow ? 'custom-shadow' : ''} ${className}`"
   >
-    <div class="px-3 pt-3">
+    <div class="px-4 pt-3">
       <div class="d-flex align-start justify-space-between mb-2">
         <div class="mr-2">
           <div>
@@ -82,11 +82,11 @@
     </div>
     <div>
       <v-divider> </v-divider>
-      <div class="px-3 py-1 d-flex justify-space-between align-center">
+      <div class="px-4 py-1 d-flex justify-space-between align-center">
         <span class="caption">Event: Project 81</span>
       </div>
       <v-divider> </v-divider>
-      <div class="px-3 py-1 d-flex justify-space-between align-center">
+      <div class="px-4 py-1 d-flex justify-space-between align-center">
         <span class="caption"
           >Destination:
           <span class="font-italic"> Destination Name </span></span

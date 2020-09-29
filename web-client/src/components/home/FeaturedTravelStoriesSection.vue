@@ -1,5 +1,5 @@
 <template>
-  <section class="py-10 grey--background" id="home-travel-stories-section">
+  <section class="py-10 grey-background" id="home-travel-stories-section">
     <v-container>
       <div class="text-center mb-10">
         <h1 class="display-1 mb-1">Featured Travel Stories</h1>

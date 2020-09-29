@@ -9,7 +9,7 @@
               height: '80vh',
               position: 'relative',
               backgroundImage:
-                'url(https://images.pexels.com/photos/2604843/pexels-photo-2604843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)',
+                'linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9) ), url(https://images.pexels.com/photos/2604843/pexels-photo-2604843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)',
             }"
             class="image-background"
             tile
@@ -44,7 +44,7 @@
             class="next-images-card"
             tile
           >
-            <div class="px-3 pt-3">
+            <div class="px-4 pt-3">
               <div class="d-flex align-start justify-space-between mb-2">
                 <div class="mr-2">
                   <div>
@@ -145,9 +145,10 @@ export default {
   width: 100%;
   height: 80vh;
   background-position: center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
-  background-color: rgba(0, 0, 0, 0.85);
-  background-blend-mode: darken;
   position: relative;
 }
 
