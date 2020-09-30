@@ -26,6 +26,9 @@
             <itinerary-post-gallery-preview-card></itinerary-post-gallery-preview-card>
           </v-col>
           <v-col cols="12">
+            <itinerary-post-tags-card></itinerary-post-tags-card>
+          </v-col>
+          <v-col cols="12">
             <v-card outlined tile>
               <div class="px-4 pt-3">
                 <span class="caption"
@@ -109,8 +112,10 @@ import ItineraryPostDetailCard from "@/components/itinerary-post/DetailCard";
 import ItineraryPostTimelineCard from "@/components/itinerary-post/TimelineCard";
 import ItineraryPostGalleryPreviewCard from "@/components/itinerary-post/GalleryPreviewCard";
 import ItineraryPostPersonalReviewsCard from "@/components/itinerary-post/personal-reviews-card/Index";
+import ItineraryPostTagsCard from "@/components/itinerary-post/TagsCard";
 export default {
   components: {
+    ItineraryPostTagsCard,
     ItineraryPostPersonalReviewsCard,
     ItineraryPostGalleryPreviewCard,
     ItineraryPostTimelineCard,
