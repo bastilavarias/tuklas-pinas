@@ -50,9 +50,8 @@
             <template v-slot:expanded-item="{ headers, item }">
               <td :colspan="headers.length">
                 <div class="py-3">
-                  <h2 class="subtitle-2 d-block mb-1">Other Details:</h2>
                   <span class="body-2 text-capitalize">
-                    {{ item.otherDetails }}
+                    {{ item.details }}
                   </span>
                 </div>
               </td>
@@ -136,21 +135,21 @@ export default {
           time: "10:00AM",
           destination: "Destination 1",
           expenses: 500,
-          otherDetails:
+          details:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id nisi et enim dictum dignissim. Proin volutpat risus id efficitur ullamcorper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Vestibulum molestie ligula at elit malesuada fermentum. In hac habitasse platea dictumst. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas a eros a arcu condimentum sollicitudin vitae ut mauris. Ut ut odio non diam varius pharetra. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         },
         {
           time: "1:00PM",
           destination: "Destination 2",
           expenses: 500,
-          otherDetails:
+          details:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id nisi et enim dictum dignissim. Proin volutpat risus id efficitur ullamcorper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Vestibulum molestie ligula at elit malesuada fermentum. In hac habitasse platea dictumst. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas a eros a arcu condimentum sollicitudin vitae ut mauris. Ut ut odio non diam varius pharetra. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         },
         {
           time: "5:00PM",
           destination: "Destination 3",
           expenses: 500,
-          otherDetails:
+          details:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id nisi et enim dictum dignissim. Proin volutpat risus id efficitur ullamcorper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Vestibulum molestie ligula at elit malesuada fermentum. In hac habitasse platea dictumst. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas a eros a arcu condimentum sollicitudin vitae ut mauris. Ut ut odio non diam varius pharetra. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         },
       ],
