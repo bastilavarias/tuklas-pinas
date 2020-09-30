@@ -146,7 +146,7 @@ export default {
           time: "10:00AM",
           destination: "Destination 1",
           transportation: {
-            type: "Train",
+            type: "Airplane (round trip)",
             fare: 50.0,
           },
           interests: ["Interest 1", "Interest 2"],
@@ -170,8 +170,8 @@ export default {
           time: "5:00PM",
           destination: "Destination 3",
           transportation: {
-            type: "Train",
-            fare: 50.0,
+            type: "Bike",
+            fare: 50,
           },
           interests: ["Interest 1", "Interest 2"],
           expenses: 500,
