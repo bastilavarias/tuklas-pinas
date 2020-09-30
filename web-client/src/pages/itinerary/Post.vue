@@ -23,9 +23,6 @@
             <itinerary-post-personal-reviews-card></itinerary-post-personal-reviews-card>
           </v-col>
           <v-col cols="12">
-            <itinerary-post-gallery-preview-card></itinerary-post-gallery-preview-card>
-          </v-col>
-          <v-col cols="12">
             <itinerary-post-tags-card></itinerary-post-tags-card>
           </v-col>
           <v-col cols="12">
@@ -108,16 +105,14 @@ import Carousel from "vue-owl-carousel";
 import CustomRouterLink from "@/components/custom/RouterLink";
 import GenericCommentMedia from "@/components/generic/CommentMedia";
 import GenericCommentReplyMedia from "@/components/generic/CommentReplyMedia";
-import ItineraryPostDetailCard from "@/components/itinerary-post/DetailCard";
+import ItineraryPostDetailCard from "@/components/itinerary-post/detail-card/Index";
 import ItineraryPostTimelineCard from "@/components/itinerary-post/TimelineCard";
-import ItineraryPostGalleryPreviewCard from "@/components/itinerary-post/GalleryPreviewCard";
 import ItineraryPostPersonalReviewsCard from "@/components/itinerary-post/personal-reviews-card/Index";
 import ItineraryPostTagsCard from "@/components/itinerary-post/TagsCard";
 export default {
   components: {
     ItineraryPostTagsCard,
     ItineraryPostPersonalReviewsCard,
-    ItineraryPostGalleryPreviewCard,
     ItineraryPostTimelineCard,
     ItineraryPostDetailCard,
     GenericCommentReplyMedia,

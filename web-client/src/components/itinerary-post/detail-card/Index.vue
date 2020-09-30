@@ -19,7 +19,7 @@
               small
               :class="`${n === 1 ? 'mr-1 mb-1' : 'ma-1'} font-weight-bold`"
               :key="n"
-              >FOOD</v-chip
+              >Category {{ n }}</v-chip
             >
           </template>
         </div>
@@ -29,9 +29,8 @@
           src="https://bastilavarias.github.io/assets/img/sebastian-lavarias.5c3a8fdd.png"
         ></v-img>
       </v-avatar>
-      <div></div>
     </div>
-    <v-divider></v-divider>
+    <itinerary-post-detail-card-gallery-preview></itinerary-post-detail-card-gallery-preview>
     <v-card-actions>
       <v-btn depressed text>
         <v-icon class="mr-1">mdi-heart-outline</v-icon>
@@ -55,7 +54,9 @@
 </template>
 
 <script>
+import ItineraryPostDetailCardGalleryPreview from "@/components/itinerary-post/detail-card/GalleryPreview";
 export default {
   name: "itinerary-post-detail-card",
+  components: { ItineraryPostDetailCardGalleryPreview },
 };
 </script>
