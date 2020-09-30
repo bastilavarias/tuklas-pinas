@@ -59,6 +59,13 @@ const routes = [
         path: "itinerary-post/:postID",
         name: "itinerary-post",
         component: () => import("../pages/itinerary/Post"),
+        children: [
+          {
+            path: "gallery/:imageID",
+            name: "itinerary-post-gallery",
+            component: () => import("../pages/itinerary/Gallery"),
+          },
+        ],
       },
     ],
   },

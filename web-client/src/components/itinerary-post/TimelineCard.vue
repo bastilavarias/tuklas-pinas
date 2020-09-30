@@ -51,6 +51,7 @@
             <template v-slot:expanded-item="{ headers, item }">
               <td :colspan="headers.length">
                 <div class="py-3">
+                  <span class="d-block subtitle-2 mb-2">Details:</span>
                   <span class="body-2 text-capitalize">
                     {{ item.details }}
                   </span>
@@ -146,8 +147,8 @@ export default {
           time: "10:00AM",
           destination: "Destination 1",
           transportation: {
-            type: "Airplane (round trip)",
-            fare: 50.0,
+            type: "Airplane",
+            fare: 500,
           },
           interests: ["Interest 1", "Interest 2"],
           expenses: 500,
@@ -159,7 +160,7 @@ export default {
           destination: "Destination 2",
           transportation: {
             type: "Train",
-            fare: 50.0,
+            fare: 500,
           },
           interests: ["Interest 1", "Interest 2"],
           expenses: 500,
@@ -171,7 +172,7 @@ export default {
           destination: "Destination 3",
           transportation: {
             type: "Bike",
-            fare: 50,
+            fare: 500,
           },
           interests: ["Interest 1", "Interest 2"],
           expenses: 500,
