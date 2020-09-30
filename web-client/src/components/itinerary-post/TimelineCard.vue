@@ -40,9 +40,10 @@
             item-key="time"
             show-expand
           >
-            <template v-slot:item.time="{ item }">
-              <v-icon class="mr-1" small>mdi-clock-outline</v-icon>
-              <span>{{ item.time }}</span>
+            <template v-slot:item.transportation="{ item }">
+              {{ item.transportation.type }} -<span title="Fare">
+                &#8369; {{ item.transportation.fare }}</span
+              >
             </template>
             <template v-slot:item.expenses="{ item }">
               <span>&#8369; {{ item.expenses }}</span>
@@ -124,6 +125,16 @@ export default {
           sortable: false,
         },
         {
+          text: "Transportation",
+          value: "transportation",
+          sortable: false,
+        },
+        {
+          text: "Places of Interest",
+          value: "interests",
+          sortable: false,
+        },
+        {
           text: "Expenses",
           value: "expenses",
           sortable: true,
@@ -134,6 +145,11 @@ export default {
         {
           time: "10:00AM",
           destination: "Destination 1",
+          transportation: {
+            type: "Train",
+            fare: 50.0,
+          },
+          interests: ["Interest 1", "Interest 2"],
           expenses: 500,
           details:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id nisi et enim dictum dignissim. Proin volutpat risus id efficitur ullamcorper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Vestibulum molestie ligula at elit malesuada fermentum. In hac habitasse platea dictumst. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas a eros a arcu condimentum sollicitudin vitae ut mauris. Ut ut odio non diam varius pharetra. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -141,6 +157,11 @@ export default {
         {
           time: "1:00PM",
           destination: "Destination 2",
+          transportation: {
+            type: "Train",
+            fare: 50.0,
+          },
+          interests: ["Interest 1", "Interest 2"],
           expenses: 500,
           details:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id nisi et enim dictum dignissim. Proin volutpat risus id efficitur ullamcorper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Vestibulum molestie ligula at elit malesuada fermentum. In hac habitasse platea dictumst. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas a eros a arcu condimentum sollicitudin vitae ut mauris. Ut ut odio non diam varius pharetra. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
@@ -148,6 +169,11 @@ export default {
         {
           time: "5:00PM",
           destination: "Destination 3",
+          transportation: {
+            type: "Train",
+            fare: 50.0,
+          },
+          interests: ["Interest 1", "Interest 2"],
           expenses: 500,
           details:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id nisi et enim dictum dignissim. Proin volutpat risus id efficitur ullamcorper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Vestibulum molestie ligula at elit malesuada fermentum. In hac habitasse platea dictumst. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas a eros a arcu condimentum sollicitudin vitae ut mauris. Ut ut odio non diam varius pharetra. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
