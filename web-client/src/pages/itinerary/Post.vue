@@ -20,6 +20,9 @@
             <itinerary-post-timeline-card></itinerary-post-timeline-card>
           </v-col>
           <v-col cols="12">
+            <itinerary-post-gallery-preview-card></itinerary-post-gallery-preview-card>
+          </v-col>
+          <v-col cols="12">
             <v-card outlined tile>
               <div class="px-4 pt-3">
                 <span class="caption"
@@ -101,8 +104,10 @@ import GenericCommentMedia from "@/components/generic/CommentMedia";
 import GenericCommentReplyMedia from "@/components/generic/CommentReplyMedia";
 import ItineraryPostDetailCard from "@/components/itinerary-post/DetailCard";
 import ItineraryPostTimelineCard from "@/components/itinerary-post/TimelineCard";
+import ItineraryPostGalleryPreviewCard from "@/components/itinerary-post/GalleryPreviewCard";
 export default {
   components: {
+    ItineraryPostGalleryPreviewCard,
     ItineraryPostTimelineCard,
     ItineraryPostDetailCard,
     GenericCommentReplyMedia,
