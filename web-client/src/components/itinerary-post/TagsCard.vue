@@ -3,7 +3,7 @@
     <div class="px-4 py-1">
       <span class="subtitle-2 ma-1 d-block">Events</span>
       <template v-for="n in 5">
-        <v-chip :key="n" class="ma-1 text-capitalize"> Event 1 </v-chip>
+        <v-chip :key="n" class="ma-1 text-capitalize"> Event {{ n }} </v-chip>
       </template>
     </div>
     <v-divider></v-divider>
@@ -14,7 +14,7 @@
           <v-avatar left>
             <v-icon>mdi-account-circle</v-icon>
           </v-avatar>
-          Tour Guide 1
+          Tour Guide {{ n }}
         </v-chip>
       </template>
     </div>
