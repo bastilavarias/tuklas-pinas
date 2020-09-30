@@ -13,9 +13,13 @@
             >
           </div>
           <div class="mb-1">
-            <span class="title font-weight-bold"
-              >Lorem ipsum dolor sit amet.</span
+            <custom-router-link
+              :to="{ name: 'itinerary-post', params: { postID: 1 } }"
             >
+              <span class="title font-weight-bold secondary--text"
+                >Lorem ipsum dolor sit amet.</span
+              >
+            </custom-router-link>
           </div>
           <div class="mb-3">
             <span class="subtitle-2"
@@ -128,9 +132,10 @@
 </template>
 
 <script>
+import CustomRouterLink from "@/components/custom/RouterLink";
 export default {
   name: "generic-itinerary-post-preview",
-
+  components: { CustomRouterLink },
   props: {
     className: {
       type: String,
