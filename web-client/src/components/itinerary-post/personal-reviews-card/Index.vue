@@ -23,6 +23,18 @@
         <v-tab-item>
           <itinerary-post-personal-reviews-card-activities-content></itinerary-post-personal-reviews-card-activities-content>
         </v-tab-item>
+        <v-tab-item>
+          <itinerary-post-personal-reviews-card-internet-access-content></itinerary-post-personal-reviews-card-internet-access-content>
+        </v-tab-item>
+        <v-tab-item>
+          <itinerary-post-personal-reviews-card-finance-content></itinerary-post-personal-reviews-card-finance-content>
+        </v-tab-item>
+        <v-tab-item>
+          <itinerary-post-personal-reviews-card-tips-content></itinerary-post-personal-reviews-card-tips-content>
+        </v-tab-item>
+        <v-tab-item>
+          <itinerary-post-personal-reviews-card-avoid-content></itinerary-post-personal-reviews-card-avoid-content>
+        </v-tab-item>
       </v-tabs-items>
     </div>
   </v-card>
@@ -33,9 +45,17 @@ import ItineraryPostPersonalReviewsCardRestaurantsContent from "@/components/iti
 import ItineraryPostPersonalReviewsCardLodgingsContent from "@/components/itinerary-post/personal-reviews-card/contents/Lodgings";
 import ItineraryPostPersonalReviewsCardTransportationContent from "@/components/itinerary-post/personal-reviews-card/contents/Transportation";
 import ItineraryPostPersonalReviewsCardActivitiesContent from "@/components/itinerary-post/personal-reviews-card/contents/Activities";
+import ItineraryPostPersonalReviewsCardInternetAccessContent from "@/components/itinerary-post/personal-reviews-card/contents/InternetAccess";
+import ItineraryPostPersonalReviewsCardFinanceContent from "@/components/itinerary-post/personal-reviews-card/contents/Finance";
+import ItineraryPostPersonalReviewsCardTipsContent from "@/components/itinerary-post/personal-reviews-card/contents/Tips";
+import ItineraryPostPersonalReviewsCardAvoidContent from "@/components/itinerary-post/personal-reviews-card/contents/Avoid";
 export default {
   name: "itinerary-post-personal-reviews-card",
   components: {
+    ItineraryPostPersonalReviewsCardAvoidContent,
+    ItineraryPostPersonalReviewsCardTipsContent,
+    ItineraryPostPersonalReviewsCardFinanceContent,
+    ItineraryPostPersonalReviewsCardInternetAccessContent,
     ItineraryPostPersonalReviewsCardActivitiesContent,
     ItineraryPostPersonalReviewsCardTransportationContent,
     ItineraryPostPersonalReviewsCardLodgingsContent,
