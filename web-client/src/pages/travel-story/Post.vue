@@ -7,7 +7,7 @@
             <generic-profile-preview-card></generic-profile-preview-card>
           </v-col>
           <v-col cols="12">
-            <feed-category-list-card></feed-category-list-card>
+            <generic-top-categories-side-card></generic-top-categories-side-card>
           </v-col>
         </v-row>
       </v-col>
@@ -223,18 +223,19 @@
 </template>
 
 <script>
-import FeedCategoryListCard from "@/components/feed/CategoryListCard";
 import FeedEventsPreviewCard from "@/components/feed/EventsPreviewCard";
 import FeedPeopleCard from "@/components/feed/PeopleCard";
 import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
 import Carousel from "vue-owl-carousel";
 import CustomRouterLink from "@/components/custom/RouterLink";
-import GenericCommentMedia from "@/components/generic/CommentMedia";
-import GenericCommentReplyMedia from "@/components/generic/CommentReplyMedia";
+import GenericCommentMedia from "@/components/generic/comment/Media";
+import GenericCommentReplyMedia from "@/components/generic/comment/ReplyMedia";
 import GenericProfilePreviewCard from "@/components/generic/ProfilePreviewCard";
+import GenericTopCategoriesSideCard from "@/components/generic/TopCategoriesSideCard";
 
 export default {
   components: {
+    GenericTopCategoriesSideCard,
     GenericProfilePreviewCard,
     GenericCommentReplyMedia,
     GenericCommentMedia,
@@ -242,7 +243,6 @@ export default {
     GenericStickyFooterCard,
     FeedPeopleCard,
     FeedEventsPreviewCard,
-    FeedCategoryListCard,
     Carousel,
   },
 
