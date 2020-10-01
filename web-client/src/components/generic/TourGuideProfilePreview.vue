@@ -1,5 +1,5 @@
 <template>
-  <v-card outlined :class="`${className} custom-shadow`" width="400">
+  <v-card outlined :class="`${className} custom-shadow`" width="320">
     <v-list-item two-line>
       <v-list-item-avatar :size="75">
         <v-img
@@ -8,7 +8,7 @@
       </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title class="primary--text font-weight-bold"
-          >Sebastian Curtis T. Lavarias</v-list-item-title
+          >Sebastian L.</v-list-item-title
         >
         <v-list-item-subtitle>
           <v-icon class="mr-1" small>mdi-map-marker</v-icon>
@@ -19,7 +19,7 @@
             <v-rating
               v-model="rating"
               background-color="secondary"
-              color="secondary"
+              color="primary"
               dense
               hover
               :size="18"
@@ -50,7 +50,7 @@
 
 <script>
 export default {
-  name: "guide-profile-preview",
+  name: "generic-tour-guide-profile-preview",
 
   props: {
     className: {

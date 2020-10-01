@@ -17,7 +17,13 @@
         <span class="mr-1 text-capitalize">Feed</span>
         <v-icon>mdi-home-modern</v-icon>
       </v-btn>
-      <v-btn color="transparent" depressed exact>
+      <v-btn
+        color="transparent"
+        depressed
+        :to="{ name: 'tour-guides' }"
+        exact
+        exact-active-class="primary"
+      >
         <span class="mr-1 text-capitalize">Tour Guides</span>
         <v-icon>mdi-account-cowboy-hat</v-icon>
       </v-btn>

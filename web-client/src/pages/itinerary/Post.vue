@@ -4,7 +4,7 @@
       <v-col cols="12" md="3">
         <v-row>
           <v-col cols="12">
-            <feed-profile-preview-card></feed-profile-preview-card>
+            <generic-profile-preview-card></generic-profile-preview-card>
           </v-col>
           <v-col cols="12">
             <feed-category-list-card></feed-category-list-card>
@@ -96,7 +96,6 @@
 </template>
 
 <script>
-import FeedProfilePreviewCard from "@/components/feed/ProfilePreviewCard";
 import FeedCategoryListCard from "@/components/feed/CategoryListCard";
 import FeedEventsPreviewCard from "@/components/feed/EventsPreviewCard";
 import FeedPeopleCard from "@/components/feed/PeopleCard";
@@ -109,8 +108,10 @@ import ItineraryPostDetailCard from "@/components/itinerary-post/detail-card/Ind
 import ItineraryPostTimelineCard from "@/components/itinerary-post/TimelineCard";
 import ItineraryPostPersonalReviewsCard from "@/components/itinerary-post/personal-reviews-card/Index";
 import ItineraryPostTagsCard from "@/components/itinerary-post/TagsCard";
+import GenericProfilePreviewCard from "@/components/generic/ProfilePreviewCard";
 export default {
   components: {
+    GenericProfilePreviewCard,
     ItineraryPostTagsCard,
     ItineraryPostPersonalReviewsCard,
     ItineraryPostTimelineCard,
@@ -122,7 +123,6 @@ export default {
     FeedPeopleCard,
     FeedEventsPreviewCard,
     FeedCategoryListCard,
-    FeedProfilePreviewCard,
     Carousel,
   },
 
