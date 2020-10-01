@@ -7,7 +7,7 @@
             <generic-profile-preview-card></generic-profile-preview-card>
           </v-col>
           <v-col cols="12">
-            <feed-category-list-card></feed-category-list-card>
+            <generic-top-categories-side-card></generic-top-categories-side-card>
           </v-col>
         </v-row>
       </v-col>
@@ -61,18 +61,18 @@
 </template>
 
 <script>
-import FeedCategoryListCard from "@/components/feed/CategoryListCard";
 import FeedEventsPreviewCard from "@/components/feed/EventsPreviewCard";
 import FeedPeopleCard from "@/components/feed/PeopleCard";
 import FeedFooterCard from "@/components/generic/StickyFooterCard";
 import GenericProfilePreviewCard from "@/components/generic/ProfilePreviewCard";
+import GenericTopCategoriesSideCard from "@/components/generic/TopCategoriesSideCard";
 export default {
   components: {
+    GenericTopCategoriesSideCard,
     GenericProfilePreviewCard,
     FeedFooterCard,
     FeedPeopleCard,
     FeedEventsPreviewCard,
-    FeedCategoryListCard,
   },
 
   data() {
