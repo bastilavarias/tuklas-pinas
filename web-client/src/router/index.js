@@ -67,6 +67,11 @@ const routes = [
           },
         ],
       },
+      {
+        path: "tour-guides",
+        name: "tour-guides",
+        component: () => import("../pages/TourGuides.vue"),
+      },
     ],
   },
 ];
