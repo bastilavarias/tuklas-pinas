@@ -21,6 +21,7 @@
         </v-btn>
       </template>
     </v-data-table>
+
     <v-dialog v-model="isItineraryDetailsDialogOpen" width="800">
       <v-card>
         <v-card-title>

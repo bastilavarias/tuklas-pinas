@@ -10,17 +10,8 @@
     <template v-for="n in 6">
       <v-list-item two-line :key="n">
         <v-list-item-content>
-          <v-list-item-subtitle class="secondary--text">
-            <span class="mr-1"
-              >{{ n }}. <span class="font-weight-bold">Tip Name</span></span
-            >
-            <v-chip
-              color="success"
-              x-small
-              label
-              class="text-uppercase font-weight-bold"
-              >You should do</v-chip
-            >
+          <v-list-item-subtitle class="secondary--text font-weight-bold">
+            {{ n }}. Tip Name
           </v-list-item-subtitle>
           <v-list-item-subtitle
             >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid,
@@ -83,31 +74,6 @@
             </v-col>
             <v-col cols="12">
               <v-textarea outlined single-line label="Description"></v-textarea>
-            </v-col>
-            <v-col cols="12">
-              <span class="subtitle-1">Recommendation</span>
-              <v-radio-group row>
-                <v-radio>
-                  <template v-slot:label>
-                    <v-chip
-                      label
-                      color="success"
-                      class="white--text font-weight-bold text-uppercase"
-                      >You should do</v-chip
-                    >
-                  </template>
-                </v-radio>
-                <v-radio>
-                  <template v-slot:label>
-                    <v-chip
-                      label
-                      color="grey"
-                      class="white--text font-weight-bold text-uppercase"
-                      >Optional</v-chip
-                    >
-                  </template>
-                </v-radio>
-              </v-radio-group>
             </v-col>
           </v-row>
         </v-card-text>

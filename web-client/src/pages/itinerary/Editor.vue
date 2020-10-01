@@ -54,6 +54,11 @@
                   <v-col cols="12">
                     <itinerary-post-editor-timeline-field></itinerary-post-editor-timeline-field>
                   </v-col>
+                  <v-col cols="12">
+                    <custom-file-dropzone
+                      label="Images/Videos"
+                    ></custom-file-dropzone>
+                  </v-col>
                 </v-row>
               </v-card-text>
               <v-card-text>
@@ -66,26 +71,12 @@
                   </v-col>
                 </v-row>
               </v-card-text>
-              <v-card-text>
-                <v-row dense>
-                  <v-col cols="12">
-                    <span class="subtitle-1">Summaries</span>
-                  </v-col>
-                  <v-col cols="12">
-                    <itinerary-post-editor-summary-field></itinerary-post-editor-summary-field>
-                  </v-col>
-                </v-row>
-              </v-card-text>
               <v-card-actions>
                 <div class="flex-grow-1"></div>
-                <v-btn
-                  color="secondary"
-                  depressed
-                  class="text-capitalize"
-                  outlined
+                <v-btn color="secondary" class="text-capitalize" outlined
                   >Save as Draft</v-btn
                 >
-                <v-btn color="primary" depressed>Post</v-btn>
+                <v-btn color="primary">Post</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -118,11 +109,11 @@ import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
 import GenericPostingGuidelinesList from "@/components/generic/PostingGuidelinesList";
 import ItineraryPostEditorPersonalReviewsField from "@/components/itinerary-post-editor/personal-reviews-field/Index";
 import ItineraryPostEditorTimelineField from "@/components/itinerary-post-editor/timeline-field/Index";
-import ItineraryPostEditorSummaryField from "@/components/itinerary-post-editor/summary-field/Index";
+import CustomFileDropzone from "@/components/custom/FileDropzone";
 
 export default {
   components: {
-    ItineraryPostEditorSummaryField,
+    CustomFileDropzone,
     ItineraryPostEditorTimelineField,
     ItineraryPostEditorPersonalReviewsField,
     GenericPostingGuidelinesList,
