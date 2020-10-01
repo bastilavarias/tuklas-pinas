@@ -20,7 +20,7 @@ const routes = [
     component: () => import("../pages/Signup"),
   },
   {
-    path: "/main",
+    path: "/feed",
     component: () => import("../layouts/Main"),
     children: [
       {
@@ -28,18 +28,47 @@ const routes = [
         name: "feed",
         component: () => import("../pages/Feed"),
       },
+    ],
+  },
+  {
+    path: "/events-explorer",
+    component: () => import("../layouts/Main"),
+    children: [
       {
-        path: "events-explorer",
+        path: "",
         name: "events-explorer",
         component: () => import("../pages/EventsExplorer"),
       },
+    ],
+  },
+  {
+    path: "/travel-story-post-editor",
+    component: () => import("../layouts/Main"),
+    children: [
       {
-        path: "travel-story-post-editor/:action",
+        path: ":action",
         name: "travel-story-post-editor",
         component: () => import("../pages/travel-story/Editor"),
       },
+    ],
+  },
+  {
+    path: "/itinerary-post-editor",
+    component: () => import("../layouts/Main"),
+    children: [
       {
-        path: "travel-story-post/:postID",
+        path: ":action",
+        name: "itinerary-post-editor",
+        component: () => import("../pages/itinerary/Editor"),
+      },
+    ],
+  },
+  {
+    path: "/travel-story-post",
+    component: () => import("../layouts/Main"),
+    children: [
+      {
+        path: ":postID",
         name: "travel-story-post",
         component: () => import("../pages/travel-story/Post"),
         children: [
@@ -50,13 +79,14 @@ const routes = [
           },
         ],
       },
+    ],
+  },
+  {
+    path: "/itinerary-post",
+    component: () => import("../layouts/Main"),
+    children: [
       {
-        path: "itinerary-post-editor/:action",
-        name: "itinerary-post-editor",
-        component: () => import("../pages/itinerary/Editor"),
-      },
-      {
-        path: "itinerary-post/:postID",
+        path: ":postID",
         name: "itinerary-post",
         component: () => import("../pages/itinerary/Post"),
         children: [
@@ -67,13 +97,25 @@ const routes = [
           },
         ],
       },
+    ],
+  },
+  {
+    path: "/tour-guides",
+    component: () => import("../layouts/Main"),
+    children: [
       {
-        path: "tour-guides",
+        path: "",
         name: "tour-guides",
-        component: () => import("../pages/TourGuides.vue"),
+        component: () => import("../pages/TourGuides"),
       },
+    ],
+  },
+  {
+    path: "/discover",
+    component: () => import("../layouts/Main"),
+    children: [
       {
-        path: "discover",
+        path: "",
         name: "discover",
         component: () => import("../pages/Discover"),
       },

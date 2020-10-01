@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <v-container>
     <v-row>
       <v-col cols="12" md="8">
         <v-row>
@@ -102,7 +102,7 @@
         </v-row>
       </v-col>
     </v-row>
-  </section>
+  </v-container>
 </template>
 
 <script>

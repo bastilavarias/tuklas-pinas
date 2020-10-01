@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <v-container>
     <v-row>
       <v-col cols="12" md="3">
         <v-row>
@@ -92,7 +92,7 @@
       </v-col>
     </v-row>
     <router-view></router-view>
-  </section>
+  </v-container>
 </template>
 
 <script>
