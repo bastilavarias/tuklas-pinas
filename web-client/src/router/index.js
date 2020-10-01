@@ -44,9 +44,9 @@ const routes = [
         component: () => import("../pages/travel-story/Post"),
         children: [
           {
-            path: "images/:imageID",
-            name: "travel-story-post-images",
-            component: () => import("../pages/travel-story/ImageGallery"),
+            path: "gallery/:imageID",
+            name: "travel-story-post-gallery",
+            component: () => import("../pages/travel-story/Gallery"),
           },
         ],
       },

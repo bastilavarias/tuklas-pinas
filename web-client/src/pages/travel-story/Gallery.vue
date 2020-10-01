@@ -60,7 +60,7 @@
                 </v-avatar>
               </div>
             </div>
-            <v-card-title>Images</v-card-title>
+            <v-card-title>Travel Story Gallery</v-card-title>
             <v-card-subtitle>Opened 1 out of 5 images</v-card-subtitle>
             <v-card-text>
               <masonry :cols="2" :gutter="5">
