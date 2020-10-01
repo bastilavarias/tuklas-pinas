@@ -72,6 +72,11 @@ const routes = [
         name: "tour-guides",
         component: () => import("../pages/TourGuides.vue"),
       },
+      {
+        path: "discover",
+        name: "discover",
+        component: () => import("../pages/Discover"),
+      },
     ],
   },
 ];
