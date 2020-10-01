@@ -14,148 +14,13 @@
       <v-col cols="12" md="6">
         <v-row>
           <v-col cols="12">
-            <v-card outlined tile class="mb-5">
-              <div class="px-4 pt-3">
-                <div class="d-flex align-start justify-space-between mb-2">
-                  <div class="mr-2">
-                    <div>
-                      <span class="caption"
-                        >Sebastian Curtis T. Lavarias - 6 hrs ago</span
-                      >
-                    </div>
-                    <div class="mb-1">
-                      <span class="title font-weight-bold secondary--text"
-                        >Lorem ipsum dolor sit amet.</span
-                      >
-                    </div>
-                    <div class="mb-3">
-                      <span class="subtitle-2"
-                        >Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Dolorem, eaque, veritatis! Ab accusantium aliquam
-                        beatae corporis culpa cupiditate deserunt ducimus esse
-                        fugit impedit inventore, maiores nesciunt numquam, odio
-                        optio quas ratione rem repellendus saepe sequi tempore
-                        temporibus tenetur velit? Debitis necessitatibus nobis
-                        officiis quam tenetur voluptate. Adipisci, consequuntur
-                        cupiditate deserunt eaque error et excepturi fugiat
-                        harum itaque iure magnam minus nesciunt nisi nulla
-                        perferendis perspiciatis placeat quasi quod ratione rem
-                        repudiandae sequi sunt tenetur veniam voluptate.
-                        Aliquam, blanditiis cupiditate debitis illum inventore
-                        ipsum magnam maxime minus nesciunt non placeat possimus
-                        qui reprehenderit repudiandae sapiente, similique sunt
-                        vitae voluptatum. Consequatur, voluptatum!</span
-                      >
-                    </div>
-                    <div class="mb-1">
-                      <template v-for="n in 4">
-                        <v-chip
-                          label
-                          color="primary"
-                          small
-                          :class="`${
-                            n === 1 ? 'mr-1 mb-1' : 'ma-1'
-                          } font-weight-bold`"
-                          :key="n"
-                          >FOOD</v-chip
-                        >
-                      </template>
-                    </div>
-                  </div>
-                  <v-avatar :size="40">
-                    <v-img
-                      src="https://bastilavarias.github.io/assets/img/sebastian-lavarias.5c3a8fdd.png"
-                    ></v-img>
-                  </v-avatar>
-                </div>
-                <carousel
-                  :items="1"
-                  dots
-                  :nav="false"
-                  :autoplay="false"
-                  :mouse-drag="false"
-                  touch-drag
-                  pull-drag
-                  free-drag
-                  style="position: relative"
-                >
-                  <template v-for="(image, index) in images">
-                    <custom-router-link
-                      :to="{
-                        name: 'travel-story-post-images',
-                        params: { imageID: 1 },
-                      }"
-                      :key="index"
-                    >
-                      <v-img
-                        height="300"
-                        :src="image"
-                        class="d-block mx-auto"
-                        position="center"
-                        cover
-                      ></v-img>
-                    </custom-router-link>
-                  </template>
-                  <template slot="prev">
-                    <v-btn fab color="white" small class="next-image-button">
-                      <v-icon small color="black">mdi-chevron-left</v-icon>
-                    </v-btn>
-                  </template>
-                  <template slot="next">
-                    <v-btn
-                      fab
-                      color="white"
-                      small
-                      class="previous-image-button"
-                    >
-                      <v-icon small color="black">mdi-chevron-right</v-icon>
-                    </v-btn>
-                  </template>
-                </carousel>
-              </div>
-              <div>
-                <v-divider> </v-divider>
-                <div
-                  class="px-4 py-1 d-flex justify-space-between align-center"
-                >
-                  <span class="caption">Event: Project 81</span>
-                </div>
-                <v-divider> </v-divider>
-                <div
-                  class="px-4 py-1 d-flex justify-space-between align-center"
-                >
-                  <span class="caption"
-                    >Destination:
-                    <span class="font-italic"> Destination Name </span></span
-                  >
-                  <v-icon small color="primary">mdi-map-marker</v-icon>
-                </div>
-              </div>
-              <div>
-                <v-divider> </v-divider>
-                <v-row no-gutters>
-                  <v-col cols="4">
-                    <v-btn block large text tile color="secondary">
-                      <v-icon class="mr-1">mdi-heart-outline</v-icon>
-                      <span class="caption font-weight-bold">1k+</span>
-                    </v-btn>
-                  </v-col>
-                  <v-col cols="4">
-                    <v-btn block large text tile color="secondary">
-                      <v-icon class="mr-1">mdi-comment-outline</v-icon>
-                      <span class="caption font-weight-bold">1k+</span>
-                    </v-btn>
-                  </v-col>
-                  <v-col cols="4">
-                    <v-btn block large text tile color="secondary">
-                      <v-icon class="mr-1">mdi-share-outline</v-icon>
-                      <span class="caption font-weight-bold">1k+</span>
-                    </v-btn>
-                  </v-col>
-                </v-row>
-              </div>
-            </v-card>
-            <v-card outlined tile class="mb-5">
+            <travel-story-post-detail-card></travel-story-post-detail-card>
+          </v-col>
+          <v-col cols="12">
+            <travel-story-post-tags-card></travel-story-post-tags-card>
+          </v-col>
+          <v-col cols="12">
+            <v-card outlined tile>
               <div class="px-4 pt-3">
                 <span class="caption"
                   >Type your comment as Sebastian Curtis T. Lavarias</span
@@ -179,6 +44,8 @@
                 </v-row>
               </v-card-text>
             </v-card>
+          </v-col>
+          <v-col cols="12">
             <v-card outlined tile>
               <v-card-title>
                 <span>Comments</span>
@@ -232,9 +99,13 @@ import GenericCommentMedia from "@/components/generic/comment/Media";
 import GenericCommentReplyMedia from "@/components/generic/comment/ReplyMedia";
 import GenericProfilePreviewCard from "@/components/generic/ProfilePreviewCard";
 import GenericTopCategoriesSideCard from "@/components/generic/TopCategoriesSideCard";
+import TravelStoryPostDetailCard from "@/components/travel-story/detail-card/Index";
+import TravelStoryPostTagsCard from "@/components/travel-story/TagsCard";
 
 export default {
   components: {
+    TravelStoryPostTagsCard,
+    TravelStoryPostDetailCard,
     GenericTopCategoriesSideCard,
     GenericProfilePreviewCard,
     GenericCommentReplyMedia,
