@@ -5,8 +5,7 @@ import store from "./store";
 import vuetify from "./plugins/vuetify";
 import VueMasonry from "vue-masonry-css";
 import VueFileAgent from "vue-file-agent";
-import VueFileAgentStyles from "vue-file-agent/dist/vue-file-agent.css";
-import "leaflet/dist/leaflet.css";
+import "vue-file-agent/dist/vue-file-agent.css";
 import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
 
