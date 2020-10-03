@@ -49,7 +49,7 @@
       <v-col cols="12" md="3">
         <v-row>
           <v-col cols="12">
-            <feed-people-card></feed-people-card>
+            <generic-suggested-people-side-card></generic-suggested-people-side-card>
           </v-col>
           <v-col cols="12">
             <feed-footer-card></feed-footer-card>
@@ -61,18 +61,16 @@
 </template>
 
 <script>
-import FeedEventsPreviewCard from "@/components/feed/EventsPreviewCard";
-import FeedPeopleCard from "@/components/feed/PeopleCard";
 import FeedFooterCard from "@/components/generic/StickyFooterCard";
 import GenericProfilePreviewCard from "@/components/generic/ProfilePreviewCard";
 import GenericTopCategoriesSideCard from "@/components/generic/TopCategoriesSideCard";
+import GenericSuggestedPeopleSideCard from "@/components/generic/SuggestedPeopleSideCard";
 export default {
   components: {
+    GenericSuggestedPeopleSideCard,
     GenericTopCategoriesSideCard,
     GenericProfilePreviewCard,
     FeedFooterCard,
-    FeedPeopleCard,
-    FeedEventsPreviewCard,
   },
 
   data() {

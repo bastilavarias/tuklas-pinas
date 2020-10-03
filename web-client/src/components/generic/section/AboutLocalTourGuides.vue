@@ -1,15 +1,13 @@
 <template>
-  <section
-    class="py-10"
-    style="max-height: 50rem"
-    id="home-about-local-tour-guides-section"
-  >
+  <section class="py-10 white" style="max-height: 50rem">
     <v-container class="fill-height">
       <v-row align-content="center">
         <v-col cols="12">
           <v-row>
             <v-col cols="12" md="6">
-              <h1 class="display-1 font-weight-bold mb-10">Local Tour Guide</h1>
+              <h1 class="display-1 font-weight-bold mb-10">
+                About Local Tour Guide
+              </h1>
               <p class="subtitle-1 mb-10">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi
                 consequatur culpa doloribus hic ipsa, libero molestiae natus
@@ -42,6 +40,6 @@
 
 <script>
 export default {
-  name: "home-about-local-tour-guides-section",
+  name: "generic-about-local-tour-guides-section",
 };
 </script>

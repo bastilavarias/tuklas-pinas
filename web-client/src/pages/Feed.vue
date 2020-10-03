@@ -28,13 +28,13 @@
                 </v-tab>
               </template>
             </v-tabs>
-            <template v-for="n in [1, 2]">
+            <template v-for="n in [1]">
               <generic-travel-story-post-preview
                 :key="n"
                 class-name="mb-5"
               ></generic-travel-story-post-preview>
             </template>
-            <template v-for="n in [4, 5]">
+            <template v-for="n in [2]">
               <generic-itinerary-post-preview
                 :key="n"
                 class-name="mb-5"
@@ -46,10 +46,10 @@
       <v-col cols="12" md="3">
         <v-row>
           <v-col cols="12">
-            <feed-events-preview-card></feed-events-preview-card>
+            <generic-events-explorer-preview-side-card></generic-events-explorer-preview-side-card>
           </v-col>
           <v-col cols="12">
-            <feed-people-card></feed-people-card>
+            <generic-suggested-people-side-card></generic-suggested-people-side-card>
           </v-col>
           <v-col cols="12">
             <generic-sticky-footer-card></generic-sticky-footer-card>
@@ -61,22 +61,22 @@
 </template>
 
 <script>
-import FeedPeopleCard from "@/components/feed/PeopleCard";
-import FeedEventsPreviewCard from "@/components/feed/EventsPreviewCard";
 import GenericTravelStoryPostPreview from "@/components/generic/TravelStoryPostPreview";
 import GenericItineraryPostPreview from "@/components/generic/ItineraryPostPreview";
 import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
 import GenericProfilePreviewCard from "@/components/generic/ProfilePreviewCard";
 import GenericTopCategoriesSideCard from "@/components/generic/TopCategoriesSideCard";
+import GenericEventsExplorerPreviewSideCard from "@/components/generic/EventsExplorerPreviewSideCard";
+import GenericSuggestedPeopleSideCard from "@/components/generic/SuggestedPeopleSideCard";
 export default {
   components: {
+    GenericSuggestedPeopleSideCard,
+    GenericEventsExplorerPreviewSideCard,
     GenericTopCategoriesSideCard,
     GenericProfilePreviewCard,
     GenericStickyFooterCard,
     GenericItineraryPostPreview,
     GenericTravelStoryPostPreview,
-    FeedEventsPreviewCard,
-    FeedPeopleCard,
   },
   data() {
     return {

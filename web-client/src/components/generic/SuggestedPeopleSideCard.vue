@@ -1,6 +1,7 @@
 <template>
   <v-card>
-    <v-card-title class="font-weight-bold">People</v-card-title>
+    <v-card-title class="font-weight-bold">Follow</v-card-title>
+    <v-card-subtitle>Suggested People to Follow</v-card-subtitle>
     <template v-for="n in 4">
       <v-list-item :key="n">
         <v-list-item-avatar>
@@ -40,6 +41,6 @@
 
 <script>
 export default {
-  name: "feed-people-card",
+  name: "generic-suggested-people-side-card",
 };
 </script>
