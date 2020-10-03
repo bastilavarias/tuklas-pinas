@@ -61,7 +61,6 @@
 </template>
 
 <script>
-import FeedEventsPreviewCard from "@/components/feed/EventsPreviewCard";
 import FeedPeopleCard from "@/components/feed/PeopleCard";
 import FeedFooterCard from "@/components/generic/StickyFooterCard";
 import GenericProfilePreviewCard from "@/components/generic/ProfilePreviewCard";
@@ -72,7 +71,6 @@ export default {
     GenericProfilePreviewCard,
     FeedFooterCard,
     FeedPeopleCard,
-    FeedEventsPreviewCard,
   },
 
   data() {

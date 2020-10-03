@@ -43,7 +43,7 @@
 
 <script>
 export default {
-  name: "feed-events-preview-card",
+  name: "generic-events-explorer-preview-side-card",
 
   data() {
     return {
