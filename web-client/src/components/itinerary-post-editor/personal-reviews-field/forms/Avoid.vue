@@ -10,8 +10,8 @@
     <template v-for="n in 6">
       <v-list-item two-line :key="n">
         <v-list-item-content>
-          <v-list-item-subtitle class="secondary--text">
-            {{ n }}. <span class="font-weight-bold">Avoid</span>
+          <v-list-item-subtitle class="secondary--text font-weight-bold">
+            {{ n }}. Avoid Name
           </v-list-item-subtitle>
           <v-list-item-subtitle
             >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid,

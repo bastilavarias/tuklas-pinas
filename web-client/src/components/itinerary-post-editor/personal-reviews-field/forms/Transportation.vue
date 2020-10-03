@@ -10,22 +10,10 @@
     <template v-for="n in 6">
       <v-list-item two-line :key="n">
         <v-list-item-content>
-          <v-list-item-subtitle>
-            <span class="mr-1"
-              >{{ n }}.
-              <span class="font-weight-bold secondary--text"
-                >To Activity Location</span
-              >
-              -
-              <span class="font-italic">Type of Transporation</span></span
-            >
-            <v-chip
-              color="success"
-              x-small
-              label
-              class="text-uppercase font-weight-bold"
-              >Awesome</v-chip
-            >
+          <v-list-item-subtitle class="secondary--text">
+            <span class="font-weight-bold"> {{ n }}. To Destination </span>
+            <span class="mx-1">-</span>
+            <span class="font-italic">Type of transportation</span>
           </v-list-item-subtitle>
           <v-list-item-subtitle
             >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid,
@@ -84,45 +72,17 @@
         <v-card-text>
           <v-row dense>
             <v-col cols="12">
+              <v-text-field
+                outlined
+                single-line
+                label="To Destination"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
               <v-select outlined single-line label="Transport Type"></v-select>
             </v-col>
             <v-col cols="12">
               <v-textarea outlined single-line label="Review"></v-textarea>
-            </v-col>
-            <v-col cols="12">
-              <span class="subtitle-1">Rating</span>
-              <v-radio-group>
-                <v-radio>
-                  <template v-slot:label>
-                    <v-chip
-                      label
-                      color="success"
-                      class="white--text font-weight-bold text-uppercase"
-                      >Awesome</v-chip
-                    >
-                  </template>
-                </v-radio>
-                <v-radio>
-                  <template v-slot:label>
-                    <v-chip
-                      label
-                      color="grey"
-                      class="white--text font-weight-bold text-uppercase"
-                      >Good</v-chip
-                    >
-                  </template>
-                </v-radio>
-                <v-radio>
-                  <template v-slot:label>
-                    <v-chip
-                      label
-                      color="error"
-                      class="white--text font-weight-bold text-uppercase"
-                      >Disappointed</v-chip
-                    >
-                  </template>
-                </v-radio>
-              </v-radio-group>
             </v-col>
           </v-row>
         </v-card-text>
