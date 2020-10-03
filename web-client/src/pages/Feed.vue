@@ -49,7 +49,7 @@
             <generic-events-explorer-preview-side-card></generic-events-explorer-preview-side-card>
           </v-col>
           <v-col cols="12">
-            <feed-people-card></feed-people-card>
+            <generic-suggested-people-side-card></generic-suggested-people-side-card>
           </v-col>
           <v-col cols="12">
             <generic-sticky-footer-card></generic-sticky-footer-card>
@@ -61,22 +61,22 @@
 </template>
 
 <script>
-import FeedPeopleCard from "@/components/feed/PeopleCard";
 import GenericTravelStoryPostPreview from "@/components/generic/TravelStoryPostPreview";
 import GenericItineraryPostPreview from "@/components/generic/ItineraryPostPreview";
 import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
 import GenericProfilePreviewCard from "@/components/generic/ProfilePreviewCard";
 import GenericTopCategoriesSideCard from "@/components/generic/TopCategoriesSideCard";
 import GenericEventsExplorerPreviewSideCard from "@/components/generic/EventsExplorerPreviewSideCard";
+import GenericSuggestedPeopleSideCard from "@/components/generic/SuggestedPeopleSideCard";
 export default {
   components: {
+    GenericSuggestedPeopleSideCard,
     GenericEventsExplorerPreviewSideCard,
     GenericTopCategoriesSideCard,
     GenericProfilePreviewCard,
     GenericStickyFooterCard,
     GenericItineraryPostPreview,
     GenericTravelStoryPostPreview,
-    FeedPeopleCard,
   },
   data() {
     return {

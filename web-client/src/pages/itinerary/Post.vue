@@ -83,7 +83,7 @@
             <generic-events-explorer-preview-side-card></generic-events-explorer-preview-side-card>
           </v-col>
           <v-col cols="12">
-            <feed-people-card></feed-people-card>
+            <generic-suggested-people-side-card></generic-suggested-people-side-card>
           </v-col>
           <v-col cols="12">
             <generic-sticky-footer-card></generic-sticky-footer-card>
@@ -96,7 +96,6 @@
 </template>
 
 <script>
-import FeedPeopleCard from "@/components/feed/PeopleCard";
 import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
 import Carousel from "vue-owl-carousel";
 import CustomRouterLink from "@/components/custom/RouterLink";
@@ -109,8 +108,10 @@ import ItineraryPostTagsCard from "@/components/itinerary-post/TagsCard";
 import GenericProfilePreviewCard from "@/components/generic/ProfilePreviewCard";
 import GenericTopCategoriesSideCard from "@/components/generic/TopCategoriesSideCard";
 import GenericEventsExplorerPreviewSideCard from "@/components/generic/EventsExplorerPreviewSideCard";
+import GenericSuggestedPeopleSideCard from "@/components/generic/SuggestedPeopleSideCard";
 export default {
   components: {
+    GenericSuggestedPeopleSideCard,
     GenericEventsExplorerPreviewSideCard,
     GenericTopCategoriesSideCard,
     GenericProfilePreviewCard,
@@ -122,7 +123,6 @@ export default {
     GenericCommentMedia,
     CustomRouterLink,
     GenericStickyFooterCard,
-    FeedPeopleCard,
     Carousel,
   },
 

@@ -40,6 +40,6 @@
 
 <script>
 export default {
-  name: "feed-people-card",
+  name: "generic-suggested-people-side-card",
 };
 </script>
