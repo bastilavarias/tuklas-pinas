@@ -28,13 +28,13 @@
                 </v-tab>
               </template>
             </v-tabs>
-            <template v-for="n in [1, 2]">
+            <template v-for="n in [1]">
               <generic-travel-story-post-preview
                 :key="n"
                 class-name="mb-5"
               ></generic-travel-story-post-preview>
             </template>
-            <template v-for="n in [4, 5]">
+            <template v-for="n in [2]">
               <generic-itinerary-post-preview
                 :key="n"
                 class-name="mb-5"
