@@ -31,7 +31,9 @@
         </v-col>
         <v-col cols="12">
           <div class="d-flex justify-space-between align-center mb-5">
-            <span class="subtitle-1 secondary--text">Posts</span>
+            <span class="subtitle-1 secondary--text font-weight-bold"
+              >Posts</span
+            >
             <span>
               <custom-tooltip-button
                 icon="mdi-sort"
