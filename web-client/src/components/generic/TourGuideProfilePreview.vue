@@ -1,5 +1,9 @@
 <template>
-  <v-card outlined :class="`${className} custom-shadow`" width="320">
+  <v-card
+    outlined
+    :class="`${className} custom-shadow`"
+    :width="width ? width : '100%'"
+  >
     <v-list-item two-line>
       <v-list-item-avatar :size="75">
         <v-img
@@ -7,26 +11,27 @@
         ></v-img>
       </v-list-item-avatar>
       <v-list-item-content>
+        <v-list-item-subtitle class="caption">
+          <v-icon class="mr-1" small>mdi-map-marker-outline</v-icon>
+          <span>Tondo, Manila</span>
+        </v-list-item-subtitle>
         <v-list-item-title class="primary--text font-weight-bold"
           >Sebastian L.</v-list-item-title
         >
         <v-list-item-subtitle>
-          <v-icon class="mr-1" small>mdi-map-marker</v-icon>
-          <span>Cavite, Tanza</span>
-        </v-list-item-subtitle>
-        <v-list-item-subtitle>
-          <span class="d-flex align-center">
+          <span class="d-flex align-start">
+            <span class="primary--text caption mr-1"> ({{ rating }}) </span>
             <v-rating
               v-model="rating"
-              background-color="secondary"
               color="primary"
+              background-color="grey"
               dense
               hover
-              :size="18"
+              size="15"
               readonly
               class="mr-1"
             ></v-rating>
-            <span class="caption">({{ rating }})</span>
+            <span class="grey--text caption mr-2"> (63) </span>
           </span>
         </v-list-item-subtitle>
       </v-list-item-content>
@@ -54,6 +59,10 @@ export default {
 
   props: {
     className: {
+      type: String,
+      required: false,
+    },
+    width: {
       type: String,
       required: false,
     },

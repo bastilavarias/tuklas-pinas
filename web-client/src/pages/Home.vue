@@ -29,7 +29,7 @@
     <home-popular-itineraries-section></home-popular-itineraries-section>
     <home-search-destination-section></home-search-destination-section>
     <home-highest-rated-guides-section></home-highest-rated-guides-section>
-    <home-about-local-tour-guides-section></home-about-local-tour-guides-section>
+    <generic-about-local-tour-guides-section></generic-about-local-tour-guides-section>
     <home-featured-travel-stories-section></home-featured-travel-stories-section>
     <generic-how-it-works-section></generic-how-it-works-section>
     <generic-footer></generic-footer>
@@ -41,21 +41,21 @@ import HomeLandingHeader from "@/components/home/LandingHeader";
 import HomeSearchDestinationSection from "@/components/home/SearchDestinationSection";
 import HomePopularItinerariesSection from "@/components/home/PopularItinerariesSection";
 import HomeHighestRatedGuidesSection from "@/components/home/HighestRatedGuidesSection";
-import HomeAboutLocalTourGuidesSection from "@/components/home/AboutLocalTourGuidesSection";
 import HomeFeaturedTravelStoriesSection from "@/components/home/FeaturedTravelStoriesSection";
 import CommonUtilities from "@/common/utilities";
 import GenericHowItWorksSection from "@/components/generic/HowItWorksSection";
 import GenericFooter from "@/components/generic/Footer";
+import GenericAboutLocalTourGuidesSection from "@/components/generic/section/AboutLocalTourGuides";
 export default {
   name: "Home",
 
   mixins: [CommonUtilities],
 
   components: {
+    GenericAboutLocalTourGuidesSection,
     GenericFooter,
     GenericHowItWorksSection,
     HomeFeaturedTravelStoriesSection,
-    HomeAboutLocalTourGuidesSection,
     HomeHighestRatedGuidesSection,
     HomePopularItinerariesSection,
     HomeSearchDestinationSection,
