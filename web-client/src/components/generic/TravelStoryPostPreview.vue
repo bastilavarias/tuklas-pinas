@@ -7,9 +7,13 @@
     <div class="px-4 py-3 d-flex align-start justify-space-between">
       <div class="mr-2">
         <span class="caption">Sebastian Curtis T. Lavarias - 6 hrs ago</span>
-        <span class="d-block mb-1 title font-weight-bold secondary--text"
-          >Lorem ipsum dolor sit amet.</span
+        <custom-router-link
+          :to="{ name: 'travel-story-post', params: { postID: 1 } }"
         >
+          <span class="d-block mb-1 title font-weight-bold secondary--text"
+            >Lorem ipsum dolor sit amet.</span
+          >
+        </custom-router-link>
         <span class="body-2 d-block mb-3"
           >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut
           deserunt excepturi facilis laboriosam molestias neque placeat. Alias

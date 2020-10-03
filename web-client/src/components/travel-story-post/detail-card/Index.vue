@@ -51,7 +51,7 @@
 
 <script>
 import ItineraryPostDetailCardGalleryPreview from "@/components/itinerary-post/detail-card/GalleryPreview";
-import TravelStoryPostDetailCardGalleryPreview from "@/components/travel-story/detail-card/GalleryPreview";
+import TravelStoryPostDetailCardGalleryPreview from "@/components/travel-story-post/detail-card/GalleryPreview";
 export default {
   name: "travel-story-post-detail-card",
   components: {

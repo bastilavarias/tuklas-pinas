@@ -98,8 +98,8 @@ import GenericCommentMedia from "@/components/generic/comment/Media";
 import GenericCommentReplyMedia from "@/components/generic/comment/ReplyMedia";
 import GenericProfilePreviewCard from "@/components/generic/ProfilePreviewCard";
 import GenericTopCategoriesSideCard from "@/components/generic/TopCategoriesSideCard";
-import TravelStoryPostDetailCard from "@/components/travel-story/detail-card/Index";
-import TravelStoryPostTagsCard from "@/components/travel-story/TagsCard";
+import TravelStoryPostDetailCard from "@/components/travel-story-post/detail-card/Index";
+import TravelStoryPostTagsCard from "@/components/travel-story-post/TagsCard";
 import GenericEventsExplorerPreviewSideCard from "@/components/generic/EventsExplorerPreviewSideCard";
 
 export default {
