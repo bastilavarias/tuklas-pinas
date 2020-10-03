@@ -11,6 +11,7 @@
             <span @click="toggle">
               <generic-tour-guide-profile-preview
                 :class-name="`${n === 12 ? '' : 'mr-5'} mt-3 mb-10`"
+                width="320"
               >
               </generic-tour-guide-profile-preview>
             </span>

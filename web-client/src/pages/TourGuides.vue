@@ -1,31 +1,39 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col cols="12" md="3">
-        <v-row>
-          <v-col cols="12">
-            <generic-profile-preview-card></generic-profile-preview-card>
-          </v-col>
-        </v-row>
-      </v-col>
-      <v-col cols="12" md="9">
-        <v-row>
-          <v-col cols="12">
-            <tour-guides-highest-rated-slide-group></tour-guides-highest-rated-slide-group>
-          </v-col>
-          <v-col cols="12">
-            <v-card-title></v-card-title>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
-  </v-container>
+  <section>
+    <v-container>
+      <v-row>
+        <v-col cols="12">
+          <v-row>
+            <v-col cols="12">
+              <tour-guides-highest-rated-section></tour-guides-highest-rated-section>
+            </v-col>
+            <v-col cols="12">
+              <v-divider></v-divider>
+            </v-col>
+            <v-col cols="12">
+              <tour-guides-discover-more-section></tour-guides-discover-more-section>
+            </v-col>
+            <v-col cols="12"> </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
+    <generic-about-local-tour-guides-section></generic-about-local-tour-guides-section>
+    <generic-footer></generic-footer>
+  </section>
 </template>
 
 <script>
-import GenericProfilePreviewCard from "@/components/generic/ProfilePreviewCard";
-import TourGuidesHighestRatedSlideGroup from "@/components/tour-guides/HighestRatedGuidesSlideGroup";
+import GenericFooter from "@/components/generic/Footer";
+import TourGuidesHighestRatedSection from "@/components/tour-guides/sections/HighestRated";
+import TourGuidesDiscoverMoreSection from "@/components/tour-guides/sections/DiscoverMore";
+import GenericAboutLocalTourGuidesSection from "@/components/generic/section/AboutLocalTourGuides";
 export default {
-  components: { TourGuidesHighestRatedSlideGroup, GenericProfilePreviewCard },
+  components: {
+    GenericAboutLocalTourGuidesSection,
+    TourGuidesDiscoverMoreSection,
+    TourGuidesHighestRatedSection,
+    GenericFooter,
+  },
 };
 </script>
