@@ -1,13 +1,13 @@
 <template>
-  <section>
+  <v-container>
     <v-row>
       <v-col cols="12" md="3">
         <v-row>
           <v-col cols="12">
-            <feed-profile-preview-card></feed-profile-preview-card>
+            <generic-profile-preview-card></generic-profile-preview-card>
           </v-col>
           <v-col cols="12">
-            <feed-category-list-card></feed-category-list-card>
+            <generic-top-categories-side-card></generic-top-categories-side-card>
           </v-col>
         </v-row>
       </v-col>
@@ -57,26 +57,26 @@
         </v-row>
       </v-col>
     </v-row>
-  </section>
+  </v-container>
 </template>
 
 <script>
-import FeedProfilePreviewCard from "@/components/feed/ProfilePreviewCard";
-import FeedCategoryListCard from "@/components/feed/CategoryListCard";
 import FeedPeopleCard from "@/components/feed/PeopleCard";
 import FeedEventsPreviewCard from "@/components/feed/EventsPreviewCard";
 import GenericTravelStoryPostPreview from "@/components/generic/TravelStoryPostPreview";
 import GenericItineraryPostPreview from "@/components/generic/ItineraryPostPreview";
 import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
+import GenericProfilePreviewCard from "@/components/generic/ProfilePreviewCard";
+import GenericTopCategoriesSideCard from "@/components/generic/TopCategoriesSideCard";
 export default {
   components: {
+    GenericTopCategoriesSideCard,
+    GenericProfilePreviewCard,
     GenericStickyFooterCard,
     GenericItineraryPostPreview,
     GenericTravelStoryPostPreview,
     FeedEventsPreviewCard,
     FeedPeopleCard,
-    FeedCategoryListCard,
-    FeedProfilePreviewCard,
   },
   data() {
     return {

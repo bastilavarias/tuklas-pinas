@@ -47,7 +47,7 @@
 
 <script>
 export default {
-  name: "feed-profile-preview-card",
+  name: "generic-profile-preview-card",
 };
 </script>
 

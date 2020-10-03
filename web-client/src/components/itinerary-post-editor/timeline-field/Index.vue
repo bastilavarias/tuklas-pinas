@@ -1,20 +1,8 @@
 <template>
   <div>
     <div class="d-flex justify-space-between align-center mb-5">
-      <span class="subtitle-1">Itinerary Timeline</span>
+      <span class="subtitle-1">Itinerary</span>
       <div>
-        <custom-tooltip-button
-          icon="mdi-card-outline"
-          text="Change to card layout"
-          :action="() => (this.itineraryLayout = 'card')"
-          v-if="itineraryLayout !== 'card'"
-        ></custom-tooltip-button>
-        <custom-tooltip-button
-          icon="mdi-view-list-outline"
-          text="Change to list layout"
-          :action="() => (this.itineraryLayout = 'list')"
-          v-if="itineraryLayout !== 'list'"
-        ></custom-tooltip-button>
         <custom-tooltip-button
           icon="mdi-sort"
           text="Sort"
@@ -26,111 +14,35 @@
         ></custom-tooltip-button>
       </div>
     </div>
-    <v-row dense v-if="itineraryLayout === 'card'">
-      <template v-for="n in 6">
-        <v-col cols="12" md="6" :key="n">
-          <v-card outlined>
-            <v-list-item>
-              <v-list-item-content>
-                <v-list-item-subtitle class="secondary--text">
-                  <span class="font-weight-bold">Day {{ n }}</span>
-                  <span class="mx-1">-</span>
-                  <span class="font-italic">Lorem ipsum dolor sit amet.</span>
-                </v-list-item-subtitle>
-              </v-list-item-content>
-              <v-list-item-action>
-                <v-menu>
-                  <template v-slot:activator="{ on: menu, attrs }">
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on: tooltip }">
-                        <v-btn
-                          v-bind="attrs"
-                          v-on="{ ...tooltip, ...menu }"
-                          icon
-                          small
-                        >
-                          <v-icon>mdi-dots-vertical</v-icon>
-                        </v-btn>
-                      </template>
-                      <span>More Actions</span>
-                    </v-tooltip>
-                  </template>
-                  <v-list>
-                    <v-list-item>
-                      <v-list-item-icon>
-                        <v-icon>mdi-pencil</v-icon>
-                      </v-list-item-icon>
-                      <v-list-item-content>
-                        <v-list-item-title>Edit</v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item>
-                      <v-list-item-icon>
-                        <v-icon>mdi-trash-can</v-icon>
-                      </v-list-item-icon>
-                      <v-list-item-content>
-                        <v-list-item-title>Delete</v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                  </v-list>
-                </v-menu>
-              </v-list-item-action>
-            </v-list-item>
-          </v-card>
-        </v-col>
-      </template>
+    <v-row>
+      <v-col cols="12">
+        <v-data-table
+          :headers="itineraryTimelineDataTableHeaders"
+          :items="itineraryTimeline"
+          hide-default-footer
+        >
+          <template v-slot:item.day="{ item }">
+            <span class="font-weight-bold">Day {{ item.day }}</span>
+          </template>
+          <template v-slot:item.numberOfDestinations="{ item }">
+            <span class="text-capitalize">{{ item.numberOfDestinations }}</span>
+          </template>
+          <template v-slot:item.totalExpenses="{ item }">
+            <span>&#8369; {{ item.totalExpenses }}</span>
+          </template>
+          <template v-slot:item.actions="{ item }">
+            <custom-tooltip-button
+              icon="mdi-pencil-outline"
+              text="Edit"
+            ></custom-tooltip-button>
+            <custom-tooltip-button
+              icon="mdi-trash-can-outline"
+              text="Remove"
+            ></custom-tooltip-button>
+          </template>
+        </v-data-table>
+      </v-col>
     </v-row>
-    <v-list v-if="itineraryLayout === 'list'">
-      <template v-for="n in 6">
-        <v-list-item :key="n">
-          <v-list-item-content>
-            <v-list-item-subtitle class="secondary--text">
-              <span class="font-weight-bold">Day {{ n }}</span>
-              <span class="mx-1">-</span>
-              <span>Lorem ipsum dolor sit amet.</span>
-            </v-list-item-subtitle>
-          </v-list-item-content>
-          <v-list-item-action>
-            <v-menu>
-              <template v-slot:activator="{ on: menu, attrs }">
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on: tooltip }">
-                    <v-btn
-                      v-bind="attrs"
-                      v-on="{ ...tooltip, ...menu }"
-                      icon
-                      small
-                    >
-                      <v-icon>mdi-dots-vertical</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>More Actions</span>
-                </v-tooltip>
-              </template>
-              <v-list>
-                <v-list-item>
-                  <v-list-item-icon>
-                    <v-icon>mdi-pencil</v-icon>
-                  </v-list-item-icon>
-                  <v-list-item-content>
-                    <v-list-item-title>Edit</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-                <v-list-item>
-                  <v-list-item-icon>
-                    <v-icon>mdi-trash-can</v-icon>
-                  </v-list-item-icon>
-                  <v-list-item-content>
-                    <v-list-item-title>Remove</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </v-list-item-action>
-        </v-list-item>
-        <v-divider v-if="n !== 6"></v-divider>
-      </template>
-    </v-list>
     <itinerary-post-editor-timeline-dialog
       :is-open.sync="isTimelineDialogOpen"
     ></itinerary-post-editor-timeline-dialog>
@@ -147,8 +59,47 @@ export default {
 
   data() {
     return {
-      itineraryLayout: "card",
       isTimelineDialogOpen: false,
+      itineraryTimelineDataTableHeaders: [
+        {
+          text: "Day",
+          value: "day",
+          sortable: true,
+          align: "left",
+        },
+        {
+          text: "# of Destinations",
+          value: "numberOfDestinations",
+          sortable: false,
+        },
+        {
+          text: "Total Expenses",
+          value: "totalExpenses",
+          sortable: true,
+        },
+        {
+          text: "Actions",
+          value: "actions",
+          sortable: false,
+        },
+      ],
+      itineraryTimeline: [
+        {
+          day: 1,
+          numberOfDestinations: "3 Destinations",
+          totalExpenses: 5000,
+        },
+        {
+          day: 2,
+          numberOfDestinations: "3 Destinations",
+          totalExpenses: 5000,
+        },
+        {
+          day: 3,
+          numberOfDestinations: "3 Destinations",
+          totalExpenses: 5000,
+        },
+      ],
     };
   },
 };

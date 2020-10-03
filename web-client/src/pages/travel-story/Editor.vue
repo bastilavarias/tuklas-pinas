@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <v-container>
     <v-row>
       <v-col cols="12" md="8">
         <v-row>
@@ -34,7 +34,7 @@
                   <v-col cols="12">
                     <v-autocomplete
                       outlined
-                      label="Location *"
+                      label="Destination *"
                       single-line
                     ></v-autocomplete>
                   </v-col>
@@ -61,14 +61,10 @@
               </v-card-text>
               <v-card-actions>
                 <div class="flex-grow-1"></div>
-                <v-btn
-                  color="secondary"
-                  depressed
-                  class="text-capitalize"
-                  outlined
+                <v-btn color="secondary" class="text-capitalize" outlined
                   >Save as Draft</v-btn
                 >
-                <v-btn color="primary" depressed>Post</v-btn>
+                <v-btn color="primary">Post</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -106,7 +102,7 @@
         </v-row>
       </v-col>
     </v-row>
-  </section>
+  </v-container>
 </template>
 
 <script>
