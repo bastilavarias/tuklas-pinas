@@ -116,8 +116,14 @@ const routes = [
     children: [
       {
         path: "",
-        name: "discover",
-        component: () => import("../pages/Discover"),
+        component: () => import("../pages/discover/Map"),
+        children: [
+          {
+            path: "",
+            name: "discover",
+            component: () => import("../pages/discover/Posts"),
+          },
+        ],
       },
     ],
   },
