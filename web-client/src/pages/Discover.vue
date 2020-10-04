@@ -89,26 +89,16 @@
           </v-row>
         </div>
         <div>
-          <div class="px-4 d-flex justify-space-between align-center mb-5">
-            <span class="subtitle-1 secondary--text font-weight-bold"
-              >Posts</span
-            >
-            <span>
-              <custom-tooltip-button
-                icon="mdi-sort"
-                text="Sort Posts"
-              ></custom-tooltip-button>
-              <custom-tooltip-button
-                icon="mdi-filter"
-                text="Filter Posts"
-              ></custom-tooltip-button>
-            </span>
-          </div>
+          <discover-page-posts-toolbar></discover-page-posts-toolbar>
           <template v-for="n in 4">
-            <discover-post-preview-item
-              :key="n"
-              :type="n % 2 == 0 ? 'itinerary' : 'travel-story'"
-            ></discover-post-preview-item>
+            <div :key="n">
+              <generic-itinerary-post-search-preview
+                v-if="n % 2 === 0"
+              ></generic-itinerary-post-search-preview>
+              <generic-travel-story-post-search-preview
+                v-if="n % 2 !== 0"
+              ></generic-travel-story-post-search-preview>
+            </div>
             <v-divider v-if="n !== 5"> </v-divider>
           </template>
         </div>
@@ -121,12 +111,16 @@
 import { latLng } from "leaflet";
 import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from "vue2-leaflet";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
-import DiscoverPostPreviewItem from "@/components/discover/PostPreviewItem";
+import GenericItineraryPostSearchPreview from "@/components/generic/search-preview/ItineraryPost";
+import GenericTravelStoryPostSearchPreview from "@/components/generic/search-preview/TravelStoryPost";
+import DiscoverPagePostsToolbar from "@/components/discover-page/PostsToolbar";
 
 export default {
   name: "Example",
   components: {
-    DiscoverPostPreviewItem,
+    DiscoverPagePostsToolbar,
+    GenericTravelStoryPostSearchPreview,
+    GenericItineraryPostSearchPreview,
     CustomTooltipButton,
     LMap,
     LTileLayer,

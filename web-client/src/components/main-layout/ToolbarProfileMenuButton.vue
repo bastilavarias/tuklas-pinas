@@ -62,7 +62,7 @@
 
 <script>
 export default {
-  name: "main-toolbar-profile-menu-button",
+  name: "main-layout-toolbar-profile-menu-button",
 
   props: {
     buttonClassName: {

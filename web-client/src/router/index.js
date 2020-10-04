@@ -121,6 +121,28 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/search",
+    component: () => import("../layouts/Main"),
+    children: [
+      {
+        path: "",
+        name: "search",
+        component: () => import("../pages/Search"),
+      },
+    ],
+  },
+  {
+    path: "/notification",
+    component: () => import("../layouts/Main"),
+    children: [
+      {
+        path: "",
+        name: "notification",
+        component: () => import("../pages/Notification"),
+      },
+    ],
+  },
 ];
 
 const router = new VueRouter({
