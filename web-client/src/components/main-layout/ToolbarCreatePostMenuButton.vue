@@ -44,7 +44,7 @@
 
 <script>
 export default {
-  name: "main-toolbar-create-post-menu-button",
+  name: "main-layout-toolbar-create-post-menu-button",
 
   props: {
     buttonClassName: {
