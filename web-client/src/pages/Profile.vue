@@ -5,36 +5,45 @@
         <v-col cols="12">
           <v-row>
             <v-col cols="12">
-              <v-card outlined>
-                <profile-page-display-images-input
-                  :height="200"
-                  class-name="mb-15"
-                ></profile-page-display-images-input>
-                <div>
-                  <div class="text-center mb-5">
-                    <h1 class="title font-weight-bold secondary--text">
-                      Sebastian Lavarias
-                    </h1>
-                    <span>
-                      <v-icon color="primary" class="mr-1" small>
-                        mdi-map-marker-outline
-                      </v-icon>
-                      <span class="subtitle-2">Manila, Philippines</span></span
-                    >
-                  </div>
-                  <div class="mb-5 d-flex justify-space-around align-center">
-                    <div class="text-center">
-                      <h2 class="subtitle-2 secondary--text">Followers</h2>
-                      <span class="caption">99</span>
-                    </div>
-                    <v-divider vertical></v-divider>
-                    <div class="text-center">
-                      <h2 class="subtitle-2 secondary--text">Following</h2>
-                      <span class="caption">99</span>
-                    </div>
-                  </div>
-                </div>
-              </v-card>
+              <profile-page-header></profile-page-header>
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-col cols="12" md="3">
+          <v-row>
+            <v-col cols="12">
+              <profile-page-about-side-card></profile-page-about-side-card>
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-row>
+            <v-col cols="12">
+              <profile-page-posts-card></profile-page-posts-card>
+            </v-col>
+            <v-col cols="12">
+              <template v-for="n in [1]">
+                <generic-travel-story-post-preview
+                  :key="n"
+                  class-name="mb-5"
+                ></generic-travel-story-post-preview>
+              </template>
+              <template v-for="n in [2]">
+                <generic-itinerary-post-preview
+                  :key="n"
+                  class-name="mb-5"
+                ></generic-itinerary-post-preview>
+              </template>
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-col cols="12" md="3">
+          <v-row>
+            <v-col cols="12">
+              <generic-suggested-people-side-card></generic-suggested-people-side-card>
+            </v-col>
+            <v-col cols="12">
+              <generic-sticky-footer-card></generic-sticky-footer-card>
             </v-col>
           </v-row>
         </v-col>
@@ -43,8 +52,22 @@
   </section>
 </template>
 <script>
-import ProfilePageDisplayImagesInput from "@/components/profile-page/DisplayImagesInput";
+import ProfilePageHeader from "@/components/profile-page/Header";
+import ProfilePagePostsCard from "@/components/profile-page/PostsCard";
+import GenericTravelStoryPostPreview from "@/components/generic/TravelStoryPostPreview";
+import GenericItineraryPostPreview from "@/components/generic/ItineraryPostPreview";
+import ProfilePageAboutSideCard from "@/components/profile-page/AboutSideCard";
+import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
+import GenericSuggestedPeopleSideCard from "@/components/generic/SuggestedPeopleSideCard";
 export default {
-  components: { ProfilePageDisplayImagesInput },
+  components: {
+    GenericSuggestedPeopleSideCard,
+    GenericStickyFooterCard,
+    ProfilePageAboutSideCard,
+    GenericItineraryPostPreview,
+    GenericTravelStoryPostPreview,
+    ProfilePagePostsCard,
+    ProfilePageHeader,
+  },
 };
 </script>
