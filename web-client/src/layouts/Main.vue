@@ -43,6 +43,7 @@
         icon="mdi-magnify"
         text="Search"
         :to="{ name: 'search' }"
+        exact-active-class="primary"
       >
       </custom-tooltip-button>
       <custom-tooltip-button

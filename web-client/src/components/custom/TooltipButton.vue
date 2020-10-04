@@ -1,7 +1,13 @@
 <template>
   <v-tooltip bottom>
     <template v-slot:activator="{ on }">
-      <v-btn v-on="on" icon :color="color" @click="action" :to="to"
+      <v-btn
+        v-on="on"
+        icon
+        :color="color"
+        @click="action"
+        :to="to"
+        :exact-active-class="exactActiveClass"
         ><v-icon>{{ icon }}</v-icon></v-btn
       >
     </template>
@@ -33,6 +39,10 @@ export default {
     },
     to: {
       type: Object,
+      required: false,
+    },
+    exactActiveClass: {
+      type: String,
       required: false,
     },
   },

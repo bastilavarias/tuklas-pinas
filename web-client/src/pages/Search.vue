@@ -8,6 +8,9 @@
               <search-page-toolbar-card></search-page-toolbar-card>
             </v-col>
             <v-col cols="12">
+              <search-page-people-card></search-page-people-card>
+            </v-col>
+            <v-col cols="12">
               <search-page-itinerary-posts-card></search-page-itinerary-posts-card>
             </v-col>
             <v-col cols="12">
@@ -35,8 +38,10 @@ import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
 import SearchPageToolbarCard from "@/components/search-page/ToolbarCard";
 import SearchPageTravelPostsCard from "@/components/search-page/TravelPostsCard";
 import SearchPageItineraryPostsCard from "@/components/search-page/ItineraryPostsCard";
+import SearchPagePeopleCard from "@/components/search-page/PeopleCard";
 export default {
   components: {
+    SearchPagePeopleCard,
     SearchPageItineraryPostsCard,
     SearchPageTravelPostsCard,
     SearchPageToolbarCard,
