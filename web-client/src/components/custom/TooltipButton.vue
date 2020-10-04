@@ -1,7 +1,7 @@
 <template>
   <v-tooltip bottom>
     <template v-slot:activator="{ on }">
-      <v-btn v-on="on" icon :color="color" @click="action"
+      <v-btn v-on="on" icon :color="color" @click="action" :to="to"
         ><v-icon>{{ icon }}</v-icon></v-btn
       >
     </template>
@@ -30,6 +30,10 @@ export default {
       type: Function,
       required: false,
       default: () => 1,
+    },
+    to: {
+      type: Object,
+      required: false,
     },
   },
 };
