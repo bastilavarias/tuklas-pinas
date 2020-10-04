@@ -1,5 +1,6 @@
 <template>
   <v-card outlined>
+    <v-card-title class="font-weight-bold">Search</v-card-title>
     <v-toolbar flat>
       <v-text-field
         append-icon="mdi-magnify"
@@ -24,6 +25,6 @@
 
 <script>
 export default {
-  name: "search-page-toolbar-card",
+  name: "search-page-search-toolbar-card",
 };
 </script>
