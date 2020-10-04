@@ -12,7 +12,7 @@
         </v-avatar>
       </div>
     </div>
-    <v-list-item three-line v-if="type === 'itinerary'">
+    <v-list-item three-line>
       <v-list-item-avatar :size="75" tile>
         <v-img
           src="https://images.pexels.com/photos/2604843/pexels-photo-2604843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
@@ -43,55 +43,12 @@
         <v-list-item-subtitle>18 Destinations • 4 Events</v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
-    <v-list-item three-line v-if="type === 'travel-story'">
-      <v-list-item-avatar :size="75" tile>
-        <v-img
-          src="https://images.pexels.com/photos/2604843/pexels-photo-2604843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-        ></v-img>
-      </v-list-item-avatar>
-      <v-list-item-content>
-        <v-list-item-subtitle>
-          <v-icon small class="mr-1">mdi-map-marker-outline</v-icon>
-          <span class="caption">Destination Name</span>
-        </v-list-item-subtitle>
-        <v-list-item-title>
-          <span class="font-weight-bold d-block">Travel Story Title</span>
-          <span
-            >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab
-            aperiam error eum facere illum nisi obcaecati quibusdam, quos saepe
-            voluptas.</span
-          >
-        </v-list-item-title>
-        <v-list-item-subtitle>
-          <span class="d-flex align-center">
-            <span class="mr-3">
-              <v-icon small class="mr-1" color="error">mdi-heart</v-icon>
-              <span>1k</span>
-            </span>
-            <span class="mr-3">
-              <v-icon small class="mr-1">mdi-comment</v-icon>
-              <span>1k</span>
-            </span>
-            <span>
-              <v-icon small class="mr-1">mdi-share</v-icon>
-              <span>1k</span>
-            </span>
-          </span>
-        </v-list-item-subtitle>
-      </v-list-item-content>
-    </v-list-item>
   </div>
 </template>
 
 <script>
 export default {
-  name: "discover-post-preview-item",
-  props: {
-    type: {
-      type: String,
-      required: true,
-    },
-  },
+  name: "generic-itinerary-post-search-preview",
   data() {
     return {
       rating: 4,

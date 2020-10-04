@@ -39,7 +39,12 @@
       </v-btn>
       <v-spacer> </v-spacer>
       <main-toolbar-create-post-menu-button></main-toolbar-create-post-menu-button>
-      <custom-tooltip-button icon="mdi-magnify" text="Search">
+      <custom-tooltip-button
+        icon="mdi-magnify"
+        text="Search"
+        :to="{ name: 'search' }"
+        exact-active-class="primary"
+      >
       </custom-tooltip-button>
       <custom-tooltip-button
         icon="mdi-bell"
