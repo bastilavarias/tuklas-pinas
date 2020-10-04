@@ -89,21 +89,7 @@
           </v-row>
         </div>
         <div>
-          <div class="px-4 d-flex justify-space-between align-center mb-5">
-            <span class="subtitle-1 secondary--text font-weight-bold"
-              >Posts</span
-            >
-            <span>
-              <custom-tooltip-button
-                icon="mdi-sort"
-                text="Sort Posts"
-              ></custom-tooltip-button>
-              <custom-tooltip-button
-                icon="mdi-filter"
-                text="Filter Posts"
-              ></custom-tooltip-button>
-            </span>
-          </div>
+          <discover-page-posts-toolbar></discover-page-posts-toolbar>
           <template v-for="n in 4">
             <div :key="n">
               <generic-itinerary-post-search-preview
@@ -127,10 +113,12 @@ import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from "vue2-leaflet";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
 import GenericItineraryPostSearchPreview from "@/components/generic/search-preview/ItineraryPost";
 import GenericTravelStoryPostSearchPreview from "@/components/generic/search-preview/TravelStoryPost";
+import DiscoverPagePostsToolbar from "@/components/discover-page/PostsToolbar";
 
 export default {
   name: "Example",
   components: {
+    DiscoverPagePostsToolbar,
     GenericTravelStoryPostSearchPreview,
     GenericItineraryPostSearchPreview,
     CustomTooltipButton,

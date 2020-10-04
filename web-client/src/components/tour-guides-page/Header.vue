@@ -65,7 +65,7 @@
 import Carousel from "vue-owl-carousel";
 
 export default {
-  name: "tour-guides-header",
+  name: "tour-guides-page-header",
   components: { Carousel },
   methods: {
     goToContent() {

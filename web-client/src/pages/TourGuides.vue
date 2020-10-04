@@ -1,35 +1,14 @@
 <template>
   <section>
-    <tour-guides-header></tour-guides-header>
+    <tour-guides-page-header></tour-guides-page-header>
     <div id="tour-guides-content">
       <v-container>
         <v-row>
           <v-col cols="12">
-            <v-toolbar>
-              <v-autocomplete
-                outlined
-                single-line
-                label="Search Destination"
-                dense
-                hide-details
-                append-icon="mdi-magnify"
-              ></v-autocomplete>
-              <v-spacer></v-spacer>
-              <custom-tooltip-button
-                icon="mdi-filter"
-                text="Filter Tour Guides"
-              ></custom-tooltip-button>
-              <custom-tooltip-button
-                icon="mdi-sort"
-                text="Sort Tour Guides"
-              ></custom-tooltip-button>
-            </v-toolbar>
+            <tour-guides-page-search-toolbar-card></tour-guides-page-search-toolbar-card>
           </v-col>
           <v-col>
             <v-row dense>
-              <v-col cols="12">
-                <span class="subtitle-1">Results</span>
-              </v-col>
               <template v-for="n in 9">
                 <v-col cols="12" md="4" :key="n">
                   <generic-tour-guide-profile-preview></generic-tour-guide-profile-preview>
@@ -48,14 +27,16 @@
 <script>
 import GenericFooter from "@/components/generic/Footer";
 import GenericAboutLocalTourGuidesSection from "@/components/generic/section/AboutLocalTourGuides";
-import TourGuidesHeader from "@/components/tour-guides/Header";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
 import GenericTourGuideProfilePreview from "@/components/generic/TourGuideProfilePreview";
+import TourGuidesPageHeader from "@/components/tour-guides-page/Header";
+import TourGuidesPageSearchToolbarCard from "@/components/tour-guides-page/SearchToolbarCard";
 export default {
   components: {
+    TourGuidesPageSearchToolbarCard,
+    TourGuidesPageHeader,
     GenericTourGuideProfilePreview,
     CustomTooltipButton,
-    TourGuidesHeader,
     GenericAboutLocalTourGuidesSection,
     GenericFooter,
   },

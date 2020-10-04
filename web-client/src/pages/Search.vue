@@ -5,7 +5,7 @@
         <v-col cols="12" md="9">
           <v-row>
             <v-col cols="12">
-              <search-page-toolbar-card></search-page-toolbar-card>
+              <search-page-search-toolbar-card></search-page-search-toolbar-card>
             </v-col>
             <v-col cols="12">
               <search-page-people-card></search-page-people-card>
@@ -35,16 +35,16 @@
 <script>
 import GenericEventsExplorerPreviewSideCard from "@/components/generic/EventsExplorerPreviewSideCard";
 import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
-import SearchPageToolbarCard from "@/components/search-page/ToolbarCard";
 import SearchPageTravelPostsCard from "@/components/search-page/TravelPostsCard";
 import SearchPageItineraryPostsCard from "@/components/search-page/ItineraryPostsCard";
 import SearchPagePeopleCard from "@/components/search-page/PeopleCard";
+import SearchPageSearchToolbarCard from "@/components/search-page/SearchToolbarCard";
 export default {
   components: {
+    SearchPageSearchToolbarCard,
     SearchPagePeopleCard,
     SearchPageItineraryPostsCard,
     SearchPageTravelPostsCard,
-    SearchPageToolbarCard,
     GenericStickyFooterCard,
     GenericEventsExplorerPreviewSideCard,
   },
