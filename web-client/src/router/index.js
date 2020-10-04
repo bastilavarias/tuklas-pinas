@@ -143,6 +143,17 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/profile",
+    component: () => import("../layouts/Main"),
+    children: [
+      {
+        path: ":profileID",
+        name: "profile",
+        component: () => import("../pages/Profile"),
+      },
+    ],
+  },
 ];
 
 const router = new VueRouter({
