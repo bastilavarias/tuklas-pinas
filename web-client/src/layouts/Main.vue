@@ -38,7 +38,7 @@
         <v-icon>mdi-map-search</v-icon>
       </v-btn>
       <v-spacer> </v-spacer>
-      <main-toolbar-create-post-menu-button></main-toolbar-create-post-menu-button>
+      <main-layout-toolbar-create-post-menu-button></main-layout-toolbar-create-post-menu-button>
       <custom-tooltip-button
         icon="mdi-magnify"
         text="Search"
@@ -46,11 +46,8 @@
         exact-active-class="primary"
       >
       </custom-tooltip-button>
-      <custom-tooltip-button
-        icon="mdi-bell"
-        text="Notifications"
-      ></custom-tooltip-button>
-      <main-toolbar-profile-menu-button></main-toolbar-profile-menu-button>
+      <main-layout-toolbar-notification-menu-button></main-layout-toolbar-notification-menu-button>
+      <main-layout-toolbar-profile-menu-button></main-layout-toolbar-profile-menu-button>
     </v-app-bar>
     <v-main>
       <router-view></router-view>
@@ -59,15 +56,17 @@
 </template>
 
 <script>
-import MainToolbarProfileMenuButton from "@/components/main/ToolbarProfileMenuButton";
-import MainToolbarCreatePostMenuButton from "@/components/main/ToolbarCreatePostMenuButton";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
+import MainLayoutToolbarCreatePostMenuButton from "@/components/main-layout/ToolbarCreatePostMenuButton";
+import MainLayoutToolbarProfileMenuButton from "@/components/main-layout/ToolbarProfileMenuButton";
+import MainLayoutToolbarNotificationMenuButton from "@/components/main-layout/ToolbarNotificationMenuButton";
 export default {
   name: "main-layout",
   components: {
+    MainLayoutToolbarNotificationMenuButton,
+    MainLayoutToolbarProfileMenuButton,
+    MainLayoutToolbarCreatePostMenuButton,
     CustomTooltipButton,
-    MainToolbarCreatePostMenuButton,
-    MainToolbarProfileMenuButton,
   },
 };
 </script>
