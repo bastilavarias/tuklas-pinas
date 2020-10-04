@@ -24,7 +24,13 @@
         ></generic-notification-list-item>
       </template>
       <v-card-actions>
-        <v-btn color="secondary" block class="text-capitalize">See All</v-btn>
+        <v-btn
+          color="secondary"
+          block
+          class="text-capitalize"
+          :to="{ name: 'notification' }"
+          >See All</v-btn
+        >
       </v-card-actions>
     </v-card>
   </v-menu>
