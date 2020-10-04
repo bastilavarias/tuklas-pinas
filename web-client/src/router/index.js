@@ -149,8 +149,19 @@ const routes = [
     children: [
       {
         path: ":profileID",
-        name: "profile",
-        component: () => import("../pages/Profile"),
+        component: () => import("../pages/profile/Index"),
+        children: [
+          {
+            path: "",
+            name: "profile-wall",
+            component: () => import("../pages/profile/Wall"),
+          },
+          {
+            path: "travel-map",
+            name: "profile-travel-map",
+            component: () => import("../pages/profile/TravelMap"),
+          },
+        ],
       },
     ],
   },

@@ -28,7 +28,14 @@
     </v-list-item>
     <v-tabs color="primary">
       <template v-for="(tab, index) in tabSelections">
-        <v-tab :key="index" class="text-capitalize">{{ tab }}</v-tab>
+        <v-tab
+          :key="index"
+          class="text-capitalize"
+          :to="tab.to"
+          exact
+          exact-active-class="primary--text"
+          >{{ tab.text }}</v-tab
+        >
       </template>
     </v-tabs>
   </v-card>
@@ -41,7 +48,16 @@ export default {
   components: { ProfilePageDisplayImagesInput },
   data() {
     return {
-      tabSelections: ["General", "Travel History"],
+      tabSelections: [
+        {
+          text: "Wall",
+          to: { name: "profile-wall", params: { profileID: 1 } },
+        },
+        {
+          text: "Travel Map",
+          to: { name: "profile-travel-map", params: { profileID: 1 } },
+        },
+      ],
     };
   },
 };

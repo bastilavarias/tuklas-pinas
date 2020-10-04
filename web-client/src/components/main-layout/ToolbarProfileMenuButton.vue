@@ -24,7 +24,9 @@
     </template>
     <v-card>
       <v-list-item two-line>
-        <custom-router-link :to="{ name: 'profile', params: { profileID: 1 } }">
+        <custom-router-link
+          :to="{ name: 'profile-wall', params: { profileID: 1 } }"
+        >
           <v-list-item-avatar :size="50">
             <v-img
               src="https://bastilavarias.github.io/assets/img/sebastian-lavarias.5c3a8fdd.png"
@@ -34,14 +36,14 @@
         <v-list-item-content>
           <v-list-item-title>
             <custom-router-link
-              :to="{ name: 'profile', params: { profileID: 1 } }"
+              :to="{ name: 'profile-wall', params: { profileID: 1 } }"
             >
               <span class="font-weight-bold secondary--text">Sebastian L.</span>
             </custom-router-link>
           </v-list-item-title>
           <v-list-item-subtitle>
             <custom-router-link
-              :to="{ name: 'profile', params: { profileID: 1 } }"
+              :to="{ name: 'profile-wall', params: { profileID: 1 } }"
             >
               <span class="secondary--text">See Profile</span>
             </custom-router-link>
