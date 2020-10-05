@@ -3,7 +3,7 @@
     <v-col cols="12" md="3">
       <v-row>
         <v-col cols="12">
-          <profile-page-about-side-card></profile-page-about-side-card>
+          <profile-page-events-side-card></profile-page-events-side-card>
         </v-col>
       </v-row>
     </v-col>
@@ -41,20 +41,20 @@
   </v-row>
 </template>
 <script>
-import ProfilePageAboutSideCard from "@/components/profile-page/AboutSideCard";
 import ProfilePagePostsCard from "@/components/profile-page/PostsCard";
 import GenericTravelStoryPostPreview from "@/components/generic/TravelStoryPostPreview";
 import GenericItineraryPostPreview from "@/components/generic/ItineraryPostPreview";
 import GenericSuggestedPeopleSideCard from "@/components/generic/SuggestedPeopleSideCard";
 import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
+import ProfilePageEventsSideCard from "@/components/profile-page/EventsSideCard";
 export default {
   components: {
+    ProfilePageEventsSideCard,
     GenericStickyFooterCard,
     GenericSuggestedPeopleSideCard,
     GenericItineraryPostPreview,
     GenericTravelStoryPostPreview,
     ProfilePagePostsCard,
-    ProfilePageAboutSideCard,
   },
 };
 </script>
