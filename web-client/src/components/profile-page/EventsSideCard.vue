@@ -4,7 +4,9 @@
     <v-card-text>
       <template v-for="(event, index) in events">
         <v-chip :key="index" class="ma-1" :color="event.color">
-          <v-icon left>{{ event.icon }}</v-icon>
+          <v-icon left v-if="event.text !== 'Project 81'">{{
+            event.icon
+          }}</v-icon>
           <span class="font-weight-bold"> {{ event.text }} </span>
         </v-chip>
       </template>
@@ -25,17 +27,17 @@ export default {
         },
         {
           text: "Chasing Waterfalls",
-          icon: "mdi-hiking",
+          icon: "mdi-hydro-power",
           color: "primary",
         },
         {
           text: "Food Trippers",
-          icon: "mdi-hiking",
+          icon: "mdi-food",
           color: "primary",
         },
         {
           text: "Backpackers",
-          icon: "mdi-hiking",
+          icon: "mdi-bag-personal",
           color: "primary",
         },
         {
@@ -45,17 +47,17 @@ export default {
         },
         {
           text: "Solo Trip",
-          icon: "mdi-hiking",
+          icon: "mdi-human-handsup",
           color: "primary",
         },
         {
           text: "Couple Adventure",
-          icon: "mdi-hiking",
+          icon: "mdi-human-male-female",
           color: "primary",
         },
         {
           text: "Barkada Adventure",
-          icon: "mdi-hiking",
+          icon: "mdi-human-queue",
           color: "primary",
         },
       ],
