@@ -110,7 +110,6 @@
 <script>
 import { latLng } from "leaflet";
 import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from "vue2-leaflet";
-import CustomTooltipButton from "@/components/custom/TooltipButton";
 import GenericItineraryPostSearchPreview from "@/components/generic/search-preview/ItineraryPost";
 import GenericTravelStoryPostSearchPreview from "@/components/generic/search-preview/TravelStoryPost";
 import DiscoverPagePostsToolbar from "@/components/discover-page/PostsToolbar";
@@ -121,7 +120,6 @@ export default {
     DiscoverPagePostsToolbar,
     GenericTravelStoryPostSearchPreview,
     GenericItineraryPostSearchPreview,
-    CustomTooltipButton,
     LMap,
     LTileLayer,
     LMarker,
@@ -179,14 +177,5 @@ export default {
   top: 0;
   left: 0;
   z-index: 0 !important;
-}
-
-.search-field {
-  position: absolute;
-  width: 30rem;
-  top: 3%;
-  left: 50%;
-  transform: translate(-50%, -10%);
-  z-index: 1;
 }
 </style>
