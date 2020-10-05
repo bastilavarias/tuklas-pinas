@@ -157,9 +157,9 @@ const routes = [
             component: () => import("../pages/profile/Wall"),
           },
           {
-            path: "travel-map",
-            name: "profile-travel-map",
-            component: () => import("../pages/profile/TravelMap"),
+            path: "travel-history",
+            name: "profile-travel-history",
+            component: () => import("../pages/profile/TravelHistory"),
           },
         ],
       },

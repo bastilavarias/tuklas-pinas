@@ -54,8 +54,8 @@ export default {
           to: { name: "profile-wall", params: { profileID: 1 } },
         },
         {
-          text: "Travel Map",
-          to: { name: "profile-travel-map", params: { profileID: 1 } },
+          text: "Travel History",
+          to: { name: "profile-travel-history", params: { profileID: 1 } },
         },
       ],
     };
