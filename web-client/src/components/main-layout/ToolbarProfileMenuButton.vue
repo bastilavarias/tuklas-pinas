@@ -24,16 +24,30 @@
     </template>
     <v-card>
       <v-list-item two-line>
-        <v-list-item-avatar :size="50">
-          <v-img
-            src="https://bastilavarias.github.io/assets/img/sebastian-lavarias.5c3a8fdd.png"
-          ></v-img>
-        </v-list-item-avatar>
+        <custom-router-link
+          :to="{ name: 'profile-wall', params: { profileID: 1 } }"
+        >
+          <v-list-item-avatar :size="50">
+            <v-img
+              src="https://bastilavarias.github.io/assets/img/sebastian-lavarias.5c3a8fdd.png"
+            ></v-img>
+          </v-list-item-avatar>
+        </custom-router-link>
         <v-list-item-content>
-          <v-list-item-title class="font-weight-bold"
-            >Sebastian Lavarias</v-list-item-title
-          >
-          <v-list-item-subtitle>See your profile</v-list-item-subtitle>
+          <v-list-item-title>
+            <custom-router-link
+              :to="{ name: 'profile-wall', params: { profileID: 1 } }"
+            >
+              <span class="font-weight-bold secondary--text">Sebastian L.</span>
+            </custom-router-link>
+          </v-list-item-title>
+          <v-list-item-subtitle>
+            <custom-router-link
+              :to="{ name: 'profile-wall', params: { profileID: 1 } }"
+            >
+              <span class="secondary--text">See Profile</span>
+            </custom-router-link>
+          </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
@@ -61,9 +75,10 @@
 </template>
 
 <script>
+import CustomRouterLink from "@/components/custom/RouterLink";
 export default {
   name: "main-layout-toolbar-profile-menu-button",
-
+  components: { CustomRouterLink },
   props: {
     buttonClassName: {
       type: String,

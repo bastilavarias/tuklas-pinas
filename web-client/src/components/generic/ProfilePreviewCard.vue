@@ -38,7 +38,12 @@
           </div>
         </div>
       </div>
-      <v-btn color="secondary" text class="text-capitalize" block
+      <v-btn
+        color="secondary"
+        text
+        class="text-capitalize"
+        block
+        :to="{ name: 'profile-wall', params: { profileID: 1 } }"
         >View Profile</v-btn
       >
     </v-card-text>
