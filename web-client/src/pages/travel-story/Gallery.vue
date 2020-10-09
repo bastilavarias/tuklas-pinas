@@ -84,11 +84,7 @@
 </template>
 
 <script>
-import Carousel from "vue-owl-carousel";
-
 export default {
-  components: { Carousel },
-
   data() {
     return {
       isOpen: false,

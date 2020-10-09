@@ -4,7 +4,7 @@
       <v-col cols="12" md="3">
         <v-row>
           <v-col cols="12">
-            <generic-profile-preview-card></generic-profile-preview-card>
+            <generic-mini-profile-side-card></generic-mini-profile-side-card>
           </v-col>
           <v-col cols="12">
             <generic-top-categories-side-card></generic-top-categories-side-card>
@@ -14,16 +14,16 @@
       <v-col cols="12" md="6">
         <v-row>
           <v-col cols="12">
-            <itinerary-post-detail-card></itinerary-post-detail-card>
+            <itinerary-post-page-detail-card></itinerary-post-page-detail-card>
           </v-col>
           <v-col cols="12">
-            <itinerary-post-timeline-card></itinerary-post-timeline-card>
+            <itinerary-post-page-timeline-card></itinerary-post-page-timeline-card>
           </v-col>
           <v-col cols="12">
-            <itinerary-post-personal-reviews-card></itinerary-post-personal-reviews-card>
+            <itinerary-post-page-personal-reviews-card></itinerary-post-page-personal-reviews-card>
           </v-col>
           <v-col cols="12">
-            <itinerary-post-tags-card></itinerary-post-tags-card>
+            <itinerary-post-page-tags-card></itinerary-post-page-tags-card>
           </v-col>
           <v-col cols="12">
             <v-card outlined tile>
@@ -80,13 +80,13 @@
       <v-col cols="12" md="3">
         <v-row>
           <v-col cols="12">
-            <generic-events-explorer-preview-side-card></generic-events-explorer-preview-side-card>
+            <generic-mini-events-explorer-side-card></generic-mini-events-explorer-side-card>
           </v-col>
           <v-col cols="12">
             <generic-suggested-people-side-card></generic-suggested-people-side-card>
           </v-col>
           <v-col cols="12">
-            <generic-sticky-footer-card></generic-sticky-footer-card>
+            <generic-sticky-footer></generic-sticky-footer>
           </v-col>
         </v-row>
       </v-col>
@@ -96,34 +96,24 @@
 </template>
 
 <script>
-import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
-import Carousel from "vue-owl-carousel";
-import CustomRouterLink from "@/components/custom/RouterLink";
-import GenericCommentMedia from "@/components/generic/comment/Media";
-import GenericCommentReplyMedia from "@/components/generic/comment/ReplyMedia";
-import ItineraryPostDetailCard from "@/components/itinerary-post/detail-card/Index";
-import ItineraryPostTimelineCard from "@/components/itinerary-post/TimelineCard";
-import ItineraryPostPersonalReviewsCard from "@/components/itinerary-post/personal-reviews-card/Index";
-import ItineraryPostTagsCard from "@/components/itinerary-post/TagsCard";
-import GenericProfilePreviewCard from "@/components/generic/ProfilePreviewCard";
-import GenericTopCategoriesSideCard from "@/components/generic/TopCategoriesSideCard";
-import GenericEventsExplorerPreviewSideCard from "@/components/generic/EventsExplorerPreviewSideCard";
-import GenericSuggestedPeopleSideCard from "@/components/generic/SuggestedPeopleSideCard";
+import GenericMiniProfileSideCard from "@/components/generic/card/MiniProfile";
+import GenericTopCategoriesSideCard from "@/components/generic/card/TopCategories";
+import ItineraryPostPageDetailCard from "@/components/itinerary-post-page/detail-card/Index";
+import ItineraryPostPageTimelineCard from "@/components/itinerary-post-page/TimelineCard";
+import ItineraryPostPagePersonalReviewsCard from "@/components/itinerary-post-page/personal-reviews-card/Index";
+import ItineraryPostPageTagsCard from "@/components/itinerary-post-page/TagsCard";
+import GenericCommentMedia from "@/components/generic/media/Comment";
+import GenericCommentReplyMedia from "@/components/generic/media/CommentReply";
 export default {
   components: {
-    GenericSuggestedPeopleSideCard,
-    GenericEventsExplorerPreviewSideCard,
-    GenericTopCategoriesSideCard,
-    GenericProfilePreviewCard,
-    ItineraryPostTagsCard,
-    ItineraryPostPersonalReviewsCard,
-    ItineraryPostTimelineCard,
-    ItineraryPostDetailCard,
     GenericCommentReplyMedia,
     GenericCommentMedia,
-    CustomRouterLink,
-    GenericStickyFooterCard,
-    Carousel,
+    ItineraryPostPageTagsCard,
+    ItineraryPostPagePersonalReviewsCard,
+    ItineraryPostPageTimelineCard,
+    ItineraryPostPageDetailCard,
+    GenericTopCategoriesSideCard,
+    GenericMiniProfileSideCard,
   },
 
   data() {

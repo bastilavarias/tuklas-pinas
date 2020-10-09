@@ -61,7 +61,7 @@
       </v-list-item>
       <v-divider></v-divider>
       <template v-for="(action, index) in actions">
-        <v-list-item :key="index">
+        <v-list-item :key="index" :to="action.to" exact>
           <v-list-item-title class="font-weight-bold">{{
             action.title
           }}</v-list-item-title>
@@ -96,6 +96,7 @@ export default {
         {
           title: "Sign Out",
           icon: "mdi-logout",
+          to: { name: "home" },
         },
       ],
     };

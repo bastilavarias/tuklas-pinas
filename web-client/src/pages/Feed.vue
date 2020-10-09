@@ -4,7 +4,7 @@
       <v-col cols="12" md="3">
         <v-row>
           <v-col cols="12">
-            <generic-profile-preview-card></generic-profile-preview-card>
+            <generic-mini-profile-side-card></generic-mini-profile-side-card>
           </v-col>
           <v-col cols="12">
             <generic-top-categories-side-card></generic-top-categories-side-card>
@@ -29,16 +29,16 @@
               </template>
             </v-tabs>
             <template v-for="n in [1]">
-              <generic-travel-story-post-preview
+              <generic-travel-story-post-preview-card
                 :key="n"
                 class-name="mb-5"
-              ></generic-travel-story-post-preview>
+              ></generic-travel-story-post-preview-card>
             </template>
             <template v-for="n in [2]">
-              <generic-itinerary-post-preview
+              <generic-itinerary-post-preview-card
                 :key="n"
                 class-name="mb-5"
-              ></generic-itinerary-post-preview>
+              ></generic-itinerary-post-preview-card>
             </template>
           </v-col>
         </v-row>
@@ -46,13 +46,13 @@
       <v-col cols="12" md="3">
         <v-row>
           <v-col cols="12">
-            <generic-events-explorer-preview-side-card></generic-events-explorer-preview-side-card>
+            <generic-mini-events-explorer-side-card></generic-mini-events-explorer-side-card>
           </v-col>
           <v-col cols="12">
             <generic-suggested-people-side-card></generic-suggested-people-side-card>
           </v-col>
           <v-col cols="12">
-            <generic-sticky-footer-card></generic-sticky-footer-card>
+            <generic-sticky-footer></generic-sticky-footer>
           </v-col>
         </v-row>
       </v-col>
@@ -61,22 +61,22 @@
 </template>
 
 <script>
-import GenericTravelStoryPostPreview from "@/components/generic/TravelStoryPostPreview";
-import GenericItineraryPostPreview from "@/components/generic/ItineraryPostPreview";
-import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
-import GenericProfilePreviewCard from "@/components/generic/ProfilePreviewCard";
-import GenericTopCategoriesSideCard from "@/components/generic/TopCategoriesSideCard";
-import GenericEventsExplorerPreviewSideCard from "@/components/generic/EventsExplorerPreviewSideCard";
-import GenericSuggestedPeopleSideCard from "@/components/generic/SuggestedPeopleSideCard";
+import GenericMiniProfileSideCard from "@/components/generic/card/MiniProfile";
+import GenericTopCategoriesSideCard from "@/components/generic/card/TopCategories";
+import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEventsExplorer";
+import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedPeople";
+import GenericItineraryPostPreviewCard from "@/components/generic/card/ItineraryPostPreview";
+import GenericStickyFooter from "@/components/generic/footer/Sticky";
+import GenericTravelStoryPostPreviewCard from "@/components/generic/card/TravelStoryPostPreview";
 export default {
   components: {
+    GenericTravelStoryPostPreviewCard,
+    GenericStickyFooter,
+    GenericItineraryPostPreviewCard,
     GenericSuggestedPeopleSideCard,
-    GenericEventsExplorerPreviewSideCard,
+    GenericMiniEventsExplorerSideCard,
     GenericTopCategoriesSideCard,
-    GenericProfilePreviewCard,
-    GenericStickyFooterCard,
-    GenericItineraryPostPreview,
-    GenericTravelStoryPostPreview,
+    GenericMiniProfileSideCard,
   },
   data() {
     return {

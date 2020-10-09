@@ -97,7 +97,7 @@
             </span>
           </v-col>
           <v-col cols="12">
-            <generic-sticky-footer-card></generic-sticky-footer-card>
+            <generic-sticky-footer></generic-sticky-footer>
           </v-col>
         </v-row>
       </v-col>
@@ -106,11 +106,10 @@
 </template>
 
 <script>
-import GenericFooter from "@/components/generic/Footer";
-import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
 import CustomFileDropzone from "@/components/custom/FileDropzone";
+import GenericStickyFooter from "@/components/generic/footer/Sticky";
 
 export default {
-  components: { CustomFileDropzone, GenericStickyFooterCard, GenericFooter },
+  components: { GenericStickyFooter, CustomFileDropzone },
 };
 </script>
