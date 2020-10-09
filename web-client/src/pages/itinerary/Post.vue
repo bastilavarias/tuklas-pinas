@@ -98,8 +98,6 @@
 <script>
 import Carousel from "vue-owl-carousel";
 import CustomRouterLink from "@/components/custom/RouterLink";
-import GenericCommentMedia from "@/components/generic/comment/Media";
-import GenericCommentReplyMedia from "@/components/generic/comment/ReplyMedia";
 import GenericMiniProfileSideCard from "@/components/generic/card/MiniProfile";
 import GenericTopCategoriesSideCard from "@/components/generic/card/TopCategories";
 import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEventsExplorer";
@@ -109,8 +107,12 @@ import ItineraryPostPageDetailCard from "@/components/itinerary-post-page/detail
 import ItineraryPostPageTimelineCard from "@/components/itinerary-post-page/TimelineCard";
 import ItineraryPostPagePersonalReviewsCard from "@/components/itinerary-post-page/personal-reviews-card/Index";
 import ItineraryPostPageTagsCard from "@/components/itinerary-post-page/TagsCard";
+import GenericCommentMedia from "@/components/generic/media/Comment";
+import GenericCommentReplyMedia from "@/components/generic/media/CommentReply";
 export default {
   components: {
+    GenericCommentReplyMedia,
+    GenericCommentMedia,
     ItineraryPostPageTagsCard,
     ItineraryPostPagePersonalReviewsCard,
     ItineraryPostPageTimelineCard,
@@ -120,8 +122,6 @@ export default {
     GenericMiniEventsExplorerSideCard,
     GenericTopCategoriesSideCard,
     GenericMiniProfileSideCard,
-    GenericCommentReplyMedia,
-    GenericCommentMedia,
     CustomRouterLink,
     Carousel,
   },

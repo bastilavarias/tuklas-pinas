@@ -92,8 +92,6 @@
 <script>
 import Carousel from "vue-owl-carousel";
 import CustomRouterLink from "@/components/custom/RouterLink";
-import GenericCommentMedia from "@/components/generic/comment/Media";
-import GenericCommentReplyMedia from "@/components/generic/comment/ReplyMedia";
 import TravelStoryPostDetailCard from "@/components/travel-story-post/detail-card/Index";
 import TravelStoryPostTagsCard from "@/components/travel-story-post/TagsCard";
 import GenericMiniProfileSideCard from "@/components/generic/card/MiniProfile";
@@ -101,9 +99,13 @@ import GenericTopCategoriesSideCard from "@/components/generic/card/TopCategorie
 import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEventsExplorer";
 import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedPeople";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
+import GenericCommentMedia from "@/components/generic/media/Comment";
+import GenericCommentReplyMedia from "@/components/generic/media/CommentReply";
 
 export default {
   components: {
+    GenericCommentReplyMedia,
+    GenericCommentMedia,
     GenericStickyFooter,
     GenericSuggestedPeopleSideCard,
     GenericMiniEventsExplorerSideCard,
@@ -111,8 +113,6 @@ export default {
     GenericMiniProfileSideCard,
     TravelStoryPostTagsCard,
     TravelStoryPostDetailCard,
-    GenericCommentReplyMedia,
-    GenericCommentMedia,
     CustomRouterLink,
     Carousel,
   },
