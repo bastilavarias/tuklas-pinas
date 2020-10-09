@@ -48,7 +48,7 @@
 
 <script>
 export default {
-  name: "generic-itinerary-post-search-preview",
+  name: "generic-itinerary-post-search-preview-list-item",
   data() {
     return {
       rating: 4,

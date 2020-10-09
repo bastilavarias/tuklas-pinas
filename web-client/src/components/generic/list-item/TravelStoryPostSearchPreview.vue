@@ -54,6 +54,6 @@
 
 <script>
 export default {
-  name: "generic-travel-story-post-search-preview",
+  name: "generic-travel-story-post-search-preview-list-item",
 };
 </script>

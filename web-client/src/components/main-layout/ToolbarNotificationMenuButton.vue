@@ -18,10 +18,10 @@
     <v-card width="400" max-height="300" :style="{ overflow: 'auto' }">
       <v-card-title class="font-weight-bold">Notifications</v-card-title>
       <template v-for="n in 5">
-        <generic-notification-list-item
+        <generic-notification-preview-list-item
           :key="n"
           :is-read="n % 2 !== 0"
-        ></generic-notification-list-item>
+        ></generic-notification-preview-list-item>
       </template>
       <v-card-actions>
         <v-btn
@@ -37,10 +37,10 @@
 </template>
 
 <script>
-import GenericNotificationListItem from "@/components/generic/notification/ListItem";
+import GenericNotificationPreviewListItem from "@/components/generic/list-item/NotificationPreview";
 export default {
   name: "main-layout-toolbar-notification-menu-button",
-  components: { GenericNotificationListItem },
+  components: { GenericNotificationPreviewListItem },
   props: {
     buttonClassName: {
       type: String,

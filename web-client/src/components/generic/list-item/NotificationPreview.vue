@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  name: "generic-notification-list-item",
+  name: "generic-notification-preview-list-item",
 
   props: {
     isRead: {

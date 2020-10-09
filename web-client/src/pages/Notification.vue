@@ -17,10 +17,10 @@
                   </v-chip>
                 </v-toolbar>
                 <template v-for="n in 10">
-                  <generic-notification-list-item
+                  <generic-notification-preview-list-item
                     :key="n"
                     :is-read="n % 2 !== 0"
-                  ></generic-notification-list-item>
+                  ></generic-notification-preview-list-item>
                   <v-divider v-if="n !== 10"></v-divider>
                 </template>
               </v-card>
@@ -42,14 +42,14 @@
   </section>
 </template>
 <script>
-import GenericNotificationListItem from "@/components/generic/notification/ListItem";
 import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEventsExplorer";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
+import GenericNotificationPreviewListItem from "@/components/generic/list-item/NotificationPreview";
 export default {
   components: {
+    GenericNotificationPreviewListItem,
     GenericStickyFooter,
     GenericMiniEventsExplorerSideCard,
-    GenericNotificationListItem,
   },
 };
 </script>
