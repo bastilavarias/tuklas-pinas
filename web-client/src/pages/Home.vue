@@ -8,9 +8,9 @@
       width="100%"
       style="z-index: 3"
     >
-      <v-app-bar-nav-icon>
+      <custom-router-link :to="{ name: 'home' }">
         <v-icon large color="white"> mdi-map-marker </v-icon>
-      </v-app-bar-nav-icon>
+      </custom-router-link>
       <v-spacer> </v-spacer>
       <v-btn color="primary" class="text-capitalize" :to="{ name: 'sign-in' }"
         >Sign In</v-btn
@@ -44,6 +44,7 @@ import GenericAboutLocalTourGuidesDiv from "@/components/generic/div/AboutLocalT
 import HomePageFeaturedTravelStoriesDiv from "@/components/home-page/FeaturedTravelStoriesSection";
 import GenericHowItWorksDiv from "@/components/generic/div/HowItWorksSection";
 import GenericBasicFooter from "@/components/generic/footer/Basic";
+import CustomRouterLink from "@/components/custom/RouterLink";
 
 export default {
   name: "Home",
@@ -51,6 +52,7 @@ export default {
   mixins: [CommonUtilities],
 
   components: {
+    CustomRouterLink,
     GenericBasicFooter,
     GenericHowItWorksDiv,
     HomePageFeaturedTravelStoriesDiv,
