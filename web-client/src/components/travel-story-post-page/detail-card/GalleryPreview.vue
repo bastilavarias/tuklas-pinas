@@ -48,7 +48,7 @@
 
 <script>
 export default {
-  name: "travel-story-post-detail-card-gallery-preview",
+  name: "travel-story-post-page-detail-card-gallery-preview",
 };
 </script>
 

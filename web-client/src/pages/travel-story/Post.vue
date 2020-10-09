@@ -14,10 +14,10 @@
       <v-col cols="12" md="6">
         <v-row>
           <v-col cols="12">
-            <travel-story-post-detail-card></travel-story-post-detail-card>
+            <travel-story-post-page-detail-card></travel-story-post-page-detail-card>
           </v-col>
           <v-col cols="12">
-            <travel-story-post-tags-card></travel-story-post-tags-card>
+            <travel-story-post-page-tags-card></travel-story-post-page-tags-card>
           </v-col>
           <v-col cols="12">
             <v-card outlined tile>
@@ -92,8 +92,6 @@
 <script>
 import Carousel from "vue-owl-carousel";
 import CustomRouterLink from "@/components/custom/RouterLink";
-import TravelStoryPostDetailCard from "@/components/travel-story-post/detail-card/Index";
-import TravelStoryPostTagsCard from "@/components/travel-story-post/TagsCard";
 import GenericMiniProfileSideCard from "@/components/generic/card/MiniProfile";
 import GenericTopCategoriesSideCard from "@/components/generic/card/TopCategories";
 import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEventsExplorer";
@@ -101,9 +99,13 @@ import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedP
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
 import GenericCommentMedia from "@/components/generic/media/Comment";
 import GenericCommentReplyMedia from "@/components/generic/media/CommentReply";
+import TravelStoryPostPageDetailCard from "@/components/travel-story-post-page/detail-card/Index";
+import TravelStoryPostPageTagsCard from "@/components/travel-story-post-page/TagsCard";
 
 export default {
   components: {
+    TravelStoryPostPageTagsCard,
+    TravelStoryPostPageDetailCard,
     GenericCommentReplyMedia,
     GenericCommentMedia,
     GenericStickyFooter,
@@ -111,8 +113,6 @@ export default {
     GenericMiniEventsExplorerSideCard,
     GenericTopCategoriesSideCard,
     GenericMiniProfileSideCard,
-    TravelStoryPostTagsCard,
-    TravelStoryPostDetailCard,
     CustomRouterLink,
     Carousel,
   },

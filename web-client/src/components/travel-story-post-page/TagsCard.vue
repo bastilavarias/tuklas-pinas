@@ -11,6 +11,6 @@
 
 <script>
 export default {
-  name: "travel-story-post-tags-card",
+  name: "travel-story-post-page-tags-card",
 };
 </script>
