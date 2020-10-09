@@ -7,21 +7,20 @@
         </v-icon>
       </v-app-bar-nav-icon>
       <v-spacer> </v-spacer>
-      <v-btn color="transparent" depressed class="text-capitalize white--text"
-        >Travel Stories</v-btn
-      >
-      <v-btn color="transparent" depressed class="text-capitalize white--text"
-        >Itineraries</v-btn
-      >
-      <v-btn color="transparent" depressed class="text-capitalize white--text"
-        >Hire a Guide</v-btn
+      <v-btn
+        color="white"
+        class="text-capitalize"
+        exact
+        :to="{ name: 'home' }"
+        text
+        >Home</v-btn
       >
       <v-btn
-        color="primary"
+        color="white"
         class="text-capitalize"
-        depressed
-        tile
+        exact
         :to="{ name: 'signup' }"
+        text
         >Signup</v-btn
       >
     </v-app-bar>
@@ -56,14 +55,12 @@
                     filled
                     rounded
                   ></v-text-field>
-                  <v-text-field
+                  <custom-password-text-field
                     filled
                     rounded
                     label="Password"
                     single-line
-                    color="primary"
-                    type="password"
-                  ></v-text-field>
+                  ></custom-password-text-field>
                   <p class="caption primary--text mb-9">Forgot Password?</p>
                   <v-btn
                     block
@@ -99,16 +96,17 @@
         </v-main>
       </v-col>
     </v-row>
-    <generic-footer></generic-footer>
+    <generic-basic-footer></generic-basic-footer>
   </v-app>
 </template>
 
 <script>
 import CommonUtilities from "@/common/utilities";
-import GenericFooter from "@/components/generic/Footer";
+import GenericBasicFooter from "@/components/generic/footer/Basic";
+import CustomPasswordTextField from "@/components/custom/PasswordTextField";
 
 export default {
-  components: { GenericFooter },
+  components: { CustomPasswordTextField, GenericBasicFooter },
   mixins: [CommonUtilities],
 };
 </script>
