@@ -1,7 +1,7 @@
 <template>
   <v-card flat color="transparent">
     <v-card-title>
-      <span>Internet Access Review</span>
+      <span>Money Exchange & Credit/Debit Review</span>
     </v-card-title>
     <v-card-text>
       <v-row dense>
@@ -15,6 +15,6 @@
 
 <script>
 export default {
-  name: "itinerary-post-editor-personal-internet-access-review-form",
+  name: "itinerary-post-editor-page-personal-finance-review-form",
 };
 </script>

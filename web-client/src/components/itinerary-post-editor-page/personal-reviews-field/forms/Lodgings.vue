@@ -1,7 +1,7 @@
 <template>
   <v-card flat color="transparent">
     <v-card-title>
-      <span>Restaurants Review</span>
+      <span>Lodgings Review</span>
       <div class="flex-grow-1"></div>
       <v-btn icon @click="isDialogOpen = true">
         <v-icon>mdi-plus</v-icon>
@@ -11,7 +11,7 @@
       <v-list-item two-line :key="n">
         <v-list-item-content>
           <v-list-item-subtitle class="secondary--text font-weight-bold">
-            {{ n }}. Restaurant Name
+            {{ n }}. Lodging Name
           </v-list-item-subtitle>
           <v-list-item-subtitle
             >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid,
@@ -73,7 +73,7 @@
               <v-text-field
                 outlined
                 single-line
-                label="Restaurant Name"
+                label="Lodging Name"
               ></v-text-field>
             </v-col>
             <v-col cols="12">
@@ -92,7 +92,7 @@
 
 <script>
 export default {
-  name: "itinerary-post-editor-personal-restaurants-review-form",
+  name: "itinerary-post-editor-page-personal-lodgings-review-form",
 
   data() {
     return {

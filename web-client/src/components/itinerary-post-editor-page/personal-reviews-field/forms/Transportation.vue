@@ -1,7 +1,7 @@
 <template>
   <v-card flat color="transparent">
     <v-card-title>
-      <span>What to Avoid</span>
+      <span>Transportation Review</span>
       <div class="flex-grow-1"></div>
       <v-btn icon @click="isDialogOpen = true">
         <v-icon>mdi-plus</v-icon>
@@ -10,8 +10,10 @@
     <template v-for="n in 6">
       <v-list-item two-line :key="n">
         <v-list-item-content>
-          <v-list-item-subtitle class="secondary--text font-weight-bold">
-            {{ n }}. Avoid Name
+          <v-list-item-subtitle class="secondary--text">
+            <span class="font-weight-bold"> {{ n }}. To Destination </span>
+            <span class="mx-1">-</span>
+            <span class="font-italic">Type of transportation</span>
           </v-list-item-subtitle>
           <v-list-item-subtitle
             >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid,
@@ -70,10 +72,17 @@
         <v-card-text>
           <v-row dense>
             <v-col cols="12">
-              <v-text-field outlined single-line label="Avoid"></v-text-field>
+              <v-text-field
+                outlined
+                single-line
+                label="To Destination"
+              ></v-text-field>
             </v-col>
             <v-col cols="12">
-              <v-textarea outlined single-line label="Description"></v-textarea>
+              <v-select outlined single-line label="Transport Type"></v-select>
+            </v-col>
+            <v-col cols="12">
+              <v-textarea outlined single-line label="Review"></v-textarea>
             </v-col>
           </v-row>
         </v-card-text>
@@ -88,7 +97,7 @@
 
 <script>
 export default {
-  name: "itinerary-post-editor-personal-avoid-form",
+  name: "itinerary-post-editor-page-personal-transportation-review-form",
 
   data() {
     return {

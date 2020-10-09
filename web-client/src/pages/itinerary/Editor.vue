@@ -52,7 +52,7 @@
                     ></v-textarea>
                   </v-col>
                   <v-col cols="12">
-                    <itinerary-post-editor-timeline-field></itinerary-post-editor-timeline-field>
+                    <itinerary-post-editor-page-timeline-field></itinerary-post-editor-page-timeline-field>
                   </v-col>
                   <v-col cols="12">
                     <custom-file-dropzone
@@ -67,7 +67,7 @@
                     <span class="subtitle-1">Personal Reviews</span>
                   </v-col>
                   <v-col cols="12">
-                    <itinerary-post-editor-personal-reviews-field></itinerary-post-editor-personal-reviews-field>
+                    <itinerary-post-editor-page-personal-reviews-field></itinerary-post-editor-page-personal-reviews-field>
                   </v-col>
                 </v-row>
               </v-card-text>
@@ -103,21 +103,18 @@
 </template>
 
 <script>
-import CustomDropzone from "@/components/custom/FileDropzone";
-import ItineraryPostEditorPersonalReviewsField from "@/components/itinerary-post-editor/personal-reviews-field/Index";
-import ItineraryPostEditorTimelineField from "@/components/itinerary-post-editor/timeline-field/Index";
+import ItineraryPostEditorPageTimelineField from "@/components/itinerary-post-editor-page/timeline-field/Index";
 import CustomFileDropzone from "@/components/custom/FileDropzone";
+import ItineraryPostEditorPagePersonalReviewsField from "@/components/itinerary-post-editor-page/personal-reviews-field/Index";
 import GenericPostingGuidelinesCard from "@/components/generic/card/PostingGuidelines";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
-
 export default {
   components: {
     GenericStickyFooter,
     GenericPostingGuidelinesCard,
+    ItineraryPostEditorPagePersonalReviewsField,
     CustomFileDropzone,
-    ItineraryPostEditorTimelineField,
-    ItineraryPostEditorPersonalReviewsField,
-    CustomDropzone,
+    ItineraryPostEditorPageTimelineField,
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <v-card flat color="transparent">
     <v-card-title>
-      <span>Helpful Tips</span>
+      <span>What to Avoid</span>
       <div class="flex-grow-1"></div>
       <v-btn icon @click="isDialogOpen = true">
         <v-icon>mdi-plus</v-icon>
@@ -11,7 +11,7 @@
       <v-list-item two-line :key="n">
         <v-list-item-content>
           <v-list-item-subtitle class="secondary--text font-weight-bold">
-            {{ n }}. Tip Name
+            {{ n }}. Avoid Name
           </v-list-item-subtitle>
           <v-list-item-subtitle
             >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid,
@@ -70,7 +70,7 @@
         <v-card-text>
           <v-row dense>
             <v-col cols="12">
-              <v-text-field outlined single-line label="Tip"></v-text-field>
+              <v-text-field outlined single-line label="Avoid"></v-text-field>
             </v-col>
             <v-col cols="12">
               <v-textarea outlined single-line label="Description"></v-textarea>
@@ -88,7 +88,7 @@
 
 <script>
 export default {
-  name: "itinerary-post-editor-personal-tips-form",
+  name: "itinerary-post-editor-page-personal-avoid-form",
 
   data() {
     return {

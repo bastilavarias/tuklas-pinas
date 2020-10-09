@@ -130,7 +130,7 @@
 import CustomFileDropzone from "@/components/custom/FileDropzone";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
 export default {
-  name: "itinerary-post-editor-timeline-dialog",
+  name: "itinerary-post-editor-page-timeline-dialog",
 
   components: {
     CustomTooltipButton,

@@ -1,7 +1,7 @@
 <template>
   <v-card flat color="transparent">
     <v-card-title>
-      <span>Transportation Review</span>
+      <span>Activities Review</span>
       <div class="flex-grow-1"></div>
       <v-btn icon @click="isDialogOpen = true">
         <v-icon>mdi-plus</v-icon>
@@ -11,9 +11,9 @@
       <v-list-item two-line :key="n">
         <v-list-item-content>
           <v-list-item-subtitle class="secondary--text">
-            <span class="font-weight-bold"> {{ n }}. To Destination </span>
+            <span class="font-weight-bold"> {{ n }}. Activity Name </span>
             <span class="mx-1">-</span>
-            <span class="font-italic">Type of transportation</span>
+            <span class="font-italic">Destination</span>
           </v-list-item-subtitle>
           <v-list-item-subtitle
             >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid,
@@ -75,11 +75,15 @@
               <v-text-field
                 outlined
                 single-line
-                label="To Destination"
+                label="Activity"
               ></v-text-field>
             </v-col>
             <v-col cols="12">
-              <v-select outlined single-line label="Transport Type"></v-select>
+              <v-text-field
+                outlined
+                single-line
+                label="Destination"
+              ></v-text-field>
             </v-col>
             <v-col cols="12">
               <v-textarea outlined single-line label="Review"></v-textarea>
@@ -97,7 +101,7 @@
 
 <script>
 export default {
-  name: "itinerary-post-editor-personal-transportation-review-form",
+  name: "itinerary-post-editor-page-personal-activities-review-form",
 
   data() {
     return {

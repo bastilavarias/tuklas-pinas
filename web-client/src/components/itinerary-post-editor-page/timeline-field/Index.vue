@@ -43,19 +43,19 @@
         </v-data-table>
       </v-col>
     </v-row>
-    <itinerary-post-editor-timeline-dialog
+    <itinerary-post-editor-page-timeline-dialog
       :is-open.sync="isTimelineDialogOpen"
-    ></itinerary-post-editor-timeline-dialog>
+    ></itinerary-post-editor-page-timeline-dialog>
   </div>
 </template>
 
 <script>
-import ItineraryPostEditorTimelineDialog from "@/components/itinerary-post-editor/timeline-field/Dialog";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
+import ItineraryPostEditorPageTimelineDialog from "@/components/itinerary-post-editor-page/timeline-field/Dialog";
 export default {
-  name: "itinerary-post-editor-timeline-field",
+  name: "itinerary-post-editor-page-timeline-field",
 
-  components: { CustomTooltipButton, ItineraryPostEditorTimelineDialog },
+  components: { ItineraryPostEditorPageTimelineDialog, CustomTooltipButton },
 
   data() {
     return {
