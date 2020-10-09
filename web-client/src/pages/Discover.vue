@@ -92,12 +92,12 @@
           <discover-page-posts-toolbar></discover-page-posts-toolbar>
           <template v-for="n in 4">
             <div :key="n">
-              <generic-itinerary-post-search-preview
+              <generic-itinerary-post-search-preview-list-item
                 v-if="n % 2 === 0"
-              ></generic-itinerary-post-search-preview>
-              <generic-travel-story-post-search-preview
+              ></generic-itinerary-post-search-preview-list-item>
+              <generic-travel-story-post-search-preview-list-item
                 v-if="n % 2 !== 0"
-              ></generic-travel-story-post-search-preview>
+              ></generic-travel-story-post-search-preview-list-item>
             </div>
             <v-divider v-if="n !== 5"> </v-divider>
           </template>
@@ -110,16 +110,16 @@
 <script>
 import { latLng } from "leaflet";
 import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from "vue2-leaflet";
-import GenericItineraryPostSearchPreview from "@/components/generic/search-preview/ItineraryPost";
-import GenericTravelStoryPostSearchPreview from "@/components/generic/search-preview/TravelStoryPost";
 import DiscoverPagePostsToolbar from "@/components/discover-page/PostsToolbar";
+import GenericItineraryPostSearchPreviewListItem from "@/components/generic/list-item/ItineraryPostSearchPreview";
+import GenericTravelStoryPostSearchPreviewListItem from "@/components/generic/list-item/TravelStoryPostSearchPreview";
 
 export default {
   name: "Example",
   components: {
+    GenericTravelStoryPostSearchPreviewListItem,
+    GenericItineraryPostSearchPreviewListItem,
     DiscoverPagePostsToolbar,
-    GenericTravelStoryPostSearchPreview,
-    GenericItineraryPostSearchPreview,
     LMap,
     LTileLayer,
     LMarker,

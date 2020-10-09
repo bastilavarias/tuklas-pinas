@@ -11,7 +11,7 @@
             <v-row dense>
               <template v-for="n in 9">
                 <v-col cols="12" md="4" :key="n">
-                  <generic-tour-guide-profile-preview></generic-tour-guide-profile-preview>
+                  <generic-tour-guide-profile-preview-card></generic-tour-guide-profile-preview-card>
                 </v-col>
               </template>
             </v-row>
@@ -19,26 +19,26 @@
         </v-row>
       </v-container>
     </div>
-    <generic-about-local-tour-guides-section></generic-about-local-tour-guides-section>
-    <generic-footer></generic-footer>
+    <generic-about-local-tour-guides-div></generic-about-local-tour-guides-div>
+    <generic-basic-footer></generic-basic-footer>
   </section>
 </template>
 
 <script>
-import GenericFooter from "@/components/generic/Footer";
-import GenericAboutLocalTourGuidesSection from "@/components/generic/section/AboutLocalTourGuides";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
-import GenericTourGuideProfilePreview from "@/components/generic/TourGuideProfilePreview";
 import TourGuidesPageHeader from "@/components/tour-guides-page/Header";
 import TourGuidesPageSearchToolbarCard from "@/components/tour-guides-page/SearchToolbarCard";
+import GenericAboutLocalTourGuidesDiv from "@/components/generic/div/AboutLocalTourGuides";
+import GenericBasicFooter from "@/components/generic/footer/Basic";
+import GenericTourGuideProfilePreviewCard from "@/components/generic/card/TourGuideProfilePreview";
 export default {
   components: {
+    GenericTourGuideProfilePreviewCard,
+    GenericBasicFooter,
+    GenericAboutLocalTourGuidesDiv,
     TourGuidesPageSearchToolbarCard,
     TourGuidesPageHeader,
-    GenericTourGuideProfilePreview,
     CustomTooltipButton,
-    GenericAboutLocalTourGuidesSection,
-    GenericFooter,
   },
 };
 </script>

@@ -4,7 +4,7 @@
       >Travel Story Posts</v-card-title
     >
     <template v-for="n in 5">
-      <generic-travel-story-post-search-preview></generic-travel-story-post-search-preview>
+      <generic-travel-story-post-search-preview-list-item></generic-travel-story-post-search-preview-list-item>
       <v-divider v-if="n !== 5"></v-divider>
     </template>
     <v-card-actions>
@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import GenericTravelStoryPostSearchPreview from "@/components/generic/search-preview/TravelStoryPost";
+import GenericTravelStoryPostSearchPreviewListItem from "@/components/generic/list-item/TravelStoryPostSearchPreview";
 export default {
   name: "search-page-travel-posts-card",
-  components: { GenericTravelStoryPostSearchPreview },
+  components: { GenericTravelStoryPostSearchPreviewListItem },
 };
 </script>

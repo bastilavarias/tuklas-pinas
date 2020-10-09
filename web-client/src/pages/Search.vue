@@ -21,32 +21,35 @@
         <v-col cols="12" md="3">
           <v-row>
             <v-col cols="12">
-              <generic-events-explorer-preview-side-card></generic-events-explorer-preview-side-card>
+              <generic-mini-events-explorer-side-card></generic-mini-events-explorer-side-card>
             </v-col>
             <v-col cols="12">
-              <generic-sticky-footer-card></generic-sticky-footer-card>
+              <generic-sticky-footer></generic-sticky-footer>
             </v-col>
           </v-row>
         </v-col>
       </v-row>
     </v-container>
+    <generic-basic-footer></generic-basic-footer>
   </section>
 </template>
 <script>
-import GenericEventsExplorerPreviewSideCard from "@/components/generic/EventsExplorerPreviewSideCard";
-import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
 import SearchPageTravelPostsCard from "@/components/search-page/TravelPostsCard";
 import SearchPageItineraryPostsCard from "@/components/search-page/ItineraryPostsCard";
 import SearchPagePeopleCard from "@/components/search-page/PeopleCard";
 import SearchPageSearchToolbarCard from "@/components/search-page/SearchToolbarCard";
+import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEventsExplorer";
+import GenericBasicFooter from "@/components/generic/footer/Basic";
+import GenericStickyFooter from "@/components/generic/footer/Sticky";
 export default {
   components: {
+    GenericStickyFooter,
+    GenericBasicFooter,
+    GenericMiniEventsExplorerSideCard,
     SearchPageSearchToolbarCard,
     SearchPagePeopleCard,
     SearchPageItineraryPostsCard,
     SearchPageTravelPostsCard,
-    GenericStickyFooterCard,
-    GenericEventsExplorerPreviewSideCard,
   },
 };
 </script>

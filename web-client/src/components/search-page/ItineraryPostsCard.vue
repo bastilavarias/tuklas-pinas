@@ -4,7 +4,7 @@
       >Itinerary Posts</v-card-title
     >
     <template v-for="n in 5">
-      <generic-itinerary-post-search-preview></generic-itinerary-post-search-preview>
+      <generic-itinerary-post-search-preview-list-item></generic-itinerary-post-search-preview-list-item>
       <v-divider v-if="n !== 5"></v-divider>
     </template>
     <v-card-actions>
@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import GenericItineraryPostSearchPreview from "@/components/generic/search-preview/ItineraryPost";
+import GenericItineraryPostSearchPreviewListItem from "@/components/generic/list-item/ItineraryPostSearchPreview";
 export default {
   name: "search-page-itinerary-posts-card",
-  components: { GenericItineraryPostSearchPreview },
+  components: { GenericItineraryPostSearchPreviewListItem },
 };
 </script>
