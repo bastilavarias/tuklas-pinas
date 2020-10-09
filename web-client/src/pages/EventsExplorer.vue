@@ -52,7 +52,7 @@
             <generic-suggested-people-side-card></generic-suggested-people-side-card>
           </v-col>
           <v-col cols="12">
-            <feed-footer-card></feed-footer-card>
+            <generic-sticky-footer></generic-sticky-footer>
           </v-col>
         </v-row>
       </v-col>
@@ -61,16 +61,16 @@
 </template>
 
 <script>
-import FeedFooterCard from "@/components/generic/StickyFooterCard";
 import GenericMiniProfileSideCard from "@/components/generic/card/MiniProfile";
 import GenericTopCategoriesSideCard from "@/components/generic/card/TopCategories";
 import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedPeople";
+import GenericStickyFooter from "@/components/generic/footer/Sticky";
 export default {
   components: {
+    GenericStickyFooter,
     GenericSuggestedPeopleSideCard,
     GenericTopCategoriesSideCard,
     GenericMiniProfileSideCard,
-    FeedFooterCard,
   },
 
   data() {

@@ -33,7 +33,7 @@
               <generic-mini-events-explorer-side-card></generic-mini-events-explorer-side-card>
             </v-col>
             <v-col cols="12">
-              <generic-sticky-footer-card></generic-sticky-footer-card>
+              <generic-sticky-footer></generic-sticky-footer>
             </v-col>
           </v-row>
         </v-col>
@@ -42,14 +42,14 @@
   </section>
 </template>
 <script>
-import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
 import GenericNotificationListItem from "@/components/generic/notification/ListItem";
 import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEventsExplorer";
+import GenericStickyFooter from "@/components/generic/footer/Sticky";
 export default {
   components: {
+    GenericStickyFooter,
     GenericMiniEventsExplorerSideCard,
     GenericNotificationListItem,
-    GenericStickyFooterCard,
   },
 };
 </script>

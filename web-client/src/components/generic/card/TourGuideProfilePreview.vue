@@ -55,7 +55,7 @@
 
 <script>
 export default {
-  name: "generic-tour-guide-profile-preview",
+  name: "generic-tour-guide-profile-preview-card",
 
   props: {
     className: {

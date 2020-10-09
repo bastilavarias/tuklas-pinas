@@ -85,7 +85,7 @@
       <v-col cols="12" md="4">
         <v-row>
           <v-col cols="12">
-            <generic-posting-guidelines-list></generic-posting-guidelines-list>
+            <generic-posting-guidelines-card></generic-posting-guidelines-card>
           </v-col>
           <v-col cols="12">
             <span class="caption">
@@ -94,7 +94,7 @@
             </span>
           </v-col>
           <v-col cols="12">
-            <generic-sticky-footer-card></generic-sticky-footer-card>
+            <generic-sticky-footer></generic-sticky-footer>
           </v-col>
         </v-row>
       </v-col>
@@ -104,21 +104,19 @@
 
 <script>
 import CustomDropzone from "@/components/custom/FileDropzone";
-import GenericFooter from "@/components/generic/Footer";
-import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
-import GenericPostingGuidelinesList from "@/components/generic/PostingGuidelinesList";
 import ItineraryPostEditorPersonalReviewsField from "@/components/itinerary-post-editor/personal-reviews-field/Index";
 import ItineraryPostEditorTimelineField from "@/components/itinerary-post-editor/timeline-field/Index";
 import CustomFileDropzone from "@/components/custom/FileDropzone";
+import GenericPostingGuidelinesCard from "@/components/generic/card/PostingGuidelines";
+import GenericStickyFooter from "@/components/generic/footer/Sticky";
 
 export default {
   components: {
+    GenericStickyFooter,
+    GenericPostingGuidelinesCard,
     CustomFileDropzone,
     ItineraryPostEditorTimelineField,
     ItineraryPostEditorPersonalReviewsField,
-    GenericPostingGuidelinesList,
-    GenericStickyFooterCard,
-    GenericFooter,
     CustomDropzone,
   },
 };

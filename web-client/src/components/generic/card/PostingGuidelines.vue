@@ -18,6 +18,6 @@
 
 <script>
 export default {
-  name: "generic-posting-guidelines-list",
+  name: "generic-posting-guidelines-card",
 };
 </script>

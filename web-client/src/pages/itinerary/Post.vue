@@ -86,7 +86,7 @@
             <generic-suggested-people-side-card></generic-suggested-people-side-card>
           </v-col>
           <v-col cols="12">
-            <generic-sticky-footer-card></generic-sticky-footer-card>
+            <generic-sticky-footer></generic-sticky-footer>
           </v-col>
         </v-row>
       </v-col>
@@ -96,7 +96,6 @@
 </template>
 
 <script>
-import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
 import Carousel from "vue-owl-carousel";
 import CustomRouterLink from "@/components/custom/RouterLink";
 import GenericCommentMedia from "@/components/generic/comment/Media";
@@ -109,8 +108,10 @@ import GenericMiniProfileSideCard from "@/components/generic/card/MiniProfile";
 import GenericTopCategoriesSideCard from "@/components/generic/card/TopCategories";
 import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEventsExplorer";
 import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedPeople";
+import GenericStickyFooter from "@/components/generic/footer/Sticky";
 export default {
   components: {
+    GenericStickyFooter,
     GenericSuggestedPeopleSideCard,
     GenericMiniEventsExplorerSideCard,
     GenericTopCategoriesSideCard,
@@ -122,7 +123,6 @@ export default {
     GenericCommentReplyMedia,
     GenericCommentMedia,
     CustomRouterLink,
-    GenericStickyFooterCard,
     Carousel,
   },
 

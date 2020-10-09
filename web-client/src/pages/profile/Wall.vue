@@ -14,16 +14,16 @@
         </v-col>
         <v-col cols="12">
           <template v-for="n in [1]">
-            <generic-travel-story-post-preview
+            <generic-travel-story-post-preview-cardw
               :key="n"
               class-name="mb-5"
-            ></generic-travel-story-post-preview>
+            ></generic-travel-story-post-preview-cardw>
           </template>
           <template v-for="n in [2]">
-            <generic-itinerary-post-preview
+            <generic-itinerary-post-preview-card
               :key="n"
               class-name="mb-5"
-            ></generic-itinerary-post-preview>
+            ></generic-itinerary-post-preview-card>
           </template>
         </v-col>
       </v-row>
@@ -34,7 +34,7 @@
           <generic-suggested-people-side-card></generic-suggested-people-side-card>
         </v-col>
         <v-col cols="12">
-          <generic-sticky-footer-card></generic-sticky-footer-card>
+          <generic-sticky-footer></generic-sticky-footer>
         </v-col>
       </v-row>
     </v-col>
@@ -42,18 +42,18 @@
 </template>
 <script>
 import ProfilePagePostsCard from "@/components/profile-page/PostsCard";
-import GenericTravelStoryPostPreview from "@/components/generic/TravelStoryPostPreview";
-import GenericItineraryPostPreview from "@/components/generic/ItineraryPostPreview";
-import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
 import ProfilePageEventsSideCard from "@/components/profile-page/EventsSideCard";
 import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedPeople";
+import GenericItineraryPostPreviewCard from "@/components/generic/card/ItineraryPostPreview";
+import GenericStickyFooter from "@/components/generic/footer/Sticky";
+import GenericTravelStoryPostPreviewCard from "@/components/generic/card/TravelStoryPostPreview";
 export default {
   components: {
+    GenericTravelStoryPostPreviewCard,
+    GenericStickyFooter,
+    GenericItineraryPostPreviewCard,
     GenericSuggestedPeopleSideCard,
     ProfilePageEventsSideCard,
-    GenericStickyFooterCard,
-    GenericItineraryPostPreview,
-    GenericTravelStoryPostPreview,
     ProfilePagePostsCard,
   },
 };

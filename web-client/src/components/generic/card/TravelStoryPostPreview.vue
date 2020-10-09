@@ -106,10 +106,8 @@ import Carousel from "vue-owl-carousel";
 import CustomRouterLink from "@/components/custom/RouterLink";
 
 export default {
-  name: "generic-travel-story-post-preview",
-
+  name: "generic-travel-story-post-preview-card",
   components: { CustomRouterLink, Carousel },
-
   props: {
     className: {
       type: String,

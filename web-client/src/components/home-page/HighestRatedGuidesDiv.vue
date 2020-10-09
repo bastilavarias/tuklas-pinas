@@ -9,11 +9,11 @@
         <template v-for="n in 12">
           <v-slide-item :key="n" v-slot:default="{ active, toggle }">
             <span @click="toggle">
-              <generic-tour-guide-profile-preview
+              <generic-tour-guide-profile-preview-card
                 :class-name="`${n === 12 ? '' : 'mr-5'} mt-3 mb-10`"
                 width="320"
               >
-              </generic-tour-guide-profile-preview>
+              </generic-tour-guide-profile-preview-card>
             </span>
           </v-slide-item>
         </template>
@@ -33,13 +33,10 @@
 </template>
 
 <script>
-import GenericTourGuideProfilePreview from "@/components/generic/TourGuideProfilePreview";
-
+import GenericTourGuideProfilePreviewCard from "@/components/generic/card/TourGuideProfilePreview";
 export default {
   name: "home-page-highest-rated-guides-div",
-
-  components: { GenericTourGuideProfilePreview },
-
+  components: { GenericTourGuideProfilePreviewCard },
   data() {
     return {
       profilePreview: null,

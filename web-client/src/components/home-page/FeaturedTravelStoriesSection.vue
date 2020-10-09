@@ -8,9 +8,9 @@
       <v-row>
         <template v-for="n in 3">
           <v-col cols="12" :md="n === 3 ? '12' : '6'" lg="4" :key="n">
-            <generic-travel-story-post-preview
+            <generic-travel-story-post-preview-card
               has-shadow
-            ></generic-travel-story-post-preview>
+            ></generic-travel-story-post-preview-card>
           </v-col>
         </template>
       </v-row>
@@ -19,10 +19,9 @@
 </template>
 
 <script>
-import ItineraryPostPreview from "@/components/generic/ItineraryPostPreview";
-import GenericTravelStoryPostPreview from "@/components/generic/TravelStoryPostPreview";
+import GenericTravelStoryPostPreviewCard from "@/components/generic/card/TravelStoryPostPreview";
 export default {
   name: "home-page-featured-travel-stories-div",
-  components: { GenericTravelStoryPostPreview, ItineraryPostPreview },
+  components: { GenericTravelStoryPostPreviewCard },
 };
 </script>

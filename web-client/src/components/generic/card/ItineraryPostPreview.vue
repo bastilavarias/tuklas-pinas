@@ -96,7 +96,7 @@
 <script>
 import CustomRouterLink from "@/components/custom/RouterLink";
 export default {
-  name: "generic-itinerary-post-preview",
+  name: "generic-itinerary-post-preview-card",
   components: { CustomRouterLink },
   props: {
     className: {
