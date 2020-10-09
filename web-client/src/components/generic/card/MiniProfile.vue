@@ -1,14 +1,14 @@
 <template>
   <v-card>
-    <div id="display-photo-container">
+    <div class="display-photo-container">
       <v-img
-        id="cover-photo"
+        class="cover-photo"
         :src="require('@/assets/temp/cover-photo.jpeg')"
         position="center"
         width="100%"
         height="100%"
       ></v-img>
-      <v-avatar :size="85" id="profile-photo" class="elevation-5">
+      <v-avatar :size="85" class="profile-photo elevation-5">
         <v-img
           :src="require('@/assets/temp/profile-photo.jpg')"
           position="center"
@@ -52,18 +52,18 @@
 
 <script>
 export default {
-  name: "generic-profile-preview-card",
+  name: "generic-mini-profile-side-card",
 };
 </script>
 
 <style scoped>
-#display-photo-container {
+.display-photo-container {
   position: relative;
   width: 100%;
   height: 5rem;
 }
 
-#cover-photo {
+.cover-photo {
   position: absolute;
   top: 0;
   left: 0;
@@ -71,7 +71,7 @@ export default {
   height: 100%;
 }
 
-#profile-photo {
+.profile-photo {
   position: absolute;
   top: -50%;
   left: 50%;

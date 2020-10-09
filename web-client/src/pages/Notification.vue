@@ -30,7 +30,7 @@
         <v-col cols="12" md="3">
           <v-row>
             <v-col cols="12">
-              <generic-events-explorer-preview-side-card></generic-events-explorer-preview-side-card>
+              <generic-mini-events-explorer-side-card></generic-mini-events-explorer-side-card>
             </v-col>
             <v-col cols="12">
               <generic-sticky-footer-card></generic-sticky-footer-card>
@@ -42,14 +42,14 @@
   </section>
 </template>
 <script>
-import GenericEventsExplorerPreviewSideCard from "@/components/generic/EventsExplorerPreviewSideCard";
 import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
 import GenericNotificationListItem from "@/components/generic/notification/ListItem";
+import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEventsExplorer";
 export default {
   components: {
+    GenericMiniEventsExplorerSideCard,
     GenericNotificationListItem,
     GenericStickyFooterCard,
-    GenericEventsExplorerPreviewSideCard,
   },
 };
 </script>

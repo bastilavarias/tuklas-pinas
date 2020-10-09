@@ -43,7 +43,7 @@
 
 <script>
 export default {
-  name: "generic-events-explorer-preview-side-card",
+  name: "generic-mini-events-explorer-side-card",
 
   data() {
     return {

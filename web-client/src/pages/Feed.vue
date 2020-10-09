@@ -4,7 +4,7 @@
       <v-col cols="12" md="3">
         <v-row>
           <v-col cols="12">
-            <generic-profile-preview-card></generic-profile-preview-card>
+            <generic-mini-profile-side-card></generic-mini-profile-side-card>
           </v-col>
           <v-col cols="12">
             <generic-top-categories-side-card></generic-top-categories-side-card>
@@ -46,7 +46,7 @@
       <v-col cols="12" md="3">
         <v-row>
           <v-col cols="12">
-            <generic-events-explorer-preview-side-card></generic-events-explorer-preview-side-card>
+            <generic-mini-events-explorer-side-card></generic-mini-events-explorer-side-card>
           </v-col>
           <v-col cols="12">
             <generic-suggested-people-side-card></generic-suggested-people-side-card>
@@ -64,16 +64,16 @@
 import GenericTravelStoryPostPreview from "@/components/generic/TravelStoryPostPreview";
 import GenericItineraryPostPreview from "@/components/generic/ItineraryPostPreview";
 import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
-import GenericProfilePreviewCard from "@/components/generic/ProfilePreviewCard";
-import GenericTopCategoriesSideCard from "@/components/generic/TopCategoriesSideCard";
-import GenericEventsExplorerPreviewSideCard from "@/components/generic/EventsExplorerPreviewSideCard";
-import GenericSuggestedPeopleSideCard from "@/components/generic/SuggestedPeopleSideCard";
+import GenericMiniProfileSideCard from "@/components/generic/card/MiniProfile";
+import GenericTopCategoriesSideCard from "@/components/generic/card/TopCategories";
+import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEventsExplorer";
+import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedPeople";
 export default {
   components: {
     GenericSuggestedPeopleSideCard,
-    GenericEventsExplorerPreviewSideCard,
+    GenericMiniEventsExplorerSideCard,
     GenericTopCategoriesSideCard,
-    GenericProfilePreviewCard,
+    GenericMiniProfileSideCard,
     GenericStickyFooterCard,
     GenericItineraryPostPreview,
     GenericTravelStoryPostPreview,

@@ -44,14 +44,14 @@
 import ProfilePagePostsCard from "@/components/profile-page/PostsCard";
 import GenericTravelStoryPostPreview from "@/components/generic/TravelStoryPostPreview";
 import GenericItineraryPostPreview from "@/components/generic/ItineraryPostPreview";
-import GenericSuggestedPeopleSideCard from "@/components/generic/SuggestedPeopleSideCard";
 import GenericStickyFooterCard from "@/components/generic/StickyFooterCard";
 import ProfilePageEventsSideCard from "@/components/profile-page/EventsSideCard";
+import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedPeople";
 export default {
   components: {
+    GenericSuggestedPeopleSideCard,
     ProfilePageEventsSideCard,
     GenericStickyFooterCard,
-    GenericSuggestedPeopleSideCard,
     GenericItineraryPostPreview,
     GenericTravelStoryPostPreview,
     ProfilePagePostsCard,
