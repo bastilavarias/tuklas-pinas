@@ -14,10 +14,10 @@
         </v-col>
         <v-col cols="12">
           <template v-for="n in [1]">
-            <generic-travel-story-post-preview-cardw
+            <generic-travel-story-post-preview-card
               :key="n"
               class-name="mb-5"
-            ></generic-travel-story-post-preview-cardw>
+            ></generic-travel-story-post-preview-card>
           </template>
           <template v-for="n in [2]">
             <generic-itinerary-post-preview-card
