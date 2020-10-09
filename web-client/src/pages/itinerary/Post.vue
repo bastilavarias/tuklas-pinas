@@ -96,13 +96,8 @@
 </template>
 
 <script>
-import Carousel from "vue-owl-carousel";
-import CustomRouterLink from "@/components/custom/RouterLink";
 import GenericMiniProfileSideCard from "@/components/generic/card/MiniProfile";
 import GenericTopCategoriesSideCard from "@/components/generic/card/TopCategories";
-import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEventsExplorer";
-import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedPeople";
-import GenericStickyFooter from "@/components/generic/footer/Sticky";
 import ItineraryPostPageDetailCard from "@/components/itinerary-post-page/detail-card/Index";
 import ItineraryPostPageTimelineCard from "@/components/itinerary-post-page/TimelineCard";
 import ItineraryPostPagePersonalReviewsCard from "@/components/itinerary-post-page/personal-reviews-card/Index";
@@ -117,13 +112,8 @@ export default {
     ItineraryPostPagePersonalReviewsCard,
     ItineraryPostPageTimelineCard,
     ItineraryPostPageDetailCard,
-    GenericStickyFooter,
-    GenericSuggestedPeopleSideCard,
-    GenericMiniEventsExplorerSideCard,
     GenericTopCategoriesSideCard,
     GenericMiniProfileSideCard,
-    CustomRouterLink,
-    Carousel,
   },
 
   data() {

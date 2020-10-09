@@ -90,33 +90,27 @@
 </template>
 
 <script>
-import Carousel from "vue-owl-carousel";
-import CustomRouterLink from "@/components/custom/RouterLink";
 import GenericMiniProfileSideCard from "@/components/generic/card/MiniProfile";
 import GenericTopCategoriesSideCard from "@/components/generic/card/TopCategories";
+import TravelStoryPostPageDetailCard from "@/components/travel-story-post-page/detail-card/Index";
+import TravelStoryPostPageTagsCard from "@/components/travel-story-post-page/TagsCard";
+import GenericCommentMedia from "@/components/generic/media/Comment";
+import GenericCommentReplyMedia from "@/components/generic/media/CommentReply";
 import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEventsExplorer";
 import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedPeople";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
-import GenericCommentMedia from "@/components/generic/media/Comment";
-import GenericCommentReplyMedia from "@/components/generic/media/CommentReply";
-import TravelStoryPostPageDetailCard from "@/components/travel-story-post-page/detail-card/Index";
-import TravelStoryPostPageTagsCard from "@/components/travel-story-post-page/TagsCard";
-
 export default {
   components: {
-    TravelStoryPostPageTagsCard,
-    TravelStoryPostPageDetailCard,
-    GenericCommentReplyMedia,
-    GenericCommentMedia,
     GenericStickyFooter,
     GenericSuggestedPeopleSideCard,
     GenericMiniEventsExplorerSideCard,
+    GenericCommentReplyMedia,
+    GenericCommentMedia,
+    TravelStoryPostPageTagsCard,
+    TravelStoryPostPageDetailCard,
     GenericTopCategoriesSideCard,
     GenericMiniProfileSideCard,
-    CustomRouterLink,
-    Carousel,
   },
-
   data() {
     return {
       images: [
