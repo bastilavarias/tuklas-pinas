@@ -3,7 +3,11 @@
     <template v-for="n in 5">
       <v-expansion-panel :key="n">
         <v-expansion-panel-header>
-          <span class="subtitle-2">{{ n }}. Avoid</span>
+          <span class="subtitle-2">
+            <span>{{ n }}. To Destination Name</span>
+            <span class="mx-1">-</span>
+            <span class="font-italic">Type of transportation</span>
+          </span>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <span class="body-2">
@@ -20,6 +24,6 @@
 
 <script>
 export default {
-  name: "itinerary-post-personal-reviews-card-avoid-content",
+  name: "itinerary-post-page-personal-reviews-card-transportation-content",
 };
 </script>

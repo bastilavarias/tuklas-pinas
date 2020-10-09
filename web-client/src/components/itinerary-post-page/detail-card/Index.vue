@@ -30,7 +30,7 @@
         ></v-img>
       </v-avatar>
     </div>
-    <itinerary-post-detail-card-gallery-preview></itinerary-post-detail-card-gallery-preview>
+    <itinerary-post-page-detail-card-gallery-preview></itinerary-post-page-detail-card-gallery-preview>
     <v-card-actions>
       <v-btn depressed text>
         <v-icon class="mr-1">mdi-heart-outline</v-icon>
@@ -54,9 +54,9 @@
 </template>
 
 <script>
-import ItineraryPostDetailCardGalleryPreview from "@/components/itinerary-post/detail-card/GalleryPreview";
+import ItineraryPostPageDetailCardGalleryPreview from "@/components/itinerary-post-page/detail-card/GalleryPreview";
 export default {
-  name: "itinerary-post-detail-card",
-  components: { ItineraryPostDetailCardGalleryPreview },
+  name: "itinerary-post-page-detail-card",
+  components: { ItineraryPostPageDetailCardGalleryPreview },
 };
 </script>

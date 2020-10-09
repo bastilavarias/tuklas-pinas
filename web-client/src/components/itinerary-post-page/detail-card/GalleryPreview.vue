@@ -48,7 +48,7 @@
 
 <script>
 export default {
-  name: "itinerary-post-detail-card-gallery-preview",
+  name: "itinerary-post-page-detail-card-gallery-preview",
 };
 </script>
 

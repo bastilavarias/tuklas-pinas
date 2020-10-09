@@ -14,16 +14,16 @@
       <v-col cols="12" md="6">
         <v-row>
           <v-col cols="12">
-            <itinerary-post-detail-card></itinerary-post-detail-card>
+            <itinerary-post-page-detail-card></itinerary-post-page-detail-card>
           </v-col>
           <v-col cols="12">
-            <itinerary-post-timeline-card></itinerary-post-timeline-card>
+            <itinerary-post-page-timeline-card></itinerary-post-page-timeline-card>
           </v-col>
           <v-col cols="12">
-            <itinerary-post-personal-reviews-card></itinerary-post-personal-reviews-card>
+            <itinerary-post-page-personal-reviews-card></itinerary-post-page-personal-reviews-card>
           </v-col>
           <v-col cols="12">
-            <itinerary-post-tags-card></itinerary-post-tags-card>
+            <itinerary-post-page-tags-card></itinerary-post-page-tags-card>
           </v-col>
           <v-col cols="12">
             <v-card outlined tile>
@@ -100,26 +100,26 @@ import Carousel from "vue-owl-carousel";
 import CustomRouterLink from "@/components/custom/RouterLink";
 import GenericCommentMedia from "@/components/generic/comment/Media";
 import GenericCommentReplyMedia from "@/components/generic/comment/ReplyMedia";
-import ItineraryPostDetailCard from "@/components/itinerary-post/detail-card/Index";
-import ItineraryPostTimelineCard from "@/components/itinerary-post/TimelineCard";
-import ItineraryPostPersonalReviewsCard from "@/components/itinerary-post/personal-reviews-card/Index";
-import ItineraryPostTagsCard from "@/components/itinerary-post/TagsCard";
 import GenericMiniProfileSideCard from "@/components/generic/card/MiniProfile";
 import GenericTopCategoriesSideCard from "@/components/generic/card/TopCategories";
 import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEventsExplorer";
 import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedPeople";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
+import ItineraryPostPageDetailCard from "@/components/itinerary-post-page/detail-card/Index";
+import ItineraryPostPageTimelineCard from "@/components/itinerary-post-page/TimelineCard";
+import ItineraryPostPagePersonalReviewsCard from "@/components/itinerary-post-page/personal-reviews-card/Index";
+import ItineraryPostPageTagsCard from "@/components/itinerary-post-page/TagsCard";
 export default {
   components: {
+    ItineraryPostPageTagsCard,
+    ItineraryPostPagePersonalReviewsCard,
+    ItineraryPostPageTimelineCard,
+    ItineraryPostPageDetailCard,
     GenericStickyFooter,
     GenericSuggestedPeopleSideCard,
     GenericMiniEventsExplorerSideCard,
     GenericTopCategoriesSideCard,
     GenericMiniProfileSideCard,
-    ItineraryPostTagsCard,
-    ItineraryPostPersonalReviewsCard,
-    ItineraryPostTimelineCard,
-    ItineraryPostDetailCard,
     GenericCommentReplyMedia,
     GenericCommentMedia,
     CustomRouterLink,

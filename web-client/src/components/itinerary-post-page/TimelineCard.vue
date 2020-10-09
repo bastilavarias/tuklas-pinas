@@ -68,7 +68,7 @@
 
 <script>
 export default {
-  name: "itinerary-post-timeline-card",
+  name: "itinerary-post-page-timeline-card",
 
   data() {
     return {

@@ -23,6 +23,6 @@
 
 <script>
 export default {
-  name: "itinerary-post-tags-card",
+  name: "itinerary-post-page-tags-card",
 };
 </script>

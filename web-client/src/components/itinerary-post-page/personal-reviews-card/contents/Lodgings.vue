@@ -3,7 +3,7 @@
     <template v-for="n in 5">
       <v-expansion-panel :key="n">
         <v-expansion-panel-header>
-          <span class="subtitle-2">{{ n }}. Tip</span>
+          <span class="subtitle-2">{{ n }}. Restaurant Name</span>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <span class="body-2">
@@ -20,6 +20,6 @@
 
 <script>
 export default {
-  name: "itinerary-post-personal-reviews-card-tips-content",
+  name: "itinerary-post-page-personal-reviews-card-lodgings-content",
 };
 </script>

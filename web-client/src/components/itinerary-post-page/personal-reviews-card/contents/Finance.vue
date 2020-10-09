@@ -13,6 +13,6 @@
 
 <script>
 export default {
-  name: "itinerary-post-personal-reviews-card-finance-content",
+  name: "itinerary-post-page-personal-reviews-card-finance-content",
 };
 </script>
