@@ -26,7 +26,10 @@
               <div class="text-center">
                 <v-avatar size="75%">
                   <v-img
-                    :src="require('@/assets/home/about-local-tour-guides.jpg')"
+                    :src="require('@/assets/generic/images/tour-guides.jpg')"
+                    :lazy-src="
+                      require('@/assets/generic/images/tour-guides.jpg')
+                    "
                   ></v-img>
                 </v-avatar>
               </div>

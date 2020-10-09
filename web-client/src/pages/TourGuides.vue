@@ -19,25 +19,25 @@
         </v-row>
       </v-container>
     </div>
-    <generic-about-local-tour-guides-section></generic-about-local-tour-guides-section>
+    <generic-about-local-tour-guides-div></generic-about-local-tour-guides-div>
     <generic-footer></generic-footer>
   </section>
 </template>
 
 <script>
 import GenericFooter from "@/components/generic/Footer";
-import GenericAboutLocalTourGuidesSection from "@/components/generic/section/AboutLocalTourGuides";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
 import GenericTourGuideProfilePreview from "@/components/generic/TourGuideProfilePreview";
 import TourGuidesPageHeader from "@/components/tour-guides-page/Header";
 import TourGuidesPageSearchToolbarCard from "@/components/tour-guides-page/SearchToolbarCard";
+import GenericAboutLocalTourGuidesDiv from "@/components/generic/div/AboutLocalTourGuides";
 export default {
   components: {
+    GenericAboutLocalTourGuidesDiv,
     TourGuidesPageSearchToolbarCard,
     TourGuidesPageHeader,
     GenericTourGuideProfilePreview,
     CustomTooltipButton,
-    GenericAboutLocalTourGuidesSection,
     GenericFooter,
   },
 };

@@ -12,20 +12,20 @@
       :autoplay-timeout="5000"
     >
       <v-img
-        :src="require(`@/assets/home/landing-header-image-1.jpg`)"
-        :lazy-src="require(`@/assets/home/landing-header-image-1.jpg`)"
+        :src="require(`@/assets/home-page/landing-header-image-1.jpg`)"
+        :lazy-src="require(`@/assets/home-page/landing-header-image-1.jpg`)"
         width="100%"
         height="100vh"
       ></v-img>
       <v-img
-        :src="require(`@/assets/home/landing-header-image-2.jpeg`)"
-        :lazy-src="require(`@/assets/home/landing-header-image-2.jpeg`)"
+        :src="require(`@/assets/home-page/landing-header-image-2.jpeg`)"
+        :lazy-src="require(`@/assets/home-page/landing-header-image-2.jpeg`)"
         width="100%"
         height="100vh"
       ></v-img>
       <v-img
-        :src="require(`@/assets/home/landing-header-image-3.jpeg`)"
-        :lazy-src="require(`@/assets/home/landing-header-image-3.jpeg`)"
+        :src="require(`@/assets/home-page/landing-header-image-3.jpeg`)"
+        :lazy-src="require(`@/assets/home-page/landing-header-image-3.jpeg`)"
         width="100%"
         height="100vh"
       ></v-img>
