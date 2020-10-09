@@ -1,5 +1,5 @@
 <template>
-  <section class="py-10 grey-background" id="home-popular-itineraries-section">
+  <div class="py-10 grey-background" id="home-popular-itineraries-section">
     <v-container>
       <div class="text-center mb-10">
         <h1 class="display-1 mb-1">Popular Itineraries</h1>
@@ -15,13 +15,13 @@
         </template>
       </v-row>
     </v-container>
-  </section>
+  </div>
 </template>
 
 <script>
 import GenericItineraryPostPreview from "@/components/generic/ItineraryPostPreview";
 export default {
-  name: "home-popular-itineraries-section",
+  name: "home-page-popular-itineraries-div",
   components: { GenericItineraryPostPreview },
 };
 </script>

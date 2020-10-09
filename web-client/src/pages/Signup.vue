@@ -157,7 +157,7 @@
   </v-app>
 </template>
 <script>
-import GenericHowItWorksSection from "@/components/generic/HowItWorksSection";
+import GenericHowItWorksSection from "@/components/generic/div/HowItWorksSection";
 import GenericFooter from "@/components/generic/Footer";
 export default {
   components: { GenericFooter, GenericHowItWorksSection },

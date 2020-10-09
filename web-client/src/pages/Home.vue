@@ -12,54 +12,53 @@
         <v-icon large color="white"> mdi-map-marker </v-icon>
       </v-app-bar-nav-icon>
       <v-spacer> </v-spacer>
-      <v-btn color="transparent" depressed class="text-capitalize white--text"
-        >Travel Stories</v-btn
+      <v-btn color="primary" class="text-capitalize" :to="{ name: 'sign-in' }"
+        >Sign In</v-btn
       >
-      <v-btn color="transparent" depressed class="text-capitalize white--text"
-        >Itineraries</v-btn
-      >
-      <v-btn color="transparent" depressed class="text-capitalize white--text"
-        >Hire a Guide</v-btn
-      >
-      <v-btn color="transparent" depressed class="text-capitalize white--text"
-        >FAQs</v-btn
+      <v-btn
+        :color="isScrollingDown ? 'primary' : 'white'"
+        text
+        class="text-capitalize"
+        :to="{ name: 'signup' }"
+        >Signup</v-btn
       >
     </v-app-bar>
-    <home-landing-header></home-landing-header>
-    <home-popular-itineraries-section></home-popular-itineraries-section>
-    <home-search-destination-section></home-search-destination-section>
-    <home-highest-rated-guides-section></home-highest-rated-guides-section>
-    <generic-about-local-tour-guides-section></generic-about-local-tour-guides-section>
-    <home-featured-travel-stories-section></home-featured-travel-stories-section>
-    <generic-how-it-works-section></generic-how-it-works-section>
-    <generic-footer></generic-footer>
+    <home-page-header></home-page-header>
+    <home-page-popular-itineraries-div></home-page-popular-itineraries-div>
+    <home-page-search-destination-div></home-page-search-destination-div>
+    <home-page-highest-rated-guides-div></home-page-highest-rated-guides-div>
+    <generic-about-local-tour-guides-div></generic-about-local-tour-guides-div>
+    <home-page-featured-travel-stories-div></home-page-featured-travel-stories-div>
+    <generic-how-it-works-div></generic-how-it-works-div>
+    <generic-basic-footer></generic-basic-footer>
   </v-app>
 </template>
 
 <script>
-import HomeLandingHeader from "@/components/home/LandingHeader";
-import HomeSearchDestinationSection from "@/components/home/SearchDestinationSection";
-import HomePopularItinerariesSection from "@/components/home/PopularItinerariesSection";
-import HomeHighestRatedGuidesSection from "@/components/home/HighestRatedGuidesSection";
-import HomeFeaturedTravelStoriesSection from "@/components/home/FeaturedTravelStoriesSection";
 import CommonUtilities from "@/common/utilities";
-import GenericHowItWorksSection from "@/components/generic/HowItWorksSection";
-import GenericFooter from "@/components/generic/Footer";
-import GenericAboutLocalTourGuidesSection from "@/components/generic/section/AboutLocalTourGuides";
+import HomePageHeader from "@/components/home-page/Header";
+import HomePagePopularItinerariesDiv from "@/components/home-page/PopularItinerariesDiv";
+import HomePageSearchDestinationDiv from "@/components/home-page/SearchDestinationDiv";
+import HomePageHighestRatedGuidesDiv from "@/components/home-page/HighestRatedGuidesDiv";
+import GenericAboutLocalTourGuidesDiv from "@/components/generic/div/AboutLocalTourGuides";
+import HomePageFeaturedTravelStoriesDiv from "@/components/home-page/FeaturedTravelStoriesSection";
+import GenericHowItWorksDiv from "@/components/generic/div/HowItWorksSection";
+import GenericBasicFooter from "@/components/generic/footer/Basic";
+
 export default {
   name: "Home",
 
   mixins: [CommonUtilities],
 
   components: {
-    GenericAboutLocalTourGuidesSection,
-    GenericFooter,
-    GenericHowItWorksSection,
-    HomeFeaturedTravelStoriesSection,
-    HomeHighestRatedGuidesSection,
-    HomePopularItinerariesSection,
-    HomeSearchDestinationSection,
-    HomeLandingHeader,
+    GenericBasicFooter,
+    GenericHowItWorksDiv,
+    HomePageFeaturedTravelStoriesDiv,
+    GenericAboutLocalTourGuidesDiv,
+    HomePageHighestRatedGuidesDiv,
+    HomePageSearchDestinationDiv,
+    HomePagePopularItinerariesDiv,
+    HomePageHeader,
   },
 };
 </script>

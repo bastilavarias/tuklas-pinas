@@ -1,5 +1,5 @@
 <template>
-  <header id="landing-page">
+  <header class="landing-page">
     <carousel
       :items="1"
       :dots="false"
@@ -79,7 +79,7 @@
 import Carousel from "vue-owl-carousel";
 
 export default {
-  name: "landing-header",
+  name: "home-page-header",
 
   components: { Carousel },
 
@@ -92,7 +92,7 @@ export default {
 </script>
 
 <style scoped>
-#landing-page {
+.landing-page {
   position: relative;
   min-height: 100vh;
 }

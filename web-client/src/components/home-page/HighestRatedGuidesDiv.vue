@@ -1,5 +1,5 @@
 <template>
-  <section class="py-10 grey-background" id="home-highest-rated-guides-section">
+  <div class="py-10 grey-background" id="home-highest-rated-guides-section">
     <v-container>
       <div class="text-center mb-10">
         <h1 class="display-1 mb-1">Highest Rated Guides</h1>
@@ -29,14 +29,14 @@
         </template>
       </v-slide-group>
     </v-container>
-  </section>
+  </div>
 </template>
 
 <script>
 import GenericTourGuideProfilePreview from "@/components/generic/TourGuideProfilePreview";
 
 export default {
-  name: "home-highest-rated-guides-section",
+  name: "home-page-highest-rated-guides-div",
 
   components: { GenericTourGuideProfilePreview },
 

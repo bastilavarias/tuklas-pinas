@@ -1,5 +1,5 @@
 <template>
-  <section class="pt-1 pt-md-7" id="home-destination-section">
+  <div class="pt-1 pt-md-7" id="home-destination-section">
     <v-container>
       <h1 class="title mb-5">
         <span class="mr-1">Search your next destination</span>
@@ -28,11 +28,11 @@
         </v-col>
       </v-row>
     </v-container>
-  </section>
+  </div>
 </template>
 
 <script>
 export default {
-  name: "home-search-destination-section",
+  name: "home-page-search-destination-div",
 };
 </script>

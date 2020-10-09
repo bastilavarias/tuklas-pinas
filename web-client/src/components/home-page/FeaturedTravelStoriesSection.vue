@@ -22,7 +22,7 @@
 import ItineraryPostPreview from "@/components/generic/ItineraryPostPreview";
 import GenericTravelStoryPostPreview from "@/components/generic/TravelStoryPostPreview";
 export default {
-  name: "home-featured-travel-stories-section",
+  name: "home-page-featured-travel-stories-div",
   components: { GenericTravelStoryPostPreview, ItineraryPostPreview },
 };
 </script>
