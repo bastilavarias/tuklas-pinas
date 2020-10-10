@@ -13,7 +13,7 @@
                   <v-spacer></v-spacer>
                   <v-chip>
                     <v-icon left> mdi-tune </v-icon>
-                    <span>Filter Notifications</span>
+                    <span class="font-weight-medium">Filters</span>
                   </v-chip>
                 </v-toolbar>
                 <template v-for="n in 10">
