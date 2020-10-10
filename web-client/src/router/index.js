@@ -116,8 +116,19 @@ const routes = [
     children: [
       {
         path: "",
-        name: "discover",
-        component: () => import("../pages/Discover"),
+        component: () => import("@/pages/discover/map/Index"),
+        children: [
+          {
+            path: "",
+            name: "discover-page-map-dashboard",
+            component: () => import("@/pages/discover/map/Dashboard"),
+          },
+          {
+            path: "place-details",
+            name: "discover-page-map-post-details",
+            component: () => import("@/pages/discover/map/PlaceDetails"),
+          },
+        ],
       },
     ],
   },
