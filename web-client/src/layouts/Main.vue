@@ -30,9 +30,8 @@
       <v-btn
         color="transparent"
         depressed
-        :to="{ name: 'discover' }"
-        exact
-        exact-active-class="primary"
+        :to="{ name: 'discover-page-map-dashboard' }"
+        active-class="primary"
       >
         <span class="mr-1 text-capitalize">Discover</span>
         <v-icon>mdi-map-search</v-icon>
