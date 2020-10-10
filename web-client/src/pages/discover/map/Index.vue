@@ -49,7 +49,7 @@ export default {
   data() {
     return {
       latLng: latLng,
-      zoom: 15,
+      zoom: 6,
       center: latLng(14.63, 120.977),
       url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       attribution:
@@ -62,20 +62,20 @@ export default {
       showMap: true,
       sampleMarkerLocations: [
         {
-          latitude: 14.6206,
-          longitude: 120.966,
+          latitude: 9.834949,
+          longitude: 118.738358,
         },
         {
-          latitude: 14.63,
-          longitude: 120.977,
+          latitude: 20.448507,
+          longitude: 121.97081,
         },
         {
-          latitude: 14.64,
-          longitude: 120.966,
+          latitude: 14.599512,
+          longitude: 120.984222,
         },
         {
-          latitude: 14.64,
-          longitude: 120.977,
+          latitude: 10.315699,
+          longitude: 123.885437,
         },
       ],
     };
