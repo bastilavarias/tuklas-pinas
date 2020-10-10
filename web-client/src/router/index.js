@@ -148,12 +148,12 @@ const routes = [
     component: () => import("../layouts/Main"),
     children: [
       {
-        path: ":profileID",
+        path: "",
         component: () => import("../pages/profile/Index"),
         children: [
           {
             path: "",
-            name: "profile-wall",
+            name: "profile-general",
             component: () => import("../pages/profile/Wall"),
           },
           {
