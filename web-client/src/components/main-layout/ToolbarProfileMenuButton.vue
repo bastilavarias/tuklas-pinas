@@ -24,7 +24,7 @@
     </template>
     <v-card>
       <v-list-item two-line>
-        <custom-router-link :to="{ name: 'profile-general' }">
+        <custom-router-link :to="{ name: 'profile-general-page' }">
           <v-list-item-avatar :size="50">
             <v-img
               src="https://bastilavarias.github.io/assets/img/sebastian-lavarias.5c3a8fdd.png"
@@ -33,12 +33,12 @@
         </custom-router-link>
         <v-list-item-content>
           <v-list-item-title>
-            <custom-router-link :to="{ name: 'profile-general' }">
+            <custom-router-link :to="{ name: 'profile-general-page' }">
               <span class="font-weight-bold secondary--text">Sebastian L.</span>
             </custom-router-link>
           </v-list-item-title>
           <v-list-item-subtitle>
-            <custom-router-link :to="{ name: 'profile-general' }">
+            <custom-router-link :to="{ name: 'profile-general-page' }">
               <span class="secondary--text">See Profile</span>
             </custom-router-link>
           </v-list-item-subtitle>
@@ -90,7 +90,7 @@ export default {
         {
           title: "Sign Out",
           icon: "mdi-logout",
-          to: { name: "home" },
+          to: { name: "home-page" },
         },
       ],
     };

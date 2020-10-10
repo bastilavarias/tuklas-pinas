@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar app color="secondary" fixed width="100%" style="z-index: 3">
       <v-app-bar-nav-icon>
-        <custom-router-link :to="{ name: 'home' }">
+        <custom-router-link :to="{ name: 'home-page' }">
           <v-icon large color="white"> mdi-map-marker </v-icon>
         </custom-router-link>
       </v-app-bar-nav-icon>
@@ -11,7 +11,7 @@
         color="white"
         class="text-capitalize"
         exact
-        :to="{ name: 'home' }"
+        :to="{ name: 'home-page' }"
         text
         >Home</v-btn
       >
@@ -19,7 +19,7 @@
         color="white"
         class="text-capitalize"
         exact
-        :to="{ name: 'signup' }"
+        :to="{ name: 'signup-page' }"
         text
         >Signup</v-btn
       >
@@ -70,7 +70,7 @@
                       class="text-capitalize"
                       large
                       rounded
-                      :to="{ name: 'feed' }"
+                      :to="{ name: 'feed-page' }"
                       >Sign In</v-btn
                     >
                   </div>

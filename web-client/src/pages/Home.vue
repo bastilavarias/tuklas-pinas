@@ -8,18 +8,21 @@
       width="100%"
       style="z-index: 3"
     >
-      <custom-router-link :to="{ name: 'home' }">
+      <custom-router-link :to="{ name: 'home-page' }">
         <v-icon large color="white"> mdi-map-marker </v-icon>
       </custom-router-link>
       <v-spacer> </v-spacer>
-      <v-btn color="primary" class="text-capitalize" :to="{ name: 'sign-in' }"
+      <v-btn
+        color="primary"
+        class="text-capitalize"
+        :to="{ name: 'sign-in-page' }"
         >Sign In</v-btn
       >
       <v-btn
         :color="isScrollingDown ? 'primary' : 'white'"
         text
         class="text-capitalize"
-        :to="{ name: 'signup' }"
+        :to="{ name: 'signup-page' }"
         >Signup</v-btn
       >
     </v-app-bar>

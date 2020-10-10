@@ -13,7 +13,7 @@
         <l-marker
           :key="index"
           :lat-lng="latLng(location.latitude, location.longitude)"
-          @click="$router.push({ name: 'discover-page-map-post-details' })"
+          @click="$router.push({ name: 'discover-map-post-details-page' })"
         >
         </l-marker>
       </template>
