@@ -51,11 +51,11 @@ export default {
       tabSelections: [
         {
           text: "Sebastian's",
-          to: { name: "profile-general" },
+          to: { name: "profile-general-page" },
         },
         {
           text: "Travel History",
-          to: { name: "profile-travel-history" },
+          to: { name: "profile-travel-history-page" },
         },
       ],
     };

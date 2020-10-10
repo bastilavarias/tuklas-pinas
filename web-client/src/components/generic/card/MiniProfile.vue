@@ -43,7 +43,7 @@
         text
         class="text-capitalize"
         block
-        :to="{ name: 'profile-general' }"
+        :to="{ name: 'profile-general-page' }"
         >View Profile</v-btn
       >
     </v-card-text>

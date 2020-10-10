@@ -2,7 +2,11 @@
   <v-app class="grey-background">
     <v-app-bar app color="dark" fixed width="100%" style="z-index: 5" dark>
       <v-app-bar-nav-icon>
-        <v-icon large color="white" @click="$router.push({ name: 'feed' })">
+        <v-icon
+          large
+          color="white"
+          @click="$router.push({ name: 'feed-page' })"
+        >
           mdi-map-marker
         </v-icon>
       </v-app-bar-nav-icon>
@@ -10,7 +14,7 @@
       <v-btn
         color="transparent"
         depressed
-        :to="{ name: 'feed' }"
+        :to="{ name: 'feed-page' }"
         exact
         exact-active-class="primary"
       >
@@ -20,7 +24,7 @@
       <v-btn
         color="transparent"
         depressed
-        :to="{ name: 'tour-guides' }"
+        :to="{ name: 'tour-guides-page' }"
         exact
         exact-active-class="primary"
       >
@@ -30,7 +34,7 @@
       <v-btn
         color="transparent"
         depressed
-        :to="{ name: 'discover-page-map-dashboard' }"
+        :to="{ name: 'discover-map-dashboard-page' }"
         active-class="primary"
       >
         <span class="mr-1 text-capitalize">Discover</span>
@@ -41,7 +45,7 @@
       <custom-tooltip-button
         icon="mdi-magnify"
         text="Search"
-        :to="{ name: 'search' }"
+        :to="{ name: 'search-page' }"
         exact-active-class="primary"
       >
       </custom-tooltip-button>
