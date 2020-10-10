@@ -61,7 +61,7 @@ export default {
           description: "Lorem ipsum dolor sit amet.",
           icon: "mdi-post",
           to: {
-            name: "travel-story-post-editor",
+            name: "travel-story-post-editor-page",
             params: { action: "submit" },
           },
         },
@@ -70,7 +70,7 @@ export default {
           description: "Lorem ipsum dolor sit amet.",
           icon: "mdi-book-open",
           to: {
-            name: "itinerary-post-editor",
+            name: "itinerary-post-editor-page",
             params: { action: "submit" },
           },
         },

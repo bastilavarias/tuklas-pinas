@@ -6,17 +6,17 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "",
-    name: "home",
+    name: "home-page",
     component: () => import("../pages/Home"),
   },
   {
     path: "/sign-in",
-    name: "sign-in",
+    name: "sign-in-page",
     component: () => import("../pages/SignIn"),
   },
   {
     path: "/signup",
-    name: "signup",
+    name: "signup-page",
     component: () => import("../pages/Signup"),
   },
   {
@@ -25,7 +25,7 @@ const routes = [
     children: [
       {
         path: "",
-        name: "feed",
+        name: "feed-page",
         component: () => import("../pages/Feed"),
       },
     ],
@@ -36,7 +36,7 @@ const routes = [
     children: [
       {
         path: "",
-        name: "events-explorer",
+        name: "events-explorer-page",
         component: () => import("../pages/EventsExplorer"),
       },
     ],
@@ -47,7 +47,7 @@ const routes = [
     children: [
       {
         path: ":action",
-        name: "travel-story-post-editor",
+        name: "travel-story-post-editor-page",
         component: () => import("../pages/travel-story/Editor"),
       },
     ],
@@ -58,7 +58,7 @@ const routes = [
     children: [
       {
         path: ":action",
-        name: "itinerary-post-editor",
+        name: "itinerary-post-editor-page",
         component: () => import("../pages/itinerary/Editor"),
       },
     ],
@@ -69,12 +69,12 @@ const routes = [
     children: [
       {
         path: ":postID",
-        name: "travel-story-post",
+        name: "travel-story-post-page",
         component: () => import("../pages/travel-story/Post"),
         children: [
           {
             path: "gallery/:imageID",
-            name: "travel-story-post-gallery",
+            name: "travel-story-post-gallery-page",
             component: () => import("../pages/travel-story/Gallery"),
           },
         ],
@@ -87,12 +87,12 @@ const routes = [
     children: [
       {
         path: ":postID",
-        name: "itinerary-post",
+        name: "itinerary-post-page",
         component: () => import("../pages/itinerary/Post"),
         children: [
           {
             path: "gallery/:imageID",
-            name: "itinerary-post-gallery",
+            name: "itinerary-post-gallery-page",
             component: () => import("../pages/itinerary/Gallery"),
           },
         ],
@@ -105,7 +105,7 @@ const routes = [
     children: [
       {
         path: "",
-        name: "tour-guides",
+        name: "tour-guides-page",
         component: () => import("../pages/TourGuides"),
       },
     ],
@@ -116,8 +116,19 @@ const routes = [
     children: [
       {
         path: "",
-        name: "discover",
-        component: () => import("../pages/Discover"),
+        component: () => import("@/pages/discover/map/Index"),
+        children: [
+          {
+            path: "",
+            name: "discover-map-dashboard-page",
+            component: () => import("@/pages/discover/map/Dashboard"),
+          },
+          {
+            path: "place-details",
+            name: "discover-map-post-details-page",
+            component: () => import("@/pages/discover/map/PlaceDetails"),
+          },
+        ],
       },
     ],
   },
@@ -127,7 +138,7 @@ const routes = [
     children: [
       {
         path: "",
-        name: "search",
+        name: "search-page",
         component: () => import("../pages/Search"),
       },
     ],
@@ -138,7 +149,7 @@ const routes = [
     children: [
       {
         path: "",
-        name: "notification",
+        name: "notification-page",
         component: () => import("../pages/Notification"),
       },
     ],
@@ -148,17 +159,17 @@ const routes = [
     component: () => import("../layouts/Main"),
     children: [
       {
-        path: ":profileID",
+        path: "",
         component: () => import("../pages/profile/Index"),
         children: [
           {
             path: "",
-            name: "profile-wall",
+            name: "profile-general-page",
             component: () => import("../pages/profile/Wall"),
           },
           {
             path: "travel-history",
-            name: "profile-travel-history",
+            name: "profile-travel-history-page",
             component: () => import("../pages/profile/TravelHistory"),
           },
         ],

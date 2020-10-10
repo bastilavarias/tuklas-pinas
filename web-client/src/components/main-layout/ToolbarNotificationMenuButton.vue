@@ -28,7 +28,7 @@
           color="secondary"
           block
           class="text-capitalize"
-          :to="{ name: 'notification' }"
+          :to="{ name: 'notification-page' }"
           >See All</v-btn
         >
       </v-card-actions>

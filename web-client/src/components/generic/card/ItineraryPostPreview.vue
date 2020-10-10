@@ -8,7 +8,7 @@
       <div class="mr-2">
         <span class="caption">Sebastian Curtis T. Lavarias - 6 hrs ago</span>
         <custom-router-link
-          :to="{ name: 'itinerary-post', params: { postID: 1 } }"
+          :to="{ name: 'itinerary-post-page', params: { postID: 1 } }"
         >
           <span class="d-block mb-1 title font-weight-bold secondary--text"
             >Lorem ipsum dolor sit amet.</span

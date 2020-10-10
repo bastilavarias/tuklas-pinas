@@ -26,7 +26,7 @@
           min-height="8rem"
           color="secondary"
           dark
-          :to="{ name: 'events-explorer' }"
+          :to="{ name: 'events-explorer-page' }"
         >
           <div class="event-content d-flex align-center justify-center">
             <div class="text-center">

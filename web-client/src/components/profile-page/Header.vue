@@ -50,12 +50,12 @@ export default {
     return {
       tabSelections: [
         {
-          text: "Wall",
-          to: { name: "profile-wall", params: { profileID: 1 } },
+          text: "Sebastian's",
+          to: { name: "profile-general-page" },
         },
         {
           text: "Travel History",
-          to: { name: "profile-travel-history", params: { profileID: 1 } },
+          to: { name: "profile-travel-history-page" },
         },
       ],
     };

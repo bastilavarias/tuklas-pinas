@@ -11,11 +11,11 @@
         rounded
         flat
         label="Search"
+        class="mr-3"
       ></v-text-field>
-      <v-spacer></v-spacer>
       <v-chip>
         <v-icon left> mdi-tune </v-icon>
-        <span>Filter Results</span>
+        <span class="font-weight-medium">Filters</span>
       </v-chip>
     </v-toolbar>
     <v-card-title>Search keyword</v-card-title>
