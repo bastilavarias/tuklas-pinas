@@ -23,9 +23,6 @@
             <v-col cols="12">
               <generic-mini-events-explorer-side-card></generic-mini-events-explorer-side-card>
             </v-col>
-            <v-col cols="12">
-              <generic-sticky-footer></generic-sticky-footer>
-            </v-col>
           </v-row>
         </v-col>
       </v-row>

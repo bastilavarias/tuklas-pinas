@@ -51,7 +51,7 @@
           <v-col cols="12">
             <generic-suggested-people-side-card></generic-suggested-people-side-card>
           </v-col>
-          <v-col cols="12" ref="stickyParent">
+          <v-col cols="12">
             <div
               :style="{
                 position: 'relative',
