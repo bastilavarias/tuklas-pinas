@@ -5,6 +5,6 @@ export default {
     const options = await getConnectionOptions(
       process.env.NODE_ENV || "development"
     );
-    await createConnection({ ...options, name: "default" });
+    return createConnection({ ...options, name: "default" });
   },
 };
