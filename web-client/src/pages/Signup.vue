@@ -62,12 +62,17 @@
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" md="6">
-                      <v-select
+                      <v-autocomplete
                         filled
                         rounded
                         label="Nationality"
                         single-line
-                      ></v-select>
+                        :loading="isFetchGenericNationalitiesStart"
+                        :items="genericNationalities"
+                        item-text="label"
+                        item-value="name"
+                        v-model="form.nationality"
+                      ></v-autocomplete>
                     </v-col>
                     <v-col cols="12" md="6">
                       <v-select
@@ -176,6 +181,12 @@
 import CustomRouterLink from "@/components/custom/RouterLink";
 import GenericBasicFooter from "@/components/generic/footer/Basic";
 import CustomDatePicker from "@/components/custom/DatePicker";
+import { GENERIC_FETCH_NATIONALITIES } from "@/store/types/generic";
+
+const defaultSignupForm = {
+  nationality: "filipino",
+};
+
 export default {
   components: {
     CustomDatePicker,
@@ -185,7 +196,25 @@ export default {
   data() {
     return {
       birthDate: "",
+      isFetchGenericNationalitiesStart: false,
+      form: Object.assign({}, defaultSignupForm),
+      defaultSignupForm,
     };
+  },
+  computed: {
+    genericNationalities() {
+      return this.$store.state.generic.nationalities;
+    },
+  },
+  methods: {
+    async fetchGenericNationalities() {
+      this.isFetchGenericNationalitiesStart = true;
+      await this.$store.dispatch(GENERIC_FETCH_NATIONALITIES);
+      this.isFetchGenericNationalitiesStart = false;
+    },
+  },
+  async created() {
+    await this.fetchGenericNationalities();
   },
 };
 </script>
