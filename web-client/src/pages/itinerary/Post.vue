@@ -77,7 +77,7 @@
           </v-col>
         </v-row>
       </v-col>
-      <v-col cols="12" md="3">
+      <v-col cols="12" md="3" ref="stickyParent">
         <v-row>
           <v-col cols="12">
             <generic-mini-events-explorer-side-card></generic-mini-events-explorer-side-card>
@@ -86,7 +86,14 @@
             <generic-suggested-people-side-card></generic-suggested-people-side-card>
           </v-col>
           <v-col cols="12">
-            <generic-sticky-footer></generic-sticky-footer>
+            <div
+              :style="{
+                position: 'relative',
+                height: `${stickyParentHeight}px`,
+              }"
+            >
+              <generic-sticky-footer></generic-sticky-footer>
+            </div>
           </v-col>
         </v-row>
       </v-col>
@@ -107,6 +114,7 @@ import GenericCommentReplyMedia from "@/components/generic/media/CommentReply";
 import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEventsExplorer";
 import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedPeople";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
+import CommonUtilities from "@/common/utilities";
 export default {
   components: {
     GenericStickyFooter,
@@ -136,6 +144,7 @@ export default {
       isGalleryDialogOpen: false,
     };
   },
+  mixins: [CommonUtilities],
 };
 </script>
 

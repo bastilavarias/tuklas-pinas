@@ -92,9 +92,6 @@ export default {
       tabSelections: ["Relevant", "New", "Trending"],
     };
   },
-  mounted() {
-    this.matchHeight();
-  },
   mixins: [CommonUtilities],
 };
 </script>
