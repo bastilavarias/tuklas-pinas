@@ -104,8 +104,14 @@ import ItineraryPostPagePersonalReviewsCard from "@/components/itinerary-post-pa
 import ItineraryPostPageTagsCard from "@/components/itinerary-post-page/TagsCard";
 import GenericCommentMedia from "@/components/generic/media/Comment";
 import GenericCommentReplyMedia from "@/components/generic/media/CommentReply";
+import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEventsExplorer";
+import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedPeople";
+import GenericStickyFooter from "@/components/generic/footer/Sticky";
 export default {
   components: {
+    GenericStickyFooter,
+    GenericSuggestedPeopleSideCard,
+    GenericMiniEventsExplorerSideCard,
     GenericCommentReplyMedia,
     GenericCommentMedia,
     ItineraryPostPageTagsCard,

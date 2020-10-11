@@ -4,40 +4,10 @@
     tile
     :class="`${hasShadow ? 'custom-shadow' : ''} ${className}`"
   >
-    <div class="px-4 py-3 d-flex align-start justify-space-between">
-      <div class="mr-2">
-        <span class="caption">Sebastian Curtis T. Lavarias - 6 hrs ago</span>
-        <custom-router-link
-          :to="{ name: 'itinerary-post-page', params: { postID: 1 } }"
-        >
-          <span class="d-block mb-1 title font-weight-bold secondary--text"
-            >Lorem ipsum dolor sit amet.</span
-          >
-        </custom-router-link>
-        <span class="body-2 d-block mb-3"
-          >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut
-          deserunt excepturi facilis laboriosam molestias neque placeat. Alias
-          beatae eius quisquam.</span
-        >
-        <div>
-          <template v-for="n in 4">
-            <v-chip
-              label
-              color="primary"
-              small
-              :class="`${n === 1 ? 'mr-1 mb-1' : 'ma-1'} font-weight-bold`"
-              :key="n"
-              >Category {{ n }}</v-chip
-            >
-          </template>
-        </div>
-      </div>
-      <v-avatar :size="40">
-        <v-img
-          src="https://bastilavarias.github.io/assets/img/sebastian-lavarias.5c3a8fdd.png"
-        ></v-img>
-      </v-avatar>
-    </div>
+    <generic-post-header-card
+      clickable
+      type="itinerary"
+    ></generic-post-header-card>
     <div class="mb-3">
       <masonry :cols="3" :gutter="5">
         <template v-for="(image, index) in images">
@@ -81,29 +51,37 @@
         <span class="caption font-weight-bold">1K+</span>
       </v-btn>
       <v-btn depressed text>
-        <v-icon class="mr-1">mdi-share-outline</v-icon>
-        <span class="caption font-weight-bold">1K+</span>
-      </v-btn>
-      <div class="flex-grow-1"></div>
-      <v-btn depressed text>
         <v-icon class="mr-1">mdi-bookmark-outline</v-icon>
         <span class="caption font-weight-bold">1K+</span>
       </v-btn>
+      <div class="flex-grow-1"></div>
+      <v-btn depressed text @click="isShareDialogOpen = true">
+        <v-icon class="mr-1">mdi-share-outline</v-icon>
+        <span class="caption font-weight-bold">1K+</span>
+      </v-btn>
     </v-card-actions>
+    <generic-post-share-dialog
+      :is-open.sync="isShareDialogOpen"
+    ></generic-post-share-dialog>
   </v-card>
 </template>
 
 <script>
 import CustomRouterLink from "@/components/custom/RouterLink";
+import GenericPostShareDialog from "@/components/generic/dialog/PostShare";
+import GenericPostHeaderCard from "@/components/generic/card/PostHeader";
 export default {
   name: "generic-itinerary-post-preview-card",
-  components: { CustomRouterLink },
+  components: {
+    GenericPostHeaderCard,
+    GenericPostShareDialog,
+    CustomRouterLink,
+  },
   props: {
     className: {
       type: String,
       required: false,
     },
-
     hasShadow: {
       type: Boolean,
       required: false,
@@ -121,6 +99,7 @@ export default {
         "https://images.pexels.com/photos/1364554/pexels-photo-1364554.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
       ],
       rating: 4,
+      isShareDialogOpen: false,
     };
   },
 };

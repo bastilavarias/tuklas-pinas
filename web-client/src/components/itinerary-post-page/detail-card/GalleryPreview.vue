@@ -2,7 +2,7 @@
   <v-row no-gutters>
     <v-col cols="6">
       <router-link
-        :to="{ name: 'itinerary-post-gallery', params: { imageID: 1 } }"
+        :to="{ name: 'itinerary-post-gallery-page', params: { imageID: 1 } }"
       >
         <v-img
           src="https://images.pexels.com/photos/2413238/pexels-photo-2413238.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
@@ -15,7 +15,10 @@
       <v-row no-gutters>
         <v-col cols="12">
           <router-link
-            :to="{ name: 'itinerary-post-gallery', params: { imageID: 1 } }"
+            :to="{
+              name: 'itinerary-post-gallery-page',
+              params: { imageID: 1 },
+            }"
           >
             <v-img
               src="https://images.pexels.com/photos/2604843/pexels-photo-2604843.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
@@ -26,7 +29,10 @@
         </v-col>
         <v-col cols="12">
           <router-link
-            :to="{ name: 'itinerary-post-gallery', params: { imageID: 1 } }"
+            :to="{
+              name: 'itinerary-post-gallery-page',
+              params: { imageID: 1 },
+            }"
           >
             <div :style="{ position: 'relative', height: '100%' }">
               <v-img
