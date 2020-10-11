@@ -3,6 +3,7 @@ import accountModel from "./model";
 
 const accountService = {
   async signup(inputs: SignupInputs): Promise<SignupResult> {
+    // Complete signup process
     const { email } = inputs;
     const gotDetails = await accountModel.getDetailsByEmail(email);
     const isEmailExists = !!gotDetails;
