@@ -78,12 +78,12 @@
                       ></v-select>
                     </v-col>
                     <v-col cols="12" md="6">
-                      <v-select
-                        filled
-                        rounded
+                      <custom-date-picker
                         label="Date of Birth"
-                        single-line
-                      ></v-select>
+                        rounded
+                        filled
+                        :date.sync="birthDate"
+                      ></custom-date-picker>
                     </v-col>
                     <v-col cols="12" md="6">
                       <v-select
@@ -175,7 +175,17 @@
 <script>
 import CustomRouterLink from "@/components/custom/RouterLink";
 import GenericBasicFooter from "@/components/generic/footer/Basic";
+import CustomDatePicker from "@/components/custom/DatePicker";
 export default {
-  components: { GenericBasicFooter, CustomRouterLink },
+  components: {
+    CustomDatePicker,
+    GenericBasicFooter,
+    CustomRouterLink,
+  },
+  data() {
+    return {
+      birthDate: "",
+    };
+  },
 };
 </script>
