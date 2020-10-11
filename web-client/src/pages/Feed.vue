@@ -28,13 +28,13 @@
                 </v-tab>
               </template>
             </v-tabs>
-            <template v-for="n in [1]">
+            <template v-for="n in [1, 2]">
               <generic-travel-story-post-preview-card
                 :key="n"
                 class-name="mb-5"
               ></generic-travel-story-post-preview-card>
             </template>
-            <template v-for="n in [2]">
+            <template v-for="n in [3, 4]">
               <generic-itinerary-post-preview-card
                 :key="n"
                 class-name="mb-5"
@@ -43,7 +43,7 @@
           </v-col>
         </v-row>
       </v-col>
-      <v-col cols="12" md="3">
+      <v-col cols="12" md="3" ref="stickyParent">
         <v-row>
           <v-col cols="12">
             <generic-mini-events-explorer-side-card></generic-mini-events-explorer-side-card>
@@ -51,8 +51,15 @@
           <v-col cols="12">
             <generic-suggested-people-side-card></generic-suggested-people-side-card>
           </v-col>
-          <v-col cols="12">
-            <generic-sticky-footer></generic-sticky-footer>
+          <v-col cols="12" ref="stickyParent">
+            <div
+              :style="{
+                position: 'relative',
+                height: `${stickyParentHeight}px`,
+              }"
+            >
+              <generic-sticky-footer></generic-sticky-footer>
+            </div>
           </v-col>
         </v-row>
       </v-col>
@@ -68,6 +75,7 @@ import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedP
 import GenericItineraryPostPreviewCard from "@/components/generic/card/ItineraryPostPreview";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
 import GenericTravelStoryPostPreviewCard from "@/components/generic/card/TravelStoryPostPreview";
+import CommonUtilities from "@/common/utilities";
 export default {
   components: {
     GenericTravelStoryPostPreviewCard,
@@ -84,5 +92,9 @@ export default {
       tabSelections: ["Relevant", "New", "Trending"],
     };
   },
+  mounted() {
+    this.matchHeight();
+  },
+  mixins: [CommonUtilities],
 };
 </script>

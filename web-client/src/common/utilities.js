@@ -2,6 +2,7 @@ const CommonUtilities = {
   data() {
     return {
       isScrollingDown: false,
+      stickyParentHeight: 0,
     };
   },
 
@@ -15,14 +16,17 @@ const CommonUtilities = {
         this.isScrollingDown = false;
       };
     },
-
     goBack() {
       this.$router.go(-1);
+    },
+    matchHeight() {
+      this.stickyParentHeight = this.$refs.stickyParent.clientHeight;
     },
   },
 
   mounted() {
     this.scroll();
+    this.matchHeight();
   },
 };
 
