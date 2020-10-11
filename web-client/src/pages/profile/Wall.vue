@@ -28,13 +28,20 @@
         </v-col>
       </v-row>
     </v-col>
-    <v-col cols="12" md="3">
+    <v-col cols="12" md="3" ref="stickyParent">
       <v-row>
         <v-col cols="12">
           <generic-suggested-people-side-card></generic-suggested-people-side-card>
         </v-col>
         <v-col cols="12">
-          <generic-sticky-footer></generic-sticky-footer>
+          <div
+            :style="{
+              position: 'relative',
+              height: `${stickyParentHeight}px`,
+            }"
+          >
+            <generic-sticky-footer></generic-sticky-footer>
+          </div>
         </v-col>
       </v-row>
     </v-col>
@@ -47,6 +54,7 @@ import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedP
 import GenericItineraryPostPreviewCard from "@/components/generic/card/ItineraryPostPreview";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
 import GenericTravelStoryPostPreviewCard from "@/components/generic/card/TravelStoryPostPreview";
+import CommonUtilities from "@/common/utilities";
 export default {
   components: {
     GenericTravelStoryPostPreviewCard,
@@ -56,5 +64,6 @@ export default {
     ProfilePageEventsSideCard,
     ProfilePagePostsCard,
   },
+  mixins: [CommonUtilities],
 };
 </script>

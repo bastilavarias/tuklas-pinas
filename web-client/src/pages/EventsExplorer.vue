@@ -1,63 +1,63 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col cols="12" md="3">
-        <v-row>
-          <v-col cols="12">
-            <generic-mini-profile-side-card></generic-mini-profile-side-card>
-          </v-col>
-          <v-col cols="12">
-            <generic-top-categories-side-card></generic-top-categories-side-card>
-          </v-col>
-        </v-row>
-      </v-col>
-      <v-col cols="12" md="6">
-        <v-row>
-          <v-col cols="12">
-            <h1 class="display-1 font-weight-bold mb-10">Explore Events</h1>
-            <v-row>
-              <template v-for="(event, index) in events">
-                <v-col cols="12" md="6" :key="index">
-                  <v-card
-                    flat
-                    min-height="15rem"
-                    dark
-                    :style="{ position: 'relative' }"
-                    color="primary"
-                  >
-                    <div
-                      class="event-content d-flex align-center justify-center"
+  <section>
+    <v-container>
+      <v-row>
+        <v-col cols="12" md="3">
+          <v-row>
+            <v-col cols="12">
+              <generic-mini-profile-side-card></generic-mini-profile-side-card>
+            </v-col>
+            <v-col cols="12">
+              <generic-top-categories-side-card></generic-top-categories-side-card>
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-row>
+            <v-col cols="12">
+              <h1 class="display-1 font-weight-bold mb-10">Explore Events</h1>
+              <v-row>
+                <template v-for="(event, index) in events">
+                  <v-col cols="12" md="6" :key="index">
+                    <v-card
+                      flat
+                      min-height="15rem"
+                      dark
+                      :style="{ position: 'relative' }"
+                      color="primary"
                     >
-                      <div class="text-center">
-                        <span class="overline">{{ event.name }}</span>
+                      <div
+                        class="event-content d-flex align-center justify-center"
+                      >
+                        <div class="text-center">
+                          <span class="overline">{{ event.name }}</span>
+                        </div>
                       </div>
-                    </div>
-                    <div
-                      class="event-background-image"
-                      :style="{
-                        backgroundImage: `url(${event.backgroundImage})`,
-                      }"
-                    ></div>
-                    <div class="dark-overlay"></div>
-                  </v-card>
-                </v-col>
-              </template>
-            </v-row>
-          </v-col>
-        </v-row>
-      </v-col>
-      <v-col cols="12" md="3">
-        <v-row>
-          <v-col cols="12">
-            <generic-suggested-people-side-card></generic-suggested-people-side-card>
-          </v-col>
-          <v-col cols="12">
-            <generic-sticky-footer></generic-sticky-footer>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
-  </v-container>
+                      <div
+                        class="event-background-image"
+                        :style="{
+                          backgroundImage: `url(${event.backgroundImage})`,
+                        }"
+                      ></div>
+                      <div class="dark-overlay"></div>
+                    </v-card>
+                  </v-col>
+                </template>
+              </v-row>
+            </v-col>
+          </v-row>
+        </v-col>
+        <v-col cols="12" md="3">
+          <v-row>
+            <v-col cols="12">
+              <generic-suggested-people-side-card></generic-suggested-people-side-card>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
+    <generic-basic-footer></generic-basic-footer>
+  </section>
 </template>
 
 <script>
@@ -65,8 +65,10 @@ import GenericMiniProfileSideCard from "@/components/generic/card/MiniProfile";
 import GenericTopCategoriesSideCard from "@/components/generic/card/TopCategories";
 import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedPeople";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
+import GenericBasicFooter from "@/components/generic/footer/Basic";
 export default {
   components: {
+    GenericBasicFooter,
     GenericStickyFooter,
     GenericSuggestedPeopleSideCard,
     GenericTopCategoriesSideCard,

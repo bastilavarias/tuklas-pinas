@@ -1,6 +1,8 @@
 <template>
   <v-card outlined class="generic-sticky-footer-card">
-    <v-card-subtitle>Sticky Footer</v-card-subtitle>
+    <div class="px-4 py-3 text-center">
+      <span class="caption"> © 2020 Tuklas Pinas® </span>
+    </div>
   </v-card>
 </template>
 
@@ -14,6 +16,6 @@ export default {
 .generic-sticky-footer-card {
   position: sticky;
   position: -webkit-sticky;
-  top: 0;
+  top: 5rem;
 }
 </style>
