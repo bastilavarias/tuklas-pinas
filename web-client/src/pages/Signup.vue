@@ -94,8 +94,13 @@
                       <v-select
                         filled
                         rounded
-                        label="Gender"
+                        label="Sex"
                         single-line
+                        :loading="isFetchGenericSexesStart"
+                        :items="genericSexes"
+                        item-text="label"
+                        item-value="name"
+                        v-model="form.sex"
                       ></v-select>
                     </v-col>
                     <v-col cols="12" md="6">
@@ -181,10 +186,14 @@
 import CustomRouterLink from "@/components/custom/RouterLink";
 import GenericBasicFooter from "@/components/generic/footer/Basic";
 import CustomDatePicker from "@/components/custom/DatePicker";
-import { GENERIC_FETCH_NATIONALITIES } from "@/store/types/generic";
+import {
+  GENERIC_FETCH_NATIONALITIES,
+  GENERIC_FETCH_SEXES,
+} from "@/store/types/generic";
 
 const defaultSignupForm = {
   nationality: "filipino",
+  sex: "",
 };
 
 export default {
@@ -197,6 +206,7 @@ export default {
     return {
       birthDate: "",
       isFetchGenericNationalitiesStart: false,
+      isFetchGenericSexesStart: false,
       form: Object.assign({}, defaultSignupForm),
       defaultSignupForm,
     };
@@ -205,6 +215,9 @@ export default {
     genericNationalities() {
       return this.$store.state.generic.nationalities;
     },
+    genericSexes() {
+      return this.$store.state.generic.sexes;
+    },
   },
   methods: {
     async fetchGenericNationalities() {
@@ -212,9 +225,15 @@ export default {
       await this.$store.dispatch(GENERIC_FETCH_NATIONALITIES);
       this.isFetchGenericNationalitiesStart = false;
     },
+    async fetchGenericSexes() {
+      this.isFetchGenericSexesStart = true;
+      await this.$store.dispatch(GENERIC_FETCH_SEXES);
+      this.isFetchGenericSexesStart = false;
+    },
   },
   async created() {
     await this.fetchGenericNationalities();
+    await this.fetchGenericSexes();
   },
 };
 </script>
