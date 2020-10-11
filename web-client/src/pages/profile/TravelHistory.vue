@@ -5,6 +5,9 @@
         <v-col cols="12">
           <profile-page-events-side-card></profile-page-events-side-card>
         </v-col>
+        <v-col cols="12">
+          <generic-sticky-footer></generic-sticky-footer>
+        </v-col>
       </v-row>
     </v-col>
     <v-col cols="12" md="9">
@@ -61,8 +64,10 @@
 import { latLng } from "leaflet";
 import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from "vue2-leaflet";
 import ProfilePageEventsSideCard from "@/components/profile-page/EventsSideCard";
+import GenericStickyFooter from "@/components/generic/footer/Sticky";
 export default {
   components: {
+    GenericStickyFooter,
     ProfilePageEventsSideCard,
     LMap,
     LTileLayer,

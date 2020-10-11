@@ -39,9 +39,7 @@
                   Fugiat, vel.
                 </h1>
                 <div class="d-flex align-center">
-                  <v-btn color="primary" class="text-capitalize"
-                    >Apply Now</v-btn
-                  >
+                  <v-btn color="primary">Apply Now</v-btn>
                   <div class="mx-5">OR</div>
                   <v-btn
                     color="white"
