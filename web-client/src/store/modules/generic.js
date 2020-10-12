@@ -22,7 +22,8 @@ const genericStore = {
   actions: {
     async [GENERIC_FETCH_NATIONALITIES]({ commit }) {
       try {
-        const nationalities = await genericApiService.fetchNationalities();
+        const result = await genericApiService.fetchNationalities();
+        const nationalities = result ? result.data : [];
         commit(GENERIC_SET_NATIONALITIES, nationalities);
       } catch (errors) {
         throw new Error(`[RWV] ApiService ${errors}`);
@@ -30,7 +31,8 @@ const genericStore = {
     },
     async [GENERIC_FETCH_SEXES]({ commit }) {
       try {
-        const sexes = await genericApiService.fetchSexes();
+        const result = await genericApiService.fetchSexes();
+        const sexes = result ? result.data : [];
         commit(GENERIC_SET_SEXES, sexes);
       } catch (errors) {
         throw new Error(`[RWV] ApiService ${errors}`);

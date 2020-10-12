@@ -201,6 +201,7 @@ import {
   GENERIC_FETCH_SEXES,
 } from "@/store/types/generic";
 import CustomPasswordTextField from "@/components/custom/PasswordTextField";
+import { AUTHENTICATION_SIGNUP } from "@/store/types/authentication";
 
 const defaultSignupForm = {
   firstName: "",
@@ -277,7 +278,7 @@ export default {
       this.isFetchGenericSexesStart = false;
     },
     async signup() {
-      console.log(this.form);
+      await this.$store.dispatch(AUTHENTICATION_SIGNUP, this.form);
     },
   },
   async created() {

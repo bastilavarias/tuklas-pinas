@@ -2,15 +2,11 @@ import apiService from "@/services/api";
 
 const genericApiService = {
   async fetchNationalities() {
-    const result = await apiService.get("/generic/nationalities");
-    return this.catcher(result.data, []);
+    return await apiService.get("/generic/nationalities");
   },
+
   async fetchSexes() {
-    const result = await apiService.get("/generic/sexes");
-    return this.catcher(result.data, []);
-  },
-  catcher(value, _catch) {
-    return value ? value : _catch;
+    return await apiService.get("/generic/sexes");
   },
 };
 
