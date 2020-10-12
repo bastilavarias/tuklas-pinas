@@ -1,6 +1,7 @@
 import Vue from "vue";
 import vueAxios from "vue-axios";
 import axios from "axios";
+import tokenService from "@/services/token";
 
 const apiService = {
   init() {
@@ -8,9 +9,9 @@ const apiService = {
     Vue.axios.defaults.baseURL = "/api";
   },
 
-  // setHeader() {
-  //   Vue.axios.defaults.headers.common["Authorization"] = tokenService.get();
-  // },
+  setHeader() {
+    Vue.axios.defaults.headers.common["Authorization"] = tokenService.get();
+  },
 
   async get(route, body) {
     return await Vue.axios.get(route, body);

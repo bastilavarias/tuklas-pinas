@@ -49,23 +49,25 @@
                       <v-text-field
                         filled
                         rounded
-                        label="First Name"
+                        label="First Name *"
                         single-line
+                        v-model="form.firstName"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" md="6">
                       <v-text-field
                         filled
                         rounded
-                        label="Last Name"
+                        label="Last Name *"
                         single-line
+                        v-model="form.lastName"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" md="6">
                       <v-autocomplete
                         filled
                         rounded
-                        label="Nationality"
+                        label="Nationality *"
                         single-line
                         :loading="isFetchGenericNationalitiesStart"
                         :items="genericNationalities"
@@ -75,26 +77,30 @@
                       ></v-autocomplete>
                     </v-col>
                     <v-col cols="12" md="6">
-                      <v-select
+                      <v-text-field
                         filled
                         rounded
-                        label="E-mail"
+                        label="Email *"
                         single-line
-                      ></v-select>
+                        type="email"
+                        v-model="form.email"
+                        :error="!!signupError.email"
+                        :error-messages="signupError.email"
+                      ></v-text-field>
                     </v-col>
                     <v-col cols="12" md="6">
                       <custom-date-picker
-                        label="Date of Birth"
+                        label="Date of Birth *"
                         rounded
                         filled
-                        :date.sync="birthDate"
+                        :date.sync="form.birthDate"
                       ></custom-date-picker>
                     </v-col>
                     <v-col cols="12" md="6">
                       <v-select
                         filled
                         rounded
-                        label="Sex"
+                        label="Sex *"
                         single-line
                         :loading="isFetchGenericSexesStart"
                         :items="genericSexes"
@@ -104,33 +110,40 @@
                       ></v-select>
                     </v-col>
                     <v-col cols="12" md="6">
-                      <v-text-field
-                        type="password"
+                      <custom-password-text-field
+                        :password.sync="form.password"
                         filled
                         rounded
-                        label="Password"
-                        single-line
-                      ></v-text-field>
+                        label="Password *"
+                      ></custom-password-text-field>
                     </v-col>
                     <v-col cols="12" md="6">
-                      <v-text-field
-                        type="password"
+                      <custom-password-text-field
+                        :password.sync="form.confirmPassword"
                         filled
                         rounded
-                        label="Confirm Password"
-                        single-line
-                      ></v-text-field>
+                        label="Confirm Password *"
+                        :rules="[formRules.password]"
+                      ></custom-password-text-field>
                     </v-col>
                     <v-col cols="12">
                       <v-checkbox
-                        label="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id lobortis enim."
+                        label="I agree and accept the terms and conditions. *"
+                        v-model="isAgreeByTermsAndCondition"
                       ></v-checkbox>
                     </v-col>
                     <v-col cols="12">
                       <div class="d-flex justify-space-between align-center">
                         <div class="flex-grow-1"></div>
-                        <v-btn color="primary" large class="text-capitalize">
-                          Continue
+                        <v-btn
+                          color="primary"
+                          large
+                          class="text-capitalize"
+                          @click="signup"
+                          :disabled="!isSignupFormValid"
+                          :loading="isSignupStart"
+                        >
+                          Signup
                         </v-btn>
                       </div>
                     </v-col>
@@ -190,14 +203,26 @@ import {
   GENERIC_FETCH_NATIONALITIES,
   GENERIC_FETCH_SEXES,
 } from "@/store/types/generic";
+import CustomPasswordTextField from "@/components/custom/PasswordTextField";
+import {
+  AUTHENTICATION_CLEAR_SIGNUP_ERROR,
+  AUTHENTICATION_SIGNUP,
+} from "@/store/types/authentication";
 
 const defaultSignupForm = {
+  firstName: "",
   nationality: "filipino",
+  lastName: "",
+  email: "",
+  birthDate: "",
   sex: "",
+  password: "",
+  confirmPassword: "",
 };
 
 export default {
   components: {
+    CustomPasswordTextField,
     CustomDatePicker,
     GenericBasicFooter,
     CustomRouterLink,
@@ -209,6 +234,15 @@ export default {
       isFetchGenericSexesStart: false,
       form: Object.assign({}, defaultSignupForm),
       defaultSignupForm,
+      formRules: {
+        password: (value) =>
+          value === this.form.password || "Password are not same.",
+      },
+      isAgreeByTermsAndCondition: false,
+      isSignupStart: false,
+      signupError: {
+        email: "",
+      },
     };
   },
   computed: {
@@ -217,6 +251,29 @@ export default {
     },
     genericSexes() {
       return this.$store.state.generic.sexes;
+    },
+    isSignupFormValid() {
+      const {
+        firstName,
+        lastName,
+        nationality,
+        email,
+        birthDate,
+        sex,
+        password,
+        confirmPassword,
+      } = this.form;
+      const isSatisfied =
+        firstName &&
+        lastName &&
+        nationality &&
+        email &&
+        birthDate &&
+        sex &&
+        password &&
+        confirmPassword;
+      const isPasswordsSame = password === confirmPassword;
+      return isSatisfied && isPasswordsSame && this.isAgreeByTermsAndCondition;
     },
   },
   methods: {
@@ -229,6 +286,18 @@ export default {
       this.isFetchGenericSexesStart = true;
       await this.$store.dispatch(GENERIC_FETCH_SEXES);
       this.isFetchGenericSexesStart = false;
+    },
+    async signup() {
+      this.isSignupStart = true;
+      const { token, error } = await this.$store.dispatch(
+        AUTHENTICATION_SIGNUP,
+        this.form
+      );
+      this.isSignupStart = false;
+      if (token) {
+        return await this.$router.push({ name: "feed-page" });
+      }
+      this.signupError = error;
     },
   },
   async created() {
