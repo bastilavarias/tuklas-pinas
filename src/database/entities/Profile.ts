@@ -2,7 +2,6 @@ import {
   BaseEntity,
   Column,
   Entity,
-  JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
@@ -31,6 +30,5 @@ export default class Profile extends BaseEntity {
   sex: string;
 
   @OneToOne(() => Account, (account) => account.profile)
-  @JoinColumn()
   account: Account;
 }

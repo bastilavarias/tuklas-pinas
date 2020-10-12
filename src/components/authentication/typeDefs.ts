@@ -1,5 +1,5 @@
-export interface SignupInputs {
-  fistName: string;
+export interface AuthenticationServiceSignupInput {
+  firstName: string;
   lastName: string;
   nationality: string;
   email: string;
@@ -8,7 +8,7 @@ export interface SignupInputs {
   password: string;
 }
 
-export interface SignupResult {
+export interface AuthenticationServiceSignupResult {
   token: string;
   error: {
     email: string;

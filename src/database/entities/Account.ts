@@ -19,6 +19,9 @@ export default class Account extends BaseEntity {
   @Column("text", { nullable: false })
   password: string;
 
+  @Column({ nullable: false })
+  type: string;
+
   @Column("timestamp with time zone", {
     nullable: false,
     default: () => "CURRENT_TIMESTAMP",
