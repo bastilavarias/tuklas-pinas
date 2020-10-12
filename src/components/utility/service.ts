@@ -7,6 +7,10 @@ const utilityService = {
     );
     return bcrypt.hashSync(password, salt);
   },
+
+  checkErrorIfValid: (error: object): boolean => {
+    return Object.values(error).filter((message) => message).length > 0;
+  },
 };
 
 export default utilityService;

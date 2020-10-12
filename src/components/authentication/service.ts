@@ -6,6 +6,7 @@ import validator from "validator";
 import profileModel from "../profile/model";
 import utilityService from "../utility/service";
 import accountModel from "../account/model";
+import jsonwebtoken from "jsonwebtoken";
 
 const authenticationService = {
   async signup(
@@ -47,9 +48,14 @@ const authenticationService = {
     const savedAccountDetails = await accountModel.saveDetails(
       accountSaveDetailsInput
     );
-    console.log(savedAccountDetails);
+    // @ts-ignore
+    delete savedAccountDetails.password;
+    const generatedJsonWebToken = jsonwebtoken.sign(
+      JSON.stringify(savedAccountDetails),
+      <jsonwebtoken.Secret>process.env.JWT_SECRET_OR_KEY
+    );
     return {
-      token: "token here",
+      token: `Bearer ${generatedJsonWebToken}`,
       error: {
         email: "",
       },
