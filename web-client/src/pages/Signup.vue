@@ -84,6 +84,8 @@
                         single-line
                         type="email"
                         v-model="form.email"
+                        :error="!!signupError.email"
+                        :error-messages="signupError.email"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" md="6">
@@ -126,7 +128,7 @@
                     </v-col>
                     <v-col cols="12">
                       <v-checkbox
-                        label="I agree and accept the terms and conditions."
+                        label="I agree and accept the terms and conditions. *"
                         v-model="isAgreeByTermsAndCondition"
                       ></v-checkbox>
                     </v-col>
@@ -139,6 +141,7 @@
                           class="text-capitalize"
                           @click="signup"
                           :disabled="!isSignupFormValid"
+                          :loading="isSignupStart"
                         >
                           Signup
                         </v-btn>
@@ -201,7 +204,10 @@ import {
   GENERIC_FETCH_SEXES,
 } from "@/store/types/generic";
 import CustomPasswordTextField from "@/components/custom/PasswordTextField";
-import { AUTHENTICATION_SIGNUP } from "@/store/types/authentication";
+import {
+  AUTHENTICATION_CLEAR_SIGNUP_ERROR,
+  AUTHENTICATION_SIGNUP,
+} from "@/store/types/authentication";
 
 const defaultSignupForm = {
   firstName: "",
@@ -233,6 +239,10 @@ export default {
           value === this.form.password || "Password are not same.",
       },
       isAgreeByTermsAndCondition: false,
+      isSignupStart: false,
+      signupError: {
+        email: "",
+      },
     };
   },
   computed: {
@@ -278,7 +288,16 @@ export default {
       this.isFetchGenericSexesStart = false;
     },
     async signup() {
-      await this.$store.dispatch(AUTHENTICATION_SIGNUP, this.form);
+      this.isSignupStart = true;
+      const { token, error } = await this.$store.dispatch(
+        AUTHENTICATION_SIGNUP,
+        this.form
+      );
+      this.isSignupStart = false;
+      if (token) {
+        return await this.$router.push({ name: "feed-page" });
+      }
+      this.signupError = error;
     },
   },
   async created() {
