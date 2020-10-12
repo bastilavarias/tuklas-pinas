@@ -62,12 +62,17 @@
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" md="6">
-                      <v-select
+                      <v-autocomplete
                         filled
                         rounded
                         label="Nationality"
                         single-line
-                      ></v-select>
+                        :loading="isFetchGenericNationalitiesStart"
+                        :items="genericNationalities"
+                        item-text="label"
+                        item-value="name"
+                        v-model="form.nationality"
+                      ></v-autocomplete>
                     </v-col>
                     <v-col cols="12" md="6">
                       <v-select
@@ -89,8 +94,13 @@
                       <v-select
                         filled
                         rounded
-                        label="Gender"
+                        label="Sex"
                         single-line
+                        :loading="isFetchGenericSexesStart"
+                        :items="genericSexes"
+                        item-text="label"
+                        item-value="name"
+                        v-model="form.sex"
                       ></v-select>
                     </v-col>
                     <v-col cols="12" md="6">
@@ -176,6 +186,16 @@
 import CustomRouterLink from "@/components/custom/RouterLink";
 import GenericBasicFooter from "@/components/generic/footer/Basic";
 import CustomDatePicker from "@/components/custom/DatePicker";
+import {
+  GENERIC_FETCH_NATIONALITIES,
+  GENERIC_FETCH_SEXES,
+} from "@/store/types/generic";
+
+const defaultSignupForm = {
+  nationality: "filipino",
+  sex: "",
+};
+
 export default {
   components: {
     CustomDatePicker,
@@ -185,7 +205,35 @@ export default {
   data() {
     return {
       birthDate: "",
+      isFetchGenericNationalitiesStart: false,
+      isFetchGenericSexesStart: false,
+      form: Object.assign({}, defaultSignupForm),
+      defaultSignupForm,
     };
+  },
+  computed: {
+    genericNationalities() {
+      return this.$store.state.generic.nationalities;
+    },
+    genericSexes() {
+      return this.$store.state.generic.sexes;
+    },
+  },
+  methods: {
+    async fetchGenericNationalities() {
+      this.isFetchGenericNationalitiesStart = true;
+      await this.$store.dispatch(GENERIC_FETCH_NATIONALITIES);
+      this.isFetchGenericNationalitiesStart = false;
+    },
+    async fetchGenericSexes() {
+      this.isFetchGenericSexesStart = true;
+      await this.$store.dispatch(GENERIC_FETCH_SEXES);
+      this.isFetchGenericSexesStart = false;
+    },
+  },
+  async created() {
+    await this.fetchGenericNationalities();
+    await this.fetchGenericSexes();
   },
 };
 </script>
