@@ -8,7 +8,7 @@ import VueFileAgent from "vue-file-agent";
 import "vue-file-agent/dist/vue-file-agent.css";
 import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
-import apiService from "@/common/api-service";
+import apiService from "@/services/api";
 
 Vue.config.productionTip = false;
 Vue.use(VueMasonry);

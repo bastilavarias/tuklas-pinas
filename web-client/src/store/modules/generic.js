@@ -1,4 +1,4 @@
-import genericApiService from "@/common/api-service/modules/generic";
+import genericApiService from "@/services/api/modules/generic";
 import {
   GENERIC_FETCH_NATIONALITIES,
   GENERIC_FETCH_SEXES,

@@ -1,4 +1,4 @@
-import apiService from "@/common/api-service";
+import apiService from "@/services/api";
 
 const genericApiService = {
   async fetchNationalities() {
