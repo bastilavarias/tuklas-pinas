@@ -1,4 +1,12 @@
-export interface AuthenticationServiceSignupInput {
+interface IAuthenticationResult {
+  token: string;
+  error: {
+    email: string;
+    password?: string;
+  };
+}
+
+export interface IAuthenticationServiceSignupInput {
   firstName: string;
   lastName: string;
   nationality: string;
@@ -8,9 +16,13 @@ export interface AuthenticationServiceSignupInput {
   password: string;
 }
 
-export interface AuthenticationServiceSignupResult {
-  token: string;
-  error: {
-    email: string;
-  };
+export interface IAuthenticationServiceSignupResult
+  extends IAuthenticationResult {}
+
+export interface IAuthenticationServiceSignInInput {
+  email: string;
+  password: string;
 }
+
+export interface IAuthenticationServiceSignInResult
+  extends IAuthenticationResult {}
