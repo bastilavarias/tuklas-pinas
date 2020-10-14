@@ -1,5 +1,5 @@
 import {
-  AUTHENTICATION_SET_SIGNUP_ERROR,
+  AUTHENTICATION_SIGN_IN,
   AUTHENTICATION_SIGNUP,
 } from "@/store/types/authentication";
 import tokenService from "@/services/token";
@@ -11,16 +11,23 @@ const authenticationStore = {
     token: tokenService.getToken(),
   },
 
-  mutations: {
-    [AUTHENTICATION_SET_SIGNUP_ERROR](state, error) {
-      state.signupError = Object.assign({}, error);
-    },
-  },
+  mutations: {},
 
   actions: {
-    async [AUTHENTICATION_SIGNUP]({ commit }, inputs) {
+    async [AUTHENTICATION_SIGNUP]({ commit }, input) {
       try {
-        const result = await authenticationApiService.signup(inputs);
+        const result = await authenticationApiService.signup(input);
+        const token = result.data.token ? result.data.token : "";
+        tokenService.saveToken(token);
+        return { token, error: { email: "" } };
+      } catch (error) {
+        return { token: "", error: error.response.data };
+      }
+    },
+
+    async [AUTHENTICATION_SIGN_IN]({ commit }, input) {
+      try {
+        const result = await authenticationApiService.signIn(input);
         const token = result.data.token ? result.data.token : "";
         tokenService.saveToken(token);
         return { token, error: { email: "" } };
