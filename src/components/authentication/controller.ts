@@ -35,7 +35,6 @@ const authenticationController = {
 
   async refreshToken(request: Request, response: Response) {
     try {
-      console.log(request.user);
       // @ts-ignore
       const accountID: number = request.user.id;
       const result = await authenticationService.refreshToken(accountID);
