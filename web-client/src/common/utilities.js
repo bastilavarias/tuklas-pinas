@@ -20,7 +20,11 @@ const CommonUtilities = {
       this.$router.go(-1);
     },
     matchHeight() {
-      this.stickyParentHeight = this.$refs.stickyParent.clientHeight - 500;
+      try {
+        this.stickyParentHeight = this.$refs.stickyParent.clientHeight - 500;
+      } catch (error) {
+        this.stickyParentHeight = 0;
+      }
     },
   },
 
