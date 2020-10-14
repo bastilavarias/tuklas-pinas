@@ -54,22 +54,29 @@
         </v-list-item-action-text>
       </v-list-item>
       <v-divider></v-divider>
-      <template v-for="(action, index) in actions">
-        <v-list-item :key="index" :to="action.to" exact>
-          <v-list-item-title class="font-weight-bold">{{
-            action.title
-          }}</v-list-item-title>
-          <v-list-item-action-text>
-            <v-icon color="secondary">{{ action.icon }}</v-icon>
-          </v-list-item-action-text>
-        </v-list-item>
-      </template>
+      <v-list-item>
+        <v-list-item-title class="font-weight-bold">Settings</v-list-item-title>
+        <v-list-item-action-text>
+          <v-icon color="secondary">mdi-cogs</v-icon>
+        </v-list-item-action-text>
+      </v-list-item>
+      <v-list-item>
+        <v-list-item-title
+          class="font-weight-bold cursor-pointer"
+          @click="signOut"
+          >Sign Out</v-list-item-title
+        >
+        <v-list-item-action-text>
+          <v-icon color="secondary">mdi-logout</v-icon>
+        </v-list-item-action-text>
+      </v-list-item>
     </v-card>
   </v-menu>
 </template>
 
 <script>
 import CustomRouterLink from "@/components/custom/RouterLink";
+import { PURGE_AUTHENTICATION } from "@/store/types/authentication";
 export default {
   name: "main-layout-toolbar-profile-menu-button",
   components: { CustomRouterLink },
@@ -80,20 +87,11 @@ export default {
     },
   },
 
-  data() {
-    return {
-      actions: [
-        {
-          title: "Settings",
-          icon: "mdi-cog",
-        },
-        {
-          title: "Sign Out",
-          icon: "mdi-logout",
-          to: { name: "home-page" },
-        },
-      ],
-    };
+  methods: {
+    async signOut() {
+      await this.$store.commit(PURGE_AUTHENTICATION);
+      await this.$router.push({ name: "sign-in-page" });
+    },
   },
 };
 </script>

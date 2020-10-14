@@ -1,2 +1,5 @@
-export const AUTHENTICATION_SIGNUP = "AUTHENTICATION_SIGNUP";
-export const AUTHENTICATION_SIGN_IN = "AUTHENTICATION_SIGN_IN";
+export const AUTHENTICATION_SIGNUP = "authentication/SIGNUP";
+export const AUTHENTICATION_SIGN_IN = "authentication/SIGN_IN";
+export const REFRESH_AUTHENTICATION_SERVICE = "authentication/REFRESH_TOKEN";
+export const SET_AUTHENTICATION = "authentication/SET";
+export const PURGE_AUTHENTICATION = "authentication/PURGE";
