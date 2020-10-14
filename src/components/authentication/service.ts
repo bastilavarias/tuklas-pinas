@@ -1,6 +1,8 @@
 import {
-  AuthenticationServiceSignupInput,
-  AuthenticationServiceSignupResult,
+  IAuthenticationServiceSignInInput,
+  IAuthenticationServiceSignInResult,
+  IAuthenticationServiceSignupInput,
+  IAuthenticationServiceSignupResult,
 } from "./typeDefs";
 import validator from "validator";
 import profileModel from "../profile/model";
@@ -10,12 +12,12 @@ import jsonwebtoken from "jsonwebtoken";
 
 const authenticationService = {
   async signup(
-    input: AuthenticationServiceSignupInput
-  ): Promise<AuthenticationServiceSignupResult> {
+    input: IAuthenticationServiceSignupInput
+  ): Promise<IAuthenticationServiceSignupResult> {
     const result = {
       token: "",
       error: {
-        email: `${input.email} already exists.`,
+        email: "",
       },
     };
     const isEmail = validator.isEmail(input.email);
@@ -54,12 +56,47 @@ const authenticationService = {
       JSON.stringify(savedAccountDetails),
       <jsonwebtoken.Secret>process.env.JWT_SECRET_OR_KEY
     );
-    return {
-      token: `Bearer ${generatedJsonWebToken}`,
+    result.token = `Bearer ${generatedJsonWebToken}`;
+    return result;
+  },
+
+  async signIn(
+    input: IAuthenticationServiceSignInInput
+  ): Promise<IAuthenticationServiceSignInResult> {
+    const result = {
+      token: "",
       error: {
         email: "",
+        password: "",
       },
     };
+    const isEmail = validator.isEmail(input.email);
+    if (!isEmail) {
+      result.error.email = `${input.email} is not valid email.`;
+      return result;
+    }
+    const gotAccountDetails = await accountModel.getDetailsByEmail(input.email);
+    const isEmailExists = !!gotAccountDetails;
+    if (!isEmailExists) {
+      result.error.email = `${input.email} is not exists.`;
+      return result;
+    }
+    const isPlainTextPasswordValid = utilityService.validateHashPassword(
+      input.password,
+      gotAccountDetails.password
+    );
+    if (!isPlainTextPasswordValid) {
+      result.error.password = `Password is not valid.`;
+      return result;
+    }
+    // @ts-ignore
+    delete gotAccountDetails.password;
+    const generatedJsonWebToken = jsonwebtoken.sign(
+      JSON.stringify(gotAccountDetails),
+      <jsonwebtoken.Secret>process.env.JWT_SECRET_OR_KEY
+    );
+    result.token = `Bearer ${generatedJsonWebToken}`;
+    return result;
   },
 };
 
