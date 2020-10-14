@@ -1,17 +1,22 @@
 import VueCookie from "vue-cookie";
+import jwtDecode from "jwt-decode";
 
 const tokenService = {
-  saveToken: (token) => {
+  save(token) {
     VueCookie.set("token", token);
   },
 
-  getToken: () => {
+  get() {
     const token = VueCookie.get("token");
     return token ? token : "";
   },
 
-  removeToken: () => {
+  remove() {
     VueCookie.delete("token");
+  },
+
+  decode() {
+    return jwtDecode(this.get());
   },
 };
 
