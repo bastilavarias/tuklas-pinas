@@ -8,10 +8,10 @@ const options: StrategyOptions = {
   secretOrKey: process.env.JWT_SECRET_OR_KEY,
 };
 
-const JWTPassport = (passport: PassportStatic) => {
+const jwtPassport = (passport: PassportStatic) => {
   passport.use(
     new Strategy(options, async (payload, done) => done(null, payload))
   );
 };
 
-export default JWTPassport;
+export default jwtPassport;
