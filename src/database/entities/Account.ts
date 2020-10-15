@@ -3,10 +3,12 @@ import {
   Column,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import Profile from "./Profile";
+import Post from "./Post";
 
 @Entity()
 export default class Account extends BaseEntity {
@@ -31,4 +33,8 @@ export default class Account extends BaseEntity {
   @OneToOne(() => Profile, (profile) => profile.account)
   @JoinColumn()
   profile: Profile;
+
+  @OneToMany(() => Post, (posts) => posts.author)
+  @JoinColumn({ name: "authorId" })
+  travelStoryPosts: Post[];
 }
