@@ -10,10 +10,20 @@ const genericController = {
       response.status(400).json(errors);
     }
   },
+
   async fetchSexes(_request: Request, response: Response) {
     try {
       const sexes = await genericService.fetchSexes();
       response.status(200).json(sexes);
+    } catch (errors) {
+      response.status(400).json(errors);
+    }
+  },
+
+  async fetchDestinations(_request: Request, response: Response) {
+    try {
+      const destinations = await genericService.fetchDestinations();
+      response.status(200).json(destinations);
     } catch (errors) {
       response.status(400).json(errors);
     }
