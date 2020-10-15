@@ -28,6 +28,15 @@ const genericController = {
       response.status(400).json(errors);
     }
   },
+
+  async fetchTravelEvents(_request: Request, response: Response) {
+    try {
+      const travelEvents = await genericService.fetchTravelEvents();
+      response.status(200).json(travelEvents);
+    } catch (errors) {
+      response.status(400).json(errors);
+    }
+  },
 };
 
 export default genericController;

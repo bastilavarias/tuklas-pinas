@@ -5,6 +5,8 @@ import nationalities from "./modules/nationalities";
 import sexes from "./modules/sexes";
 import Destination from "../entities/Destination";
 import destinations from "./modules/destinations";
+import TravelEvent from "../entities/TravelEvent";
+import travelEvents from "./modules/travelEvents";
 
 const generateSeeds = async () => {
   const connection = await Database.init();
@@ -27,6 +29,13 @@ const generateSeeds = async () => {
     .insert()
     .into(Destination)
     .values(destinations)
+    .onConflict(`("name") do nothing`)
+    .execute();
+  await connection
+    .createQueryBuilder()
+    .insert()
+    .into(TravelEvent)
+    .values(travelEvents)
     .onConflict(`("name") do nothing`)
     .execute();
 };
