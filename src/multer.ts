@@ -1,7 +1,11 @@
-import Multer, { memoryStorage } from "multer";
+import Multer, { diskStorage } from "multer";
 
 const multer = Multer({
-  storage: memoryStorage(),
+  storage: diskStorage({
+    destination(_request, _file, callback) {
+      callback(null, process.cwd() + "/tmp/files");
+    },
+  }),
 });
 
 export default multer;

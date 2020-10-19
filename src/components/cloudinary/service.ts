@@ -1,14 +1,17 @@
 import cloudinary from "cloudinary";
 import { CloudinaryImageMeta } from "./typeDefs";
 
-const cloudinaryV2 = cloudinary.v2.config({
+cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 const cloudinaryService = {
-  upload: async (file: File, folder: string): Promise<CloudinaryImageMeta> => {
+  async upload(
+    file: Express.Multer.File,
+    folder: string
+  ): Promise<CloudinaryImageMeta> {
     let meta: CloudinaryImageMeta;
     try {
       const folderPath = `${process.env.CLOUDINARY_ROOT_FOLDER_NAME}/${folder}`;
@@ -16,8 +19,12 @@ const cloudinaryService = {
         folder: folderPath,
         use_filename: true,
       };
+      console.log(uploadOptions);
       // @ts-ignore
-      const result = await cloudinaryV2.uploader.upload(file, uploadOptions);
+      const result = await cloudinary.v2.uploader.upload(
+        file.path,
+        uploadOptions
+      );
       meta = {
         url: result.secure_url,
         publicID: result.public_id,
@@ -27,6 +34,7 @@ const cloudinaryService = {
         url: "",
         publicID: "",
       };
+      console.log(err);
     }
     return meta;
   },
@@ -34,7 +42,7 @@ const cloudinaryService = {
   delete: async (publicID: string) => {
     try {
       // @ts-ignore
-      await cloudinaryV2.uploader.destroy(publicID);
+      await cloudinary.v2.uploader.destroy(publicID);
     } catch (error) {
       console.log(error);
     }

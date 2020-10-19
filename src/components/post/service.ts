@@ -1,12 +1,17 @@
 import { PostServiceCreateTravelStoryInput } from "./typeDefs";
+import cloudinaryService from "../cloudinary/service";
 
 const postService = {
   async createTravelStory(
-    accountID: number,
+    _accountID: number,
     input: PostServiceCreateTravelStoryInput
   ) {
-    console.log(accountID);
-    console.log(input);
+    const cloudinaryFolder = "posts";
+    await Promise.all(
+      input.files.map(async (file) => {
+        await cloudinaryService.upload(file, cloudinaryFolder);
+      })
+    );
   },
 };
 
