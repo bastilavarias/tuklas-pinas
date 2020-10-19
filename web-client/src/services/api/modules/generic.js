@@ -8,6 +8,14 @@ const genericApiService = {
   async fetchSexes() {
     return await apiService.get("/generic/sexes");
   },
+
+  async fetchDestinations() {
+    return await apiService.get("/generic/destinations");
+  },
+
+  async fetchTravelEvents() {
+    return await apiService.get("/generic/travel-events");
+  },
 };
 
 export default genericApiService;

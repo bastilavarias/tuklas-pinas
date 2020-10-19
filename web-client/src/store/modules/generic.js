@@ -1,41 +1,74 @@
 import genericApiService from "@/services/api/modules/generic";
 import {
-  GENERIC_FETCH_NATIONALITIES,
-  GENERIC_FETCH_SEXES,
-  GENERIC_SET_NATIONALITIES,
-  GENERIC_SET_SEXES,
+  FETCH_GENERIC_DESTINATIONS,
+  FETCH_GENERIC_NATIONALITIES,
+  FETCH_GENERIC_SEXES,
+  FETCH_GENERIC_TRAVEL_EVENTS,
+  SET_GENERIC_DESTINATIONS,
+  SET_GENERIC_NATIONALITIES,
+  SET_GENERIC_SEXES,
+  SET_GENERIC_TRAVEL_EVENTS,
 } from "@/store/types/generic";
 
 const genericStore = {
   state: {
     nationalities: [],
     sexes: [],
+    destinations: [],
+    travelEvents: [],
   },
   mutations: {
-    [GENERIC_SET_NATIONALITIES](state, nationalities) {
+    [SET_GENERIC_NATIONALITIES](state, nationalities) {
       state.nationalities = nationalities;
     },
-    [GENERIC_SET_SEXES](state, sexes) {
+    [SET_GENERIC_SEXES](state, sexes) {
       state.sexes = sexes;
+    },
+    [SET_GENERIC_SEXES](state, sexes) {
+      state.sexes = sexes;
+    },
+    [SET_GENERIC_DESTINATIONS](state, destinations) {
+      state.destinations = destinations;
+    },
+    [SET_GENERIC_TRAVEL_EVENTS](state, travelEvents) {
+      state.travelEvents = travelEvents;
     },
   },
   actions: {
-    async [GENERIC_FETCH_NATIONALITIES]({ commit }) {
+    async [FETCH_GENERIC_NATIONALITIES]({ commit }) {
       try {
         const result = await genericApiService.fetchNationalities();
         const nationalities = result ? result.data : [];
-        commit(GENERIC_SET_NATIONALITIES, nationalities);
-      } catch (errors) {
-        throw new Error(`[RWV] ApiService ${errors}`);
+        commit(SET_GENERIC_NATIONALITIES, nationalities);
+      } catch (error) {
+        throw new Error(`[RWV] ApiService ${error}`);
       }
     },
-    async [GENERIC_FETCH_SEXES]({ commit }) {
+    async [FETCH_GENERIC_SEXES]({ commit }) {
       try {
         const result = await genericApiService.fetchSexes();
         const sexes = result ? result.data : [];
-        commit(GENERIC_SET_SEXES, sexes);
-      } catch (errors) {
-        throw new Error(`[RWV] ApiService ${errors}`);
+        commit(SET_GENERIC_SEXES, sexes);
+      } catch (error) {
+        throw new Error(`[RWV] ApiService ${error}`);
+      }
+    },
+    async [FETCH_GENERIC_DESTINATIONS]({ commit }) {
+      try {
+        const result = await genericApiService.fetchDestinations();
+        const destinations = result ? result.data : [];
+        commit(SET_GENERIC_DESTINATIONS, destinations);
+      } catch (error) {
+        throw new Error(`[RWV] ApiService ${error}`);
+      }
+    },
+    async [FETCH_GENERIC_TRAVEL_EVENTS]({ commit }) {
+      try {
+        const result = await genericApiService.fetchTravelEvents();
+        const travelEvents = result ? result.data : [];
+        commit(SET_GENERIC_TRAVEL_EVENTS, travelEvents);
+      } catch (error) {
+        throw new Error(`[RWV] ApiService ${error}`);
       }
     },
   },

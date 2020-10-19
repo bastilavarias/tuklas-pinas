@@ -37,6 +37,11 @@
                         outlined
                         label="Destination *"
                         single-line
+                        :loading="isFetchGenericDestinationsStart"
+                        :items="genericDestinations"
+                        multiple
+                        item-text="name"
+                        item-value="id"
                       ></v-autocomplete>
                     </v-col>
                     <v-col cols="12">
@@ -112,8 +117,29 @@
 import CustomFileDropzone from "@/components/custom/FileDropzone";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
 import GenericBasicFooter from "@/components/generic/footer/Basic";
+import { FETCH_GENERIC_DESTINATIONS } from "@/store/types/generic";
 
 export default {
   components: { GenericBasicFooter, GenericStickyFooter, CustomFileDropzone },
+  data() {
+    return {
+      isFetchGenericDestinationsStart: false,
+    };
+  },
+  computed: {
+    genericDestinations() {
+      return this.$store.state.generic.destinations;
+    },
+  },
+  methods: {
+    async fetchGenericDestinations() {
+      this.isFetchGenericDestinationsStart = true;
+      await this.$store.dispatch(FETCH_GENERIC_DESTINATIONS);
+      this.isFetchGenericDestinationsStart = false;
+    },
+  },
+  async created() {
+    await this.fetchGenericDestinations();
+  },
 };
 </script>
