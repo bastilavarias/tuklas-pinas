@@ -1,7 +1,9 @@
 import {
+  PostModelSaveCategoryInput,
   PostModelSaveDestinationInput,
   PostModelSaveDetailsInput,
   PostModelSaveFileDetailsInput,
+  PostModelSaveTravelEventInput,
   PostServiceCreateTravelStoryInput,
 } from "./typeDefs";
 import cloudinaryService from "../cloudinary/service";
@@ -29,6 +31,25 @@ const postService = {
         await postModel.saveDestination(saveDestinationInput);
       })
     );
+    await Promise.all(
+      input.categories.map(async (name) => {
+        const saveCategoryInput: PostModelSaveCategoryInput = {
+          postID: savedPostDetails.id,
+          name,
+        };
+        await postModel.saveCategory(saveCategoryInput);
+      })
+    );
+    await Promise.all(
+      input.travelEventsID.map(async (id) => {
+        const savePostTravelEventInput: PostModelSaveTravelEventInput = {
+          postID: savedPostDetails.id,
+          travelEventID: id,
+        };
+        await postModel.saveTravelEvent(savePostTravelEventInput);
+      })
+    );
+
     const cloudinaryFolder = "posts";
     const uploadedFilesMeta = await Promise.all(
       input.files.map(

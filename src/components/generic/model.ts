@@ -24,6 +24,11 @@ const genericModel = {
   async fetchTravelEvents(): Promise<TravelEvent[]> {
     return await TravelEvent.find();
   },
+
+  async getTravelEvent(travelEventID: number): Promise<TravelEvent> {
+    const gotTravelEvent = await TravelEvent.findOne(travelEventID);
+    return gotTravelEvent!;
+  },
 };
 
 export default genericModel;

@@ -12,7 +12,7 @@ export interface PostServiceCreateTravelStoryInput {
   text: string;
   isDraft: boolean;
   destinationsID: number[];
-  eventsID: number[];
+  travelEventsID: number[];
   categories: string[];
   files: Express.Multer.File[];
 }
@@ -25,4 +25,14 @@ export interface PostModelSaveFileDetailsInput extends CloudinaryFileMeta {
 export interface PostModelSaveDestinationInput {
   postID: number;
   destinationID: number;
+}
+
+export interface PostModelSaveCategoryInput {
+  postID: number;
+  name: string;
+}
+
+export interface PostModelSaveTravelEventInput {
+  postID: number;
+  travelEventID: number;
 }

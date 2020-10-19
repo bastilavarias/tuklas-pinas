@@ -11,6 +11,8 @@ import {
 import Account from "./Account";
 import PostFile from "./PostFile";
 import Destination from "./Destination";
+import PostCategory from "./PostCategory";
+import TravelEvent from "./TravelEvent";
 
 @Entity()
 export default class Post extends BaseEntity {
@@ -49,5 +51,11 @@ export default class Post extends BaseEntity {
   @JoinColumn({ name: "postId" })
   files: PostFile[];
 
+  @OneToMany(() => PostCategory, (categories) => categories.post)
+  @JoinColumn({ name: "postId" })
+  categories: PostCategory[];
+
   destinations: Destination[];
+
+  travelEvents: TravelEvent[];
 }
