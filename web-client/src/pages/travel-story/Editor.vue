@@ -22,6 +22,7 @@
                         label="Title"
                         single-line
                         color="primary"
+                        v-model="form.title"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12">
@@ -30,6 +31,7 @@
                         label="Text *"
                         single-line
                         color="primary"
+                        v-model="form.text"
                       ></v-textarea>
                     </v-col>
                     <v-col cols="12">
@@ -42,6 +44,7 @@
                         multiple
                         item-text="name"
                         item-value="id"
+                        v-model="form.destinationsID"
                       ></v-autocomplete>
                     </v-col>
                     <v-col cols="12">
@@ -54,18 +57,21 @@
                         multiple
                         item-text="name"
                         item-value="id"
+                        v-model="form.travelEventsID"
                       ></v-autocomplete>
                     </v-col>
                     <v-col cols="12">
-                      <v-autocomplete
+                      <generic-category-combobox
                         outlined
-                        label="Categories *"
+                        label="Categories"
                         single-line
-                      ></v-autocomplete>
+                        :categories.sync="form.categories"
+                      ></generic-category-combobox>
                     </v-col>
                     <v-col cols="12">
                       <custom-file-dropzone
-                        label="Images or Videos"
+                        label="Images or Videos *"
+                        :files.sync="form.files"
                       ></custom-file-dropzone>
                     </v-col>
                   </v-row>
@@ -75,7 +81,9 @@
                   <v-btn color="secondary" class="text-capitalize" outlined
                     >Save as Draft</v-btn
                   >
-                  <v-btn color="primary">Post</v-btn>
+                  <v-btn color="primary" @click="createTravelStoryPost"
+                    >CREATE</v-btn
+                  >
                 </v-card-actions>
               </v-card>
             </v-col>
@@ -126,13 +134,30 @@ import {
   FETCH_GENERIC_DESTINATIONS,
   FETCH_GENERIC_TRAVEL_EVENTS,
 } from "@/store/types/generic";
+import GenericCategoryCombobox from "@/components/generic/combobox/Category";
+
+const defaultTravelStoryForm = {
+  title: "",
+  text: "",
+  destinationsID: [],
+  travelEventsID: [],
+  categories: [],
+  files: [],
+};
 
 export default {
-  components: { GenericBasicFooter, GenericStickyFooter, CustomFileDropzone },
+  components: {
+    GenericCategoryCombobox,
+    GenericBasicFooter,
+    GenericStickyFooter,
+    CustomFileDropzone,
+  },
   data() {
     return {
       isFetchGenericDestinationsStart: false,
       isFetchGenericTravelEventsStart: false,
+      form: Object.assign({}, defaultTravelStoryForm),
+      defaultTravelStoryForm,
     };
   },
   computed: {
@@ -153,6 +178,9 @@ export default {
       this.isFetchGenericTravelEventsStart = true;
       await this.$store.dispatch(FETCH_GENERIC_TRAVEL_EVENTS);
       this.isFetchGenericTravelEventsStart = false;
+    },
+    async createTravelStoryPost() {
+      console.log(this.form);
     },
   },
   async created() {
