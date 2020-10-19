@@ -47,8 +47,13 @@
                     <v-col cols="12">
                       <v-autocomplete
                         outlined
-                        label="Events *"
+                        label="Travel Events *"
                         single-line
+                        :loading="isFetchGenericTravelEventsStart"
+                        :items="genericTravelEvents"
+                        multiple
+                        item-text="name"
+                        item-value="id"
                       ></v-autocomplete>
                     </v-col>
                     <v-col cols="12">
@@ -117,18 +122,25 @@
 import CustomFileDropzone from "@/components/custom/FileDropzone";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
 import GenericBasicFooter from "@/components/generic/footer/Basic";
-import { FETCH_GENERIC_DESTINATIONS } from "@/store/types/generic";
+import {
+  FETCH_GENERIC_DESTINATIONS,
+  FETCH_GENERIC_TRAVEL_EVENTS,
+} from "@/store/types/generic";
 
 export default {
   components: { GenericBasicFooter, GenericStickyFooter, CustomFileDropzone },
   data() {
     return {
       isFetchGenericDestinationsStart: false,
+      isFetchGenericTravelEventsStart: false,
     };
   },
   computed: {
     genericDestinations() {
       return this.$store.state.generic.destinations;
+    },
+    genericTravelEvents() {
+      return this.$store.state.generic.travelEvents;
     },
   },
   methods: {
@@ -137,9 +149,15 @@ export default {
       await this.$store.dispatch(FETCH_GENERIC_DESTINATIONS);
       this.isFetchGenericDestinationsStart = false;
     },
+    async fetchGenericTravelEvents() {
+      this.isFetchGenericTravelEventsStart = true;
+      await this.$store.dispatch(FETCH_GENERIC_TRAVEL_EVENTS);
+      this.isFetchGenericTravelEventsStart = false;
+    },
   },
   async created() {
     await this.fetchGenericDestinations();
+    await this.fetchGenericTravelEvents();
   },
 };
 </script>
