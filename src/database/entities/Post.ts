@@ -10,7 +10,7 @@ import {
 } from "typeorm";
 import Account from "./Account";
 import PostFile from "./PostFile";
-import PostDestination from "./PostDestination";
+import Destination from "./Destination";
 
 @Entity()
 export default class Post extends BaseEntity {
@@ -49,7 +49,5 @@ export default class Post extends BaseEntity {
   @JoinColumn({ name: "postId" })
   files: PostFile[];
 
-  @OneToMany(() => PostDestination, (postDestination) => postDestination.post)
-  @JoinColumn({ name: "postId" })
-  destinations: PostDestination[];
+  destinations: Destination[];
 }

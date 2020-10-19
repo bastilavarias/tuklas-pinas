@@ -1,3 +1,5 @@
+import { CloudinaryFileMeta } from "../cloudinary/typeDefs";
+
 export interface PostModelSaveDetailsInput {
   title: string;
   text: string;
@@ -13,4 +15,14 @@ export interface PostServiceCreateTravelStoryInput {
   eventsID: number[];
   categories: string[];
   files: Express.Multer.File[];
+}
+
+export interface PostModelSaveFileDetailsInput extends CloudinaryFileMeta {
+  postID: number;
+  data: Buffer;
+}
+
+export interface PostModelSaveDestinationInput {
+  postID: number;
+  destinationID: number;
 }

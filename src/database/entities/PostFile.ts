@@ -18,6 +18,9 @@ export default class PostFile extends BaseEntity {
   @Column({ nullable: false })
   publicID: string;
 
+  @Column({ nullable: false })
+  format: string;
+
   @Column("bytea", { nullable: false })
   data: Buffer;
 

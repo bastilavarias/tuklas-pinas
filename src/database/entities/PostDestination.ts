@@ -7,7 +7,7 @@ export default class PostDestination extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Post, (post) => post.destinations)
+  @ManyToOne(() => Post)
   post: Post;
 
   @ManyToOne(() => Destination)

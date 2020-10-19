@@ -1,5 +1,5 @@
 import cloudinary from "cloudinary";
-import { CloudinaryImageMeta } from "./typeDefs";
+import { CloudinaryFileMeta } from "./typeDefs";
 
 cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -11,15 +11,14 @@ const cloudinaryService = {
   async upload(
     file: Express.Multer.File,
     folder: string
-  ): Promise<CloudinaryImageMeta> {
-    let meta: CloudinaryImageMeta;
+  ): Promise<CloudinaryFileMeta> {
+    let meta: CloudinaryFileMeta;
     try {
       const folderPath = `${process.env.CLOUDINARY_ROOT_FOLDER_NAME}/${folder}`;
       const uploadOptions = {
         folder: folderPath,
         use_filename: true,
       };
-      console.log(uploadOptions);
       // @ts-ignore
       const result = await cloudinary.v2.uploader.upload(
         file.path,
@@ -28,13 +27,17 @@ const cloudinaryService = {
       meta = {
         url: result.secure_url,
         publicID: result.public_id,
+        format: result.format,
+        fileName: result.original_filename,
       };
-    } catch (err) {
+    } catch (error) {
+      console.log(error);
       meta = {
         url: "",
         publicID: "",
+        format: "",
+        fileName: "",
       };
-      console.log(err);
     }
     return meta;
   },
