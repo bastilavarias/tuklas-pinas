@@ -1,5 +1,3 @@
-import * as dotenv from "dotenv";
-dotenv.config();
 import { Strategy, ExtractJwt, StrategyOptions } from "passport-jwt";
 import { PassportStatic } from "passport";
 
