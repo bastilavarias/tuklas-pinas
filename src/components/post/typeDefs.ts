@@ -13,7 +13,28 @@ interface PostBaseInput {
   files: Express.Multer.File[];
 }
 
+export interface PostDetails extends Post {
+  destinations: Destination[];
+  travelEvents: TravelEvent[];
+}
+
 export interface PostServiceCreateTravelStoryInput extends PostBaseInput {}
+
+export interface PostServiceCreateItineraryInput extends PostBaseInput {
+  itinerary: PostItineraryInput;
+  review: PostServiceCreateItineraryReview;
+}
+
+export interface PostServiceCreateItineraryReview {
+  restaurants: PostRestaurantReviewInput[];
+  lodgings: PostLodgingReviewInput[];
+  transportation: PostTransportationReviewInput[];
+  activities: PostActivityReviewInput[];
+  internetAccess: PostInternetAccessReviewInput;
+  finance: PostFinanceReviewInput;
+  tips: string[];
+  avoids: string[];
+}
 
 export interface PostModelSaveDetailsInput {
   title: string;
@@ -43,7 +64,7 @@ export interface PostModelSaveTravelEventInput {
   travelEventID: number;
 }
 
-interface ItineraryTimestamp {
+interface PostItineraryTimestamp {
   time: Date;
   fare: number;
   expenses: number;
@@ -53,22 +74,18 @@ interface ItineraryTimestamp {
   interests: string[];
 }
 
-export interface ItineraryDay {
+export interface PostItineraryDay {
   date: Date;
   day: number;
   destinationsCount: number;
   expenses: number;
-  timestamps: ItineraryTimestamp[];
+  timestamps: PostItineraryTimestamp[];
 }
 
-export interface Itinerary {
+export interface PostItineraryInput {
   totalDestinations: number;
   totalExpenses: number;
-  days: ItineraryDay[];
-}
-
-export interface PostServiceCreateItineraryInput extends PostBaseInput {
-  itinerary: Itinerary;
+  days: PostItineraryDay[];
 }
 
 export interface PostModelSaveItineraryInput {
@@ -95,34 +112,22 @@ export interface PostModelSaveItineraryDayTimestampInput {
   transportation: string;
 }
 
-export interface RestaurantReview {
+export interface PostRestaurantReviewInput {
   name: string;
   text: string;
   rating: number;
 }
 
-export interface LodgingReview extends RestaurantReview {}
+export interface PostLodgingReviewInput extends PostRestaurantReviewInput {}
 
-export interface PostModelSaveRestaurantReview extends RestaurantReview {
-  postID: number;
-}
-
-export interface PostModelSaveLodgingReview
-  extends PostModelSaveRestaurantReview {}
-
-export interface TransportationReview {
+export interface PostTransportationReviewInput {
   destinationID: number;
   type: string;
   text: string;
   rating: number;
 }
 
-export interface PostModelSaveTransportationReview
-  extends TransportationReview {
-  postID: number;
-}
-
-export interface ActivityReviewInput {
+export interface PostActivityReviewInput {
   destinationID: number;
   name: string;
   text: string;
@@ -135,8 +140,3 @@ export interface PostInternetAccessReviewInput {
 }
 
 export interface PostFinanceReviewInput extends PostInternetAccessReviewInput {}
-
-export interface PostDetails extends Post {
-  destinations: Destination[];
-  travelEvents: TravelEvent[];
-}

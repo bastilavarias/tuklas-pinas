@@ -1,9 +1,5 @@
 import {
-  ActivityReviewInput,
-  Itinerary,
-  LodgingReview,
-  PostFinanceReviewInput,
-  PostInternetAccessReviewInput,
+  PostItineraryInput,
   PostModelSaveCategoryInput,
   PostModelSaveDestinationInput,
   PostModelSaveDetailsInput,
@@ -11,14 +7,10 @@ import {
   PostModelSaveItineraryDayInput,
   PostModelSaveItineraryDayTimestampInput,
   PostModelSaveItineraryInput,
-  PostModelSaveLodgingReview,
-  PostModelSaveRestaurantReview,
-  PostModelSaveTransportationReview,
   PostModelSaveTravelEventInput,
-  PostServiceCreateItineraryInput,
   PostServiceCreateTravelStoryInput,
-  RestaurantReview,
-  TransportationReview,
+  PostServiceCreateItineraryInput,
+  PostServiceCreateItineraryReview,
 } from "./typeDefs";
 import cloudinaryService from "../cloudinary/service";
 import postModel from "./model";
@@ -60,6 +52,7 @@ const postService = {
     await this.saveCategories(savedPostDetails.id, input.categories);
     await this.saveTravelEvents(savedPostDetails.id, input.travelEventsID);
     await this.saveItineraryDetails(savedPostDetails.id, input.itinerary);
+    await this.saveReview(savedPostDetails.id, input.review);
     return postModel.getDetails(savedPostDetails.id);
   },
 
@@ -125,7 +118,7 @@ const postService = {
     );
   },
 
-  async saveItineraryDetails(postID: number, itinerary: Itinerary) {
+  async saveItineraryDetails(postID: number, itinerary: PostItineraryInput) {
     const savePostItineraryInput: PostModelSaveItineraryInput = {
       postID,
       totalDestinations: itinerary.totalDestinations,
@@ -173,71 +166,38 @@ const postService = {
     );
   },
 
-  async saveRestaurantReviews(postID: number, reviews: RestaurantReview[]) {
+  async saveReview(postID: number, review: PostServiceCreateItineraryReview) {
     await Promise.all(
-      reviews.map(async (review) => {
-        const savePostRestaurantReviewInput: PostModelSaveRestaurantReview = {
-          postID,
-          name: review.name,
-          text: review.text,
-          rating: review.rating,
-        };
-        await postModel.saveRestaurantReview(savePostRestaurantReviewInput);
-      })
-    );
-  },
-
-  async saveLodgingReviews(postID: number, reviews: LodgingReview[]) {
-    await Promise.all(
-      reviews.map(async (review) => {
-        const savePostLodgingReviewInput: PostModelSaveLodgingReview = {
-          postID,
-          name: review.name,
-          text: review.text,
-          rating: review.rating,
-        };
-        await postModel.saveRestaurantReview(savePostLodgingReviewInput);
-      })
-    );
-  },
-
-  async saveTransportationReviews(
-    postID: number,
-    reviews: TransportationReview[]
-  ) {
-    await Promise.all(
-      reviews.map(async (review) => {
-        const savePostTransportationReviewInput: PostModelSaveTransportationReview = {
-          postID,
-          destinationID: review.destinationID,
-          type: review.type,
-          text: review.text,
-          rating: review.rating,
-        };
-        await postModel.saveTransportationReview(
-          savePostTransportationReviewInput
-        );
-      })
-    );
-  },
-
-  async saveActivityReviews(postID: number, inputs: ActivityReviewInput[]) {
-    await Promise.all(
-      inputs.map(
-        async (review) => await postModel.saveActivityReview(postID, review)
+      review.restaurants.map(
+        async (restaurant) =>
+          await postModel.saveRestaurantReview(postID, restaurant)
       )
     );
-  },
-
-  async saveInternetAccessReview(
-    postID: number,
-    input: PostInternetAccessReviewInput
-  ) {
-    await postModel.saveInternetAccessReview(postID, input);
-  },
-
-  async saveFinanceReview(postID: number, input: PostFinanceReviewInput) {
-    await postModel.saveFinanceReview(postID, input);
+    await Promise.all(
+      review.lodgings.map(
+        async (lodging) => await postModel.saveLodgingReview(postID, lodging)
+      )
+    );
+    await Promise.all(
+      review.transportation.map(
+        async (item) => await postModel.saveTransportationReview(postID, item)
+      )
+    );
+    await Promise.all(
+      review.activities.map(
+        async (activity) => await postModel.saveActivityReview(postID, activity)
+      )
+    );
+    await postModel.saveInternetAccessReview(postID, review.internetAccess);
+    await postModel.saveFinanceReview(postID, review.finance);
+    await Promise.all(
+      review.tips.map(async (tip) => await postModel.saveTipReview(postID, tip))
+    );
+    await Promise.all(
+      review.avoids.map(
+        async (avoid) => await postModel.saveAvoidReview(postID, avoid)
+      )
+    );
   },
 };
 

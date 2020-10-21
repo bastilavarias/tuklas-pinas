@@ -1,5 +1,5 @@
 import {
-  ActivityReviewInput,
+  PostActivityReviewInput,
   PostDetails,
   PostModelSaveCategoryInput,
   PostModelSaveDestinationInput,
@@ -10,10 +10,10 @@ import {
   PostModelSaveItineraryDayInput,
   PostModelSaveItineraryDayTimestampInput,
   PostModelSaveItineraryInput,
-  PostModelSaveLodgingReview,
-  PostModelSaveRestaurantReview,
-  PostModelSaveTransportationReview,
   PostModelSaveTravelEventInput,
+  PostRestaurantReviewInput,
+  PostLodgingReviewInput,
+  PostTransportationReviewInput,
 } from "./typeDefs";
 import Post from "../../database/entities/Post";
 import PostFile from "../../database/entities/PostFile";
@@ -142,9 +142,10 @@ const postModel = {
   },
 
   async saveRestaurantReview(
-    input: PostModelSaveRestaurantReview
+    postID: number,
+    input: PostRestaurantReviewInput
   ): Promise<PostReviewRestaurant> {
-    const { postID, name, text, rating } = input;
+    const { name, text, rating } = input;
     return await PostReviewRestaurant.create({
       post: { id: postID },
       name,
@@ -154,9 +155,10 @@ const postModel = {
   },
 
   async saveLodgingReview(
-    input: PostModelSaveLodgingReview
+    postID: number,
+    input: PostLodgingReviewInput
   ): Promise<PostReviewLodging> {
-    const { postID, name, text, rating } = input;
+    const { name, text, rating } = input;
     return await PostReviewLodging.create({
       post: { id: postID },
       name,
@@ -166,9 +168,10 @@ const postModel = {
   },
 
   async saveTransportationReview(
-    input: PostModelSaveTransportationReview
+    postID: number,
+    input: PostTransportationReviewInput
   ): Promise<PostReviewTransportation> {
-    const { postID, destinationID, type, text, rating } = input;
+    const { destinationID, type, text, rating } = input;
     return await PostReviewTransportation.create({
       post: { id: postID },
       destination: { id: destinationID },
@@ -180,7 +183,7 @@ const postModel = {
 
   async saveActivityReview(
     postID: number,
-    input: ActivityReviewInput
+    input: PostActivityReviewInput
   ): Promise<PostReviewActivity> {
     const { destinationID, name, text, rating } = input;
     return await PostReviewActivity.create({
