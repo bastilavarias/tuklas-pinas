@@ -52,13 +52,13 @@
 import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEventsExplorer";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
 import GenericNotificationPreviewListItem from "@/components/generic/list-item/NotificationPreview";
-import CommonUtilities from "@/common/utilities";
+import commonUtilities from "@/common/utilities";
 export default {
   components: {
     GenericNotificationPreviewListItem,
     GenericStickyFooter,
     GenericMiniEventsExplorerSideCard,
   },
-  mixins: [CommonUtilities],
+  mixins: [commonUtilities],
 };
 </script>

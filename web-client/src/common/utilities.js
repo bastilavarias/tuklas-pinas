@@ -1,4 +1,4 @@
-const CommonUtilities = {
+const commonUtilities = {
   data() {
     return {
       isScrollingDown: false,
@@ -34,4 +34,4 @@ const CommonUtilities = {
   },
 };
 
-export default CommonUtilities;
+export default commonUtilities;

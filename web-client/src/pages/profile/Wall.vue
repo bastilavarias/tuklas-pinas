@@ -54,7 +54,7 @@ import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedP
 import GenericItineraryPostPreviewCard from "@/components/generic/card/ItineraryPostPreview";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
 import GenericTravelStoryPostPreviewCard from "@/components/generic/card/TravelStoryPostPreview";
-import CommonUtilities from "@/common/utilities";
+import commonUtilities from "@/common/utilities";
 export default {
   components: {
     GenericTravelStoryPostPreviewCard,
@@ -64,6 +64,6 @@ export default {
     ProfilePageEventsSideCard,
     ProfilePagePostsCard,
   },
-  mixins: [CommonUtilities],
+  mixins: [commonUtilities],
 };
 </script>

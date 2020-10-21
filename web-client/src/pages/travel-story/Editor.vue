@@ -81,7 +81,10 @@
                   <v-btn color="secondary" class="text-capitalize" outlined
                     >Save as Draft</v-btn
                   >
-                  <v-btn color="primary" @click="createTravelStoryPost"
+                  <v-btn
+                    color="primary"
+                    @click="createTravelStoryPost"
+                    :loading="isCreateTravelStoryPostStart"
                     >CREATE</v-btn
                   >
                 </v-card-actions>
@@ -135,6 +138,8 @@ import {
   FETCH_GENERIC_TRAVEL_EVENTS,
 } from "@/store/types/generic";
 import GenericCategoryCombobox from "@/components/generic/combobox/Category";
+import { CREATE_TRAVEL_STORY_POST } from "@/store/types/post";
+import commonValidation from "@/common/validation";
 
 const defaultTravelStoryForm = {
   title: "",
@@ -146,6 +151,7 @@ const defaultTravelStoryForm = {
 };
 
 export default {
+  mixins: [commonValidation],
   components: {
     GenericCategoryCombobox,
     GenericBasicFooter,
@@ -156,6 +162,7 @@ export default {
     return {
       isFetchGenericDestinationsStart: false,
       isFetchGenericTravelEventsStart: false,
+      isCreateTravelStoryPostStart: false,
       form: Object.assign({}, defaultTravelStoryForm),
       defaultTravelStoryForm,
     };
@@ -180,7 +187,24 @@ export default {
       this.isFetchGenericTravelEventsStart = false;
     },
     async createTravelStoryPost() {
-      console.log(this.form);
+      this.isCreateTravelStoryPostStart = true;
+      const createdTravelStoryPost = await this.$store.dispatch(
+        CREATE_TRAVEL_STORY_POST,
+        this.form
+      );
+      const isObjectValid = this.validateObject(createdTravelStoryPost);
+      if (isObjectValid) {
+        this.clearForm();
+        return await this.$router.push({
+          name: "travel-story-post-page",
+          params: { postID: createdTravelStoryPost.id },
+        });
+      }
+      alert("Something went wrong!");
+      this.isCreateTravelStoryPostStart = false;
+    },
+    clearForm() {
+      this.form = Object.assign({}, this.defaultTravelStoryForm);
     },
   },
   async created() {
