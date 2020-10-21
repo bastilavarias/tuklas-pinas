@@ -85,6 +85,7 @@
                     color="primary"
                     @click="createTravelStoryPost"
                     :loading="isCreateTravelStoryPostStart"
+                    :disabled="!isCreateTravelStoryFormValid"
                     >CREATE</v-btn
                   >
                 </v-card-actions>
@@ -174,6 +175,20 @@ export default {
     genericTravelEvents() {
       return this.$store.state.generic.travelEvents;
     },
+    isCreateTravelStoryFormValid() {
+      const { title, text, destinationsID, travelEventsID, files } = this.form;
+      const isDestinationsIDIsNotEmpty = destinationsID.length > 0;
+      const isTravelEventsIDIsNotEmpty = travelEventsID.length > 0;
+      const isFilesIsNotEmptyAndExceeding =
+        files.length > 0 && files.length < 26;
+      return (
+        title &&
+        text &&
+        isDestinationsIDIsNotEmpty &&
+        isTravelEventsIDIsNotEmpty &&
+        isFilesIsNotEmptyAndExceeding
+      );
+    },
   },
   methods: {
     async fetchGenericDestinations() {
@@ -192,19 +207,14 @@ export default {
         CREATE_TRAVEL_STORY_POST,
         this.form
       );
+      this.isCreateTravelStoryPostStart = false;
+      console.log(createdTravelStoryPost);
       const isObjectValid = this.validateObject(createdTravelStoryPost);
-      if (isObjectValid) {
-        this.clearForm();
+      if (isObjectValid)
         return await this.$router.push({
           name: "travel-story-post-page",
           params: { postID: createdTravelStoryPost.id },
         });
-      }
-      alert("Something went wrong!");
-      this.isCreateTravelStoryPostStart = false;
-    },
-    clearForm() {
-      this.form = Object.assign({}, this.defaultTravelStoryForm);
     },
   },
   async created() {

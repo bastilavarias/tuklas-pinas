@@ -54,6 +54,7 @@
     </v-app-bar>
     <v-main>
       <router-view></router-view>
+      <custom-global-snackbar></custom-global-snackbar>
     </v-main>
   </v-app>
 </template>
@@ -63,9 +64,11 @@ import CustomTooltipButton from "@/components/custom/TooltipButton";
 import MainLayoutToolbarCreatePostMenuButton from "@/components/main-layout/ToolbarCreatePostMenuButton";
 import MainLayoutToolbarProfileMenuButton from "@/components/main-layout/ToolbarProfileMenuButton";
 import MainLayoutToolbarNotificationMenuButton from "@/components/main-layout/ToolbarNotificationMenuButton";
+import CustomGlobalSnackbar from "@/components/custom/GlobalSnackbar";
 export default {
   name: "main-layout",
   components: {
+    CustomGlobalSnackbar,
     MainLayoutToolbarNotificationMenuButton,
     MainLayoutToolbarProfileMenuButton,
     MainLayoutToolbarCreatePostMenuButton,

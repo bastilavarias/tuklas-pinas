@@ -18,6 +18,7 @@ const cloudinaryService = {
       const uploadOptions = {
         folder: folderPath,
         use_filename: true,
+        resource_type: "auto",
       };
       // @ts-ignore
       const result = await cloudinary.v2.uploader.upload(
