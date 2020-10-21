@@ -3,30 +3,35 @@ import {
   Column,
   Entity,
   ManyToOne,
+  JoinColumn,
   PrimaryGeneratedColumn,
+  OneToMany,
 } from "typeorm";
 import Post from "./Post";
+import PostItineraryDay from "./PostItineraryDay";
 
 @Entity()
 export default class PostItinerary extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column("timestamp with time zone", {
+  @Column({
     nullable: false,
   })
-  date: Date;
-
-  @Column("int", {
-    nullable: false,
-  })
-  destinationsCount: number;
+  totalDestinations: number;
 
   @Column("numeric", {
     nullable: false,
   })
-  expenses: number;
+  totalExpenses: number;
 
   @ManyToOne(() => Post)
   post: Post;
+
+  @OneToMany(
+    () => PostItineraryDay,
+    (postItineraryDay) => postItineraryDay.postItinerary
+  )
+  @JoinColumn({ name: "postItineraryId" })
+  itinerary: PostItineraryDay[];
 }

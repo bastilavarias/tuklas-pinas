@@ -9,11 +9,11 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import Destination from "./Destination";
-import PostItinerary from "./PostItinerary";
-import PostItineraryTimestampInterest from "./PostItineraryTimestampInterest";
+import PostItineraryDay from "./PostItineraryDay";
+import PostItineraryDayTimestampInterest from "./PostItineraryDayTimestampInterest";
 
 @Entity()
-export default class PostItineraryTimestamp extends BaseEntity {
+export default class PostItineraryDayTimestamp extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -21,6 +21,11 @@ export default class PostItineraryTimestamp extends BaseEntity {
     nullable: false,
   })
   time: Date;
+
+  @Column({
+    nullable: true,
+  })
+  transportation: string;
 
   @Column("numeric", {
     nullable: true,
@@ -39,13 +44,13 @@ export default class PostItineraryTimestamp extends BaseEntity {
   @JoinColumn()
   destination: Destination;
 
-  @ManyToOne(() => PostItinerary)
-  itinerary: PostItinerary;
+  @ManyToOne(() => PostItineraryDay)
+  postItineraryDay: PostItineraryDay;
 
   @OneToMany(
-    () => PostItineraryTimestampInterest,
+    () => PostItineraryDayTimestampInterest,
     (interest) => interest.itineraryTimestamp
   )
   @JoinColumn({ name: "itineraryTimestampId" })
-  interests: PostItineraryTimestampInterest[];
+  interests: PostItineraryDayTimestampInterest[];
 }

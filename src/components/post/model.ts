@@ -3,6 +3,8 @@ import {
   PostModelSaveDestinationInput,
   PostModelSaveDetailsInput,
   PostModelSaveFileDetailsInput,
+  PostModelSaveItineraryDayInput,
+  PostModelSaveItineraryDayTimestampInput,
   PostModelSaveTravelEventInput,
 } from "./typeDefs";
 import Post from "../../database/entities/Post";
@@ -14,13 +16,16 @@ import genericModel from "../generic/model";
 import PostCategory from "../../database/entities/PostCategory";
 import PostTravelEvent from "../../database/entities/PostTravelEvent";
 import TravelEvent from "../../database/entities/TravelEvent";
+import PostItineraryDay from "../../database/entities/PostItineraryDay";
+import PostItineraryDayTimestamp from "../../database/entities/PostItineraryDayTimestamp";
 
 const postModel = {
   async saveDetails(input: PostModelSaveDetailsInput): Promise<Post> {
-    const { title, text, isDraft, accountID } = input;
+    const { title, text, isDraft, accountID, type } = input;
     return await Post.create({
       title,
       text,
+      type,
       isDraft,
       author: { id: accountID },
     }).save();
@@ -60,6 +65,41 @@ const postModel = {
     return await PostTravelEvent.create({
       post: { id: postID },
       travelEvent: { id: travelEventID },
+    }).save();
+  },
+
+  async saveItineraryDay(
+    input: PostModelSaveItineraryDayInput
+  ): Promise<PostItineraryDay> {
+    const { postID, date, destinationsCount, expenses } = input;
+    return await PostItineraryDay.create({
+      post: { id: postID },
+      date,
+      destinationsCount,
+      expenses,
+    }).save();
+  },
+
+  async saveItineraryDayTimestamp(
+    input: PostModelSaveItineraryDayTimestampInput
+  ): Promise<PostItineraryDayTimestamp> {
+    const {
+      postItineraryID,
+      time,
+      fare,
+      expenses,
+      otherDetails,
+      destinationID,
+      transportation,
+    } = input;
+    return await PostItineraryDayTimestamp.create({
+      postItinerary: { id: postItineraryID },
+      destination: { id: destinationID },
+      time,
+      fare,
+      expenses,
+      otherDetails,
+      transportation,
     }).save();
   },
 
