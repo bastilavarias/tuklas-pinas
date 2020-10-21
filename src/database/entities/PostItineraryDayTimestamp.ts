@@ -49,8 +49,8 @@ export default class PostItineraryDayTimestamp extends BaseEntity {
 
   @OneToMany(
     () => PostItineraryDayTimestampInterest,
-    (interest) => interest.itineraryTimestamp
+    (interest) => interest.timestamp
   )
-  @JoinColumn({ name: "itineraryTimestampId" })
+  @JoinColumn({ name: "timestampId" })
   interests: PostItineraryDayTimestampInterest[];
 }
