@@ -20,7 +20,7 @@ export interface PostModelSaveDetailsInput {
   accountID: number;
 }
 
-export interface PostModelSaveFileDetailsInput extends CloudinaryFileMeta {
+export interface PostModelSaveFileInput extends CloudinaryFileMeta {
   postID: number;
   data: Buffer;
 }
@@ -50,20 +50,34 @@ interface ItineraryTimestamp {
   interests: string[];
 }
 
-interface Itinerary {
+export interface ItineraryDay {
   date: Date;
+  day: number;
   destinationsCount: number;
   expenses: number;
   timestamps: ItineraryTimestamp[];
 }
 
+export interface Itinerary {
+  totalDestinations: number;
+  totalExpenses: number;
+  days: ItineraryDay[];
+}
+
 export interface PostServiceCreateItineraryInput extends PostBaseInput {
-  itinerary: Itinerary[];
+  itinerary: Itinerary;
+}
+
+export interface PostModelSaveItineraryInput {
+  postID: number;
+  totalDestinations: number;
+  totalExpenses: number;
 }
 
 export interface PostModelSaveItineraryDayInput {
-  postID: number;
+  postItineraryID: number;
   date: Date;
+  day: number;
   destinationsCount: number;
   expenses: number;
 }

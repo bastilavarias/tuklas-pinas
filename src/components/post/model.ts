@@ -2,9 +2,10 @@ import {
   PostModelSaveCategoryInput,
   PostModelSaveDestinationInput,
   PostModelSaveDetailsInput,
-  PostModelSaveFileDetailsInput,
+  PostModelSaveFileInput,
   PostModelSaveItineraryDayInput,
   PostModelSaveItineraryDayTimestampInput,
+  PostModelSaveItineraryInput,
   PostModelSaveTravelEventInput,
 } from "./typeDefs";
 import Post from "../../database/entities/Post";
@@ -18,6 +19,7 @@ import PostTravelEvent from "../../database/entities/PostTravelEvent";
 import TravelEvent from "../../database/entities/TravelEvent";
 import PostItineraryDay from "../../database/entities/PostItineraryDay";
 import PostItineraryDayTimestamp from "../../database/entities/PostItineraryDayTimestamp";
+import PostItinerary from "../../database/entities/PostItinerary";
 
 const postModel = {
   async saveDetails(input: PostModelSaveDetailsInput): Promise<Post> {
@@ -31,9 +33,7 @@ const postModel = {
     }).save();
   },
 
-  async saveFileDetails(
-    input: PostModelSaveFileDetailsInput
-  ): Promise<PostFile> {
+  async saveFile(input: PostModelSaveFileInput): Promise<PostFile> {
     const { url, publicID, format, data, postID } = input;
     return await PostFile.create({
       url,
@@ -68,15 +68,27 @@ const postModel = {
     }).save();
   },
 
+  async saveItinerary(
+    input: PostModelSaveItineraryInput
+  ): Promise<PostItinerary> {
+    const { postID, totalDestinations, totalExpenses } = input;
+    return await PostItinerary.create({
+      post: { id: postID },
+      totalDestinations,
+      totalExpenses,
+    }).save();
+  },
+
   async saveItineraryDay(
     input: PostModelSaveItineraryDayInput
   ): Promise<PostItineraryDay> {
-    const { postID, date, destinationsCount, expenses } = input;
+    const { postItineraryID, date, destinationsCount, expenses, day } = input;
     return await PostItineraryDay.create({
-      itinerary: { id: postID },
+      itinerary: { id: postItineraryID },
       date,
       destinationsCount,
       expenses,
+      day,
     }).save();
   },
 

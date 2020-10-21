@@ -33,5 +33,5 @@ export default class PostItinerary extends BaseEntity {
     (postItineraryDay) => postItineraryDay.itinerary
   )
   @JoinColumn({ name: "itineraryId" })
-  itinerary: PostItineraryDay[];
+  days: PostItineraryDay[];
 }

@@ -1,10 +1,11 @@
 import {
+  Itinerary,
   PostModelSaveCategoryInput,
   PostModelSaveDestinationInput,
   PostModelSaveDetailsInput,
-  PostModelSaveFileDetailsInput,
+  PostModelSaveFileInput,
   PostModelSaveItineraryDayInput,
-  PostModelSaveItineraryDayTimestampInput,
+  PostModelSaveItineraryInput,
   PostModelSaveTravelEventInput,
   PostServiceCreateItineraryInput,
   PostServiceCreateTravelStoryInput,
@@ -26,57 +27,10 @@ const postService = {
       accountID,
     };
     const savedPostDetails = await postModel.saveDetails(savePostDetailsInput);
-    await Promise.all(
-      input.destinationsID.map(async (id) => {
-        const saveDestinationInput: PostModelSaveDestinationInput = {
-          postID: savedPostDetails.id,
-          destinationID: id,
-        };
-        await postModel.saveDestination(saveDestinationInput);
-      })
-    );
-    await Promise.all(
-      input.categories.map(async (name) => {
-        const saveCategoryInput: PostModelSaveCategoryInput = {
-          postID: savedPostDetails.id,
-          name,
-        };
-        if (name) await postModel.saveCategory(saveCategoryInput);
-      })
-    );
-    await Promise.all(
-      input.travelEventsID.map(async (id) => {
-        const saveTravelEventInput: PostModelSaveTravelEventInput = {
-          postID: savedPostDetails.id,
-          travelEventID: id,
-        };
-        await postModel.saveTravelEvent(saveTravelEventInput);
-      })
-    );
-
-    const cloudinaryFolder = "posts";
-    const uploadedFilesMeta = await Promise.all(
-      input.files.map(
-        async (file) => await cloudinaryService.upload(file, cloudinaryFolder)
-      )
-    );
-    await Promise.all(
-      uploadedFilesMeta.map(async (meta) => {
-        const fileData = await input.files.find(
-          (file) => file.filename === meta.fileName
-        );
-        const savePostFileDetailsInput: PostModelSaveFileDetailsInput = {
-          postID: savedPostDetails.id,
-          publicID: meta.publicID,
-          fileName: meta.fileName,
-          url: meta.url,
-          format: meta.format,
-          // @ts-ignore
-          data: fileData,
-        };
-        await postModel.saveFileDetails(savePostFileDetailsInput);
-      })
-    );
+    await this.saveDestinations(savedPostDetails.id, input.destinationsID);
+    await this.saveCategories(savedPostDetails.id, input.categories);
+    await this.saveTravelEvents(savedPostDetails.id, input.travelEventsID);
+    await this.saveFiles(savedPostDetails.id, input.files);
     return postModel.getDetails(savedPostDetails.id);
   },
 
@@ -92,73 +46,63 @@ const postService = {
       accountID,
     };
     const savedPostDetails = await postModel.saveDetails(savePostDetailsInput);
+    await this.saveDestinations(savedPostDetails.id, input.destinationsID);
+    await this.saveCategories(savedPostDetails.id, input.categories);
+    await this.saveTravelEvents(savedPostDetails.id, input.travelEventsID);
+    await this.saveItineraryDetails(savedPostDetails.id, input.itinerary);
+    return postModel.getDetails(savedPostDetails.id);
+  },
+
+  async saveDestinations(postID: number, destinationsID: number[]) {
     await Promise.all(
-      input.destinationsID.map(async (id) => {
+      destinationsID.map(async (id) => {
         const saveDestinationInput: PostModelSaveDestinationInput = {
-          postID: savedPostDetails.id,
+          postID,
           destinationID: id,
         };
         await postModel.saveDestination(saveDestinationInput);
       })
     );
+  },
+
+  async saveCategories(postID: number, categories: string[]) {
     await Promise.all(
-      input.categories.map(async (name) => {
+      categories.map(async (name) => {
         const saveCategoryInput: PostModelSaveCategoryInput = {
-          postID: savedPostDetails.id,
+          postID,
           name,
         };
         if (name) await postModel.saveCategory(saveCategoryInput);
       })
     );
+  },
+
+  async saveTravelEvents(postID: number, travelEventsID: number[]) {
     await Promise.all(
-      input.travelEventsID.map(async (id) => {
+      travelEventsID.map(async (id) => {
         const saveTravelEventInput: PostModelSaveTravelEventInput = {
-          postID: savedPostDetails.id,
+          postID,
           travelEventID: id,
         };
         await postModel.saveTravelEvent(saveTravelEventInput);
       })
     );
-    await Promise.all(
-      input.itinerary.map(async (item) => {
-        const savePostItineraryDayInput: PostModelSaveItineraryDayInput = {
-          postID: savedPostDetails.id,
-          date: item.date,
-          destinationsCount: item.destinationsCount,
-          expenses: item.expenses,
-        };
-        const savedItinerary = await postModel.saveItineraryDay(
-          savePostItineraryDayInput
-        );
-        await item.timestamps.map(async (timestamp) => {
-          const savePostItineraryDayTimestampInput: PostModelSaveItineraryDayTimestampInput = {
-            postItineraryID: savedItinerary.id,
-            time: timestamp.time,
-            fare: timestamp.fare,
-            expenses: timestamp.expenses,
-            otherDetails: timestamp.otherDetails,
-            destinationID: timestamp.destinationID,
-            transportation: timestamp.transportation,
-          };
-          await postModel.saveItineraryDayTimestamp(
-            savePostItineraryDayTimestampInput
-          );
-        });
-      })
-    );
+  },
+
+  async saveFiles(postID: number, files: Express.Multer.File[]) {
     const cloudinaryFolder = "posts";
     const uploadedFilesMeta = await Promise.all(
-      input.files.map(
+      files.map(
         async (file) => await cloudinaryService.upload(file, cloudinaryFolder)
       )
     );
     await Promise.all(
       uploadedFilesMeta.map(async (meta) => {
-        const fileData = await input.files.find(
+        const fileData = await files.find(
           (file) => file.filename === meta.fileName
         );
-        const savePostFileDetailsInput: PostModelSaveFileDetailsInput = {
-          postID: savedPostDetails.id,
+        const savePostFileInput: PostModelSaveFileInput = {
+          postID,
           publicID: meta.publicID,
           fileName: meta.fileName,
           url: meta.url,
@@ -166,10 +110,32 @@ const postService = {
           // @ts-ignore
           data: fileData,
         };
-        await postModel.saveFileDetails(savePostFileDetailsInput);
+        await postModel.saveFile(savePostFileInput);
       })
     );
-    return postModel.getDetails(savedPostDetails.id);
+  },
+
+  async saveItineraryDetails(postID: number, itinerary: Itinerary) {
+    const savePostItineraryInput: PostModelSaveItineraryInput = {
+      postID,
+      totalDestinations: itinerary.totalDestinations,
+      totalExpenses: itinerary.totalExpenses,
+    };
+    const savedPostItinerary = await postModel.saveItinerary(
+      savePostItineraryInput
+    );
+    await Promise.all(
+      itinerary.days.map(async (item) => {
+        const savePostItineraryDayInput: PostModelSaveItineraryDayInput = {
+          postItineraryID: savedPostItinerary.id,
+          date: item.date,
+          day: item.day,
+          destinationsCount: item.destinationsCount,
+          expenses: item.expenses,
+        };
+        await postModel.saveItineraryDay(savePostItineraryDayInput);
+      })
+    );
   },
 };
 
