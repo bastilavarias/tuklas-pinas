@@ -1,6 +1,9 @@
 import {
+  ActivityReviewInput,
   Itinerary,
   LodgingReview,
+  PostFinanceReviewInput,
+  PostInternetAccessReviewInput,
   PostModelSaveCategoryInput,
   PostModelSaveDestinationInput,
   PostModelSaveDetailsInput,
@@ -216,6 +219,25 @@ const postService = {
         );
       })
     );
+  },
+
+  async saveActivityReviews(postID: number, inputs: ActivityReviewInput[]) {
+    await Promise.all(
+      inputs.map(
+        async (review) => await postModel.saveActivityReview(postID, review)
+      )
+    );
+  },
+
+  async saveInternetAccessReview(
+    postID: number,
+    input: PostInternetAccessReviewInput
+  ) {
+    await postModel.saveInternetAccessReview(postID, input);
+  },
+
+  async saveFinanceReview(postID: number, input: PostFinanceReviewInput) {
+    await postModel.saveFinanceReview(postID, input);
   },
 };
 

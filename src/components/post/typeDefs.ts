@@ -122,22 +122,19 @@ export interface PostModelSaveTransportationReview
   postID: number;
 }
 
-export interface PostModelSaveActivityReview {
-  postID: number;
+export interface ActivityReviewInput {
   destinationID: number;
   name: string;
   text: string;
   rating: number;
 }
 
-export interface PostModelSaveInternetAccessReview {
-  postID: number;
+export interface PostInternetAccessReviewInput {
   text: string;
   rating: number;
 }
 
-export interface PostModelSaveFinanceReview
-  extends PostModelSaveInternetAccessReview {}
+export interface PostFinanceReviewInput extends PostInternetAccessReviewInput {}
 
 export interface PostDetails extends Post {
   destinations: Destination[];

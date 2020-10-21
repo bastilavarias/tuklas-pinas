@@ -1,12 +1,12 @@
 import {
+  ActivityReviewInput,
   PostDetails,
-  PostModelSaveActivityReview,
   PostModelSaveCategoryInput,
   PostModelSaveDestinationInput,
   PostModelSaveDetailsInput,
   PostModelSaveFileInput,
-  PostModelSaveFinanceReview,
-  PostModelSaveInternetAccessReview,
+  PostFinanceReviewInput,
+  PostInternetAccessReviewInput,
   PostModelSaveItineraryDayInput,
   PostModelSaveItineraryDayTimestampInput,
   PostModelSaveItineraryInput,
@@ -179,9 +179,10 @@ const postModel = {
   },
 
   async saveActivityReview(
-    input: PostModelSaveActivityReview
+    postID: number,
+    input: ActivityReviewInput
   ): Promise<PostReviewActivity> {
-    const { postID, destinationID, name, text, rating } = input;
+    const { destinationID, name, text, rating } = input;
     return await PostReviewActivity.create({
       post: { id: postID },
       destination: { id: destinationID },
@@ -192,9 +193,10 @@ const postModel = {
   },
 
   async saveInternetAccessReview(
-    input: PostModelSaveInternetAccessReview
+    postID: number,
+    input: PostInternetAccessReviewInput
   ): Promise<PostReviewInternetAccess> {
-    const { postID, text, rating } = input;
+    const { text, rating } = input;
     return await PostReviewInternetAccess.create({
       post: { id: postID },
       text,
@@ -203,9 +205,10 @@ const postModel = {
   },
 
   async saveFinanceReview(
-    input: PostModelSaveFinanceReview
+    postID: number,
+    input: PostFinanceReviewInput
   ): Promise<PostReviewFinance> {
-    const { postID, text, rating } = input;
+    const { text, rating } = input;
     return await PostReviewFinance.create({
       post: { id: postID },
       text,
