@@ -73,7 +73,7 @@ const postModel = {
   ): Promise<PostItineraryDay> {
     const { postID, date, destinationsCount, expenses } = input;
     return await PostItineraryDay.create({
-      post: { id: postID },
+      itinerary: { id: postID },
       date,
       destinationsCount,
       expenses,
@@ -93,7 +93,7 @@ const postModel = {
       transportation,
     } = input;
     return await PostItineraryDayTimestamp.create({
-      postItinerary: { id: postItineraryID },
+      itineraryDay: { id: postItineraryID },
       destination: { id: destinationID },
       time,
       fare,
