@@ -37,7 +37,7 @@ const postService = {
           postID: savedPostDetails.id,
           name,
         };
-        await postModel.saveCategory(saveCategoryInput);
+        if (name) await postModel.saveCategory(saveCategoryInput);
       })
     );
     await Promise.all(

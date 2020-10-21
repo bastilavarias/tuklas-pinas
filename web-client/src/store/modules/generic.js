@@ -5,6 +5,7 @@ import {
   FETCH_GENERIC_SEXES,
   FETCH_GENERIC_TRAVEL_EVENTS,
   SET_GENERIC_DESTINATIONS,
+  SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS,
   SET_GENERIC_NATIONALITIES,
   SET_GENERIC_SEXES,
   SET_GENERIC_TRAVEL_EVENTS,
@@ -16,6 +17,11 @@ const genericStore = {
     sexes: [],
     destinations: [],
     travelEvents: [],
+    globalSnackbarConfigs: {
+      isOpen: false,
+      text: "",
+      color: "",
+    },
   },
   mutations: {
     [SET_GENERIC_NATIONALITIES](state, nationalities) {
@@ -32,6 +38,9 @@ const genericStore = {
     },
     [SET_GENERIC_TRAVEL_EVENTS](state, travelEvents) {
       state.travelEvents = travelEvents;
+    },
+    [SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS](state, configs) {
+      state.globalSnackbarConfigs = Object.assign({}, configs);
     },
   },
   actions: {
