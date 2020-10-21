@@ -5,7 +5,6 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import Destination from "./Destination";
@@ -40,8 +39,7 @@ export default class PostItineraryDayTimestamp extends BaseEntity {
   @Column("text", { nullable: true })
   otherDetails: string;
 
-  @OneToOne(() => Destination)
-  @JoinColumn()
+  @ManyToOne(() => Destination)
   destination: Destination;
 
   @ManyToOne(() => PostItineraryDay)

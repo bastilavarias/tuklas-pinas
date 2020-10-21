@@ -137,20 +137,29 @@ const postService = {
         const savedItineraryDay = await postModel.saveItineraryDay(
           savePostItineraryDayInput
         );
-        item.timestamps.map(async (timestamp) => {
-          const savePostItineraryDayTimestampInput: PostModelSaveItineraryDayTimestampInput = {
-            postItineraryDayID: savedItineraryDay.id,
-            time: timestamp.time,
-            transportation: timestamp.transportation,
-            fare: timestamp.fare,
-            expenses: timestamp.expenses,
-            otherDetails: timestamp.otherDetails,
-            destinationID: timestamp.destinationID,
-          };
-          await postModel.saveItineraryDayTimestamp(
-            savePostItineraryDayTimestampInput
-          );
-        });
+        await Promise.all(
+          item.timestamps.map(async (timestamp) => {
+            const savePostItineraryDayTimestampInput: PostModelSaveItineraryDayTimestampInput = {
+              postItineraryDayID: savedItineraryDay.id,
+              time: timestamp.time,
+              transportation: timestamp.transportation,
+              fare: timestamp.fare,
+              expenses: timestamp.expenses,
+              otherDetails: timestamp.otherDetails,
+              destinationID: timestamp.destinationID,
+            };
+            const savedItineraryDayTimestamp = await postModel.saveItineraryDayTimestamp(
+              savePostItineraryDayTimestampInput
+            );
+            timestamp.interests.map(
+              async (name) =>
+                await postModel.saveItineraryDayTimestampInterest(
+                  savedItineraryDayTimestamp.id,
+                  name
+                )
+            );
+          })
+        );
       })
     );
   },

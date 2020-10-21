@@ -20,6 +20,7 @@ import TravelEvent from "../../database/entities/TravelEvent";
 import PostItineraryDay from "../../database/entities/PostItineraryDay";
 import PostItineraryDayTimestamp from "../../database/entities/PostItineraryDayTimestamp";
 import PostItinerary from "../../database/entities/PostItinerary";
+import PostItineraryDayTimestampInterest from "../../database/entities/PostItineraryDayTimestampInterest";
 
 const postModel = {
   async saveDetails(input: PostModelSaveDetailsInput): Promise<Post> {
@@ -112,6 +113,16 @@ const postModel = {
       expenses,
       otherDetails,
       transportation,
+    }).save();
+  },
+
+  async saveItineraryDayTimestampInterest(
+    postItineraryDayTimestampID: number,
+    name: string
+  ): Promise<PostItineraryDayTimestampInterest> {
+    return await PostItineraryDayTimestampInterest.create({
+      timestamp: { id: postItineraryDayTimestampID },
+      name,
     }).save();
   },
 
