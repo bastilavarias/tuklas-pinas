@@ -36,12 +36,12 @@ export default class PostItineraryDay extends BaseEntity {
   expenses: number;
 
   @ManyToOne(() => PostItinerary)
-  postItinerary: PostItineraryDay;
+  itinerary: PostItinerary;
 
   @OneToMany(
     () => PostItineraryDayTimestamp,
-    (postItineraryDayTimestamp) => postItineraryDayTimestamp.postItineraryDay
+    (postItineraryDayTimestamp) => postItineraryDayTimestamp.itineraryDay
   )
-  @JoinColumn({ name: "postItineraryDayId" })
+  @JoinColumn({ name: "itineraryDayId" })
   timestamps: PostItineraryDayTimestamp[];
 }

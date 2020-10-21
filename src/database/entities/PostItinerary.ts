@@ -30,8 +30,8 @@ export default class PostItinerary extends BaseEntity {
 
   @OneToMany(
     () => PostItineraryDay,
-    (postItineraryDay) => postItineraryDay.postItinerary
+    (postItineraryDay) => postItineraryDay.itinerary
   )
-  @JoinColumn({ name: "postItineraryId" })
+  @JoinColumn({ name: "itineraryId" })
   itinerary: PostItineraryDay[];
 }

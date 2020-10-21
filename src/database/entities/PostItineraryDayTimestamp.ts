@@ -45,7 +45,7 @@ export default class PostItineraryDayTimestamp extends BaseEntity {
   destination: Destination;
 
   @ManyToOne(() => PostItineraryDay)
-  postItineraryDay: PostItineraryDay;
+  itineraryDay: PostItineraryDay;
 
   @OneToMany(
     () => PostItineraryDayTimestampInterest,
