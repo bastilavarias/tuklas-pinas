@@ -96,7 +96,7 @@ const postModel = {
     input: PostModelSaveItineraryDayTimestampInput
   ): Promise<PostItineraryDayTimestamp> {
     const {
-      postItineraryID,
+      postItineraryDayID,
       time,
       fare,
       expenses,
@@ -105,7 +105,7 @@ const postModel = {
       transportation,
     } = input;
     return await PostItineraryDayTimestamp.create({
-      itineraryDay: { id: postItineraryID },
+      itineraryDay: { id: postItineraryDayID },
       destination: { id: destinationID },
       time,
       fare,

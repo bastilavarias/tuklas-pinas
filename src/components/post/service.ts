@@ -5,6 +5,7 @@ import {
   PostModelSaveDetailsInput,
   PostModelSaveFileInput,
   PostModelSaveItineraryDayInput,
+  PostModelSaveItineraryDayTimestampInput,
   PostModelSaveItineraryInput,
   PostModelSaveTravelEventInput,
   PostServiceCreateItineraryInput,
@@ -133,7 +134,23 @@ const postService = {
           destinationsCount: item.destinationsCount,
           expenses: item.expenses,
         };
-        await postModel.saveItineraryDay(savePostItineraryDayInput);
+        const savedItineraryDay = await postModel.saveItineraryDay(
+          savePostItineraryDayInput
+        );
+        item.timestamps.map(async (timestamp) => {
+          const savePostItineraryDayTimestampInput: PostModelSaveItineraryDayTimestampInput = {
+            postItineraryDayID: savedItineraryDay.id,
+            time: timestamp.time,
+            transportation: timestamp.transportation,
+            fare: timestamp.fare,
+            expenses: timestamp.expenses,
+            otherDetails: timestamp.otherDetails,
+            destinationID: timestamp.destinationID,
+          };
+          await postModel.saveItineraryDayTimestamp(
+            savePostItineraryDayTimestampInput
+          );
+        });
       })
     );
   },

@@ -83,7 +83,7 @@ export interface PostModelSaveItineraryDayInput {
 }
 
 export interface PostModelSaveItineraryDayTimestampInput {
-  postItineraryID: number;
+  postItineraryDayID: number;
   time: Date;
   fare: number;
   expenses: number;
