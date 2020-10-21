@@ -1,5 +1,6 @@
 import {
   Itinerary,
+  LodgingReview,
   PostModelSaveCategoryInput,
   PostModelSaveDestinationInput,
   PostModelSaveDetailsInput,
@@ -7,9 +8,14 @@ import {
   PostModelSaveItineraryDayInput,
   PostModelSaveItineraryDayTimestampInput,
   PostModelSaveItineraryInput,
+  PostModelSaveLodgingReview,
+  PostModelSaveRestaurantReview,
+  PostModelSaveTransportationReview,
   PostModelSaveTravelEventInput,
   PostServiceCreateItineraryInput,
   PostServiceCreateTravelStoryInput,
+  RestaurantReview,
+  TransportationReview,
 } from "./typeDefs";
 import cloudinaryService from "../cloudinary/service";
 import postModel from "./model";
@@ -159,6 +165,54 @@ const postService = {
                 )
             );
           })
+        );
+      })
+    );
+  },
+
+  async saveRestaurantReviews(postID: number, reviews: RestaurantReview[]) {
+    await Promise.all(
+      reviews.map(async (review) => {
+        const savePostRestaurantReviewInput: PostModelSaveRestaurantReview = {
+          postID,
+          name: review.name,
+          text: review.text,
+          rating: review.rating,
+        };
+        await postModel.saveRestaurantReview(savePostRestaurantReviewInput);
+      })
+    );
+  },
+
+  async saveLodgingReviews(postID: number, reviews: LodgingReview[]) {
+    await Promise.all(
+      reviews.map(async (review) => {
+        const savePostLodgingReviewInput: PostModelSaveLodgingReview = {
+          postID,
+          name: review.name,
+          text: review.text,
+          rating: review.rating,
+        };
+        await postModel.saveRestaurantReview(savePostLodgingReviewInput);
+      })
+    );
+  },
+
+  async saveTransportationReviews(
+    postID: number,
+    reviews: TransportationReview[]
+  ) {
+    await Promise.all(
+      reviews.map(async (review) => {
+        const savePostTransportationReviewInput: PostModelSaveTransportationReview = {
+          postID,
+          destinationID: review.destinationID,
+          type: review.type,
+          text: review.text,
+          rating: review.rating,
+        };
+        await postModel.saveTransportationReview(
+          savePostTransportationReviewInput
         );
       })
     );

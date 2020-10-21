@@ -1,11 +1,18 @@
 import {
+  PostDetails,
+  PostModelSaveActivityReview,
   PostModelSaveCategoryInput,
   PostModelSaveDestinationInput,
   PostModelSaveDetailsInput,
   PostModelSaveFileInput,
+  PostModelSaveFinanceReview,
+  PostModelSaveInternetAccessReview,
   PostModelSaveItineraryDayInput,
   PostModelSaveItineraryDayTimestampInput,
   PostModelSaveItineraryInput,
+  PostModelSaveLodgingReview,
+  PostModelSaveRestaurantReview,
+  PostModelSaveTransportationReview,
   PostModelSaveTravelEventInput,
 } from "./typeDefs";
 import Post from "../../database/entities/Post";
@@ -21,6 +28,14 @@ import PostItineraryDay from "../../database/entities/PostItineraryDay";
 import PostItineraryDayTimestamp from "../../database/entities/PostItineraryDayTimestamp";
 import PostItinerary from "../../database/entities/PostItinerary";
 import PostItineraryDayTimestampInterest from "../../database/entities/PostItineraryDayTimestampInterest";
+import PostReviewRestaurant from "../../database/entities/PostReviewRestaurant";
+import PostReviewLodging from "../../database/entities/PostReviewLodging";
+import PostReviewTransportation from "../../database/entities/PostReviewTransportation";
+import PostReviewActivity from "../../database/entities/PostReviewActivity";
+import PostReviewInternetAccess from "../../database/entities/PostReviewInternetAccess";
+import PostReviewFinance from "../../database/entities/PostReviewFinance";
+import PostReviewTip from "../../database/entities/PostReviewTip";
+import PostReviewAvoid from "../../database/entities/PostReviewAvoid";
 
 const postModel = {
   async saveDetails(input: PostModelSaveDetailsInput): Promise<Post> {
@@ -126,8 +141,97 @@ const postModel = {
     }).save();
   },
 
-  async getDetails(postID: number): Promise<Post> {
-    const gotDetails: Post = <Post>await Post.findOne(postID, {
+  async saveRestaurantReview(
+    input: PostModelSaveRestaurantReview
+  ): Promise<PostReviewRestaurant> {
+    const { postID, name, text, rating } = input;
+    return await PostReviewRestaurant.create({
+      post: { id: postID },
+      name,
+      text,
+      rating,
+    }).save();
+  },
+
+  async saveLodgingReview(
+    input: PostModelSaveLodgingReview
+  ): Promise<PostReviewLodging> {
+    const { postID, name, text, rating } = input;
+    return await PostReviewLodging.create({
+      post: { id: postID },
+      name,
+      text,
+      rating,
+    }).save();
+  },
+
+  async saveTransportationReview(
+    input: PostModelSaveTransportationReview
+  ): Promise<PostReviewTransportation> {
+    const { postID, destinationID, type, text, rating } = input;
+    return await PostReviewTransportation.create({
+      post: { id: postID },
+      destination: { id: destinationID },
+      type,
+      text,
+      rating,
+    }).save();
+  },
+
+  async saveActivityReview(
+    input: PostModelSaveActivityReview
+  ): Promise<PostReviewActivity> {
+    const { postID, destinationID, name, text, rating } = input;
+    return await PostReviewActivity.create({
+      post: { id: postID },
+      destination: { id: destinationID },
+      name,
+      text,
+      rating,
+    }).save();
+  },
+
+  async saveInternetAccessReview(
+    input: PostModelSaveInternetAccessReview
+  ): Promise<PostReviewInternetAccess> {
+    const { postID, text, rating } = input;
+    return await PostReviewInternetAccess.create({
+      post: { id: postID },
+      text,
+      rating,
+    }).save();
+  },
+
+  async saveFinanceReview(
+    input: PostModelSaveFinanceReview
+  ): Promise<PostReviewFinance> {
+    const { postID, text, rating } = input;
+    return await PostReviewFinance.create({
+      post: { id: postID },
+      text,
+      rating,
+    }).save();
+  },
+
+  async saveTipReview(postID: number, text: string): Promise<PostReviewTip> {
+    return await PostReviewTip.create({
+      post: { id: postID },
+      text,
+    }).save();
+  },
+
+  async saveAvoidReview(
+    postID: number,
+    text: string
+  ): Promise<PostReviewAvoid> {
+    return await PostReviewAvoid.create({
+      post: { id: postID },
+      text,
+    }).save();
+  },
+
+  async getDetails(postID: number): Promise<PostDetails> {
+    const gotDetails: PostDetails = <PostDetails>await Post.findOne(postID, {
       relations: ["author"],
     });
     gotDetails.files = await this.getDetailsFiles(gotDetails.id);

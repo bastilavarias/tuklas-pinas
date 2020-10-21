@@ -1,4 +1,7 @@
 import { CloudinaryFileMeta } from "../cloudinary/typeDefs";
+import Post from "../../database/entities/Post";
+import Destination from "../../database/entities/Destination";
+import TravelEvent from "../../database/entities/TravelEvent";
 
 interface PostBaseInput {
   title: string;
@@ -90,4 +93,53 @@ export interface PostModelSaveItineraryDayTimestampInput {
   otherDetails: string;
   destinationID: number;
   transportation: string;
+}
+
+export interface RestaurantReview {
+  name: string;
+  text: string;
+  rating: number;
+}
+
+export interface LodgingReview extends RestaurantReview {}
+
+export interface PostModelSaveRestaurantReview extends RestaurantReview {
+  postID: number;
+}
+
+export interface PostModelSaveLodgingReview
+  extends PostModelSaveRestaurantReview {}
+
+export interface TransportationReview {
+  destinationID: number;
+  type: string;
+  text: string;
+  rating: number;
+}
+
+export interface PostModelSaveTransportationReview
+  extends TransportationReview {
+  postID: number;
+}
+
+export interface PostModelSaveActivityReview {
+  postID: number;
+  destinationID: number;
+  name: string;
+  text: string;
+  rating: number;
+}
+
+export interface PostModelSaveInternetAccessReview {
+  postID: number;
+  text: string;
+  rating: number;
+}
+
+export interface PostModelSaveFinanceReview
+  extends PostModelSaveInternetAccessReview {}
+
+export interface PostDetails extends Post {
+  destinations: Destination[];
+  travelEvents: TravelEvent[];
 }
