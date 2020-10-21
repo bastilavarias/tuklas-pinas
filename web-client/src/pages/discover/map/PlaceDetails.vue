@@ -69,11 +69,11 @@
 
 <script>
 import CustomTooltipButton from "@/components/custom/TooltipButton";
-import CommonUtilities from "@/common/utilities";
+import commonUtilities from "@/common/utilities";
 import DiscoverPageImageUploaderDialog from "@/components/discover-page/ImageUploaderDialog";
 export default {
   components: { DiscoverPageImageUploaderDialog, CustomTooltipButton },
-  mixins: [CommonUtilities],
+  mixins: [commonUtilities],
   data() {
     return {
       images: [

@@ -1,0 +1,1 @@
+export const CREATE_TRAVEL_STORY_POST = "post/CREATE_TRAVEL_STORY";

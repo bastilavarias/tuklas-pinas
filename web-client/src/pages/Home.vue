@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import CommonUtilities from "@/common/utilities";
+import commonUtilities from "@/common/utilities";
 import HomePageHeader from "@/components/home-page/Header";
 import HomePagePopularItinerariesDiv from "@/components/home-page/PopularItinerariesDiv";
 import HomePageSearchDestinationDiv from "@/components/home-page/SearchDestinationDiv";
@@ -52,7 +52,7 @@ import CustomRouterLink from "@/components/custom/RouterLink";
 export default {
   name: "Home",
 
-  mixins: [CommonUtilities],
+  mixins: [commonUtilities],
 
   components: {
     CustomRouterLink,

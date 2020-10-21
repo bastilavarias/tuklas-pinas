@@ -22,6 +22,7 @@
                         label="Title"
                         single-line
                         color="primary"
+                        v-model="form.title"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12">
@@ -30,6 +31,7 @@
                         label="Text *"
                         single-line
                         color="primary"
+                        v-model="form.text"
                       ></v-textarea>
                     </v-col>
                     <v-col cols="12">
@@ -37,25 +39,39 @@
                         outlined
                         label="Destination *"
                         single-line
+                        :loading="isFetchGenericDestinationsStart"
+                        :items="genericDestinations"
+                        multiple
+                        item-text="name"
+                        item-value="id"
+                        v-model="form.destinationsID"
                       ></v-autocomplete>
                     </v-col>
                     <v-col cols="12">
                       <v-autocomplete
                         outlined
-                        label="Events *"
+                        label="Travel Events *"
                         single-line
+                        :loading="isFetchGenericTravelEventsStart"
+                        :items="genericTravelEvents"
+                        multiple
+                        item-text="name"
+                        item-value="id"
+                        v-model="form.travelEventsID"
                       ></v-autocomplete>
                     </v-col>
                     <v-col cols="12">
-                      <v-autocomplete
+                      <generic-category-combobox
                         outlined
-                        label="Categories *"
+                        label="Categories"
                         single-line
-                      ></v-autocomplete>
+                        :categories.sync="form.categories"
+                      ></generic-category-combobox>
                     </v-col>
                     <v-col cols="12">
                       <custom-file-dropzone
-                        label="Images or Videos"
+                        label="Images or Videos *"
+                        :files.sync="form.files"
                       ></custom-file-dropzone>
                     </v-col>
                   </v-row>
@@ -65,7 +81,12 @@
                   <v-btn color="secondary" class="text-capitalize" outlined
                     >Save as Draft</v-btn
                   >
-                  <v-btn color="primary">Post</v-btn>
+                  <v-btn
+                    color="primary"
+                    @click="createTravelStoryPost"
+                    :loading="isCreateTravelStoryPostStart"
+                    >CREATE</v-btn
+                  >
                 </v-card-actions>
               </v-card>
             </v-col>
@@ -112,8 +133,83 @@
 import CustomFileDropzone from "@/components/custom/FileDropzone";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
 import GenericBasicFooter from "@/components/generic/footer/Basic";
+import {
+  FETCH_GENERIC_DESTINATIONS,
+  FETCH_GENERIC_TRAVEL_EVENTS,
+} from "@/store/types/generic";
+import GenericCategoryCombobox from "@/components/generic/combobox/Category";
+import { CREATE_TRAVEL_STORY_POST } from "@/store/types/post";
+import commonValidation from "@/common/validation";
+
+const defaultTravelStoryForm = {
+  title: "",
+  text: "",
+  destinationsID: [],
+  travelEventsID: [],
+  categories: [],
+  files: [],
+};
 
 export default {
-  components: { GenericBasicFooter, GenericStickyFooter, CustomFileDropzone },
+  mixins: [commonValidation],
+  components: {
+    GenericCategoryCombobox,
+    GenericBasicFooter,
+    GenericStickyFooter,
+    CustomFileDropzone,
+  },
+  data() {
+    return {
+      isFetchGenericDestinationsStart: false,
+      isFetchGenericTravelEventsStart: false,
+      isCreateTravelStoryPostStart: false,
+      form: Object.assign({}, defaultTravelStoryForm),
+      defaultTravelStoryForm,
+    };
+  },
+  computed: {
+    genericDestinations() {
+      return this.$store.state.generic.destinations;
+    },
+    genericTravelEvents() {
+      return this.$store.state.generic.travelEvents;
+    },
+  },
+  methods: {
+    async fetchGenericDestinations() {
+      this.isFetchGenericDestinationsStart = true;
+      await this.$store.dispatch(FETCH_GENERIC_DESTINATIONS);
+      this.isFetchGenericDestinationsStart = false;
+    },
+    async fetchGenericTravelEvents() {
+      this.isFetchGenericTravelEventsStart = true;
+      await this.$store.dispatch(FETCH_GENERIC_TRAVEL_EVENTS);
+      this.isFetchGenericTravelEventsStart = false;
+    },
+    async createTravelStoryPost() {
+      this.isCreateTravelStoryPostStart = true;
+      const createdTravelStoryPost = await this.$store.dispatch(
+        CREATE_TRAVEL_STORY_POST,
+        this.form
+      );
+      const isObjectValid = this.validateObject(createdTravelStoryPost);
+      if (isObjectValid) {
+        this.clearForm();
+        return await this.$router.push({
+          name: "travel-story-post-page",
+          params: { postID: createdTravelStoryPost.id },
+        });
+      }
+      alert("Something went wrong!");
+      this.isCreateTravelStoryPostStart = false;
+    },
+    clearForm() {
+      this.form = Object.assign({}, this.defaultTravelStoryForm);
+    },
+  },
+  async created() {
+    await this.fetchGenericDestinations();
+    await this.fetchGenericTravelEvents();
+  },
 };
 </script>

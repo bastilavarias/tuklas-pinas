@@ -114,7 +114,7 @@ import GenericCommentReplyMedia from "@/components/generic/media/CommentReply";
 import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEventsExplorer";
 import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedPeople";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
-import CommonUtilities from "@/common/utilities";
+import commonUtilities from "@/common/utilities";
 export default {
   components: {
     GenericStickyFooter,
@@ -144,7 +144,7 @@ export default {
       isGalleryDialogOpen: false,
     };
   },
-  mixins: [CommonUtilities],
+  mixins: [commonUtilities],
 };
 </script>
 

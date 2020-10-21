@@ -1,26 +1,31 @@
 <template>
-  <div>
-    <div class="d-flex justify-space-between align-center mb-3">
-      <span class="subtitle-1" v-if="label">{{ label }}</span>
-      <div class="flex-grow-1" v-if="!label"></div>
-      <div>
-        <v-btn icon v-if="layout !== 'default'" @click="layout = 'default'">
-          <v-icon>mdi-card-outline</v-icon>
-        </v-btn>
-        <v-btn icon v-if="layout !== 'list'" @click="layout = 'list'">
-          <v-icon>mdi-view-list-outline</v-icon>
-        </v-btn>
-      </div>
-    </div>
-    <VueFileAgent
-      v-model="files"
-      :theme="layout"
-      :max-files="5"
-      accept="image/*, video/*"
-      deletable
-      help-text="Choose Images/Videos or drag here"
-    ></VueFileAgent>
-  </div>
+  <v-file-input
+    v-model="filesLocal"
+    color="primary"
+    counter
+    :placeholder="label"
+    multiple
+    single-line
+    prepend-icon=""
+    outlined
+    persistent-hint
+    :show-size="1000"
+    hint="Maximum of 25 files."
+    accept="image/*, video/*"
+  >
+    <template v-slot:selection="{ index, text }">
+      <v-chip v-if="index < 2" color="primary" dark label small>
+        {{ text }}
+      </v-chip>
+
+      <span
+        v-else-if="index === 2"
+        class="overline grey--text text--darken-3 mx-2"
+      >
+        +{{ files.length - 2 }} File(s)
+      </span>
+    </template>
+  </v-file-input>
 </template>
 
 <script>
@@ -29,20 +34,21 @@ export default {
   name: "custom-file-dropzone",
   components: { CustomTooltipButton },
   props: {
+    files: { required: true },
     label: { type: String, required: false },
   },
-
   data() {
     return {
-      files: [],
-      layout: "list",
+      filesLocal: this.files,
     };
+  },
+  watch: {
+    files(val) {
+      this.filesLocal = val;
+    },
+    filesLocal(val) {
+      this.$emit("update:files", val);
+    },
   },
 };
 </script>
-
-<style>
-#dropzone {
-  font-family: "Poppins", sans-serif;
-}
-</style>
