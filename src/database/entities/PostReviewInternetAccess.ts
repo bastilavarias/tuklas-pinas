@@ -12,7 +12,7 @@ export default class PostReviewInternetAccess extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column("text", { nullable: false })
+  @Column("text", { nullable: true })
   text: string;
 
   @Column({ nullable: true })

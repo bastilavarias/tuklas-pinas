@@ -28,6 +28,7 @@ const postController = {
       const input: PostServiceCreateItineraryInput = request.body;
       // @ts-ignore
       // input.files = request.files;
+      console.log(input);
       const result = await postService.createItinerary(accountID, input);
       response.status(200).json(result);
     } catch (error) {

@@ -15,7 +15,7 @@ export default class PostReviewFinance extends BaseEntity {
   @Column("text", { nullable: true })
   text: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   rating: number;
 
   @ManyToOne(() => Post)
