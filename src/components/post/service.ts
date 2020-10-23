@@ -33,7 +33,7 @@ const postService = {
     await this.saveCategories(savedPostDetails.id, input.categories);
     await this.saveTravelEvents(savedPostDetails.id, input.travelEventsID);
     await this.saveFiles(savedPostDetails.id, input.files);
-    return postModel.getDetails(savedPostDetails.id);
+    return postModel.getTravelStorySoftDetails(savedPostDetails.id);
   },
 
   async createItinerary(
@@ -53,7 +53,7 @@ const postService = {
     await this.saveTravelEvents(savedPostDetails.id, input.travelEventsID);
     await this.saveItineraryDetails(savedPostDetails.id, input.itinerary);
     await this.saveReview(savedPostDetails.id, input.review);
-    return postModel.getDetails(savedPostDetails.id);
+    return postModel.getItinerarySoftDetails(savedPostDetails.id);
   },
 
   async saveDestinations(postID: number, destinationsID: number[]) {

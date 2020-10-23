@@ -1,6 +1,6 @@
 import {
   PostActivityReviewInput,
-  PostDetails,
+  TravelStoryPostSoftDetails,
   PostModelSaveCategoryInput,
   PostModelSaveDestinationInput,
   PostModelSaveDetailsInput,
@@ -14,6 +14,7 @@ import {
   PostRestaurantReviewInput,
   PostLodgingReviewInput,
   PostTransportationReviewInput,
+  ItineraryPostSoftDetails,
 } from "./typeDefs";
 import Post from "../../database/entities/Post";
 import PostFile from "../../database/entities/PostFile";
@@ -236,11 +237,15 @@ const postModel = {
     }).save();
   },
 
-  async getDetails(postID: number): Promise<PostDetails> {
-    const gotDetails: PostDetails = <PostDetails>await Post.findOne(postID, {
-      relations: ["author"],
-    });
-    gotDetails.files = await this.getDetailsFiles(gotDetails.id);
+  async getTravelStorySoftDetails(
+    postID: number
+  ): Promise<TravelStoryPostSoftDetails> {
+    const gotDetails: TravelStoryPostSoftDetails = <TravelStoryPostSoftDetails>(
+      await Post.findOne(postID, {
+        relations: ["author"],
+      })
+    );
+    gotDetails.files = await this.getSoftDetailsFiles(gotDetails.id);
     gotDetails.destinations = await this.getDestinations(gotDetails.id);
     gotDetails.categories = await this.getCategories(gotDetails.id);
     gotDetails.travelEvents = await this.getTravelEvents(gotDetails.id);
@@ -249,7 +254,24 @@ const postModel = {
     return gotDetails!;
   },
 
-  async getDetailsFiles(postID: number): Promise<PostFile[]> {
+  async getItinerarySoftDetails(
+    postID: number
+  ): Promise<ItineraryPostSoftDetails> {
+    const gotDetails: ItineraryPostSoftDetails = <ItineraryPostSoftDetails>(
+      await Post.findOne(postID, {
+        relations: ["author"],
+      })
+    );
+    gotDetails.files = await this.getSoftDetailsFiles(gotDetails.id);
+    gotDetails.destinations = await this.getDestinations(gotDetails.id);
+    gotDetails.categories = await this.getCategories(gotDetails.id);
+    gotDetails.travelEvents = await this.getTravelEvents(gotDetails.id);
+    // @ts-ignore
+    delete gotDetails.author.password;
+    return gotDetails!;
+  },
+
+  async getSoftDetailsFiles(postID: number): Promise<PostFile[]> {
     return await getRepository(PostFile)
       .createQueryBuilder("post_file")
       .select("post_file.id", "id")

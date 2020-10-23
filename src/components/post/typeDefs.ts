@@ -13,10 +13,12 @@ interface PostBaseInput {
   files: Express.Multer.File[];
 }
 
-export interface PostDetails extends Post {
+export interface TravelStoryPostSoftDetails extends Post {
   destinations: Destination[];
   travelEvents: TravelEvent[];
 }
+
+export interface ItineraryPostSoftDetails extends TravelStoryPostSoftDetails {}
 
 export interface PostServiceCreateTravelStoryInput extends PostBaseInput {}
 
