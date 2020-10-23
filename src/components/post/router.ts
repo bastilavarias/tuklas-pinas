@@ -13,7 +13,7 @@ postRouter.post(
 
 postRouter.post(
   "/create-itinerary",
-  // multer.array("files"),
+  multer.array("files"),
   passport.authenticate("jwt", { session: false }),
   postController.createItinerary
 );

@@ -2,14 +2,8 @@ import { ICloudinaryFileMeta } from "../cloudinary/typeDefs";
 import Post from "../../database/entities/Post";
 import Destination from "../../database/entities/Destination";
 import TravelEvent from "../../database/entities/TravelEvent";
-import PostReviewRestaurant from "../../database/entities/PostReviewRestaurant";
-import PostReviewLodging from "../../database/entities/PostReviewLodging";
-import PostReviewTransportation from "../../database/entities/PostReviewTransportation";
-import PostReviewActivity from "../../database/entities/PostReviewActivity";
-import PostReviewInternetAccess from "../../database/entities/PostReviewInternetAccess";
-import PostReviewFinance from "../../database/entities/PostReviewFinance";
-import PostReviewTip from "../../database/entities/PostReviewTip";
-import PostReviewAvoid from "../../database/entities/PostReviewAvoid";
+import PostItinerary from "../../database/entities/PostItinerary";
+import PostReview from "../../database/entities/PostReview";
 
 interface IBasePostInput {
   title: string;
@@ -27,16 +21,8 @@ export interface ITravelStoryPostSoftDetails extends Post {
 }
 
 export interface IItineraryPostSoftDetails extends ITravelStoryPostSoftDetails {
-  review: {
-    restaurant: PostReviewRestaurant[];
-    lodgings: PostReviewLodging[];
-    transportation: PostReviewTransportation[];
-    activities: PostReviewActivity[];
-    internetAccess: PostReviewInternetAccess;
-    finance: PostReviewFinance;
-    tips: PostReviewTip[];
-    avoids: PostReviewAvoid[];
-  };
+  itinerary: PostItinerary;
+  review: PostReview;
 }
 
 export interface IPostServiceCreateTravelStoryInput extends IBasePostInput {}
@@ -162,3 +148,9 @@ export interface IPostInternetAccessReviewInput {
 
 export interface IPostFinanceReviewInput
   extends IPostInternetAccessReviewInput {}
+
+export interface IPostModelSaveReviewInput {
+  postID: number;
+  postInternetAccessReviewID: number;
+  postFinanceReviewID: number;
+}

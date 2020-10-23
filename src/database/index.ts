@@ -1,7 +1,7 @@
 import { getConnectionOptions, createConnection } from "typeorm";
 
 export default {
-  init: async () => {
+  async init() {
     const options = await getConnectionOptions(
       process.env.NODE_ENV || "development"
     );

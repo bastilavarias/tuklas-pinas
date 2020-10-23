@@ -1,11 +1,4 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from "typeorm";
-import Post from "./Post";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export default class PostReviewFinance extends BaseEntity {
@@ -17,7 +10,4 @@ export default class PostReviewFinance extends BaseEntity {
 
   @Column({ nullable: true })
   rating: number;
-
-  @ManyToOne(() => Post)
-  post: Post;
 }

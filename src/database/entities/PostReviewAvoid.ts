@@ -5,7 +5,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import Post from "./Post";
+import PostReview from "./PostReview";
 
 @Entity()
 export default class PostReviewAvoid extends BaseEntity {
@@ -15,6 +15,6 @@ export default class PostReviewAvoid extends BaseEntity {
   @Column("text", { nullable: false })
   text: string;
 
-  @ManyToOne(() => Post)
-  post: Post;
+  @ManyToOne(() => PostReview)
+  review: PostReview;
 }

@@ -5,8 +5,8 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import Post from "./Post";
 import Destination from "./Destination";
+import PostReview from "./PostReview";
 
 @Entity()
 export default class PostReviewActivity extends BaseEntity {
@@ -22,9 +22,9 @@ export default class PostReviewActivity extends BaseEntity {
   @Column({ nullable: false })
   rating: number;
 
-  @ManyToOne(() => Post)
-  post: Post;
-
   @ManyToOne(() => Destination)
   destination: Destination;
+
+  @ManyToOne(() => PostReview)
+  review: PostReview;
 }

@@ -15,6 +15,7 @@ import {
   IPostLodgingReviewInput,
   IPostTransportationReviewInput,
   IItineraryPostSoftDetails,
+  IPostModelSaveReviewInput,
 } from "./typeDefs";
 import Post from "../../database/entities/Post";
 import PostFile from "../../database/entities/PostFile";
@@ -37,6 +38,7 @@ import PostReviewInternetAccess from "../../database/entities/PostReviewInternet
 import PostReviewFinance from "../../database/entities/PostReviewFinance";
 import PostReviewTip from "../../database/entities/PostReviewTip";
 import PostReviewAvoid from "../../database/entities/PostReviewAvoid";
+import PostReview from "../../database/entities/PostReview";
 
 const postModel = {
   async saveDetails(input: IPostModelSaveDetailsInput): Promise<Post> {
@@ -142,13 +144,22 @@ const postModel = {
     }).save();
   },
 
+  async saveReview(input: IPostModelSaveReviewInput): Promise<PostReview> {
+    const { postID, postInternetAccessReviewID, postFinanceReviewID } = input;
+    return await PostReview.create({
+      post: { id: postID },
+      internetAccess: { id: postInternetAccessReviewID },
+      finance: { id: postFinanceReviewID },
+    }).save();
+  },
+
   async saveRestaurantReview(
-    postID: number,
+    postReviewID: number,
     input: IPostRestaurantReviewInput
   ): Promise<PostReviewRestaurant> {
     const { name, text, rating } = input;
     return await PostReviewRestaurant.create({
-      post: { id: postID },
+      review: { id: postReviewID },
       name,
       text,
       rating,
@@ -156,12 +167,12 @@ const postModel = {
   },
 
   async saveLodgingReview(
-    postID: number,
+    postReviewID: number,
     input: IPostLodgingReviewInput
   ): Promise<PostReviewLodging> {
     const { name, text, rating } = input;
     return await PostReviewLodging.create({
-      post: { id: postID },
+      review: { id: postReviewID },
       name,
       text,
       rating,
@@ -169,12 +180,12 @@ const postModel = {
   },
 
   async saveTransportationReview(
-    postID: number,
+    postReviewID: number,
     input: IPostTransportationReviewInput
   ): Promise<PostReviewTransportation> {
     const { destinationID, type, text, rating } = input;
     return await PostReviewTransportation.create({
-      post: { id: postID },
+      review: { id: postReviewID },
       destination: { id: destinationID },
       type,
       text,
@@ -183,12 +194,12 @@ const postModel = {
   },
 
   async saveActivityReview(
-    postID: number,
+    postReviewID: number,
     input: IPostActivityReviewInput
   ): Promise<PostReviewActivity> {
     const { destinationID, name, text, rating } = input;
     return await PostReviewActivity.create({
-      post: { id: postID },
+      review: { id: postReviewID },
       destination: { id: destinationID },
       name,
       text,
@@ -197,42 +208,41 @@ const postModel = {
   },
 
   async saveInternetAccessReview(
-    postID: number,
     input: IPostInternetAccessReviewInput
   ): Promise<PostReviewInternetAccess> {
     const { text, rating } = input;
     return await PostReviewInternetAccess.create({
-      post: { id: postID },
       text,
       rating,
     }).save();
   },
 
   async saveFinanceReview(
-    postID: number,
     input: IPostFinanceReviewInput
   ): Promise<PostReviewFinance> {
     const { text, rating } = input;
     return await PostReviewFinance.create({
-      post: { id: postID },
       text,
       rating,
     }).save();
   },
 
-  async saveTipReview(postID: number, text: string): Promise<PostReviewTip> {
+  async saveTipReview(
+    postReviewID: number,
+    text: string
+  ): Promise<PostReviewTip> {
     return await PostReviewTip.create({
-      post: { id: postID },
+      review: { id: postReviewID },
       text,
     }).save();
   },
 
   async saveAvoidReview(
-    postID: number,
+    postReviewID: number,
     text: string
   ): Promise<PostReviewAvoid> {
     return await PostReviewAvoid.create({
-      post: { id: postID },
+      review: { id: postReviewID },
       text,
     }).save();
   },
@@ -266,6 +276,8 @@ const postModel = {
     gotDetails.destinations = await this.getDestinations(gotDetails.id);
     gotDetails.categories = await this.getCategories(gotDetails.id);
     gotDetails.travelEvents = await this.getTravelEvents(gotDetails.id);
+    gotDetails.itinerary = await this.getItinerary(gotDetails.id);
+    gotDetails.review = await this.getReview(gotDetails.id);
     // @ts-ignore
     delete gotDetails.author.password;
     return gotDetails!;
@@ -316,6 +328,60 @@ const postModel = {
           await genericModel.getTravelEvent(postTravelEvent.travelEventID)
       )
     );
+  },
+
+  async getItinerary(postID: number): Promise<PostItinerary> {
+    const foundItinerary = await PostItinerary.findOne({
+      where: { post: { id: postID } },
+      relations: ["days"],
+    });
+    foundItinerary!.days = await Promise.all(
+      foundItinerary!.days.map(async (day) => {
+        const gotDay = await this.getItineraryDay(day.id);
+        gotDay.timestamps = await Promise.all(
+          gotDay.timestamps.map(
+            async (timestamp) =>
+              await this.getItineraryDayTimestamp(timestamp.id)
+          )
+        );
+        return gotDay;
+      })
+    );
+    return foundItinerary!;
+  },
+
+  async getItineraryDay(postItineraryDayID: number): Promise<PostItineraryDay> {
+    const gotDay = await PostItineraryDay.findOne(postItineraryDayID, {
+      relations: ["timestamps"],
+    });
+    return gotDay!;
+  },
+
+  async getItineraryDayTimestamp(
+    postItineraryDayTimestampID: number
+  ): Promise<PostItineraryDayTimestamp> {
+    const gotTimestamp = await PostItineraryDayTimestamp.findOne(
+      postItineraryDayTimestampID,
+      { relations: ["interests"] }
+    );
+    return gotTimestamp!;
+  },
+
+  async getReview(postID: number): Promise<PostReview> {
+    const gotReview = await PostReview.findOne({
+      where: { post: { id: postID } },
+      relations: [
+        "restaurants",
+        "lodgings",
+        "transportation",
+        "activities",
+        "internetAccess",
+        "finance",
+        "tips",
+        "avoids",
+      ],
+    });
+    return gotReview!;
   },
 };
 
