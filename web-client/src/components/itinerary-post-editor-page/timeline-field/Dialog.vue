@@ -15,7 +15,7 @@
           <custom-tooltip-button
             icon="mdi-plus"
             text="Add New Timestamp"
-            :action="() => (this.isTimestampDialogOpen = true)"
+            :action="() => (this.isTimestampFormDialogOpen = true)"
           ></custom-tooltip-button>
         </div>
         <v-data-table
@@ -62,78 +62,21 @@
         <v-btn color="secondary">Create</v-btn>
       </v-card-actions>
     </v-card>
-    <v-dialog v-model="isTimestampDialogOpen" width="500">
-      <v-card>
-        <v-card-title>Timestamp #1</v-card-title>
-        <v-card-subtitle>Lorem ipsum dolor sit amet.</v-card-subtitle>
-        <v-card-text>
-          <v-row dense>
-            <v-col cols="12">
-              <v-text-field outlined single-line label="Time *"></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                outlined
-                single-line
-                label="Destination *"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="8">
-              <generic-transportation-combobox
-                :transport.sync="form.transportation"
-                label="Transportation"
-                outlined
-                single-line
-              ></generic-transportation-combobox>
-            </v-col>
-            <v-col cols="12" md="4">
-              <v-text-field outlined single-line label="Fare"></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-autocomplete
-                outlined
-                single-line
-                label="Places of Interests"
-              ></v-autocomplete>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                outlined
-                single-line
-                label="Expenses *"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-textarea
-                outlined
-                single-line
-                label="Other Details"
-              ></v-textarea>
-            </v-col>
-          </v-row>
-        </v-card-text>
-        <v-card-actions>
-          <div class="flex-grow-1"></div>
-          <v-btn color="secondary">Add</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <itinerary-post-editor-page-timeline-timestamp-form-dialog
+      :is-open.sync="isTimestampFormDialogOpen"
+    ></itinerary-post-editor-page-timeline-timestamp-form-dialog>
   </v-dialog>
 </template>
 
 <script>
 import CustomFileDropzone from "@/components/custom/FileDropzone";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
-import GenericTransportationCombobox from "@/components/generic/combobox/Transportation";
-
-const defaultTimestampForm = {
-  transportation: "",
-};
+import ItineraryPostEditorPageTimelineTimestampFormDialog from "@/components/itinerary-post-editor-page/timeline-field/TimestampFormDialog";
 
 export default {
   name: "itinerary-post-editor-page-timeline-dialog",
   components: {
-    GenericTransportationCombobox,
+    ItineraryPostEditorPageTimelineTimestampFormDialog,
     CustomTooltipButton,
     CustomFileDropzone,
   },
@@ -213,9 +156,7 @@ export default {
         },
       ],
       singleExpand: true,
-      isTimestampDialogOpen: false,
-      form: Object.assign({}, defaultTimestampForm),
-      defaultTimestampForm,
+      isTimestampFormDialogOpen: false,
     };
   },
   computed: {
@@ -224,11 +165,11 @@ export default {
     },
   },
   watch: {
-    isOpen(newValue) {
-      this.isOpenLocal = newValue;
+    isOpen(val) {
+      this.isOpenLocal = val;
     },
-    isOpenLocal(newValue) {
-      this.$emit("update:isOpen", newValue);
+    isOpenLocal(val) {
+      this.$emit("update:isOpen", val);
     },
   },
 };

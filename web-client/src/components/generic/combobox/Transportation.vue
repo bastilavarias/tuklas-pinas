@@ -10,6 +10,7 @@
     :single-line="singleLine"
     item-text="name"
     item-value="name"
+    :clearable="clearable"
   >
     <template v-slot:no-data>
       <v-list-item>
@@ -41,6 +42,10 @@ export default {
       required: false,
     },
     singleLine: {
+      type: Boolean,
+      required: false,
+    },
+    clearable: {
       type: Boolean,
       required: false,
     },
