@@ -1,5 +1,5 @@
 import cloudinary from "cloudinary";
-import { CloudinaryFileMeta } from "./typeDefs";
+import { ICloudinaryFileMeta } from "./typeDefs";
 
 cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -11,8 +11,8 @@ const cloudinaryService = {
   async upload(
     file: Express.Multer.File,
     folder: string
-  ): Promise<CloudinaryFileMeta> {
-    let meta: CloudinaryFileMeta;
+  ): Promise<ICloudinaryFileMeta> {
+    let meta: ICloudinaryFileMeta;
     try {
       const folderPath = `${process.env.CLOUDINARY_ROOT_FOLDER_NAME}/${folder}`;
       const uploadOptions = {

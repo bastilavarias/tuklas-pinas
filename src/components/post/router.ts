@@ -11,4 +11,11 @@ postRouter.post(
   postController.createTravelStory
 );
 
+postRouter.post(
+  "/create-itinerary",
+  multer.array("files"),
+  passport.authenticate("jwt", { session: false }),
+  postController.createItinerary
+);
+
 export default postRouter;
