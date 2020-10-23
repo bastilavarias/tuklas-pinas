@@ -12,17 +12,11 @@
       <v-card-text>
         <div class="d-flex justify-space-between align-center">
           <span class="subtitle-1">Timestamps</span>
-          <div>
-            <custom-tooltip-button
-              icon="mdi-sort"
-              text="Sort"
-            ></custom-tooltip-button>
-            <custom-tooltip-button
-              icon="mdi-plus"
-              text="Add New Timestamp"
-              :action="() => (this.isTimestampDialogOpen = true)"
-            ></custom-tooltip-button>
-          </div>
+          <custom-tooltip-button
+            icon="mdi-plus"
+            text="Add New Timestamp"
+            :action="() => (this.isTimestampDialogOpen = true)"
+          ></custom-tooltip-button>
         </div>
         <v-data-table
           :headers="itineraryTimelineTimestampTableHeaders"
@@ -34,8 +28,8 @@
         >
           <template v-slot:top> </template>
           <template v-slot:item.transportation="{ item }">
-            {{ item.transportation.type }} -<span title="Fare">
-              &#8369; {{ item.transportation.fare }}</span
+            {{ item.transportation }} -<span title="Fare">
+              &#8369; {{ item.fare }}</span
             >
           </template>
           <template v-slot:item.expenses="{ item }">
@@ -85,11 +79,12 @@
               ></v-text-field>
             </v-col>
             <v-col cols="12" md="8">
-              <v-text-field
+              <generic-transportation-combobox
+                :transport.sync="form.transportation"
+                label="Transportation"
                 outlined
                 single-line
-                label="Transportation"
-              ></v-text-field>
+              ></generic-transportation-combobox>
             </v-col>
             <v-col cols="12" md="4">
               <v-text-field outlined single-line label="Fare"></v-text-field>
@@ -129,24 +124,28 @@
 <script>
 import CustomFileDropzone from "@/components/custom/FileDropzone";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
+import GenericTransportationCombobox from "@/components/generic/combobox/Transportation";
+
+const defaultTimestampForm = {
+  transportation: "",
+};
+
 export default {
   name: "itinerary-post-editor-page-timeline-dialog",
-
   components: {
+    GenericTransportationCombobox,
     CustomTooltipButton,
     CustomFileDropzone,
   },
-
   props: {
     isOpen: {
       type: Boolean,
       required: true,
     },
   },
-
   data() {
     return {
-      isOpenLocal: false,
+      isOpenLocal: this.isOpen,
       itineraryTimelineTimestampTableHeaders: [
         {
           text: "Time",
@@ -185,7 +184,7 @@ export default {
         {
           time: "10:00AM",
           destination: "Destination 1",
-          transportation: "Train",
+          transportation: "Metro",
           fare: 500,
           interests: ["Interest 1", "Interest 2"],
           expenses: 500,
@@ -195,7 +194,7 @@ export default {
         {
           time: "1:00PM",
           destination: "Destination 2",
-          transportation: "Train",
+          transportation: "Air",
           fare: 500,
           interests: ["Interest 1", "Interest 2"],
           expenses: 500,
@@ -205,7 +204,7 @@ export default {
         {
           time: "5:00PM",
           destination: "Destination 3",
-          transportation: "Train",
+          transportation: "Bus/Shuttle",
           fare: 500,
           interests: ["Interest 1", "Interest 2"],
           expenses: 500,
@@ -215,21 +214,22 @@ export default {
       ],
       singleExpand: true,
       isTimestampDialogOpen: false,
+      form: Object.assign({}, defaultTimestampForm),
+      defaultTimestampForm,
     };
   },
-
+  computed: {
+    genericDestinations() {
+      return this.$store.state.generic.destinations;
+    },
+  },
   watch: {
     isOpen(newValue) {
       this.isOpenLocal = newValue;
     },
-
     isOpenLocal(newValue) {
       this.$emit("update:isOpen", newValue);
     },
-  },
-
-  created() {
-    this.isOpenLocal = this.isOpen;
   },
 };
 </script>

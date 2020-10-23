@@ -132,6 +132,7 @@ import GenericStickyFooter from "@/components/generic/footer/Sticky";
 import GenericBasicFooter from "@/components/generic/footer/Basic";
 import {
   FETCH_GENERIC_DESTINATIONS,
+  FETCH_GENERIC_TRANSPORTATION,
   FETCH_GENERIC_TRAVEL_EVENTS,
 } from "@/store/types/generic";
 import GenericCategoryCombobox from "@/components/generic/combobox/Category";
@@ -202,6 +203,7 @@ export default {
   async created() {
     await this.fetchGenericDestinations();
     await this.fetchGenericTravelEvents();
+    await this.$store.dispatch(FETCH_GENERIC_TRANSPORTATION);
   },
 };
 </script>
