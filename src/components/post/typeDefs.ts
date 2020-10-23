@@ -1,9 +1,17 @@
-import { CloudinaryFileMeta } from "../cloudinary/typeDefs";
+import { ICloudinaryFileMeta } from "../cloudinary/typeDefs";
 import Post from "../../database/entities/Post";
 import Destination from "../../database/entities/Destination";
 import TravelEvent from "../../database/entities/TravelEvent";
+import PostReviewRestaurant from "../../database/entities/PostReviewRestaurant";
+import PostReviewLodging from "../../database/entities/PostReviewLodging";
+import PostReviewTransportation from "../../database/entities/PostReviewTransportation";
+import PostReviewActivity from "../../database/entities/PostReviewActivity";
+import PostReviewInternetAccess from "../../database/entities/PostReviewInternetAccess";
+import PostReviewFinance from "../../database/entities/PostReviewFinance";
+import PostReviewTip from "../../database/entities/PostReviewTip";
+import PostReviewAvoid from "../../database/entities/PostReviewAvoid";
 
-interface PostBaseInput {
+interface IBasePostInput {
   title: string;
   text: string;
   isDraft: boolean;
@@ -13,32 +21,43 @@ interface PostBaseInput {
   files: Express.Multer.File[];
 }
 
-export interface TravelStoryPostSoftDetails extends Post {
+export interface ITravelStoryPostSoftDetails extends Post {
   destinations: Destination[];
   travelEvents: TravelEvent[];
 }
 
-export interface ItineraryPostSoftDetails extends TravelStoryPostSoftDetails {}
-
-export interface PostServiceCreateTravelStoryInput extends PostBaseInput {}
-
-export interface PostServiceCreateItineraryInput extends PostBaseInput {
-  itinerary: PostItineraryInput;
-  review: PostServiceCreateItineraryReview;
+export interface IItineraryPostSoftDetails extends ITravelStoryPostSoftDetails {
+  review: {
+    restaurant: PostReviewRestaurant[];
+    lodgings: PostReviewLodging[];
+    transportation: PostReviewTransportation[];
+    activities: PostReviewActivity[];
+    internetAccess: PostReviewInternetAccess;
+    finance: PostReviewFinance;
+    tips: PostReviewTip[];
+    avoids: PostReviewAvoid[];
+  };
 }
 
-export interface PostServiceCreateItineraryReview {
-  restaurants: PostRestaurantReviewInput[];
-  lodgings: PostLodgingReviewInput[];
-  transportation: PostTransportationReviewInput[];
-  activities: PostActivityReviewInput[];
-  internetAccess: PostInternetAccessReviewInput;
-  finance: PostFinanceReviewInput;
+export interface IPostServiceCreateTravelStoryInput extends IBasePostInput {}
+
+export interface IPostServiceCreateItineraryInput extends IBasePostInput {
+  itinerary: IPostItineraryInput;
+  review: IPostServiceCreateItineraryReview;
+}
+
+export interface IPostServiceCreateItineraryReview {
+  restaurants: IPostRestaurantReviewInput[];
+  lodgings: IPostLodgingReviewInput[];
+  transportation: IPostTransportationReviewInput[];
+  activities: IPostActivityReviewInput[];
+  internetAccess: IPostInternetAccessReviewInput;
+  finance: IPostFinanceReviewInput;
   tips: string[];
   avoids: string[];
 }
 
-export interface PostModelSaveDetailsInput {
+export interface IPostModelSaveDetailsInput {
   title: string;
   text: string;
   type: string;
@@ -46,27 +65,27 @@ export interface PostModelSaveDetailsInput {
   accountID: number;
 }
 
-export interface PostModelSaveFileInput extends CloudinaryFileMeta {
+export interface IPostModelSaveFileInput extends ICloudinaryFileMeta {
   postID: number;
   data: Buffer;
 }
 
-export interface PostModelSaveDestinationInput {
+export interface IPostModelSaveDestinationInput {
   postID: number;
   destinationID: number;
 }
 
-export interface PostModelSaveCategoryInput {
+export interface IPostModelSaveCategoryInput {
   postID: number;
   name: string;
 }
 
-export interface PostModelSaveTravelEventInput {
+export interface IPostModelSaveTravelEventInput {
   postID: number;
   travelEventID: number;
 }
 
-interface PostItineraryTimestamp {
+interface IPostItineraryTimestamp {
   time: Date;
   fare: number;
   expenses: number;
@@ -76,27 +95,27 @@ interface PostItineraryTimestamp {
   interests: string[];
 }
 
-export interface PostItineraryDay {
+export interface IPostItineraryDay {
   date: Date;
   day: number;
   destinationsCount: number;
   expenses: number;
-  timestamps: PostItineraryTimestamp[];
+  timestamps: IPostItineraryTimestamp[];
 }
 
-export interface PostItineraryInput {
+export interface IPostItineraryInput {
   totalDestinations: number;
   totalExpenses: number;
-  days: PostItineraryDay[];
+  days: IPostItineraryDay[];
 }
 
-export interface PostModelSaveItineraryInput {
+export interface IPostModelSaveItineraryInput {
   postID: number;
   totalDestinations: number;
   totalExpenses: number;
 }
 
-export interface PostModelSaveItineraryDayInput {
+export interface IPostModelSaveItineraryDayInput {
   postItineraryID: number;
   date: Date;
   day: number;
@@ -104,7 +123,7 @@ export interface PostModelSaveItineraryDayInput {
   expenses: number;
 }
 
-export interface PostModelSaveItineraryDayTimestampInput {
+export interface IPostModelSaveItineraryDayTimestampInput {
   postItineraryDayID: number;
   time: Date;
   fare: number;
@@ -114,31 +133,32 @@ export interface PostModelSaveItineraryDayTimestampInput {
   transportation: string;
 }
 
-export interface PostRestaurantReviewInput {
+export interface IPostRestaurantReviewInput {
   name: string;
   text: string;
   rating: number;
 }
 
-export interface PostLodgingReviewInput extends PostRestaurantReviewInput {}
+export interface IPostLodgingReviewInput extends IPostRestaurantReviewInput {}
 
-export interface PostTransportationReviewInput {
+export interface IPostTransportationReviewInput {
   destinationID: number;
   type: string;
   text: string;
   rating: number;
 }
 
-export interface PostActivityReviewInput {
+export interface IPostActivityReviewInput {
   destinationID: number;
   name: string;
   text: string;
   rating: number;
 }
 
-export interface PostInternetAccessReviewInput {
+export interface IPostInternetAccessReviewInput {
   text: string;
   rating: number;
 }
 
-export interface PostFinanceReviewInput extends PostInternetAccessReviewInput {}
+export interface IPostFinanceReviewInput
+  extends IPostInternetAccessReviewInput {}

@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import postService from "./service";
 import {
-  PostServiceCreateItineraryInput,
-  PostServiceCreateTravelStoryInput,
+  IPostServiceCreateItineraryInput,
+  IPostServiceCreateTravelStoryInput,
 } from "./typeDefs";
 
 const postController = {
@@ -10,7 +10,7 @@ const postController = {
     try {
       // @ts-ignore
       const accountID = request.user.id;
-      const input: PostServiceCreateTravelStoryInput = request.body;
+      const input: IPostServiceCreateTravelStoryInput = request.body;
       // @ts-ignore
       input.files = request.files;
       const result = await postService.createTravelStory(accountID, input);
@@ -25,7 +25,7 @@ const postController = {
     try {
       // @ts-ignore
       const accountID = request.user.id;
-      const input: PostServiceCreateItineraryInput = request.body;
+      const input: IPostServiceCreateItineraryInput = request.body;
       // @ts-ignore
       // input.files = request.files;
       console.log(input);

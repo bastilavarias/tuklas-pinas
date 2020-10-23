@@ -1,20 +1,20 @@
 import {
-  PostActivityReviewInput,
-  TravelStoryPostSoftDetails,
-  PostModelSaveCategoryInput,
-  PostModelSaveDestinationInput,
-  PostModelSaveDetailsInput,
-  PostModelSaveFileInput,
-  PostFinanceReviewInput,
-  PostInternetAccessReviewInput,
-  PostModelSaveItineraryDayInput,
-  PostModelSaveItineraryDayTimestampInput,
-  PostModelSaveItineraryInput,
-  PostModelSaveTravelEventInput,
-  PostRestaurantReviewInput,
-  PostLodgingReviewInput,
-  PostTransportationReviewInput,
-  ItineraryPostSoftDetails,
+  IPostActivityReviewInput,
+  ITravelStoryPostSoftDetails,
+  IPostModelSaveCategoryInput,
+  IPostModelSaveDestinationInput,
+  IPostModelSaveDetailsInput,
+  IPostModelSaveFileInput,
+  IPostFinanceReviewInput,
+  IPostInternetAccessReviewInput,
+  IPostModelSaveItineraryDayInput,
+  IPostModelSaveItineraryDayTimestampInput,
+  IPostModelSaveItineraryInput,
+  IPostModelSaveTravelEventInput,
+  IPostRestaurantReviewInput,
+  IPostLodgingReviewInput,
+  IPostTransportationReviewInput,
+  IItineraryPostSoftDetails,
 } from "./typeDefs";
 import Post from "../../database/entities/Post";
 import PostFile from "../../database/entities/PostFile";
@@ -39,7 +39,7 @@ import PostReviewTip from "../../database/entities/PostReviewTip";
 import PostReviewAvoid from "../../database/entities/PostReviewAvoid";
 
 const postModel = {
-  async saveDetails(input: PostModelSaveDetailsInput): Promise<Post> {
+  async saveDetails(input: IPostModelSaveDetailsInput): Promise<Post> {
     const { title, text, isDraft, accountID, type } = input;
     return await Post.create({
       title,
@@ -50,7 +50,7 @@ const postModel = {
     }).save();
   },
 
-  async saveFile(input: PostModelSaveFileInput): Promise<PostFile> {
+  async saveFile(input: IPostModelSaveFileInput): Promise<PostFile> {
     const { url, publicID, format, data, postID } = input;
     return await PostFile.create({
       url,
@@ -61,7 +61,7 @@ const postModel = {
     }).save();
   },
 
-  async saveDestination(input: PostModelSaveDestinationInput) {
+  async saveDestination(input: IPostModelSaveDestinationInput) {
     const { postID, destinationID } = input;
     return await PostDestination.create({
       post: { id: postID },
@@ -69,7 +69,7 @@ const postModel = {
     }).save();
   },
 
-  async saveCategory(input: PostModelSaveCategoryInput) {
+  async saveCategory(input: IPostModelSaveCategoryInput) {
     const { postID, name } = input;
     return await PostCategory.create({
       post: { id: postID },
@@ -77,7 +77,7 @@ const postModel = {
     }).save();
   },
 
-  async saveTravelEvent(input: PostModelSaveTravelEventInput) {
+  async saveTravelEvent(input: IPostModelSaveTravelEventInput) {
     const { postID, travelEventID } = input;
     return await PostTravelEvent.create({
       post: { id: postID },
@@ -86,7 +86,7 @@ const postModel = {
   },
 
   async saveItinerary(
-    input: PostModelSaveItineraryInput
+    input: IPostModelSaveItineraryInput
   ): Promise<PostItinerary> {
     const { postID, totalDestinations, totalExpenses } = input;
     return await PostItinerary.create({
@@ -97,7 +97,7 @@ const postModel = {
   },
 
   async saveItineraryDay(
-    input: PostModelSaveItineraryDayInput
+    input: IPostModelSaveItineraryDayInput
   ): Promise<PostItineraryDay> {
     const { postItineraryID, date, destinationsCount, expenses, day } = input;
     return await PostItineraryDay.create({
@@ -110,7 +110,7 @@ const postModel = {
   },
 
   async saveItineraryDayTimestamp(
-    input: PostModelSaveItineraryDayTimestampInput
+    input: IPostModelSaveItineraryDayTimestampInput
   ): Promise<PostItineraryDayTimestamp> {
     const {
       postItineraryDayID,
@@ -144,7 +144,7 @@ const postModel = {
 
   async saveRestaurantReview(
     postID: number,
-    input: PostRestaurantReviewInput
+    input: IPostRestaurantReviewInput
   ): Promise<PostReviewRestaurant> {
     const { name, text, rating } = input;
     return await PostReviewRestaurant.create({
@@ -157,7 +157,7 @@ const postModel = {
 
   async saveLodgingReview(
     postID: number,
-    input: PostLodgingReviewInput
+    input: IPostLodgingReviewInput
   ): Promise<PostReviewLodging> {
     const { name, text, rating } = input;
     return await PostReviewLodging.create({
@@ -170,7 +170,7 @@ const postModel = {
 
   async saveTransportationReview(
     postID: number,
-    input: PostTransportationReviewInput
+    input: IPostTransportationReviewInput
   ): Promise<PostReviewTransportation> {
     const { destinationID, type, text, rating } = input;
     return await PostReviewTransportation.create({
@@ -184,7 +184,7 @@ const postModel = {
 
   async saveActivityReview(
     postID: number,
-    input: PostActivityReviewInput
+    input: IPostActivityReviewInput
   ): Promise<PostReviewActivity> {
     const { destinationID, name, text, rating } = input;
     return await PostReviewActivity.create({
@@ -198,7 +198,7 @@ const postModel = {
 
   async saveInternetAccessReview(
     postID: number,
-    input: PostInternetAccessReviewInput
+    input: IPostInternetAccessReviewInput
   ): Promise<PostReviewInternetAccess> {
     const { text, rating } = input;
     return await PostReviewInternetAccess.create({
@@ -210,7 +210,7 @@ const postModel = {
 
   async saveFinanceReview(
     postID: number,
-    input: PostFinanceReviewInput
+    input: IPostFinanceReviewInput
   ): Promise<PostReviewFinance> {
     const { text, rating } = input;
     return await PostReviewFinance.create({
@@ -239,12 +239,12 @@ const postModel = {
 
   async getTravelStorySoftDetails(
     postID: number
-  ): Promise<TravelStoryPostSoftDetails> {
-    const gotDetails: TravelStoryPostSoftDetails = <TravelStoryPostSoftDetails>(
-      await Post.findOne(postID, {
-        relations: ["author"],
-      })
-    );
+  ): Promise<ITravelStoryPostSoftDetails> {
+    const gotDetails: ITravelStoryPostSoftDetails = <
+      ITravelStoryPostSoftDetails
+    >await Post.findOne(postID, {
+      relations: ["author"],
+    });
     gotDetails.files = await this.getSoftDetailsFiles(gotDetails.id);
     gotDetails.destinations = await this.getDestinations(gotDetails.id);
     gotDetails.categories = await this.getCategories(gotDetails.id);
@@ -256,8 +256,8 @@ const postModel = {
 
   async getItinerarySoftDetails(
     postID: number
-  ): Promise<ItineraryPostSoftDetails> {
-    const gotDetails: ItineraryPostSoftDetails = <ItineraryPostSoftDetails>(
+  ): Promise<IItineraryPostSoftDetails> {
+    const gotDetails: IItineraryPostSoftDetails = <IItineraryPostSoftDetails>(
       await Post.findOne(postID, {
         relations: ["author"],
       })

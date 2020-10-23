@@ -1,16 +1,16 @@
 import {
-  PostItineraryInput,
-  PostModelSaveCategoryInput,
-  PostModelSaveDestinationInput,
-  PostModelSaveDetailsInput,
-  PostModelSaveFileInput,
-  PostModelSaveItineraryDayInput,
-  PostModelSaveItineraryDayTimestampInput,
-  PostModelSaveItineraryInput,
-  PostModelSaveTravelEventInput,
-  PostServiceCreateTravelStoryInput,
-  PostServiceCreateItineraryInput,
-  PostServiceCreateItineraryReview,
+  IPostItineraryInput,
+  IPostModelSaveCategoryInput,
+  IPostModelSaveDestinationInput,
+  IPostModelSaveDetailsInput,
+  IPostModelSaveFileInput,
+  IPostModelSaveItineraryDayInput,
+  IPostModelSaveItineraryDayTimestampInput,
+  IPostModelSaveItineraryInput,
+  IPostModelSaveTravelEventInput,
+  IPostServiceCreateTravelStoryInput,
+  IPostServiceCreateItineraryInput,
+  IPostServiceCreateItineraryReview,
 } from "./typeDefs";
 import cloudinaryService from "../cloudinary/service";
 import postModel from "./model";
@@ -19,9 +19,9 @@ import Post from "../../database/entities/Post";
 const postService = {
   async createTravelStory(
     accountID: number,
-    input: PostServiceCreateTravelStoryInput
+    input: IPostServiceCreateTravelStoryInput
   ): Promise<Post> {
-    const savePostDetailsInput: PostModelSaveDetailsInput = {
+    const savePostDetailsInput: IPostModelSaveDetailsInput = {
       title: input.title,
       text: input.text,
       type: "travel-story",
@@ -38,9 +38,9 @@ const postService = {
 
   async createItinerary(
     accountID: number,
-    input: PostServiceCreateItineraryInput
+    input: IPostServiceCreateItineraryInput
   ): Promise<Post> {
-    const savePostDetailsInput: PostModelSaveDetailsInput = {
+    const savePostDetailsInput: IPostModelSaveDetailsInput = {
       title: input.title,
       text: input.text,
       type: "itinerary",
@@ -59,7 +59,7 @@ const postService = {
   async saveDestinations(postID: number, destinationsID: number[]) {
     await Promise.all(
       destinationsID.map(async (id) => {
-        const saveDestinationInput: PostModelSaveDestinationInput = {
+        const saveDestinationInput: IPostModelSaveDestinationInput = {
           postID,
           destinationID: id,
         };
@@ -71,7 +71,7 @@ const postService = {
   async saveCategories(postID: number, categories: string[]) {
     await Promise.all(
       categories.map(async (name) => {
-        const saveCategoryInput: PostModelSaveCategoryInput = {
+        const saveCategoryInput: IPostModelSaveCategoryInput = {
           postID,
           name,
         };
@@ -83,7 +83,7 @@ const postService = {
   async saveTravelEvents(postID: number, travelEventsID: number[]) {
     await Promise.all(
       travelEventsID.map(async (id) => {
-        const saveTravelEventInput: PostModelSaveTravelEventInput = {
+        const saveTravelEventInput: IPostModelSaveTravelEventInput = {
           postID,
           travelEventID: id,
         };
@@ -104,7 +104,7 @@ const postService = {
         const fileData = await files.find(
           (file) => file.filename === meta.fileName
         );
-        const savePostFileInput: PostModelSaveFileInput = {
+        const savePostFileInput: IPostModelSaveFileInput = {
           postID,
           publicID: meta.publicID,
           fileName: meta.fileName,
@@ -118,8 +118,8 @@ const postService = {
     );
   },
 
-  async saveItineraryDetails(postID: number, itinerary: PostItineraryInput) {
-    const savePostItineraryInput: PostModelSaveItineraryInput = {
+  async saveItineraryDetails(postID: number, itinerary: IPostItineraryInput) {
+    const savePostItineraryInput: IPostModelSaveItineraryInput = {
       postID,
       totalDestinations: itinerary.totalDestinations,
       totalExpenses: itinerary.totalExpenses,
@@ -129,7 +129,7 @@ const postService = {
     );
     await Promise.all(
       itinerary.days.map(async (item) => {
-        const savePostItineraryDayInput: PostModelSaveItineraryDayInput = {
+        const savePostItineraryDayInput: IPostModelSaveItineraryDayInput = {
           postItineraryID: savedPostItinerary.id,
           date: item.date,
           day: item.day,
@@ -141,7 +141,7 @@ const postService = {
         );
         await Promise.all(
           item.timestamps.map(async (timestamp) => {
-            const savePostItineraryDayTimestampInput: PostModelSaveItineraryDayTimestampInput = {
+            const savePostItineraryDayTimestampInput: IPostModelSaveItineraryDayTimestampInput = {
               postItineraryDayID: savedItineraryDay.id,
               time: timestamp.time,
               transportation: timestamp.transportation,
@@ -166,7 +166,7 @@ const postService = {
     );
   },
 
-  async saveReview(postID: number, review: PostServiceCreateItineraryReview) {
+  async saveReview(postID: number, review: IPostServiceCreateItineraryReview) {
     await Promise.all(
       review.restaurants.map(
         async (restaurant) =>

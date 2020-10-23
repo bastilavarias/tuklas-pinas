@@ -1,4 +1,4 @@
-export interface CloudinaryFileMeta {
+export interface ICloudinaryFileMeta {
   url: string;
   publicID: string;
   format: string;
