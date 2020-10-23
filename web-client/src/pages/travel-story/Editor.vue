@@ -37,7 +37,7 @@
                     <v-col cols="12">
                       <v-autocomplete
                         outlined
-                        label="Destination *"
+                        label="Destinations *"
                         single-line
                         :loading="isFetchGenericDestinationsStart"
                         :items="genericDestinations"

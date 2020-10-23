@@ -19,47 +19,65 @@
                     <v-col cols="12">
                       <v-text-field
                         outlined
-                        label="Itinerary name (E.g, 4 Nights in Amazing Paris) *"
+                        label="Title * (E.g, 4 Nights in Amazing Paris)"
                         single-line
+                        color="primary"
+                        v-model="form.title"
                       ></v-text-field>
-                    </v-col>
-                    <v-col cols="12">
-                      <v-autocomplete
-                        outlined
-                        label="Events *"
-                        single-line
-                      ></v-autocomplete>
-                    </v-col>
-                    <v-col cols="12">
-                      <v-autocomplete
-                        outlined
-                        label="Categories *"
-                        single-line
-                      ></v-autocomplete>
-                    </v-col>
-                    <v-col cols="12">
-                      <v-autocomplete
-                        outlined
-                        label="Tour Guides"
-                        single-line
-                      ></v-autocomplete>
                     </v-col>
                     <v-col cols="12">
                       <v-textarea
                         outlined
-                        label="Description"
+                        label="Text"
                         single-line
                         color="primary"
+                        v-model="form.text"
                       ></v-textarea>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-autocomplete
+                        outlined
+                        label="Destinations *"
+                        single-line
+                        :loading="isFetchGenericDestinationsStart"
+                        :items="genericDestinations"
+                        multiple
+                        item-text="name"
+                        item-value="id"
+                        v-model="form.destinationsID"
+                      ></v-autocomplete>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-autocomplete
+                        outlined
+                        label="Travel Events *"
+                        single-line
+                        :loading="isFetchGenericTravelEventsStart"
+                        :items="genericTravelEvents"
+                        multiple
+                        item-text="name"
+                        item-value="id"
+                        v-model="form.travelEventsID"
+                      ></v-autocomplete>
+                    </v-col>
+                    <v-col cols="12">
+                      <generic-category-combobox
+                        outlined
+                        label="Categories"
+                        single-line
+                        :categories.sync="form.categories"
+                      ></generic-category-combobox>
+                    </v-col>
+                    <v-col cols="12">
+                      <custom-file-dropzone
+                        label="Images or Videos *"
+                        :files.sync="form.files"
+                      ></custom-file-dropzone>
                     </v-col>
                     <v-col cols="12">
                       <itinerary-post-editor-page-timeline-field></itinerary-post-editor-page-timeline-field>
                     </v-col>
-                    <v-col cols="12">
-                      <custom-file-dropzone
-                        label="Images/Videos"
-                      ></custom-file-dropzone>
-                    </v-col>
+                    <v-col cols="12"> </v-col>
                   </v-row>
                 </v-card-text>
                 <v-card-text>
@@ -112,14 +130,78 @@ import ItineraryPostEditorPagePersonalReviewsField from "@/components/itinerary-
 import GenericPostingGuidelinesCard from "@/components/generic/card/PostingGuidelines";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
 import GenericBasicFooter from "@/components/generic/footer/Basic";
+import {
+  FETCH_GENERIC_DESTINATIONS,
+  FETCH_GENERIC_TRAVEL_EVENTS,
+} from "@/store/types/generic";
+import GenericCategoryCombobox from "@/components/generic/combobox/Category";
+
+const defaultItineraryForm = {
+  title: "",
+  text: "",
+  destinationsID: [],
+  travelEventsID: [],
+  categories: [],
+  files: [],
+  itinerary: {
+    totalDestinations: 0,
+    totalExpenses: 0,
+    days: [],
+  },
+  review: {
+    restaurants: [],
+    lodgings: [],
+    transportation: [],
+    activities: [],
+    internetAccess: {},
+    finance: {},
+    tips: [],
+    avoids: [],
+  },
+};
+
 export default {
   components: {
+    GenericCategoryCombobox,
     GenericBasicFooter,
     GenericStickyFooter,
     GenericPostingGuidelinesCard,
     ItineraryPostEditorPagePersonalReviewsField,
     CustomFileDropzone,
     ItineraryPostEditorPageTimelineField,
+  },
+  data() {
+    return {
+      isFetchGenericDestinationsStart: false,
+      isFetchGenericTravelEventsStart: false,
+      isCreateItineraryPostStart: false,
+      form: Object.assign({}, defaultItineraryForm),
+      defaultItineraryForm,
+    };
+  },
+  computed: {
+    genericDestinations() {
+      return this.$store.state.generic.destinations;
+    },
+    genericTravelEvents() {
+      return this.$store.state.generic.travelEvents;
+    },
+  },
+  methods: {
+    async fetchGenericDestinations() {
+      this.isFetchGenericDestinationsStart = true;
+      await this.$store.dispatch(FETCH_GENERIC_DESTINATIONS);
+      this.isFetchGenericDestinationsStart = false;
+    },
+    async fetchGenericTravelEvents() {
+      this.isFetchGenericTravelEventsStart = true;
+      await this.$store.dispatch(FETCH_GENERIC_TRAVEL_EVENTS);
+      this.isFetchGenericTravelEventsStart = false;
+    },
+  },
+  async created() {
+    await this.fetchGenericDestinations();
+    await this.fetchGenericTravelEvents();
   },
 };
 </script>
