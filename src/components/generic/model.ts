@@ -2,6 +2,7 @@ import Nationality from "../../database/entities/Nationality";
 import Sex from "../../database/entities/Sex";
 import Destination from "../../database/entities/Destination";
 import TravelEvent from "../../database/entities/TravelEvent";
+import Transportation from "../../database/entities/Transportation";
 
 const genericModel = {
   async fetchNationalities(): Promise<Nationality[]> {
@@ -28,6 +29,10 @@ const genericModel = {
   async getTravelEvent(travelEventID: number): Promise<TravelEvent> {
     const gotTravelEvent = await TravelEvent.findOne(travelEventID);
     return gotTravelEvent!;
+  },
+
+  async fetchTransportation(): Promise<Transportation[]> {
+    return await Transportation.find();
   },
 };
 

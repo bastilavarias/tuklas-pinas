@@ -7,6 +7,8 @@ import Destination from "../entities/Destination";
 import destinations from "./modules/destinations";
 import TravelEvent from "../entities/TravelEvent";
 import travelEvents from "./modules/travelEvents";
+import Transportation from "../entities/Transportation";
+import transportation from "./modules/transportation";
 
 const generateSeeds = async () => {
   const connection = await Database.init();
@@ -36,6 +38,13 @@ const generateSeeds = async () => {
     .insert()
     .into(TravelEvent)
     .values(travelEvents)
+    .onConflict(`("name") do nothing`)
+    .execute();
+  await connection
+    .createQueryBuilder()
+    .insert()
+    .into(Transportation)
+    .values(transportation)
     .onConflict(`("name") do nothing`)
     .execute();
 };
