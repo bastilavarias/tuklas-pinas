@@ -194,11 +194,16 @@ export default {
         this.clearForm();
       }
     },
+    timestamps(val) {
+      this.timestampsLocal = val;
+    },
+    timestampsLocal(val) {
+      this.$emit("update:timestamps", this.timestampsLocal);
+    },
   },
   methods: {
     addTimestamp() {
-      this.timestampsLocal.push(this.form);
-      this.$emit("update:timestamps", this.timestampsLocal);
+      this.timestampsLocal = this.timestampsLocal.push(this.form);
       this.isOpenLocal = false;
     },
     updateTimestamp() {
@@ -208,7 +213,6 @@ export default {
         }
         return timestamp;
       });
-      this.$emit("update:timestamps", this.timestampsLocal);
       this.isOpenLocal = false;
     },
     clearForm() {

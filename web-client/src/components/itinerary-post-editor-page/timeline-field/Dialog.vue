@@ -70,11 +70,12 @@
                 <custom-tooltip-button
                   icon="mdi-pencil-outline"
                   text="Update"
-                  :action="() => selectTimestamp(item)"
+                  :action="() => openUpdateTimestampDialog(item)"
                 ></custom-tooltip-button>
                 <custom-tooltip-button
                   icon="mdi-trash-can-outline"
                   text="Remove"
+                  :action="() => openRemoveTimestampDialog(item)"
                 ></custom-tooltip-button>
               </template>
             </v-data-table>
@@ -92,6 +93,13 @@
       :selected-timestamp="selectedTimestamp"
       :operation="timestampFormDialogOperation"
     ></itinerary-post-editor-page-timeline-timestamp-form-dialog>
+    <custom-alert-dialog
+      :is-open.sync="isCustomAlertDialogOpen"
+      type="warning"
+      title="Remove Timestamp"
+      text="Removing this timestamp is irreversible. Confirm anyway?"
+      :action="() => removeTimestampDialog()"
+    ></custom-alert-dialog>
   </v-dialog>
 </template>
 
@@ -101,10 +109,12 @@ import CustomTooltipButton from "@/components/custom/TooltipButton";
 import ItineraryPostEditorPageTimelineTimestampFormDialog from "@/components/itinerary-post-editor-page/timeline-field/TimestampFormDialog";
 import CustomDatePicker from "@/components/custom/DatePicker";
 import commonUtilities from "@/common/utilities";
+import CustomAlertDialog from "@/components/custom/AlertDialog";
 
 export default {
   name: "itinerary-post-editor-page-timeline-dialog",
   components: {
+    CustomAlertDialog,
     CustomDatePicker,
     ItineraryPostEditorPageTimelineTimestampFormDialog,
     CustomTooltipButton,
@@ -159,6 +169,7 @@ export default {
       timestamps: [],
       selectedTimestamp: {},
       timestampFormDialogOperation: "add",
+      isCustomAlertDialogOpen: false,
     };
   },
   mixins: [commonUtilities],
@@ -192,10 +203,21 @@ export default {
       this.selectedTimestamp = {};
       this.isTimestampFormDialogOpen = true;
     },
-    selectTimestamp(timestamp) {
+    openUpdateTimestampDialog(timestamp) {
       this.timestampFormDialogOperation = "update";
       this.selectedTimestamp = timestamp;
       this.isTimestampFormDialogOpen = true;
+    },
+    openRemoveTimestampDialog(timestamp) {
+      this.selectedTimestamp = timestamp;
+      this.isCustomAlertDialogOpen = true;
+    },
+    removeTimestampDialog() {
+      this.timestamps = this.timestamps.filter(
+        (timestamp) => timestamp.time !== this.selectedTimestamp.time
+      );
+      this.selectedTimestamp = {};
+      this.isCustomAlertDialogOpen = false;
     },
   },
 };
