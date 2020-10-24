@@ -45,6 +45,7 @@
             <custom-tooltip-button
               icon="mdi-trash-can-outline"
               text="Remove"
+              :action="() => openRemoveDayDialog(item)"
             ></custom-tooltip-button>
           </template>
         </v-data-table>
@@ -56,6 +57,13 @@
       :operation="dayFormDialogOperation"
       :selected-day="selectedDay"
     ></itinerary-post-editor-page-timeline-dialog>
+    <custom-alert-dialog
+      :is-open="isCustomAlertDialogOpen"
+      type="warning"
+      title="Remove Day"
+      text="Removing this day is irreversible. Confirm anyway?"
+      :action="() => closeRemoveDayDialog()"
+    ></custom-alert-dialog>
   </div>
 </template>
 
@@ -63,9 +71,14 @@
 import CustomTooltipButton from "@/components/custom/TooltipButton";
 import ItineraryPostEditorPageTimelineDialog from "@/components/itinerary-post-editor-page/timeline-field/Dialog";
 import commonUtilities from "@/common/utilities";
+import CustomAlertDialog from "@/components/custom/AlertDialog";
 export default {
   name: "itinerary-post-editor-page-timeline-field",
-  components: { ItineraryPostEditorPageTimelineDialog, CustomTooltipButton },
+  components: {
+    CustomAlertDialog,
+    ItineraryPostEditorPageTimelineDialog,
+    CustomTooltipButton,
+  },
   props: {
     itinerary: {
       type: Object,
@@ -101,6 +114,7 @@ export default {
       itineraryLocal: this.itinerary,
       selectedDay: {},
       dayFormDialogOperation: "create",
+      isCustomAlertDialogOpen: false,
     };
   },
   mixins: [commonUtilities],
@@ -132,6 +146,17 @@ export default {
       this.dayFormDialogOperation = "update";
       this.selectedDay = day;
       this.isDayFormDialogOpen = true;
+    },
+    openRemoveDayDialog(day) {
+      this.selectedDay = day;
+      this.isCustomAlertDialogOpen = true;
+    },
+    closeRemoveDayDialog() {
+      this.itineraryLocal.days = this.itineraryLocal.days.filter(
+        (item) => item.day !== this.selectedDay.day
+      );
+      this.selectedDay = {};
+      this.isCustomAlertDialogOpen = false;
     },
   },
 };

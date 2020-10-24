@@ -116,7 +116,7 @@
       type="warning"
       title="Remove Timestamp"
       text="Removing this timestamp is irreversible. Confirm anyway?"
-      :action="() => removeTimestampDialog()"
+      :action="() => closeRemoveTimestampDialog()"
     ></custom-alert-dialog>
   </v-dialog>
 </template>
@@ -276,7 +276,7 @@ export default {
       this.selectedTimestamp = timestamp;
       this.isCustomAlertDialogOpen = true;
     },
-    removeTimestampDialog() {
+    closeRemoveTimestampDialog() {
       this.form.timestamps = this.form.timestamps.filter(
         (timestamp) => timestamp.time !== this.selectedTimestamp.time
       );
