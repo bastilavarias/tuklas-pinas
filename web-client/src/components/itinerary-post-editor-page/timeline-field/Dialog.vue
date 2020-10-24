@@ -14,7 +14,7 @@
           <v-col cols="12">
             <custom-date-picker
               :date.sync="form.date"
-              label="Date"
+              label="Date *"
               outlined
               single-line
             ></custom-date-picker>
@@ -25,12 +25,12 @@
               <custom-tooltip-button
                 icon="mdi-plus"
                 text="Add New Timestamp"
-                :action="() => (this.isTimestampFormDialogOpen = true)"
+                :action="openTimestampFormDialog"
               ></custom-tooltip-button>
             </div>
             <v-data-table
-              :headers="itineraryTimelineTimestampTableHeaders"
-              :items="timestamps"
+              :headers="timestampTableHeaders"
+              :items="sortedTimestamps"
               hide-default-footer
               :single-expand="singleExpand"
               item-key="time"
@@ -69,7 +69,8 @@
               <template v-slot:item.actions="{ item }">
                 <custom-tooltip-button
                   icon="mdi-pencil-outline"
-                  text="Edit"
+                  text="Update"
+                  :action="() => selectTimestamp(item)"
                 ></custom-tooltip-button>
                 <custom-tooltip-button
                   icon="mdi-trash-can-outline"
@@ -88,6 +89,8 @@
     <itinerary-post-editor-page-timeline-timestamp-form-dialog
       :is-open.sync="isTimestampFormDialogOpen"
       :timestamps.sync="timestamps"
+      :selected-timestamp="selectedTimestamp"
+      :operation="timestampFormDialogOperation"
     ></itinerary-post-editor-page-timeline-timestamp-form-dialog>
   </v-dialog>
 </template>
@@ -120,7 +123,7 @@ export default {
   data() {
     return {
       isOpenLocal: this.isOpen,
-      itineraryTimelineTimestampTableHeaders: [
+      timestampTableHeaders: [
         {
           text: "Time",
           value: "time",
@@ -159,12 +162,19 @@ export default {
       form: Object.assign({}, defaultItineraryDayForm),
       defaultItineraryDayForm,
       timestamps: [],
+      selectedTimestamp: {},
+      timestampFormDialogOperation: "add",
     };
   },
   mixins: [commonUtilities],
   computed: {
     genericDestinations() {
       return this.$store.state.generic.destinations;
+    },
+    sortedTimestamps() {
+      return this.timestamps.sort((flat, next) =>
+        flat.time < next.time ? -1 : flat.time > next.time ? 1 : 0
+      );
     },
   },
   watch: {
@@ -181,6 +191,16 @@ export default {
         (destination) => destination.id === destinationID
       );
       return foundDestination.name;
+    },
+    openTimestampFormDialog() {
+      this.timestampFormDialogOperation = "add";
+      this.selectedTimestamp = {};
+      this.isTimestampFormDialogOpen = true;
+    },
+    selectTimestamp(timestamp) {
+      this.timestampFormDialogOperation = "update";
+      this.selectedTimestamp = timestamp;
+      this.isTimestampFormDialogOpen = true;
     },
   },
 };

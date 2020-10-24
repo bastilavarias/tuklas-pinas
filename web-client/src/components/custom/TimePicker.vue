@@ -22,6 +22,7 @@
         v-bind="attrs"
         v-on="on"
         :rules="rules"
+        :disabled="readonly"
       ></v-text-field>
     </template>
     <v-time-picker
@@ -29,6 +30,7 @@
       v-model="timeLocal"
       full-width
       @click:minute="$refs.menu.save(timeLocal)"
+      :readonly="readonly"
     ></v-time-picker>
   </v-menu>
 </template>
@@ -64,6 +66,10 @@ export default {
     },
     rules: {
       type: Array,
+      required: false,
+    },
+    readonly: {
+      type: Boolean,
       required: false,
     },
   },

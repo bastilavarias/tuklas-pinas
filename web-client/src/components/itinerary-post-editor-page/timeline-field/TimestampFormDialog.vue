@@ -17,6 +17,7 @@
               label="Time *"
               outlined
               :rules="formRule.time"
+              :readonly="operation === 'update'"
             ></custom-time-picker>
           </v-col>
           <v-col cols="12">
@@ -76,8 +77,19 @@
       </v-card-text>
       <v-card-actions>
         <div class="flex-grow-1"></div>
-        <v-btn color="secondary" @click="addTimestamp" :disabled="!isFormValid"
+        <v-btn
+          color="secondary"
+          @click="addTimestamp"
+          :disabled="!isFormValid"
+          v-if="operation === 'add'"
           >Add</v-btn
+        >
+        <v-btn
+          color="secondary"
+          @click="updateTimestamp"
+          :disabled="!isFormValid"
+          v-if="operation === 'update'"
+          >Update</v-btn
         >
       </v-card-actions>
     </v-card>
@@ -88,6 +100,7 @@ import GenericTransportationCombobox from "@/components/generic/combobox/Transpo
 import CustomTimePicker from "@/components/custom/TimePicker";
 import GenericInterestCombobox from "@/components/generic/combobox/Interests";
 import GenericDestinationsAutocomplete from "@/components/generic/autocomplete/Destinations";
+import commonValidation from "@/common/validation";
 
 const defaultTimestampForm = {
   time: null,
@@ -114,6 +127,14 @@ export default {
     },
     timestamps: {
       type: Array,
+      required: true,
+    },
+    selectedTimestamp: {
+      type: Object,
+      required: true,
+    },
+    operation: {
+      type: String,
       required: true,
     },
   },
@@ -158,6 +179,7 @@ export default {
       );
     },
   },
+  mixins: [commonValidation],
   watch: {
     isOpen(val) {
       this.isOpenLocal = val;
@@ -165,13 +187,29 @@ export default {
     isOpenLocal(val) {
       this.$emit("update:isOpen", val);
     },
+    selectedTimestamp(val) {
+      if (this.validateObject(val, "time") && this.operation === "update") {
+        this.form = Object.assign({}, val);
+      } else {
+        this.clearForm();
+      }
+    },
   },
   methods: {
     addTimestamp() {
       this.timestampsLocal.push(this.form);
-      this.clearForm();
-      this.isOpenLocal = false;
       this.$emit("update:timestamps", this.timestampsLocal);
+      this.isOpenLocal = false;
+    },
+    updateTimestamp() {
+      this.timestampsLocal = this.timestampsLocal.map((timestamp) => {
+        if (timestamp.time === this.selectedTimestamp.time) {
+          timestamp = Object.assign({}, this.form);
+        }
+        return timestamp;
+      });
+      this.$emit("update:timestamps", this.timestampsLocal);
+      this.isOpenLocal = false;
     },
     clearForm() {
       this.form = Object.assign({}, this.defaultTimestampForm);
