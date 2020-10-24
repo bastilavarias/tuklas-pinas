@@ -12,7 +12,7 @@
   >
     <template v-slot:activator="{ on, attrs }">
       <v-text-field
-        :value="formattedTime"
+        :value="formatTime(timeLocal)"
         :label="label"
         :filled="filled"
         :single-line="singleLine"
@@ -21,6 +21,7 @@
         readonly
         v-bind="attrs"
         v-on="on"
+        :rules="rules"
       ></v-text-field>
     </template>
     <v-time-picker
@@ -33,7 +34,7 @@
 </template>
 
 <script>
-import moment from "moment";
+import commonUtilities from "@/common/utilities";
 
 export default {
   name: "custom-time-picker",
@@ -61,6 +62,10 @@ export default {
       type: Boolean,
       required: false,
     },
+    rules: {
+      type: Array,
+      required: false,
+    },
   },
   data() {
     return {
@@ -68,11 +73,7 @@ export default {
       menu2: false,
     };
   },
-  computed: {
-    formattedTime() {
-      return this.timeLocal ? moment(this.timeLocal, "hh").format("LT") : "";
-    },
-  },
+  mixins: [commonUtilities],
   watch: {
     time(val) {
       this.timeLocal = val;

@@ -1,3 +1,5 @@
+import moment from "moment";
+
 const commonUtilities = {
   data() {
     return {
@@ -25,6 +27,9 @@ const commonUtilities = {
       } catch (error) {
         this.stickyParentHeight = 0;
       }
+    },
+    formatTime(time) {
+      return time ? moment(time, "hh:mm").format("LT") : "";
     },
   },
 

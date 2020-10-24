@@ -11,6 +11,8 @@
     item-text="name"
     item-value="name"
     :clearable="clearable"
+    :return-object="false"
+    :rules="rules"
   >
     <template v-slot:no-data>
       <v-list-item>
@@ -47,6 +49,10 @@ export default {
     },
     clearable: {
       type: Boolean,
+      required: false,
+    },
+    rules: {
+      type: Array,
       required: false,
     },
   },

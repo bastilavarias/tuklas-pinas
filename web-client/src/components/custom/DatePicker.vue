@@ -13,6 +13,7 @@
         :label="label"
         :filled="filled"
         :single-line="singleLine"
+        :outlined="outlined"
         :rounded="rounded"
         readonly
         v-bind="attrs"
@@ -45,6 +46,10 @@ export default {
       required: false,
     },
     singleLine: {
+      type: Boolean,
+      required: false,
+    },
+    outlined: {
       type: Boolean,
       required: false,
     },

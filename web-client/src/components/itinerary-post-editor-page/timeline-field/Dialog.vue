@@ -10,52 +10,75 @@
       </v-card-title>
       <v-card-subtitle>Lorem ipsum dolor sit amet.</v-card-subtitle>
       <v-card-text>
-        <div class="d-flex justify-space-between align-center">
-          <span class="subtitle-1">Timestamps</span>
-          <custom-tooltip-button
-            icon="mdi-plus"
-            text="Add New Timestamp"
-            :action="() => (this.isTimestampFormDialogOpen = true)"
-          ></custom-tooltip-button>
-        </div>
-        <v-data-table
-          :headers="itineraryTimelineTimestampTableHeaders"
-          :items="itineraryTimelineTimestamps"
-          hide-default-footer
-          :single-expand="singleExpand"
-          item-key="time"
-          show-expand
-        >
-          <template v-slot:top> </template>
-          <template v-slot:item.transportation="{ item }">
-            {{ item.transportation }} -<span title="Fare">
-              &#8369; {{ item.fare }}</span
+        <v-row dense>
+          <v-col cols="12">
+            <custom-date-picker
+              :date.sync="form.date"
+              label="Date"
+              outlined
+              single-line
+            ></custom-date-picker>
+          </v-col>
+          <v-col cols="12">
+            <div class="d-flex justify-space-between align-center">
+              <span class="subtitle-1">Timestamps</span>
+              <custom-tooltip-button
+                icon="mdi-plus"
+                text="Add New Timestamp"
+                :action="() => (this.isTimestampFormDialogOpen = true)"
+              ></custom-tooltip-button>
+            </div>
+            <v-data-table
+              :headers="itineraryTimelineTimestampTableHeaders"
+              :items="timestamps"
+              hide-default-footer
+              :single-expand="singleExpand"
+              item-key="time"
+              show-expand
             >
-          </template>
-          <template v-slot:item.expenses="{ item }">
-            <span>&#8369; {{ item.expenses }}</span>
-          </template>
-          <template v-slot:expanded-item="{ headers, item }">
-            <td :colspan="headers.length">
-              <div class="py-3">
-                <span class="d-block subtitle-2 mb-2">Details:</span>
-                <span class="body-2 text-capitalize">
-                  {{ item.details }}
-                </span>
-              </div>
-            </td>
-          </template>
-          <template v-slot:item.actions="{ item }">
-            <custom-tooltip-button
-              icon="mdi-pencil-outline"
-              text="Edit"
-            ></custom-tooltip-button>
-            <custom-tooltip-button
-              icon="mdi-trash-can-outline"
-              text="Remove"
-            ></custom-tooltip-button>
-          </template>
-        </v-data-table>
+              <template v-slot:top> </template>
+              <template v-slot:item.time="{ item }">
+                {{ formatTime(item.time) }}
+              </template>
+              <template v-slot:item.destination="{ item }">
+                {{ getDestinationName(item.destinationID) }}
+              </template>
+              <template v-slot:item.transportation="{ item }">
+                {{ item.transportation }} -<span title="Fare">
+                  &#8369; {{ item.fare }}</span
+                >
+              </template>
+              <template v-slot:item.expenses="{ item }">
+                <span>&#8369; {{ item.expenses }}</span>
+              </template>
+              <template v-slot:expanded-item="{ headers, item }">
+                <td :colspan="headers.length">
+                  <div class="py-3">
+                    <span class="d-block subtitle-2 mb-2">Other Details:</span>
+                    <span class="body-2">
+                      <span v-if="item.otherDetails" class="text-capitalize">{{
+                        item.otherDetails
+                      }}</span>
+                      <span v-if="!item.otherDetails" class="font-italic"
+                        >You have no other details specified.</span
+                      >
+                    </span>
+                  </div>
+                </td>
+              </template>
+              <template v-slot:item.actions="{ item }">
+                <custom-tooltip-button
+                  icon="mdi-pencil-outline"
+                  text="Edit"
+                ></custom-tooltip-button>
+                <custom-tooltip-button
+                  icon="mdi-trash-can-outline"
+                  text="Remove"
+                ></custom-tooltip-button>
+              </template>
+            </v-data-table>
+          </v-col>
+        </v-row>
       </v-card-text>
       <v-card-actions>
         <div class="flex-grow-1"></div>
@@ -64,6 +87,7 @@
     </v-card>
     <itinerary-post-editor-page-timeline-timestamp-form-dialog
       :is-open.sync="isTimestampFormDialogOpen"
+      :timestamps.sync="timestamps"
     ></itinerary-post-editor-page-timeline-timestamp-form-dialog>
   </v-dialog>
 </template>
@@ -72,10 +96,17 @@
 import CustomFileDropzone from "@/components/custom/FileDropzone";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
 import ItineraryPostEditorPageTimelineTimestampFormDialog from "@/components/itinerary-post-editor-page/timeline-field/TimestampFormDialog";
+import CustomDatePicker from "@/components/custom/DatePicker";
+import commonUtilities from "@/common/utilities";
+
+const defaultItineraryDayForm = {
+  date: null,
+};
 
 export default {
   name: "itinerary-post-editor-page-timeline-dialog",
   components: {
+    CustomDatePicker,
     ItineraryPostEditorPageTimelineTimestampFormDialog,
     CustomTooltipButton,
     CustomFileDropzone,
@@ -123,42 +154,14 @@ export default {
         },
         { text: "", value: "data-table-expand" },
       ],
-      itineraryTimelineTimestamps: [
-        {
-          time: "10:00AM",
-          destination: "Destination 1",
-          transportation: "Metro",
-          fare: 500,
-          interests: ["Interest 1", "Interest 2"],
-          expenses: 500,
-          details:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id nisi et enim dictum dignissim. Proin volutpat risus id efficitur ullamcorper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Vestibulum molestie ligula at elit malesuada fermentum. In hac habitasse platea dictumst. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas a eros a arcu condimentum sollicitudin vitae ut mauris. Ut ut odio non diam varius pharetra. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        },
-        {
-          time: "1:00PM",
-          destination: "Destination 2",
-          transportation: "Air",
-          fare: 500,
-          interests: ["Interest 1", "Interest 2"],
-          expenses: 500,
-          details:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id nisi et enim dictum dignissim. Proin volutpat risus id efficitur ullamcorper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Vestibulum molestie ligula at elit malesuada fermentum. In hac habitasse platea dictumst. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas a eros a arcu condimentum sollicitudin vitae ut mauris. Ut ut odio non diam varius pharetra. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        },
-        {
-          time: "5:00PM",
-          destination: "Destination 3",
-          transportation: "Bus/Shuttle",
-          fare: 500,
-          interests: ["Interest 1", "Interest 2"],
-          expenses: 500,
-          details:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id nisi et enim dictum dignissim. Proin volutpat risus id efficitur ullamcorper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Vestibulum molestie ligula at elit malesuada fermentum. In hac habitasse platea dictumst. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas a eros a arcu condimentum sollicitudin vitae ut mauris. Ut ut odio non diam varius pharetra. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        },
-      ],
       singleExpand: true,
       isTimestampFormDialogOpen: false,
+      form: Object.assign({}, defaultItineraryDayForm),
+      defaultItineraryDayForm,
+      timestamps: [],
     };
   },
+  mixins: [commonUtilities],
   computed: {
     genericDestinations() {
       return this.$store.state.generic.destinations;
@@ -170,6 +173,14 @@ export default {
     },
     isOpenLocal(val) {
       this.$emit("update:isOpen", val);
+    },
+  },
+  methods: {
+    getDestinationName(destinationID) {
+      const foundDestination = this.genericDestinations.find(
+        (destination) => destination.id === destinationID
+      );
+      return foundDestination.name;
     },
   },
 };

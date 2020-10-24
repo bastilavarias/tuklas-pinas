@@ -8,6 +8,7 @@
     multiple
     :outlined="outlined"
     :single-line="singleLine"
+    :rules="rules"
   >
     <template v-slot:no-data>
       <v-list-item>
@@ -55,6 +56,10 @@ export default {
       type: Boolean,
       required: false,
     },
+    rules: {
+      type: Array,
+      required: false,
+    },
   },
   data() {
     return {
@@ -64,10 +69,10 @@ export default {
   },
   watch: {
     interests(val) {
-      this.interestsLocal = this.interests;
+      this.interestsLocal = val;
     },
     interestsLocal(val) {
-      this.$emit("update:categories", val);
+      this.$emit("update:interests", val);
     },
   },
 };
