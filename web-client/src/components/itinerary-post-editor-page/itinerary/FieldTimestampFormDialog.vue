@@ -149,21 +149,8 @@ export default {
       return this.$store.state.generic.destinations;
     },
     isFormValid() {
-      const {
-        time,
-        destinationID,
-        transportation,
-        interests,
-        expenses,
-      } = this.form;
-      return (
-        time &&
-        destinationID &&
-        transportation &&
-        interests.length > 0 &&
-        expenses &&
-        parseFloat(expenses) > 0
-      );
+      const { time, destinationID, transportation, interests } = this.form;
+      return time && destinationID && transportation && interests.length > 0;
     },
     lastSelectedTime() {
       if (this.timestampsLocal.length <= 0) return "";
@@ -197,6 +184,8 @@ export default {
   },
   methods: {
     addTimestamp() {
+      this.form.fare = this.form.fare ? this.form.fare : 0;
+      this.form.expenses = this.form.expenses ? this.form.expenses : 0;
       this.timestampsLocal = this.timestampsLocal.push(this.form);
       this.isOpenLocal = false;
     },
@@ -204,6 +193,8 @@ export default {
       this.timestampsLocal = this.timestampsLocal.map((timestamp) => {
         if (timestamp.time === this.selectedTimestamp.time) {
           timestamp = Object.assign({}, this.form);
+          timestamp.fare = this.form.fare ? this.form.fare : 0;
+          timestamp.expenses = this.form.expenses ? this.form.expenses : 0;
         }
         return timestamp;
       });
