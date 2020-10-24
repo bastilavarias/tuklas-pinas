@@ -11,7 +11,7 @@
     <v-row>
       <v-col cols="12">
         <v-data-table
-          :headers="itineraryTimelineDataTableHeaders"
+          :headers="itineraryTimelineTableHeaders"
           :items="itineraryTimeline"
           hide-default-footer
         >
@@ -51,6 +51,8 @@
     </v-row>
     <itinerary-post-editor-page-timeline-dialog
       :is-open.sync="isTimelineDialogOpen"
+      :itinerary.sync="itineraryLocal"
+      :timeline.sync="itineraryTimeline"
     ></itinerary-post-editor-page-timeline-dialog>
   </div>
 </template>
@@ -60,15 +62,19 @@ import CustomTooltipButton from "@/components/custom/TooltipButton";
 import ItineraryPostEditorPageTimelineDialog from "@/components/itinerary-post-editor-page/timeline-field/Dialog";
 export default {
   name: "itinerary-post-editor-page-timeline-field",
-
   components: { ItineraryPostEditorPageTimelineDialog, CustomTooltipButton },
-
+  props: {
+    itinerary: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       isTimelineDialogOpen: false,
-      itineraryTimelineDataTableHeaders: [
+      itineraryTimelineTableHeaders: [
         {
-          text: "Days",
+          text: "Day",
           value: "date",
           sortable: true,
           align: "left",
@@ -89,27 +95,17 @@ export default {
           sortable: false,
         },
       ],
-      itineraryTimeline: [
-        {
-          date: "March 15, 2020",
-          day: 1,
-          totalDestinations: 3,
-          totalExpenses: 4500,
-        },
-        {
-          date: "March 16, 2020",
-          day: 2,
-          totalDestinations: 1,
-          totalExpenses: 1350,
-        },
-        {
-          date: "March 17, 2020",
-          day: 3,
-          totalDestinations: 3,
-          totalExpenses: 5230,
-        },
-      ],
+      itineraryTimeline: [],
+      itineraryLocal: this.itinerary,
     };
+  },
+  watch: {
+    itinerary(val) {
+      this.itineraryLocal = val;
+    },
+    itineraryLocal(val) {
+      this.$emit("update:itinerary", val);
+    },
   },
 };
 </script>

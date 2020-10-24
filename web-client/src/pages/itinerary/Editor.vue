@@ -75,7 +75,9 @@
                       ></custom-file-dropzone>
                     </v-col>
                     <v-col cols="12">
-                      <itinerary-post-editor-page-timeline-field></itinerary-post-editor-page-timeline-field>
+                      <itinerary-post-editor-page-timeline-field
+                        :itinerary.sync="form.itinerary"
+                      ></itinerary-post-editor-page-timeline-field>
                     </v-col>
                     <v-col cols="12"> </v-col>
                   </v-row>

@@ -84,7 +84,9 @@
       </v-card-text>
       <v-card-actions>
         <div class="flex-grow-1"></div>
-        <v-btn color="secondary">Create</v-btn>
+        <v-btn color="secondary" @click="createDay" :disabled="!date"
+          >Create</v-btn
+        >
       </v-card-actions>
     </v-card>
     <itinerary-post-editor-page-timeline-timestamp-form-dialog
@@ -123,6 +125,10 @@ export default {
   props: {
     isOpen: {
       type: Boolean,
+      required: true,
+    },
+    timeline: {
+      type: Array,
       required: true,
     },
   },
@@ -170,6 +176,7 @@ export default {
       selectedTimestamp: {},
       timestampFormDialogOperation: "add",
       isCustomAlertDialogOpen: false,
+      timelineLocal: this.timeline,
     };
   },
   mixins: [commonUtilities],
@@ -182,6 +189,16 @@ export default {
         flat.time < next.time ? -1 : flat.time > next.time ? 1 : 0
       );
     },
+    totalDestinations() {
+      const total = this.timestamps.length;
+      return total ? total : 0;
+    },
+    totalExpenses() {
+      const reducer = (flat, next) =>
+        parseInt(flat.expenses) + parseInt(next.expenses);
+      const total = this.timestamps.reduce(reducer);
+      return total ? total : 0;
+    },
   },
   watch: {
     isOpen(val) {
@@ -189,6 +206,12 @@ export default {
     },
     isOpenLocal(val) {
       this.$emit("update:isOpen", val);
+    },
+    timeline(val) {
+      this.timelineLocal = val;
+    },
+    timelineLocal(val) {
+      this.$emit("update:timeline", val);
     },
   },
   methods: {
@@ -218,6 +241,14 @@ export default {
       );
       this.selectedTimestamp = {};
       this.isCustomAlertDialogOpen = false;
+    },
+    createDay() {
+      const timelineItem = {
+        date: this.date,
+        totalDestinations: this.totalDestinations,
+        totalExpenses: this.totalExpenses,
+      };
+      this.timelineLocal.push(timelineItem);
     },
   },
 };
