@@ -2,7 +2,7 @@
   <v-dialog v-model="isOpenLocal" width="1000">
     <v-card>
       <v-card-title>
-        <span>Create Day 1 </span>
+        <span>Create Day {{ dayCount }} </span>
         <div class="flex-grow-1"></div>
         <v-btn icon @click="isOpenLocal = false">
           <v-icon>mdi-close</v-icon>
@@ -13,10 +13,9 @@
         <v-row dense>
           <v-col cols="12">
             <custom-date-picker
-              :date.sync="date"
+              :date.sync="form.date"
               label="Date *"
               outlined
-              single-line
             ></custom-date-picker>
           </v-col>
           <v-col cols="12">
@@ -25,7 +24,7 @@
               <custom-tooltip-button
                 icon="mdi-plus"
                 text="Add New Timestamp"
-                :action="openTimestampFormDialog"
+                :action="openAddTimestampFormDialog"
               ></custom-tooltip-button>
             </div>
             <v-data-table
@@ -49,7 +48,7 @@
                 >
               </template>
               <template v-slot:item.expenses="{ item }">
-                <span>&#8369; {{ item.expenses }}</span>
+                <span>{{ formatMoney(item.expenses) }}</span>
               </template>
               <template v-slot:expanded-item="{ headers, item }">
                 <td :colspan="headers.length">
@@ -70,7 +69,7 @@
                 <custom-tooltip-button
                   icon="mdi-pencil-outline"
                   text="Update"
-                  :action="() => openUpdateTimestampDialog(item)"
+                  :action="() => openUpdateTimestampFormDialog(item)"
                 ></custom-tooltip-button>
                 <custom-tooltip-button
                   icon="mdi-trash-can-outline"
@@ -84,14 +83,14 @@
       </v-card-text>
       <v-card-actions>
         <div class="flex-grow-1"></div>
-        <v-btn color="secondary" @click="createDay" :disabled="!date"
+        <v-btn color="secondary" @click="createDay" :disabled="!form.date"
           >Create</v-btn
         >
       </v-card-actions>
     </v-card>
     <itinerary-post-editor-page-timeline-timestamp-form-dialog
       :is-open.sync="isTimestampFormDialogOpen"
-      :timestamps.sync="timestamps"
+      :timestamps.sync="form.timestamps"
       :selected-timestamp="selectedTimestamp"
       :operation="timestampFormDialogOperation"
     ></itinerary-post-editor-page-timeline-timestamp-form-dialog>
@@ -113,6 +112,11 @@ import CustomDatePicker from "@/components/custom/DatePicker";
 import commonUtilities from "@/common/utilities";
 import CustomAlertDialog from "@/components/custom/AlertDialog";
 
+const defaultDayForm = {
+  date: null,
+  timestamps: [],
+};
+
 export default {
   name: "itinerary-post-editor-page-timeline-dialog",
   components: {
@@ -127,7 +131,7 @@ export default {
       type: Boolean,
       required: true,
     },
-    timeline: {
+    days: {
       type: Array,
       required: true,
     },
@@ -171,12 +175,12 @@ export default {
       ],
       singleExpand: true,
       isTimestampFormDialogOpen: false,
-      date: null,
-      timestamps: [],
+      form: Object.assign({}, defaultDayForm),
+      defaultDayForm,
       selectedTimestamp: {},
       timestampFormDialogOperation: "add",
       isCustomAlertDialogOpen: false,
-      timelineLocal: this.timeline,
+      daysLocal: this.days,
     };
   },
   mixins: [commonUtilities],
@@ -185,19 +189,12 @@ export default {
       return this.$store.state.generic.destinations;
     },
     sortedTimestamps() {
-      return this.timestamps.sort((flat, next) =>
+      return this.form.timestamps.sort((flat, next) =>
         flat.time < next.time ? -1 : flat.time > next.time ? 1 : 0
       );
     },
-    totalDestinations() {
-      const total = this.timestamps.length;
-      return total ? total : 0;
-    },
-    totalExpenses() {
-      const reducer = (flat, next) =>
-        parseInt(flat.expenses) + parseInt(next.expenses);
-      const total = this.timestamps.reduce(reducer);
-      return total ? total : 0;
+    dayCount() {
+      return this.daysLocal.length + 1;
     },
   },
   watch: {
@@ -207,11 +204,11 @@ export default {
     isOpenLocal(val) {
       this.$emit("update:isOpen", val);
     },
-    timeline(val) {
-      this.timelineLocal = val;
+    days(val) {
+      this.daysLocal = val;
     },
-    timelineLocal(val) {
-      this.$emit("update:timeline", val);
+    daysLocal(val) {
+      this.$emit("update:days", val);
     },
   },
   methods: {
@@ -221,12 +218,12 @@ export default {
       );
       return foundDestination.name;
     },
-    openTimestampFormDialog() {
+    openAddTimestampFormDialog() {
       this.timestampFormDialogOperation = "add";
       this.selectedTimestamp = {};
       this.isTimestampFormDialogOpen = true;
     },
-    openUpdateTimestampDialog(timestamp) {
+    openUpdateTimestampFormDialog(timestamp) {
       this.timestampFormDialogOperation = "update";
       this.selectedTimestamp = timestamp;
       this.isTimestampFormDialogOpen = true;
@@ -236,19 +233,24 @@ export default {
       this.isCustomAlertDialogOpen = true;
     },
     removeTimestampDialog() {
-      this.timestamps = this.timestamps.filter(
+      this.form.timestamps = this.form.timestamps.filter(
         (timestamp) => timestamp.time !== this.selectedTimestamp.time
       );
       this.selectedTimestamp = {};
       this.isCustomAlertDialogOpen = false;
     },
     createDay() {
-      const timelineItem = {
-        date: this.date,
-        totalDestinations: this.totalDestinations,
-        totalExpenses: this.totalExpenses,
+      const day = {
+        day: this.dayCount,
+        date: this.form.date,
+        timestamps: this.form.timestamps,
       };
-      this.timelineLocal.push(timelineItem);
+      this.daysLocal = this.daysLocal.push(day);
+      this.clearForm();
+      this.isOpenLocal = false;
+    },
+    clearForm() {
+      this.form = Object.assign({}, this.defaultDayForm);
     },
   },
 };

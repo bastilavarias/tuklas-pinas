@@ -16,7 +16,6 @@
               :time.sync="form.time"
               label="Time *"
               outlined
-              :rules="formRule.time"
               :readonly="operation === 'update'"
             ></custom-time-picker>
           </v-col>
@@ -25,7 +24,6 @@
               :destinationID.sync="form.destinationID"
               outlined
               label="Destination *"
-              :rules="formRule.destination"
             ></generic-destinations-autocomplete>
           </v-col>
           <v-col cols="12" :md="form.transportation ? '8' : '12'">
@@ -34,7 +32,6 @@
               label="Transportation *"
               outlined
               clearable
-              :rules="formRule.transportation"
             ></generic-transportation-combobox>
           </v-col>
           <v-col cols="12" md="4" v-if="form.transportation">
@@ -52,7 +49,6 @@
               :interests.sync="form.interests"
               label="Sights/places of interest/activities *"
               outlined
-              :rules="formRule.interests"
             ></generic-interest-combobox>
           </v-col>
           <v-col cols="12">
@@ -63,7 +59,6 @@
               v-model="form.expenses"
               min="0.01"
               step="0.01"
-              :rules="formRule.expenses"
             ></v-text-field>
           </v-col>
           <v-col cols="12">
@@ -143,17 +138,6 @@ export default {
       isOpenLocal: this.isOpen,
       form: Object.assign({}, defaultTimestampForm),
       defaultTimestampForm,
-      formRule: {
-        time: [(value) => !!value || "Time is required"],
-        destination: [(value) => !!value || "Destination is required"],
-        transportation: [(value) => !!value || "Transportation is required"],
-        interests: [(value) => value.length > 0 || "Interests is required"],
-        expenses: [
-          (value) => !!value || "Expenses is required",
-          (value) =>
-            parseFloat(value) > 0 || "Expenses should greater than zero",
-        ],
-      },
       timestampsLocal: this.timestamps,
     };
   },

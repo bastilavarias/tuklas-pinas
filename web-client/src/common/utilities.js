@@ -1,4 +1,5 @@
 import moment from "moment";
+import numberFormatter from "number-formatter";
 
 const commonUtilities = {
   data() {
@@ -30,6 +31,12 @@ const commonUtilities = {
     },
     formatTime(time) {
       return time ? moment(time, "hh:mm").format("LT") : "";
+    },
+    formatMoney(money) {
+      return money > 0 ? numberFormatter("₱ #,###.00", money) : `₱ 0.00`;
+    },
+    formatDate(date) {
+      return date ? moment(date).format("MMMM D, YYYY") : "";
     },
   },
 

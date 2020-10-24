@@ -5,36 +5,36 @@
       <custom-tooltip-button
         icon="mdi-plus"
         text="Create New Day"
-        :action="() => (this.isTimelineDialogOpen = true)"
+        :action="() => (this.isItineraryDayFormDialogOpen = true)"
       ></custom-tooltip-button>
     </div>
     <v-row>
       <v-col cols="12">
         <v-data-table
-          :headers="itineraryTimelineTableHeaders"
-          :items="itineraryTimeline"
+          :headers="itineraryDaysTableHeaders"
+          :items="itineraryLocal.days"
           hide-default-footer
         >
           <template v-slot:item.date="{ item }">
             <v-list-item-content>
               <v-list-item-subtitle class="grey--text"
-                >Day {{ item.day }}
+                >{{ formatDate(item.date) }}
               </v-list-item-subtitle>
-              <v-list-item-subtitle class="font-weight-bold">{{
-                item.date
-              }}</v-list-item-subtitle>
+              <v-list-item-subtitle class="font-weight-bold">
+                Day {{ item.day }}
+              </v-list-item-subtitle>
             </v-list-item-content>
           </template>
           <template v-slot:item.totalDestinations="{ item }">
             <span class="text-capitalize"
-              >{{ item.totalDestinations }} Destination<span
-                v-if="item.totalDestinations > 1"
+              >{{ totalDestinations(item.timestamps) }} Destination<span
+                v-if="totalDestinations(item.timestamps) > 1"
                 >s</span
               ></span
             >
           </template>
           <template v-slot:item.totalExpenses="{ item }">
-            <span>&#8369; {{ item.totalExpenses }}</span>
+            <span>{{ formatMoney(totalExpenses(item.timestamps)) }}</span>
           </template>
           <template v-slot:item.actions="{ item }">
             <custom-tooltip-button
@@ -50,9 +50,8 @@
       </v-col>
     </v-row>
     <itinerary-post-editor-page-timeline-dialog
-      :is-open.sync="isTimelineDialogOpen"
-      :itinerary.sync="itineraryLocal"
-      :timeline.sync="itineraryTimeline"
+      :is-open.sync="isItineraryDayFormDialogOpen"
+      :days.sync="itineraryLocal.days"
     ></itinerary-post-editor-page-timeline-dialog>
   </div>
 </template>
@@ -60,6 +59,7 @@
 <script>
 import CustomTooltipButton from "@/components/custom/TooltipButton";
 import ItineraryPostEditorPageTimelineDialog from "@/components/itinerary-post-editor-page/timeline-field/Dialog";
+import commonUtilities from "@/common/utilities";
 export default {
   name: "itinerary-post-editor-page-timeline-field",
   components: { ItineraryPostEditorPageTimelineDialog, CustomTooltipButton },
@@ -71,8 +71,8 @@ export default {
   },
   data() {
     return {
-      isTimelineDialogOpen: false,
-      itineraryTimelineTableHeaders: [
+      isItineraryDayFormDialogOpen: false,
+      itineraryDaysTableHeaders: [
         {
           text: "Day",
           value: "date",
@@ -95,16 +95,29 @@ export default {
           sortable: false,
         },
       ],
-      itineraryTimeline: [],
       itineraryLocal: this.itinerary,
+      selectedDay: {},
     };
   },
+  mixins: [commonUtilities],
   watch: {
     itinerary(val) {
       this.itineraryLocal = val;
     },
     itineraryLocal(val) {
       this.$emit("update:itinerary", val);
+    },
+  },
+  methods: {
+    totalDestinations(timestamps) {
+      const total = timestamps.length;
+      return total ? total : 0;
+    },
+    totalExpenses(timestamps) {
+      const total = timestamps
+        .map((timestamp) => parseInt(timestamp.expenses))
+        .reduce((flat, next) => flat + next, 0);
+      return total ? total : 0;
     },
   },
 };

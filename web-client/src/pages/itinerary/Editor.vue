@@ -74,12 +74,15 @@
                         :files.sync="form.files"
                       ></custom-file-dropzone>
                     </v-col>
+                  </v-row>
+                </v-card-text>
+                <v-card-text>
+                  <v-row dense>
                     <v-col cols="12">
                       <itinerary-post-editor-page-timeline-field
                         :itinerary.sync="form.itinerary"
                       ></itinerary-post-editor-page-timeline-field>
                     </v-col>
-                    <v-col cols="12"> </v-col>
                   </v-row>
                 </v-card-text>
                 <v-card-text>
