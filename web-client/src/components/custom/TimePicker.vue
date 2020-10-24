@@ -31,6 +31,7 @@
       full-width
       @click:minute="$refs.menu.save(timeLocal)"
       :readonly="readonly"
+      :min="min"
     ></v-time-picker>
   </v-menu>
 </template>
@@ -70,6 +71,10 @@ export default {
     },
     readonly: {
       type: Boolean,
+      required: false,
+    },
+    min: {
+      type: String,
       required: false,
     },
   },

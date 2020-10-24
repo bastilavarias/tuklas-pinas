@@ -17,6 +17,7 @@
               label="Time *"
               outlined
               :readonly="operation === 'update'"
+              :min="lastSelectedTime"
             ></custom-time-picker>
           </v-col>
           <v-col cols="12">
@@ -96,6 +97,7 @@ import CustomTimePicker from "@/components/custom/TimePicker";
 import GenericInterestCombobox from "@/components/generic/combobox/Interests";
 import GenericDestinationsAutocomplete from "@/components/generic/autocomplete/Destinations";
 import commonValidation from "@/common/validation";
+import moment from "moment";
 
 const defaultTimestampForm = {
   time: null,
@@ -141,6 +143,7 @@ export default {
       timestampsLocal: this.timestamps,
     };
   },
+  mixins: [commonValidation],
   computed: {
     genericDestinations() {
       return this.$store.state.generic.destinations;
@@ -162,8 +165,15 @@ export default {
         parseFloat(expenses) > 0
       );
     },
+    lastSelectedTime() {
+      if (this.timestampsLocal.length <= 0) return "";
+      const lastItemIndex = this.timestampsLocal.length - 1;
+      const selectedTimeString = this.timestampsLocal[lastItemIndex].time;
+      const hoursString = selectedTimeString.split(":")[0];
+      const minutesString = selectedTimeString.split(":")[1];
+      return `${hoursString}:${parseInt(minutesString) + 1}`;
+    },
   },
-  mixins: [commonValidation],
   watch: {
     isOpen(val) {
       this.isOpenLocal = val;
