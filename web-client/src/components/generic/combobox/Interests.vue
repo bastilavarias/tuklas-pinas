@@ -1,13 +1,11 @@
 <template>
   <v-combobox
-    v-model="categoriesLocal"
-    :items="categoriesLocal"
+    v-model="interestsLocal"
+    :items="interestsLocal"
     :search-input.sync="search"
     hide-selected
-    hint="Maximum of 5 categories."
     :label="label"
     multiple
-    persistent-hint
     :outlined="outlined"
     :single-line="singleLine"
   >
@@ -16,7 +14,7 @@
         <v-list-item-content>
           <v-list-item-title>
             "<strong>{{ search }}</strong
-            >". Press <kbd>enter</kbd> to add category
+            >". Press <kbd>enter</kbd> to add new one
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -31,7 +29,7 @@
         color="primary"
         class="text-uppercase"
       >
-        #{{ data.item }}
+        {{ data.item }}
       </v-chip>
     </template>
   </v-combobox>
@@ -39,9 +37,9 @@
 
 <script>
 export default {
-  name: "generic-category-combobox",
+  name: "generic-interest-combobox",
   props: {
-    categories: {
+    interests: {
       type: Array,
       required: true,
     },
@@ -60,17 +58,15 @@ export default {
   },
   data() {
     return {
-      categoriesLocal: this.categories,
+      interestsLocal: this.interests,
       search: null,
     };
   },
   watch: {
-    categories(val) {
-      this.categoriesLocal = val;
+    interests(val) {
+      this.interestsLocal = this.interests;
     },
-    categoriesLocal(val) {
-      if (val.length > 5)
-        return this.$nextTick(() => this.categoriesLocal.pop());
+    interestsLocal(val) {
       this.$emit("update:categories", val);
     },
   },

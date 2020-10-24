@@ -44,11 +44,12 @@
           </v-col>
           <!--   Make a combobox for this    -->
           <v-col cols="12">
-            <v-autocomplete
-              outlined
+            <generic-interest-combobox
+              :interests.sync="form.interests"
+              label="Sights/places of interest/activities"
               single-line
-              label="Places of Interests"
-            ></v-autocomplete>
+              outlined
+            ></generic-interest-combobox>
           </v-col>
           <v-col cols="12">
             <v-text-field
@@ -72,16 +73,22 @@
 <script>
 import GenericTransportationCombobox from "@/components/generic/combobox/Transportation";
 import CustomTimePicker from "@/components/custom/TimePicker";
+import GenericInterestCombobox from "@/components/generic/combobox/Interests";
 
 const defaultTimestampForm = {
   time: null,
   destinationID: null,
   transportation: "",
+  interests: [],
 };
 
 export default {
   name: "itinerary-post-editor-page-timeline-timestamp-form-dialog",
-  components: { CustomTimePicker, GenericTransportationCombobox },
+  components: {
+    GenericInterestCombobox,
+    CustomTimePicker,
+    GenericTransportationCombobox,
+  },
   props: {
     isOpen: {
       type: Boolean,
