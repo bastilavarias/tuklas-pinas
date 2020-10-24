@@ -79,9 +79,9 @@
                 <v-card-text>
                   <v-row dense>
                     <v-col cols="12">
-                      <itinerary-post-editor-page-timeline-field
+                      <itinerary-post-editor-page-itinerary-field
                         :itinerary.sync="form.itinerary"
-                      ></itinerary-post-editor-page-timeline-field>
+                      ></itinerary-post-editor-page-itinerary-field>
                     </v-col>
                   </v-row>
                 </v-card-text>
@@ -129,7 +129,6 @@
 </template>
 
 <script>
-import ItineraryPostEditorPageTimelineField from "@/components/itinerary-post-editor-page/timeline-field/Index";
 import CustomFileDropzone from "@/components/custom/FileDropzone";
 import ItineraryPostEditorPagePersonalReviewsField from "@/components/itinerary-post-editor-page/personal-reviews-field/Index";
 import GenericPostingGuidelinesCard from "@/components/generic/card/PostingGuidelines";
@@ -141,6 +140,7 @@ import {
   FETCH_GENERIC_TRAVEL_EVENTS,
 } from "@/store/types/generic";
 import GenericCategoryCombobox from "@/components/generic/combobox/Category";
+import ItineraryPostEditorPageItineraryField from "@/components/itinerary-post-editor-page/itinerary/Field";
 
 const defaultItineraryForm = {
   title: "",
@@ -168,13 +168,13 @@ const defaultItineraryForm = {
 
 export default {
   components: {
+    ItineraryPostEditorPageItineraryField,
     GenericCategoryCombobox,
     GenericBasicFooter,
     GenericStickyFooter,
     GenericPostingGuidelinesCard,
     ItineraryPostEditorPagePersonalReviewsField,
     CustomFileDropzone,
-    ItineraryPostEditorPageTimelineField,
   },
   data() {
     return {

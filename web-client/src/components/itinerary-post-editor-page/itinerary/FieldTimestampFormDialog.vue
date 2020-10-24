@@ -110,7 +110,7 @@ const defaultTimestampForm = {
 };
 
 export default {
-  name: "itinerary-post-editor-page-timeline-timestamp-form-dialog",
+  name: "itinerary-post-editor-page-itinerary-field-form-timestamp-dialog",
   components: {
     GenericDestinationsAutocomplete,
     GenericInterestCombobox,

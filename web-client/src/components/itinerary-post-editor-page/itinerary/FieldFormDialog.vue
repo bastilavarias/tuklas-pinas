@@ -105,12 +105,12 @@
         >
       </v-card-actions>
     </v-card>
-    <itinerary-post-editor-page-timeline-timestamp-form-dialog
+    <itinerary-post-editor-page-itinerary-field-form-timestamp-dialog
       :is-open.sync="isTimestampFormDialogOpen"
       :timestamps.sync="form.timestamps"
       :selected-timestamp="selectedTimestamp"
       :operation="timestampFormDialogOperation"
-    ></itinerary-post-editor-page-timeline-timestamp-form-dialog>
+    ></itinerary-post-editor-page-itinerary-field-form-timestamp-dialog>
     <custom-alert-dialog
       :is-open.sync="isCustomAlertDialogOpen"
       type="warning"
@@ -124,12 +124,12 @@
 <script>
 import CustomFileDropzone from "@/components/custom/FileDropzone";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
-import ItineraryPostEditorPageTimelineTimestampFormDialog from "@/components/itinerary-post-editor-page/timeline-field/TimestampFormDialog";
 import CustomDatePicker from "@/components/custom/DatePicker";
 import commonUtilities from "@/common/utilities";
 import CustomAlertDialog from "@/components/custom/AlertDialog";
 import commonValidation from "@/common/validation";
 import moment from "moment";
+import ItineraryPostEditorPageItineraryFieldFormTimestampDialog from "@/components/itinerary-post-editor-page/itinerary/FieldTimestampFormDialog";
 
 const defaultDayForm = {
   date: null,
@@ -137,11 +137,11 @@ const defaultDayForm = {
 };
 
 export default {
-  name: "itinerary-post-editor-page-timeline-dialog",
+  name: "itinerary-post-editor-page-itinerary-field-form-dialog",
   components: {
+    ItineraryPostEditorPageItineraryFieldFormTimestampDialog,
     CustomAlertDialog,
     CustomDatePicker,
-    ItineraryPostEditorPageTimelineTimestampFormDialog,
     CustomTooltipButton,
     CustomFileDropzone,
   },

@@ -51,12 +51,12 @@
         </v-data-table>
       </v-col>
     </v-row>
-    <itinerary-post-editor-page-timeline-dialog
+    <itinerary-post-editor-page-itinerary-field-form-dialog
       :is-open.sync="isDayFormDialogOpen"
       :days.sync="itineraryLocal.days"
       :operation="dayFormDialogOperation"
       :selected-day="selectedDay"
-    ></itinerary-post-editor-page-timeline-dialog>
+    ></itinerary-post-editor-page-itinerary-field-form-dialog>
     <custom-alert-dialog
       :is-open="isCustomAlertDialogOpen"
       type="warning"
@@ -69,14 +69,14 @@
 
 <script>
 import CustomTooltipButton from "@/components/custom/TooltipButton";
-import ItineraryPostEditorPageTimelineDialog from "@/components/itinerary-post-editor-page/timeline-field/Dialog";
 import commonUtilities from "@/common/utilities";
 import CustomAlertDialog from "@/components/custom/AlertDialog";
+import ItineraryPostEditorPageItineraryFieldFormDialog from "@/components/itinerary-post-editor-page/itinerary/FieldFormDialog";
 export default {
-  name: "itinerary-post-editor-page-timeline-field",
+  name: "itinerary-post-editor-page-itinerary-field",
   components: {
+    ItineraryPostEditorPageItineraryFieldFormDialog,
     CustomAlertDialog,
-    ItineraryPostEditorPageTimelineDialog,
     CustomTooltipButton,
   },
   props: {
