@@ -2,7 +2,10 @@
   <v-dialog v-model="isOpenLocal" width="1000">
     <v-card>
       <v-card-title>
-        <span>Create Day {{ dayCount }} </span>
+        <span
+          >{{ operation === "create" ? "Create Day" : "Update Day" }}
+          {{ operation === "create" ? dayCount : selectedDay.day }}
+        </span>
         <div class="flex-grow-1"></div>
         <v-btn icon @click="isOpenLocal = false">
           <v-icon>mdi-close</v-icon>
@@ -16,11 +19,14 @@
               :date.sync="form.date"
               label="Date *"
               outlined
+              :disabled="operation === 'update'"
+              :show-current="false"
+              :min="lastSelectedDate"
             ></custom-date-picker>
           </v-col>
           <v-col cols="12">
             <div class="d-flex justify-space-between align-center">
-              <span class="subtitle-1">Timestamps</span>
+              <span class="subtitle-1">Timestamps *</span>
               <custom-tooltip-button
                 icon="mdi-plus"
                 text="Add New Timestamp"
@@ -83,8 +89,19 @@
       </v-card-text>
       <v-card-actions>
         <div class="flex-grow-1"></div>
-        <v-btn color="secondary" @click="createDay" :disabled="!form.date"
+        <v-btn
+          color="secondary"
+          @click="createDay"
+          :disabled="!isFormValid"
+          v-if="operation === 'create'"
           >Create</v-btn
+        >
+        <v-btn
+          color="secondary"
+          @click="updateDay"
+          :disabled="!isFormValid"
+          v-if="operation === 'update'"
+          >Update</v-btn
         >
       </v-card-actions>
     </v-card>
@@ -111,6 +128,8 @@ import ItineraryPostEditorPageTimelineTimestampFormDialog from "@/components/iti
 import CustomDatePicker from "@/components/custom/DatePicker";
 import commonUtilities from "@/common/utilities";
 import CustomAlertDialog from "@/components/custom/AlertDialog";
+import commonValidation from "@/common/validation";
+import moment from "moment";
 
 const defaultDayForm = {
   date: null,
@@ -133,6 +152,14 @@ export default {
     },
     days: {
       type: Array,
+      required: true,
+    },
+    operation: {
+      type: String,
+      required: true,
+    },
+    selectedDay: {
+      type: Object,
       required: true,
     },
   },
@@ -183,7 +210,7 @@ export default {
       daysLocal: this.days,
     };
   },
-  mixins: [commonUtilities],
+  mixins: [commonUtilities, commonValidation],
   computed: {
     genericDestinations() {
       return this.$store.state.generic.destinations;
@@ -195,6 +222,16 @@ export default {
     },
     dayCount() {
       return this.daysLocal.length + 1;
+    },
+    isFormValid() {
+      const { date, timestamps } = this.form;
+      return date && timestamps.length > 0;
+    },
+    lastSelectedDate() {
+      if (this.daysLocal.length <= 0) return "";
+      const lastItemIndex = this.daysLocal.length - 1;
+      const selectedDateString = this.daysLocal[lastItemIndex].date;
+      return moment(selectedDateString).add(2, "d").toISOString();
     },
   },
   watch: {
@@ -209,6 +246,13 @@ export default {
     },
     daysLocal(val) {
       this.$emit("update:days", val);
+    },
+    selectedDay(val) {
+      if (this.validateObject(val, "day") && this.operation === "update") {
+        this.form = Object.assign({}, val);
+      } else {
+        this.clearForm();
+      }
     },
   },
   methods: {
@@ -249,8 +293,19 @@ export default {
       this.clearForm();
       this.isOpenLocal = false;
     },
+    updateDay() {
+      this.daysLocal = this.daysLocal.map((item) => {
+        if (item.day === this.selectedDay.day) {
+          item = Object.assign({}, this.form);
+        }
+        return item;
+      });
+      this.clearForm();
+      this.isOpenLocal = false;
+    },
     clearForm() {
       this.form = Object.assign({}, this.defaultDayForm);
+      this.form.timestamps = [];
     },
   },
 };

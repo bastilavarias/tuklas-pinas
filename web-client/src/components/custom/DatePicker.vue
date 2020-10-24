@@ -18,9 +18,16 @@
         readonly
         v-bind="attrs"
         v-on="on"
+        :disabled="disabled"
       ></v-text-field>
     </template>
-    <v-date-picker v-model="dateLocal" @input="menu = false"></v-date-picker>
+    <v-date-picker
+      v-model="dateLocal"
+      @input="menu = false"
+      :disabled="disabled"
+      :show-current="showCurrent"
+      :min="min"
+    ></v-date-picker>
   </v-menu>
 </template>
 
@@ -51,6 +58,18 @@ export default {
     },
     outlined: {
       type: Boolean,
+      required: false,
+    },
+    disabled: {
+      type: Boolean,
+      required: false,
+    },
+    showCurrent: {
+      type: Boolean,
+      required: false,
+    },
+    min: {
+      type: String,
       required: false,
     },
   },

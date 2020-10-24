@@ -5,7 +5,7 @@
       <custom-tooltip-button
         icon="mdi-plus"
         text="Create New Day"
-        :action="() => (this.isItineraryDayFormDialogOpen = true)"
+        :action="openCreateDayFormDialog"
       ></custom-tooltip-button>
     </div>
     <v-row>
@@ -40,6 +40,7 @@
             <custom-tooltip-button
               icon="mdi-pencil-outline"
               text="Edit"
+              :action="() => openUpdateDayFormDialog(item)"
             ></custom-tooltip-button>
             <custom-tooltip-button
               icon="mdi-trash-can-outline"
@@ -50,8 +51,10 @@
       </v-col>
     </v-row>
     <itinerary-post-editor-page-timeline-dialog
-      :is-open.sync="isItineraryDayFormDialogOpen"
+      :is-open.sync="isDayFormDialogOpen"
       :days.sync="itineraryLocal.days"
+      :operation="dayFormDialogOperation"
+      :selected-day="selectedDay"
     ></itinerary-post-editor-page-timeline-dialog>
   </div>
 </template>
@@ -71,7 +74,7 @@ export default {
   },
   data() {
     return {
-      isItineraryDayFormDialogOpen: false,
+      isDayFormDialogOpen: false,
       itineraryDaysTableHeaders: [
         {
           text: "Day",
@@ -97,6 +100,7 @@ export default {
       ],
       itineraryLocal: this.itinerary,
       selectedDay: {},
+      dayFormDialogOperation: "create",
     };
   },
   mixins: [commonUtilities],
@@ -118,6 +122,16 @@ export default {
         .map((timestamp) => parseInt(timestamp.expenses))
         .reduce((flat, next) => flat + next, 0);
       return total ? total : 0;
+    },
+    openCreateDayFormDialog() {
+      this.dayFormDialogOperation = "create";
+      this.selectedDay = {};
+      this.isDayFormDialogOpen = true;
+    },
+    openUpdateDayFormDialog(day) {
+      this.dayFormDialogOperation = "update";
+      this.selectedDay = day;
+      this.isDayFormDialogOpen = true;
     },
   },
 };
