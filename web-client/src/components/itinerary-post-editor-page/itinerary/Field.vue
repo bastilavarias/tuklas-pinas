@@ -58,7 +58,7 @@
       :selected-day="selectedDay"
     ></itinerary-post-editor-page-itinerary-field-form-dialog>
     <custom-alert-dialog
-      :is-open="isCustomAlertDialogOpen"
+      :is-open.sync="isCustomAlertDialogOpen"
       type="warning"
       title="Remove Day"
       text="Removing this day is irreversible. Confirm anyway?"
