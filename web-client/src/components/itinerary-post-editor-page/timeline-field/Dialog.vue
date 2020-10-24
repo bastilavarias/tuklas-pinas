@@ -13,7 +13,7 @@
         <v-row dense>
           <v-col cols="12">
             <custom-date-picker
-              :date.sync="form.date"
+              :date.sync="date"
               label="Date *"
               outlined
               single-line
@@ -102,10 +102,6 @@ import ItineraryPostEditorPageTimelineTimestampFormDialog from "@/components/iti
 import CustomDatePicker from "@/components/custom/DatePicker";
 import commonUtilities from "@/common/utilities";
 
-const defaultItineraryDayForm = {
-  date: null,
-};
-
 export default {
   name: "itinerary-post-editor-page-timeline-dialog",
   components: {
@@ -159,8 +155,7 @@ export default {
       ],
       singleExpand: true,
       isTimestampFormDialogOpen: false,
-      form: Object.assign({}, defaultItineraryDayForm),
-      defaultItineraryDayForm,
+      date: null,
       timestamps: [],
       selectedTimestamp: {},
       timestampFormDialogOperation: "add",
