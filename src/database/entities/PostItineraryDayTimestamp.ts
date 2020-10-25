@@ -10,6 +10,7 @@ import {
 import Destination from "./Destination";
 import PostItineraryDay from "./PostItineraryDay";
 import PostItineraryDayTimestampInterest from "./PostItineraryDayTimestampInterest";
+import { ColumnNumericTransformer } from "../helper";
 
 @Entity()
 export default class PostItineraryDayTimestamp extends BaseEntity {
@@ -28,11 +29,13 @@ export default class PostItineraryDayTimestamp extends BaseEntity {
 
   @Column("numeric", {
     nullable: true,
+    transformer: new ColumnNumericTransformer(),
   })
   fare: number;
 
   @Column("numeric", {
     nullable: false,
+    transformer: new ColumnNumericTransformer(),
   })
   expenses: number;
 

@@ -17,7 +17,7 @@
         <v-list-item-content>
           <v-list-item-subtitle class="secondary--text">
             {{ index + 1 }}.
-            <span v-if="avoid">
+            <span v-if="avoid" class="font-weight-bold">
               {{ avoid }}
             </span>
           </v-list-item-subtitle>

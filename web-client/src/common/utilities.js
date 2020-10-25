@@ -24,7 +24,7 @@ const commonUtilities = {
     },
     matchHeight() {
       try {
-        this.stickyParentHeight = this.$refs.stickyParent.clientHeight - 500;
+        this.stickyParentHeight = this.$refs.stickyParent.clientHeight;
       } catch (error) {
         this.stickyParentHeight = 0;
       }

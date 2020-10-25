@@ -20,7 +20,6 @@
                       <v-text-field
                         outlined
                         label="Title * (E.g, 4 Nights in Amazing Paris)"
-                        single-line
                         color="primary"
                         v-model="form.title"
                       ></v-text-field>
@@ -29,29 +28,22 @@
                       <v-textarea
                         outlined
                         label="Text"
-                        single-line
                         color="primary"
                         v-model="form.text"
                       ></v-textarea>
                     </v-col>
                     <v-col cols="12">
-                      <v-autocomplete
+                      <generic-destinations-autocomplete
                         outlined
                         label="Destinations *"
-                        single-line
-                        :loading="isFetchGenericDestinationsStart"
-                        :items="genericDestinations"
+                        :destinationID.sync="form.destinationsID"
                         multiple
-                        item-text="name"
-                        item-value="id"
-                        v-model="form.destinationsID"
-                      ></v-autocomplete>
+                      ></generic-destinations-autocomplete>
                     </v-col>
                     <v-col cols="12">
                       <v-autocomplete
                         outlined
                         label="Travel Events *"
-                        single-line
                         :loading="isFetchGenericTravelEventsStart"
                         :items="genericTravelEvents"
                         multiple
@@ -64,7 +56,6 @@
                       <generic-category-combobox
                         outlined
                         label="Categories"
-                        single-line
                         :categories.sync="form.categories"
                       ></generic-category-combobox>
                     </v-col>
@@ -110,7 +101,12 @@
                   <v-btn color="secondary" class="text-capitalize" outlined
                     >Save as Draft</v-btn
                   >
-                  <v-btn color="primary" @click="createItinerary">Post</v-btn>
+                  <v-btn
+                    color="primary"
+                    @click="createItineraryPost"
+                    :loading="isCreateItineraryPostStart"
+                    >Post</v-btn
+                  >
                 </v-card-actions>
               </v-card>
             </v-col>
@@ -120,15 +116,6 @@
           <v-row>
             <v-col cols="12">
               <generic-posting-guidelines-card></generic-posting-guidelines-card>
-            </v-col>
-            <v-col cols="12">
-              <span class="caption">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Mollitia, quisquam?
-              </span>
-            </v-col>
-            <v-col cols="12">
-              <generic-sticky-footer></generic-sticky-footer>
             </v-col>
           </v-row>
         </v-col>
@@ -151,6 +138,10 @@ import {
 } from "@/store/types/generic";
 import GenericCategoryCombobox from "@/components/generic/combobox/Category";
 import ItineraryPostEditorPageItineraryField from "@/components/itinerary-post-editor-page/itinerary/Field";
+import { CREATE_ITINERARY_POST } from "@/store/types/post";
+import GenericDestinationsAutocomplete from "@/components/generic/autocomplete/Destinations";
+import commonValidation from "@/common/validation";
+import commonUtilities from "@/common/utilities";
 
 const defaultItineraryForm = {
   title: "",
@@ -184,6 +175,7 @@ const defaultItineraryForm = {
 
 export default {
   components: {
+    GenericDestinationsAutocomplete,
     ItineraryPostEditorPageItineraryField,
     GenericCategoryCombobox,
     GenericBasicFooter,
@@ -192,6 +184,7 @@ export default {
     ItineraryPostEditorPagePersonalReviewsField,
     CustomFileDropzone,
   },
+  mixins: [commonUtilities],
   data() {
     return {
       isFetchGenericDestinationsStart: false,
@@ -238,8 +231,19 @@ export default {
       await this.$store.dispatch(FETCH_GENERIC_TRAVEL_EVENTS);
       this.isFetchGenericTravelEventsStart = false;
     },
-    async createItinerary() {
-      console.log(this.form);
+    async createItineraryPost() {
+      this.isCreateItineraryPostStart = true;
+      const createdItineraryPost = await this.$store.dispatch(
+        CREATE_ITINERARY_POST,
+        this.form
+      );
+      const isObjectValid = this.validateObject(createdItineraryPost, "id");
+      if (isObjectValid)
+        return await this.$router.push({
+          name: "itinerary-post-page",
+          params: { postID: createdItineraryPost.id },
+        });
+      this.isCreateItineraryPostStart = false;
     },
   },
   async created() {

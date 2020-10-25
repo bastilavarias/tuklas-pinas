@@ -5,7 +5,6 @@
     counter
     :placeholder="label"
     multiple
-    single-line
     prepend-icon=""
     outlined
     persistent-hint

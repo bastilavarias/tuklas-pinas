@@ -12,6 +12,7 @@ import {
   IPostServiceCreateItineraryInput,
   IPostServiceCreateItineraryReview,
   IPostModelSaveReviewInput,
+  IPostModelUpdateDetailsInput,
 } from "./typeDefs";
 import cloudinaryService from "../cloudinary/service";
 import postModel from "./model";
@@ -33,29 +34,48 @@ const postService = {
     await this.saveDestinations(savedPostDetails.id, input.destinationsID);
     await this.saveCategories(savedPostDetails.id, input.categories);
     await this.saveTravelEvents(savedPostDetails.id, input.travelEventsID);
+    // @ts-ignore
     await this.saveFiles(savedPostDetails.id, input.files);
     return postModel.getTravelStorySoftDetails(savedPostDetails.id);
   },
 
   async createItinerary(
-    accountID: number,
+    postID: number,
     input: IPostServiceCreateItineraryInput
   ): Promise<Post> {
-    const savePostDetailsInput: IPostModelSaveDetailsInput = {
+    const updateDetailsInput: IPostModelUpdateDetailsInput = {
       title: input.title,
       text: input.text,
       type: "itinerary",
       isDraft: false,
+      accountID: 0,
+    };
+    const updatedDetails = await postModel.updateDetails(
+      postID,
+      updateDetailsInput
+    );
+    await this.saveDestinations(updatedDetails.id, input.destinationsID);
+    await this.saveCategories(updatedDetails.id, input.categories);
+    await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
+    await this.saveItineraryDetails(updatedDetails.id, input.itinerary);
+    await this.saveReviews(updatedDetails.id, input.review);
+    return postModel.getItinerarySoftDetails(updatedDetails.id);
+  },
+
+  async uploadFiles(
+    accountID: number,
+    files: Express.Multer.File[]
+  ): Promise<Post> {
+    const savePostDetailsInput: IPostModelSaveDetailsInput = {
+      title: "",
+      text: "",
+      type: "",
+      isDraft: false,
       accountID,
     };
     const savedPostDetails = await postModel.saveDetails(savePostDetailsInput);
-    await this.saveDestinations(savedPostDetails.id, input.destinationsID);
-    await this.saveCategories(savedPostDetails.id, input.categories);
-    await this.saveTravelEvents(savedPostDetails.id, input.travelEventsID);
-    await this.saveFiles(savedPostDetails.id, input.files);
-    await this.saveItineraryDetails(savedPostDetails.id, input.itinerary);
-    await this.saveReviews(savedPostDetails.id, input.review);
-    return postModel.getItinerarySoftDetails(savedPostDetails.id);
+    await this.saveFiles(savedPostDetails.id, files);
+    return postModel.getBasePostSoftDetails(savedPostDetails.id);
   },
 
   async saveDestinations(postID: number, destinationsID: number[]) {

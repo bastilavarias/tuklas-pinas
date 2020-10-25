@@ -17,7 +17,7 @@
         <v-list-item-content>
           <v-list-item-subtitle class="secondary--text">
             {{ index + 1 }}.
-            <span v-if="tip">
+            <span v-if="tip" class="font-weight-bold">
               {{ tip }}
             </span>
           </v-list-item-subtitle>

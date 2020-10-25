@@ -16,8 +16,9 @@
       <v-list-item two-line :key="index">
         <v-list-item-content>
           <v-list-item-subtitle>
-            <span class="secondary--text font-weight-bold mr-1 text-capitalize">
-              {{ index + 1 }}. {{ review.name }} </span
+            <span class="secondary--text mr-2 text-capitalize">
+              {{ index + 1 }}.
+              <span class="font-weight-bold">{{ review.name }}</span> </span
             ><generic-rating-chip :rating="review.rating"></generic-rating-chip>
           </v-list-item-subtitle>
           <v-list-item-subtitle>

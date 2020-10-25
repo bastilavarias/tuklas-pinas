@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 import Post from "./Post";
 import PostItineraryDay from "./PostItineraryDay";
+import { ColumnNumericTransformer } from "../helper";
 
 @Entity()
 export default class PostItinerary extends BaseEntity {
@@ -22,6 +23,7 @@ export default class PostItinerary extends BaseEntity {
 
   @Column("numeric", {
     nullable: false,
+    transformer: new ColumnNumericTransformer(),
   })
   totalExpenses: number;
 

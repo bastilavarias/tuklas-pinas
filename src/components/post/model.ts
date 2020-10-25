@@ -16,6 +16,7 @@ import {
   IPostTransportationReviewInput,
   IItineraryPostSoftDetails,
   IPostModelSaveReviewInput,
+  IPostModelUpdateDetailsInput,
 } from "./typeDefs";
 import Post from "../../database/entities/Post";
 import PostFile from "../../database/entities/PostFile";
@@ -247,6 +248,16 @@ const postModel = {
     }).save();
   },
 
+  async getBasePostSoftDetails(postID: number): Promise<Post> {
+    const gotDetails = <Post>await Post.findOne(postID, {
+      relations: ["author"],
+    });
+    gotDetails.files = await this.getSoftDetailsFiles(gotDetails.id);
+    // @ts-ignore
+    delete gotDetails.author.password;
+    return gotDetails!;
+  },
+
   async getTravelStorySoftDetails(
     postID: number
   ): Promise<ITravelStoryPostSoftDetails> {
@@ -382,6 +393,15 @@ const postModel = {
       ],
     });
     return gotReview!;
+  },
+
+  async updateDetails(
+    postID: number,
+    input: IPostModelUpdateDetailsInput
+  ): Promise<Post> {
+    const { title, text, type } = input;
+    await Post.update({ id: postID }, { title, text, type });
+    return await this.getBasePostSoftDetails(postID);
   },
 };
 

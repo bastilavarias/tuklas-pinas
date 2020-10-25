@@ -1,4 +1,7 @@
-import { CREATE_TRAVEL_STORY_POST } from "@/store/types/post";
+import {
+  CREATE_ITINERARY_POST,
+  CREATE_TRAVEL_STORY_POST,
+} from "@/store/types/post";
 import postService from "@/services/api/modules/post";
 import { SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS } from "@/store/types/generic";
 
@@ -38,6 +41,50 @@ const postStore = {
           color: "success",
         });
         return result.data ? result.data : {};
+      } catch (error) {
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Something went wrong to the server. Please try again.",
+          color: "error",
+        });
+      }
+    },
+    async [CREATE_ITINERARY_POST](
+      { commit },
+      {
+        title,
+        text,
+        destinationsID,
+        categories,
+        travelEventsID,
+        files,
+        itinerary,
+        review,
+      }
+    ) {
+      try {
+        const formData = new FormData();
+        files.map((file) => formData.append("files", file));
+        const uploadFilesResult = await postService.uploadFiles(formData);
+        const uploadedPostFiles = uploadFilesResult.data;
+        const form = {
+          postID: uploadedPostFiles.id,
+          title,
+          text,
+          destinationsID,
+          travelEventsID,
+          categories,
+          files: uploadedPostFiles.files,
+          itinerary,
+          review,
+        };
+        const createdItineraryPost = await postService.createItinerary(form);
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Creating itinerary done!",
+          color: "success",
+        });
+        return createdItineraryPost || {};
       } catch (error) {
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,
