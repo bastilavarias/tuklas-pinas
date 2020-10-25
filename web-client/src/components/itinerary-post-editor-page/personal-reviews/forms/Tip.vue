@@ -17,8 +17,8 @@
         <v-list-item-content>
           <v-list-item-subtitle class="secondary--text">
             {{ index + 1 }}.
-            <span v-if="tip.text">
-              {{ tip.text }}
+            <span v-if="tip">
+              {{ tip }}
             </span>
           </v-list-item-subtitle>
         </v-list-item-content>
@@ -77,11 +77,7 @@
         <v-card-text>
           <v-row dense>
             <v-col cols="12">
-              <v-textarea
-                outlined
-                label="Tip *"
-                v-model="form.text"
-              ></v-textarea>
+              <v-textarea outlined label="Tip *" v-model="tip"></v-textarea>
             </v-col>
           </v-row>
         </v-card-text>
@@ -117,9 +113,6 @@
 <script>
 import CustomAlertDialog from "@/components/custom/AlertDialog";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
-const defaultPersonalTipForm = {
-  text: "",
-};
 
 export default {
   name: "itinerary-post-editor-page-personal-tips-form",
@@ -136,18 +129,16 @@ export default {
   data() {
     return {
       isDialogOpen: false,
-      form: Object.assign({}, defaultPersonalTipForm),
-      defaultPersonalTipForm,
       tipsLocal: this.tips,
       operation: "add",
       selectedTipIndex: null,
       isCustomAlertDialogOpen: false,
+      tip: "",
     };
   },
   computed: {
     isFormValid() {
-      const { text } = this.form;
-      return text;
+      return this.tip;
     },
     tipCount() {
       return this.tipsLocal.length + 1;
@@ -168,20 +159,20 @@ export default {
       this.isDialogOpen = true;
     },
     addTip() {
-      this.tipsLocal = this.tipsLocal.push(this.form);
+      this.tipsLocal = this.tipsLocal.push(this.tip);
       this.clearForm();
       this.isDialogOpen = false;
     },
     openUpdateTipDialog(tip, index) {
       this.selectedTipIndex = index;
-      this.form = Object.assign({}, tip);
+      this.tip = tip;
       this.operation = "update";
       this.isDialogOpen = true;
     },
     updateTip() {
       this.tipsLocal = this.tipsLocal.map((tip, index) => {
         if (index === this.selectedTipIndex) {
-          tip = Object.assign({}, this.form);
+          tip = this.tip;
         }
         return tip;
       });
@@ -201,7 +192,7 @@ export default {
       this.isCustomAlertDialogOpen = false;
     },
     clearForm() {
-      this.form = Object.assign({}, this.defaultPersonalTipForm);
+      this.tip = "";
     },
   },
 };
