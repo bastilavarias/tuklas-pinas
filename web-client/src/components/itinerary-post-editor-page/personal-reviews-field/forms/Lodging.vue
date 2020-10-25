@@ -1,7 +1,7 @@
 <template>
   <v-card flat color="transparent">
     <v-card-title>
-      <span>Transportation Reviews</span>
+      <span>Lodging Reviews</span>
       <div class="flex-grow-1"></div>
       <custom-tooltip-button
         icon="mdi-plus"
@@ -17,13 +17,10 @@
         <v-list-item-content>
           <v-list-item-subtitle>
             <span class="secondary--text font-weight-bold mr-1 text-capitalize">
-              {{ index + 1 }}. {{ review.type }} </span
+              {{ index + 1 }}. {{ review.name }} </span
             ><generic-rating-chip :rating="review.rating"></generic-rating-chip>
           </v-list-item-subtitle>
           <v-list-item-subtitle>
-            <span class="font-weight-medium"
-              >To {{ getDestinationName(review.destinationID) }} -
-            </span>
             <span v-if="review.text">
               {{ review.text }}
             </span>
@@ -87,18 +84,11 @@
         <v-card-text>
           <v-row dense>
             <v-col cols="12">
-              <generic-transportation-combobox
-                :transport.sync="form.type"
-                label="Transport"
+              <v-text-field
                 outlined
-              ></generic-transportation-combobox>
-            </v-col>
-            <v-col cols="12">
-              <generic-destinations-autocomplete
-                :destinationID.sync="form.destinationID"
-                label="To Destination *"
-                outlined
-              ></generic-destinations-autocomplete>
+                label="Lodging Name *"
+                v-model="form.name"
+              ></v-text-field>
             </v-col>
             <v-col cols="12">
               <v-textarea
@@ -149,21 +139,15 @@ import CustomRating from "@/components/custom/Rating";
 import GenericRatingChip from "@/components/generic/chip/Rating";
 import CustomAlertDialog from "@/components/custom/AlertDialog";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
-import GenericTransportationCombobox from "@/components/generic/combobox/Transportation";
-import GenericDestinationsAutocomplete from "@/components/generic/autocomplete/Destinations";
-import commonFinder from "@/common/finder";
-const defaultPersonalReviewTransportationForm = {
-  type: "",
+const defaultPersonalReviewLodgingForm = {
+  name: "",
   text: "",
   rating: 0,
-  destinationID: null,
 };
 
 export default {
-  name: "itinerary-post-editor-page-personal-transportation-reviews-form",
+  name: "itinerary-post-editor-page-personal-lodging-reviews-form",
   components: {
-    GenericDestinationsAutocomplete,
-    GenericTransportationCombobox,
     CustomTooltipButton,
     CustomAlertDialog,
     GenericRatingChip,
@@ -175,12 +159,11 @@ export default {
       required: true,
     },
   },
-  mixins: [commonFinder],
   data() {
     return {
       isDialogOpen: false,
-      form: Object.assign({}, defaultPersonalReviewTransportationForm),
-      defaultPersonalReviewTransportationForm,
+      form: Object.assign({}, defaultPersonalReviewLodgingForm),
+      defaultPersonalReviewLodgingForm,
       reviewsLocal: this.reviews,
       operation: "add",
       selectedReviewIndex: null,
@@ -189,8 +172,8 @@ export default {
   },
   computed: {
     isFormValid() {
-      const { type, destinationID, rating } = this.form;
-      return type && destinationID && rating > 0;
+      const { name, rating } = this.form;
+      return name && rating > 0;
     },
     reviewCount() {
       return this.reviewsLocal.length + 1;
@@ -244,10 +227,7 @@ export default {
       this.isCustomAlertDialogOpen = false;
     },
     clearForm() {
-      this.form = Object.assign(
-        {},
-        this.defaultPersonalReviewTransportationForm
-      );
+      this.form = Object.assign({}, this.defaultPersonalReviewLodgingForm);
     },
   },
 };

@@ -1,7 +1,7 @@
 <template>
   <v-card flat color="transparent">
     <v-card-title>
-      <span>Lodging Reviews</span>
+      <span>Restaurant Reviews</span>
       <div class="flex-grow-1"></div>
       <custom-tooltip-button
         icon="mdi-plus"
@@ -86,7 +86,7 @@
             <v-col cols="12">
               <v-text-field
                 outlined
-                label="Lodging Name *"
+                label="Restaurant Name *"
                 v-model="form.name"
               ></v-text-field>
             </v-col>
@@ -139,14 +139,14 @@ import CustomRating from "@/components/custom/Rating";
 import GenericRatingChip from "@/components/generic/chip/Rating";
 import CustomAlertDialog from "@/components/custom/AlertDialog";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
-const defaultPersonalReviewLodgingForm = {
+const defaultPersonalReviewRestaurantForm = {
   name: "",
   text: "",
   rating: 0,
 };
 
 export default {
-  name: "itinerary-post-editor-page-personal-lodgings-review-form",
+  name: "itinerary-post-editor-page-personal-restaurant-reviews-form",
   components: {
     CustomTooltipButton,
     CustomAlertDialog,
@@ -162,8 +162,8 @@ export default {
   data() {
     return {
       isDialogOpen: false,
-      form: Object.assign({}, defaultPersonalReviewLodgingForm),
-      defaultPersonalReviewLodgingForm,
+      form: Object.assign({}, defaultPersonalReviewRestaurantForm),
+      defaultPersonalReviewRestaurantForm,
       reviewsLocal: this.reviews,
       operation: "add",
       selectedReviewIndex: null,
@@ -227,7 +227,7 @@ export default {
       this.isCustomAlertDialogOpen = false;
     },
     clearForm() {
-      this.form = Object.assign({}, this.defaultPersonalReviewLodgingForm);
+      this.form = Object.assign({}, this.defaultPersonalReviewRestaurantForm);
     },
   },
 };

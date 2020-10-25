@@ -1,7 +1,7 @@
 <template>
   <v-card flat color="transparent">
     <v-card-title>
-      <span>Restaurant Reviews</span>
+      <span>Activity Reviews</span>
       <div class="flex-grow-1"></div>
       <custom-tooltip-button
         icon="mdi-plus"
@@ -21,6 +21,9 @@
             ><generic-rating-chip :rating="review.rating"></generic-rating-chip>
           </v-list-item-subtitle>
           <v-list-item-subtitle>
+            <span class="font-weight-medium"
+              >{{ getDestinationName(review.destinationID) }} -
+            </span>
             <span v-if="review.text">
               {{ review.text }}
             </span>
@@ -86,9 +89,16 @@
             <v-col cols="12">
               <v-text-field
                 outlined
-                label="Restaurant Name *"
+                label="Activity Name *"
                 v-model="form.name"
               ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <generic-destinations-autocomplete
+                :destinationID.sync="form.destinationID"
+                label="Destination *"
+                outlined
+              ></generic-destinations-autocomplete>
             </v-col>
             <v-col cols="12">
               <v-textarea
@@ -139,15 +149,19 @@ import CustomRating from "@/components/custom/Rating";
 import GenericRatingChip from "@/components/generic/chip/Rating";
 import CustomAlertDialog from "@/components/custom/AlertDialog";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
-const defaultPersonalReviewRestaurantForm = {
+import GenericDestinationsAutocomplete from "@/components/generic/autocomplete/Destinations";
+import commonFinder from "@/common/finder";
+const defaultPersonalReviewActivityForm = {
   name: "",
   text: "",
   rating: 0,
+  destinationID: null,
 };
 
 export default {
-  name: "itinerary-post-editor-page-personal-restaurants-review-form",
+  name: "itinerary-post-editor-page-personal-activity-reviews-form",
   components: {
+    GenericDestinationsAutocomplete,
     CustomTooltipButton,
     CustomAlertDialog,
     GenericRatingChip,
@@ -159,11 +173,12 @@ export default {
       required: true,
     },
   },
+  mixins: [commonFinder],
   data() {
     return {
       isDialogOpen: false,
-      form: Object.assign({}, defaultPersonalReviewRestaurantForm),
-      defaultPersonalReviewRestaurantForm,
+      form: Object.assign({}, defaultPersonalReviewActivityForm),
+      defaultPersonalReviewActivityForm,
       reviewsLocal: this.reviews,
       operation: "add",
       selectedReviewIndex: null,
@@ -172,8 +187,8 @@ export default {
   },
   computed: {
     isFormValid() {
-      const { name, rating } = this.form;
-      return name && rating > 0;
+      const { name, destinationID, rating } = this.form;
+      return name && destinationID && rating > 0;
     },
     reviewCount() {
       return this.reviewsLocal.length + 1;
@@ -227,7 +242,7 @@ export default {
       this.isCustomAlertDialogOpen = false;
     },
     clearForm() {
-      this.form = Object.assign({}, this.defaultPersonalReviewRestaurantForm);
+      this.form = Object.assign({}, this.defaultPersonalReviewActivityForm);
     },
   },
 };

@@ -10,14 +10,14 @@
     </v-tabs>
     <v-tabs-items v-model="tab">
       <v-tab-item>
-        <itinerary-post-editor-page-personal-restaurants-review-form
+        <itinerary-post-editor-page-personal-restaurant-reviews-form
           :reviews.sync="form.restaurants"
-        ></itinerary-post-editor-page-personal-restaurants-review-form>
+        ></itinerary-post-editor-page-personal-restaurant-reviews-form>
       </v-tab-item>
       <v-tab-item>
-        <itinerary-post-editor-page-personal-lodgings-review-form
+        <itinerary-post-editor-page-personal-lodging-reviews-form
           :reviews.sync="form.lodgings"
-        ></itinerary-post-editor-page-personal-lodgings-review-form>
+        ></itinerary-post-editor-page-personal-lodging-reviews-form>
       </v-tab-item>
       <v-tab-item>
         <itinerary-post-editor-page-personal-transportation-review-form
@@ -25,7 +25,9 @@
         ></itinerary-post-editor-page-personal-transportation-review-form>
       </v-tab-item>
       <v-tab-item>
-        <itinerary-post-editor-page-personal-activities-review-form></itinerary-post-editor-page-personal-activities-review-form>
+        <itinerary-post-editor-page-personal-activity-reviews-form
+          :reviews.sync="form.activities"
+        ></itinerary-post-editor-page-personal-activity-reviews-form>
       </v-tab-item>
       <v-tab-item>
         <itinerary-post-editor-page-personal-internet-access-review-form></itinerary-post-editor-page-personal-internet-access-review-form>
@@ -44,36 +46,37 @@
 </template>
 
 <script>
-import ItineraryPostEditorPagePersonalRestaurantsReviewForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Restaurants";
-import ItineraryPostEditorPagePersonalLodgingsReviewForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Lodgings";
 import ItineraryPostEditorPagePersonalTransportationReviewForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Transportation";
-import ItineraryPostEditorPagePersonalActivitiesReviewForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Activities";
 import ItineraryPostEditorPagePersonalInternetAccessReviewForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/InternetAccess";
 import ItineraryPostEditorPagePersonalFinanceReviewForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Finance";
-import ItineraryPostEditorPagePersonalTipsForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Tips";
+import ItineraryPostEditorPagePersonalTipsForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Tip";
 import ItineraryPostEditorPagePersonalAvoidForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Avoid";
 import {
   FETCH_GENERIC_DESTINATIONS,
   FETCH_GENERIC_TRANSPORTATION,
 } from "@/store/types/generic";
+import ItineraryPostEditorPagePersonalRestaurantReviewsForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Restaurant";
+import ItineraryPostEditorPagePersonalLodgingReviewsForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Lodging";
+import ItineraryPostEditorPagePersonalActivityReviewsForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Activity";
 
 const defaultPersonalReviewForm = {
   restaurants: [],
   lodgings: [],
   transportation: [],
+  activities: [],
 };
 
 export default {
   name: "itinerary-post-editor-page-personal-reviews-field",
   components: {
+    ItineraryPostEditorPagePersonalActivityReviewsForm,
+    ItineraryPostEditorPagePersonalLodgingReviewsForm,
+    ItineraryPostEditorPagePersonalRestaurantReviewsForm,
     ItineraryPostEditorPagePersonalAvoidForm,
     ItineraryPostEditorPagePersonalTipsForm,
     ItineraryPostEditorPagePersonalFinanceReviewForm,
     ItineraryPostEditorPagePersonalInternetAccessReviewForm,
-    ItineraryPostEditorPagePersonalActivitiesReviewForm,
     ItineraryPostEditorPagePersonalTransportationReviewForm,
-    ItineraryPostEditorPagePersonalLodgingsReviewForm,
-    ItineraryPostEditorPagePersonalRestaurantsReviewForm,
   },
   data() {
     return {
