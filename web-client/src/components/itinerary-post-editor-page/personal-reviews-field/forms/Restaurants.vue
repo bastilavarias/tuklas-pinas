@@ -3,20 +3,31 @@
     <v-card-title>
       <span>Restaurants Review</span>
       <div class="flex-grow-1"></div>
-      <v-btn icon @click="isDialogOpen = true">
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
+      <custom-tooltip-button
+        icon="mdi-plus"
+        text="Add New Review"
+        :action="openAddReviewDialog"
+      ></custom-tooltip-button>
     </v-card-title>
-    <template v-for="n in 6">
-      <v-list-item two-line :key="n">
+    <v-card-text v-if="reviewsLocal.length === 0" class="text-center">
+      <span class="caption font-italic">No reviews yet.</span>
+    </v-card-text>
+    <template v-for="(review, index) in reviewsLocal">
+      <v-list-item two-line :key="index">
         <v-list-item-content>
-          <v-list-item-subtitle class="secondary--text font-weight-bold">
-            {{ n }}. Restaurant Name
+          <v-list-item-subtitle>
+            <span class="secondary--text font-weight-bold mr-1 text-capitalize">
+              {{ index + 1 }}. {{ review.name }} </span
+            ><generic-rating-chip :rating="review.rating"></generic-rating-chip>
           </v-list-item-subtitle>
-          <v-list-item-subtitle
-            >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid,
-            nam.</v-list-item-subtitle
-          >
+          <v-list-item-subtitle>
+            <span v-if="review.text">
+              {{ review.text }}
+            </span>
+            <span class="font-italic" v-if="!review.text">
+              No review specified.
+            </span>
+          </v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
           <v-menu>
@@ -35,8 +46,8 @@
                 <span>More Actions</span>
               </v-tooltip>
             </template>
-            <v-list>
-              <v-list-item>
+            <v-list dense>
+              <v-list-item @click="openUpdateReviewDialog(review, index)">
                 <v-list-item-icon>
                   <v-icon>mdi-pencil</v-icon>
                 </v-list-item-icon>
@@ -44,7 +55,7 @@
                   <v-list-item-title>Edit</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item>
+              <v-list-item @click="openRemoveReviewDialog(index)">
                 <v-list-item-icon>
                   <v-icon>mdi-trash-can</v-icon>
                 </v-list-item-icon>
@@ -60,7 +71,10 @@
     <v-dialog width="500" v-model="isDialogOpen">
       <v-card>
         <v-card-title>
-          <span>Add Review #1 </span>
+          <span v-if="operation === 'add'">Add Review #{{ reviewCount }} </span>
+          <span v-if="operation === 'update'"
+            >Update Review #{{ this.selectedReviewIndex + 1 }}
+          </span>
           <div class="flex-grow-1"></div>
           <v-btn icon @click="isDialogOpen = false">
             <v-icon>mdi-close</v-icon>
@@ -72,32 +86,149 @@
             <v-col cols="12">
               <v-text-field
                 outlined
-                single-line
-                label="Restaurant Name"
+                label="Restaurant Name *"
+                v-model="form.name"
               ></v-text-field>
             </v-col>
             <v-col cols="12">
-              <v-textarea outlined single-line label="Review"></v-textarea>
+              <v-textarea
+                outlined
+                label="Review"
+                v-model="form.text"
+              ></v-textarea>
+            </v-col>
+            <v-col cols="12">
+              <custom-rating
+                :rating.sync="form.rating"
+                label="Rating *"
+              ></custom-rating>
             </v-col>
           </v-row>
         </v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="secondary">Add</v-btn>
+          <v-btn
+            color="secondary"
+            :disabled="!isFormValid"
+            @click="addReview"
+            v-if="operation === 'add'"
+            >Add</v-btn
+          >
+          <v-btn
+            color="secondary"
+            :disabled="!isFormValid"
+            @click="updateReview"
+            v-if="operation === 'update'"
+            >Update</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <custom-alert-dialog
+      :is-open.sync="isCustomAlertDialogOpen"
+      type="warning"
+      :title="`Remove Review #${this.selectedReviewIndex + 1}`"
+      text="Removing this review is irreversible. Confirm anyway?"
+      :action="() => removeReview()"
+    ></custom-alert-dialog>
   </v-card>
 </template>
 
 <script>
+import CustomRating from "@/components/custom/Rating";
+import GenericRatingChip from "@/components/generic/chip/Rating";
+import CustomAlertDialog from "@/components/custom/AlertDialog";
+import CustomTooltipButton from "@/components/custom/TooltipButton";
+const defaultPersonalReviewRestaurantForm = {
+  name: "",
+  text: "",
+  rating: 0,
+};
+
 export default {
   name: "itinerary-post-editor-page-personal-restaurants-review-form",
-
+  components: {
+    CustomTooltipButton,
+    CustomAlertDialog,
+    GenericRatingChip,
+    CustomRating,
+  },
+  props: {
+    reviews: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       isDialogOpen: false,
+      form: Object.assign({}, defaultPersonalReviewRestaurantForm),
+      defaultPersonalReviewRestaurantForm,
+      reviewsLocal: this.reviews,
+      operation: "add",
+      selectedReviewIndex: null,
+      isCustomAlertDialogOpen: false,
     };
+  },
+  computed: {
+    isFormValid() {
+      const { name, rating } = this.form;
+      return name && rating > 0;
+    },
+    reviewCount() {
+      return this.reviewsLocal.length + 1;
+    },
+  },
+  watch: {
+    reviews(val) {
+      this.reviewsLocal = val;
+    },
+    reviewsLocal(val) {
+      this.$emit("update:reviews", val);
+    },
+  },
+  methods: {
+    openAddReviewDialog() {
+      this.operation = "add";
+      this.clearForm();
+      this.isDialogOpen = true;
+    },
+    addReview() {
+      this.reviewsLocal = this.reviewsLocal.push(this.form);
+      this.clearForm();
+      this.isDialogOpen = false;
+    },
+    openUpdateReviewDialog(review, index) {
+      this.selectedReviewIndex = index;
+      this.form = Object.assign({}, review);
+      this.operation = "update";
+      this.isDialogOpen = true;
+    },
+    updateReview() {
+      this.reviewsLocal = this.reviewsLocal.map((review, index) => {
+        if (index === this.selectedReviewIndex) {
+          review = Object.assign({}, this.form);
+        }
+        return review;
+      });
+      this.clearForm();
+      this.selectedReviewIndex = null;
+      this.isDialogOpen = false;
+    },
+    openRemoveReviewDialog(index) {
+      this.selectedReviewIndex = index;
+      this.isCustomAlertDialogOpen = true;
+    },
+    removeReview() {
+      this.reviewsLocal = this.reviewsLocal.filter(
+        (_, index) => index !== this.selectedReviewIndex
+      );
+      this.selectedReviewIndex = null;
+      this.isCustomAlertDialogOpen = false;
+    },
+    clearForm() {
+      this.form = Object.assign({}, this.defaultPersonalReviewRestaurantForm);
+    },
   },
 };
 </script>

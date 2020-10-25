@@ -76,6 +76,10 @@
                     </v-col>
                   </v-row>
                 </v-card-text>
+              </v-card>
+            </v-col>
+            <v-col cols="12">
+              <v-card outlined>
                 <v-card-text>
                   <v-row dense>
                     <v-col cols="12">
@@ -85,6 +89,10 @@
                     </v-col>
                   </v-row>
                 </v-card-text>
+              </v-card>
+            </v-col>
+            <v-col cols="12">
+              <v-card outlined>
                 <v-card-text>
                   <v-row dense>
                     <v-col cols="12">

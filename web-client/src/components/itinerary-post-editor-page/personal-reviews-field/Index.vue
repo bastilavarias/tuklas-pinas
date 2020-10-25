@@ -10,7 +10,9 @@
     </v-tabs>
     <v-tabs-items v-model="tab">
       <v-tab-item>
-        <itinerary-post-editor-page-personal-restaurants-review-form></itinerary-post-editor-page-personal-restaurants-review-form>
+        <itinerary-post-editor-page-personal-restaurants-review-form
+          :reviews.sync="form.restaurants"
+        ></itinerary-post-editor-page-personal-restaurants-review-form>
       </v-tab-item>
       <v-tab-item>
         <itinerary-post-editor-page-personal-lodgings-review-form></itinerary-post-editor-page-personal-lodgings-review-form>
@@ -46,6 +48,11 @@ import ItineraryPostEditorPagePersonalInternetAccessReviewForm from "@/component
 import ItineraryPostEditorPagePersonalFinanceReviewForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Finance";
 import ItineraryPostEditorPagePersonalTipsForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Tips";
 import ItineraryPostEditorPagePersonalAvoidForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Avoid";
+
+const defaultPersonalReviewForm = {
+  restaurants: [],
+};
+
 export default {
   name: "itinerary-post-editor-page-personal-reviews-field",
   components: {
@@ -95,6 +102,7 @@ export default {
           icon: "mdi-alert",
         },
       ],
+      form: Object.assign({}, defaultPersonalReviewForm),
     };
   },
 };
