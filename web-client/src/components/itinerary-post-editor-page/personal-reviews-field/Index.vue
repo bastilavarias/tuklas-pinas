@@ -30,7 +30,9 @@
         ></itinerary-post-editor-page-personal-activity-reviews-form>
       </v-tab-item>
       <v-tab-item>
-        <itinerary-post-editor-page-personal-internet-access-review-form></itinerary-post-editor-page-personal-internet-access-review-form>
+        <itinerary-post-editor-page-personal-internet-access-review-form
+          :review.sync="form.internetAccess"
+        ></itinerary-post-editor-page-personal-internet-access-review-form>
       </v-tab-item>
       <v-tab-item>
         <itinerary-post-editor-page-personal-finance-review-form></itinerary-post-editor-page-personal-finance-review-form>
@@ -64,6 +66,10 @@ const defaultPersonalReviewForm = {
   lodgings: [],
   transportation: [],
   activities: [],
+  internetAccess: {
+    text: "",
+    rating: 0,
+  },
 };
 
 export default {
