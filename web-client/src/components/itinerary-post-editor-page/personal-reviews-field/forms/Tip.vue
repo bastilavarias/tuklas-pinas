@@ -3,20 +3,24 @@
     <v-card-title>
       <span>Helpful Tips</span>
       <div class="flex-grow-1"></div>
-      <v-btn icon @click="isDialogOpen = true">
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
+      <custom-tooltip-button
+        icon="mdi-plus"
+        text="Add New Tip"
+        :action="openAddTipDialog"
+      ></custom-tooltip-button>
     </v-card-title>
-    <template v-for="n in 6">
-      <v-list-item two-line :key="n">
+    <v-card-text v-if="tipsLocal.length === 0" class="text-center">
+      <span class="caption font-italic">No tips yet.</span>
+    </v-card-text>
+    <template v-for="(tip, index) in tipsLocal">
+      <v-list-item :key="index">
         <v-list-item-content>
-          <v-list-item-subtitle class="secondary--text font-weight-bold">
-            {{ n }}. Tip Name
+          <v-list-item-subtitle class="secondary--text">
+            {{ index + 1 }}.
+            <span v-if="tip.text">
+              {{ tip.text }}
+            </span>
           </v-list-item-subtitle>
-          <v-list-item-subtitle
-            >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid,
-            nam.</v-list-item-subtitle
-          >
         </v-list-item-content>
         <v-list-item-action>
           <v-menu>
@@ -35,8 +39,8 @@
                 <span>More Actions</span>
               </v-tooltip>
             </template>
-            <v-list>
-              <v-list-item>
+            <v-list dense>
+              <v-list-item @click="openUpdateTipDialog(tip, index)">
                 <v-list-item-icon>
                   <v-icon>mdi-pencil</v-icon>
                 </v-list-item-icon>
@@ -44,7 +48,7 @@
                   <v-list-item-title>Edit</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item>
+              <v-list-item @click="openRemoveTipDialog(index)">
                 <v-list-item-icon>
                   <v-icon>mdi-trash-can</v-icon>
                 </v-list-item-icon>
@@ -60,7 +64,10 @@
     <v-dialog width="500" v-model="isDialogOpen">
       <v-card>
         <v-card-title>
-          <span>Add Review #1 </span>
+          <span v-if="operation === 'add'">Add Tip #{{ tipCount }} </span>
+          <span v-if="operation === 'update'"
+            >Update Tip #{{ this.selectedTipIndex + 1 }}
+          </span>
           <div class="flex-grow-1"></div>
           <v-btn icon @click="isDialogOpen = false">
             <v-icon>mdi-close</v-icon>
@@ -70,30 +77,132 @@
         <v-card-text>
           <v-row dense>
             <v-col cols="12">
-              <v-text-field outlined single-line label="Tip"></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-textarea outlined single-line label="Description"></v-textarea>
+              <v-textarea
+                outlined
+                label="Tip *"
+                v-model="form.text"
+              ></v-textarea>
             </v-col>
           </v-row>
         </v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="secondary">Add</v-btn>
+          <v-btn
+            color="secondary"
+            :disabled="!isFormValid"
+            @click="addTip"
+            v-if="operation === 'add'"
+            >Add</v-btn
+          >
+          <v-btn
+            color="secondary"
+            :disabled="!isFormValid"
+            @click="updateTip"
+            v-if="operation === 'update'"
+            >Update</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <custom-alert-dialog
+      :is-open.sync="isCustomAlertDialogOpen"
+      type="warning"
+      :title="`Remove Tip #${this.selectedTipIndex + 1}`"
+      text="Removing this tip is irreversible. Confirm anyway?"
+      :action="() => removeTip()"
+    ></custom-alert-dialog>
   </v-card>
 </template>
 
 <script>
+import CustomAlertDialog from "@/components/custom/AlertDialog";
+import CustomTooltipButton from "@/components/custom/TooltipButton";
+const defaultPersonalTipForm = {
+  text: "",
+};
+
 export default {
   name: "itinerary-post-editor-page-personal-tips-form",
-
+  components: {
+    CustomTooltipButton,
+    CustomAlertDialog,
+  },
+  props: {
+    tips: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       isDialogOpen: false,
+      form: Object.assign({}, defaultPersonalTipForm),
+      defaultPersonalTipForm,
+      tipsLocal: this.tips,
+      operation: "add",
+      selectedTipIndex: null,
+      isCustomAlertDialogOpen: false,
     };
+  },
+  computed: {
+    isFormValid() {
+      const { text } = this.form;
+      return text;
+    },
+    tipCount() {
+      return this.tipsLocal.length + 1;
+    },
+  },
+  watch: {
+    tips(val) {
+      this.tipsLocal = val;
+    },
+    tipsLocal(val) {
+      this.$emit("update:tips", val);
+    },
+  },
+  methods: {
+    openAddTipDialog() {
+      this.operation = "add";
+      this.clearForm();
+      this.isDialogOpen = true;
+    },
+    addTip() {
+      this.tipsLocal = this.tipsLocal.push(this.form);
+      this.clearForm();
+      this.isDialogOpen = false;
+    },
+    openUpdateTipDialog(tip, index) {
+      this.selectedTipIndex = index;
+      this.form = Object.assign({}, tip);
+      this.operation = "update";
+      this.isDialogOpen = true;
+    },
+    updateTip() {
+      this.tipsLocal = this.tipsLocal.map((tip, index) => {
+        if (index === this.selectedTipIndex) {
+          tip = Object.assign({}, this.form);
+        }
+        return tip;
+      });
+      this.clearForm();
+      this.selectedTipIndex = null;
+      this.isDialogOpen = false;
+    },
+    openRemoveTipDialog(index) {
+      this.selectedTipIndex = index;
+      this.isCustomAlertDialogOpen = true;
+    },
+    removeTip() {
+      this.tipsLocal = this.tipsLocal.filter(
+        (_, index) => index !== this.selectedTipIndex
+      );
+      this.selectedTipIndex = null;
+      this.isCustomAlertDialogOpen = false;
+    },
+    clearForm() {
+      this.form = Object.assign({}, this.defaultPersonalTipForm);
+    },
   },
 };
 </script>

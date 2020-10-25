@@ -40,10 +40,12 @@
         ></itinerary-post-editor-page-personal-finance-review-form>
       </v-tab-item>
       <v-tab-item>
-        <itinerary-post-editor-page-personal-tips-form></itinerary-post-editor-page-personal-tips-form>
+        <itinerary-post-editor-page-personal-tips-form
+          :tips.sync="form.tips"
+        ></itinerary-post-editor-page-personal-tips-form>
       </v-tab-item>
       <v-tab-item>
-        <itinerary-post-editor-page-personal-avoid-form></itinerary-post-editor-page-personal-avoid-form>
+        <!--        <itinerary-post-editor-page-personal-avoid-form></itinerary-post-editor-page-personal-avoid-form>-->
       </v-tab-item>
     </v-tabs-items>
   </div>
@@ -53,8 +55,6 @@
 import ItineraryPostEditorPagePersonalTransportationReviewForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Transportation";
 import ItineraryPostEditorPagePersonalInternetAccessReviewForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/InternetAccess";
 import ItineraryPostEditorPagePersonalFinanceReviewForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Finance";
-import ItineraryPostEditorPagePersonalTipsForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Tip";
-import ItineraryPostEditorPagePersonalAvoidForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Avoid";
 import {
   FETCH_GENERIC_DESTINATIONS,
   FETCH_GENERIC_TRANSPORTATION,
@@ -62,6 +62,7 @@ import {
 import ItineraryPostEditorPagePersonalRestaurantReviewsForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Restaurant";
 import ItineraryPostEditorPagePersonalLodgingReviewsForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Lodging";
 import ItineraryPostEditorPagePersonalActivityReviewsForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Activity";
+import ItineraryPostEditorPagePersonalTipsForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Tip";
 
 const defaultPersonalReviewForm = {
   restaurants: [],
@@ -76,16 +77,17 @@ const defaultPersonalReviewForm = {
     text: "",
     rating: 0,
   },
+  tips: [],
+  avoids: [],
 };
 
 export default {
   name: "itinerary-post-editor-page-personal-reviews-field",
   components: {
+    ItineraryPostEditorPagePersonalTipsForm,
     ItineraryPostEditorPagePersonalActivityReviewsForm,
     ItineraryPostEditorPagePersonalLodgingReviewsForm,
     ItineraryPostEditorPagePersonalRestaurantReviewsForm,
-    ItineraryPostEditorPagePersonalAvoidForm,
-    ItineraryPostEditorPagePersonalTipsForm,
     ItineraryPostEditorPagePersonalFinanceReviewForm,
     ItineraryPostEditorPagePersonalInternetAccessReviewForm,
     ItineraryPostEditorPagePersonalTransportationReviewForm,
