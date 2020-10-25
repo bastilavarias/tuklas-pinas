@@ -1,7 +1,7 @@
 <template>
   <v-card flat color="transparent">
     <v-card-title>
-      <span>Lodgings Review</span>
+      <span>Lodging Reviews</span>
       <div class="flex-grow-1"></div>
       <custom-tooltip-button
         icon="mdi-plus"

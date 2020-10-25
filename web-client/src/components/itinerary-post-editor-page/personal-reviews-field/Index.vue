@@ -20,7 +20,9 @@
         ></itinerary-post-editor-page-personal-lodgings-review-form>
       </v-tab-item>
       <v-tab-item>
-        <itinerary-post-editor-page-personal-transportation-review-form></itinerary-post-editor-page-personal-transportation-review-form>
+        <itinerary-post-editor-page-personal-transportation-review-form
+          :reviews.sync="form.transportation"
+        ></itinerary-post-editor-page-personal-transportation-review-form>
       </v-tab-item>
       <v-tab-item>
         <itinerary-post-editor-page-personal-activities-review-form></itinerary-post-editor-page-personal-activities-review-form>
@@ -50,10 +52,15 @@ import ItineraryPostEditorPagePersonalInternetAccessReviewForm from "@/component
 import ItineraryPostEditorPagePersonalFinanceReviewForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Finance";
 import ItineraryPostEditorPagePersonalTipsForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Tips";
 import ItineraryPostEditorPagePersonalAvoidForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Avoid";
+import {
+  FETCH_GENERIC_DESTINATIONS,
+  FETCH_GENERIC_TRANSPORTATION,
+} from "@/store/types/generic";
 
 const defaultPersonalReviewForm = {
   restaurants: [],
   lodgings: [],
+  transportation: [],
 };
 
 export default {
@@ -107,6 +114,10 @@ export default {
       ],
       form: Object.assign({}, defaultPersonalReviewForm),
     };
+  },
+  async created() {
+    await this.$store.dispatch(FETCH_GENERIC_DESTINATIONS);
+    await this.$store.dispatch(FETCH_GENERIC_TRANSPORTATION);
   },
 };
 </script>

@@ -130,6 +130,7 @@ import CustomAlertDialog from "@/components/custom/AlertDialog";
 import commonValidation from "@/common/validation";
 import moment from "moment";
 import ItineraryPostEditorPageItineraryFieldFormTimestampDialog from "@/components/itinerary-post-editor-page/itinerary/FieldTimestampFormDialog";
+import commonFinder from "@/common/finder";
 
 const defaultDayForm = {
   date: null,
@@ -210,11 +211,8 @@ export default {
       daysLocal: this.days,
     };
   },
-  mixins: [commonUtilities, commonValidation],
+  mixins: [commonUtilities, commonValidation, commonFinder],
   computed: {
-    genericDestinations() {
-      return this.$store.state.generic.destinations;
-    },
     sortedTimestamps() {
       return this.form.timestamps.sort((flat, next) =>
         flat.time < next.time ? -1 : flat.time > next.time ? 1 : 0
@@ -256,12 +254,6 @@ export default {
     },
   },
   methods: {
-    getDestinationName(destinationID) {
-      const foundDestination = this.genericDestinations.find(
-        (destination) => destination.id === destinationID
-      );
-      return foundDestination.name;
-    },
     openAddTimestampFormDialog() {
       this.timestampFormDialogOperation = "add";
       this.selectedTimestamp = {};
