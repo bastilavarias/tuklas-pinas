@@ -45,7 +45,9 @@
         ></itinerary-post-editor-page-personal-tips-form>
       </v-tab-item>
       <v-tab-item>
-        <!--        <itinerary-post-editor-page-personal-avoid-form></itinerary-post-editor-page-personal-avoid-form>-->
+        <itinerary-post-editor-page-personal-avoids-form
+          :avoids.sync="form.avoids"
+        ></itinerary-post-editor-page-personal-avoids-form>
       </v-tab-item>
     </v-tabs-items>
   </div>
@@ -63,6 +65,7 @@ import ItineraryPostEditorPagePersonalRestaurantReviewsForm from "@/components/i
 import ItineraryPostEditorPagePersonalLodgingReviewsForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Lodging";
 import ItineraryPostEditorPagePersonalActivityReviewsForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Activity";
 import ItineraryPostEditorPagePersonalTipsForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Tip";
+import ItineraryPostEditorPagePersonalAvoidsForm from "@/components/itinerary-post-editor-page/personal-reviews-field/forms/Avoid";
 
 const defaultPersonalReviewForm = {
   restaurants: [],
@@ -84,6 +87,7 @@ const defaultPersonalReviewForm = {
 export default {
   name: "itinerary-post-editor-page-personal-reviews-field",
   components: {
+    ItineraryPostEditorPagePersonalAvoidsForm,
     ItineraryPostEditorPagePersonalTipsForm,
     ItineraryPostEditorPagePersonalActivityReviewsForm,
     ItineraryPostEditorPagePersonalLodgingReviewsForm,

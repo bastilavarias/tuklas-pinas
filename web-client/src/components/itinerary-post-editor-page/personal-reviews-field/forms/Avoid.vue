@@ -3,20 +3,24 @@
     <v-card-title>
       <span>What to Avoid</span>
       <div class="flex-grow-1"></div>
-      <v-btn icon @click="isDialogOpen = true">
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
+      <custom-tooltip-button
+        icon="mdi-plus"
+        text="Add New Avoid"
+        :action="openAddAvoidDialog"
+      ></custom-tooltip-button>
     </v-card-title>
-    <template v-for="n in 6">
-      <v-list-item two-line :key="n">
+    <v-card-text v-if="avoidsLocal.length === 0" class="text-center">
+      <span class="caption font-italic">No avoids yet.</span>
+    </v-card-text>
+    <template v-for="(avoid, index) in avoidsLocal">
+      <v-list-item :key="index">
         <v-list-item-content>
-          <v-list-item-subtitle class="secondary--text font-weight-bold">
-            {{ n }}. Avoid Name
+          <v-list-item-subtitle class="secondary--text">
+            {{ index + 1 }}.
+            <span v-if="avoid.text">
+              {{ avoid.text }}
+            </span>
           </v-list-item-subtitle>
-          <v-list-item-subtitle
-            >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid,
-            nam.</v-list-item-subtitle
-          >
         </v-list-item-content>
         <v-list-item-action>
           <v-menu>
@@ -35,8 +39,8 @@
                 <span>More Actions</span>
               </v-tooltip>
             </template>
-            <v-list>
-              <v-list-item>
+            <v-list dense>
+              <v-list-item @click="openUpdateAvoidDialog(avoid, index)">
                 <v-list-item-icon>
                   <v-icon>mdi-pencil</v-icon>
                 </v-list-item-icon>
@@ -44,7 +48,7 @@
                   <v-list-item-title>Edit</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item>
+              <v-list-item @click="openRemoveAvoidDialog(index)">
                 <v-list-item-icon>
                   <v-icon>mdi-trash-can</v-icon>
                 </v-list-item-icon>
@@ -60,7 +64,10 @@
     <v-dialog width="500" v-model="isDialogOpen">
       <v-card>
         <v-card-title>
-          <span>Add Review #1 </span>
+          <span v-if="operation === 'add'">Add Avoid #{{ avoidCount }} </span>
+          <span v-if="operation === 'update'"
+            >Update Avoid #{{ this.selectedAvoidIndex + 1 }}
+          </span>
           <div class="flex-grow-1"></div>
           <v-btn icon @click="isDialogOpen = false">
             <v-icon>mdi-close</v-icon>
@@ -70,30 +77,132 @@
         <v-card-text>
           <v-row dense>
             <v-col cols="12">
-              <v-text-field outlined single-line label="Avoid"></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-textarea outlined single-line label="Description"></v-textarea>
+              <v-textarea
+                outlined
+                label="Avoid *"
+                v-model="form.text"
+              ></v-textarea>
             </v-col>
           </v-row>
         </v-card-text>
         <v-card-actions>
           <div class="flex-grow-1"></div>
-          <v-btn color="secondary">Add</v-btn>
+          <v-btn
+            color="secondary"
+            :disabled="!isFormValid"
+            @click="addAvoid"
+            v-if="operation === 'add'"
+            >Add</v-btn
+          >
+          <v-btn
+            color="secondary"
+            :disabled="!isFormValid"
+            @click="updateAvoid"
+            v-if="operation === 'update'"
+            >Update</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <custom-alert-dialog
+      :is-open.sync="isCustomAlertDialogOpen"
+      type="warning"
+      :title="`Remove Avoid #${this.selectedAvoidIndex + 1}`"
+      text="Removing this tip is irreversible. Confirm anyway?"
+      :action="() => removeAvoid()"
+    ></custom-alert-dialog>
   </v-card>
 </template>
 
 <script>
-export default {
-  name: "itinerary-post-editor-page-personal-avoid-form",
+import CustomAlertDialog from "@/components/custom/AlertDialog";
+import CustomTooltipButton from "@/components/custom/TooltipButton";
+const defaultPersonalAvoidForm = {
+  text: "",
+};
 
+export default {
+  name: "itinerary-post-editor-page-personal-avoids-form",
+  components: {
+    CustomTooltipButton,
+    CustomAlertDialog,
+  },
+  props: {
+    avoids: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       isDialogOpen: false,
+      form: Object.assign({}, defaultPersonalAvoidForm),
+      defaultPersonalAvoidForm,
+      avoidsLocal: this.avoids,
+      operation: "add",
+      selectedAvoidIndex: null,
+      isCustomAlertDialogOpen: false,
     };
+  },
+  computed: {
+    isFormValid() {
+      const { text } = this.form;
+      return text;
+    },
+    avoidCount() {
+      return this.avoidsLocal.length + 1;
+    },
+  },
+  watch: {
+    avoids(val) {
+      this.avoidsLocal = val;
+    },
+    avoidsLocal(val) {
+      this.$emit("update:avoids", val);
+    },
+  },
+  methods: {
+    openAddAvoidDialog() {
+      this.operation = "add";
+      this.clearForm();
+      this.isDialogOpen = true;
+    },
+    addAvoid() {
+      this.avoidsLocal = this.avoidsLocal.push(this.form);
+      this.clearForm();
+      this.isDialogOpen = false;
+    },
+    openUpdateAvoidDialog(tip, index) {
+      this.selectedAvoidIndex = index;
+      this.form = Object.assign({}, tip);
+      this.operation = "update";
+      this.isDialogOpen = true;
+    },
+    updateAvoid() {
+      this.avoidsLocal = this.avoidsLocal.map((tip, index) => {
+        if (index === this.selectedAvoidIndex) {
+          tip = Object.assign({}, this.form);
+        }
+        return tip;
+      });
+      this.clearForm();
+      this.selectedAvoidIndex = null;
+      this.isDialogOpen = false;
+    },
+    openRemoveAvoidDialog(index) {
+      this.selectedAvoidIndex = index;
+      this.isCustomAlertDialogOpen = true;
+    },
+    removeAvoid() {
+      this.avoidsLocal = this.avoidsLocal.filter(
+        (_, index) => index !== this.selectedAvoidIndex
+      );
+      this.selectedAvoidIndex = null;
+      this.isCustomAlertDialogOpen = false;
+    },
+    clearForm() {
+      this.form = Object.assign({}, this.defaultPersonalAvoidForm);
+    },
   },
 };
 </script>
