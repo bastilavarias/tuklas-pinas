@@ -13,10 +13,9 @@
           ></v-textarea>
         </v-col>
         <v-col cols="12">
-          <custom-rating
-            :rating="reviewLocal.rating"
-            label="Rating"
-          ></custom-rating>
+          <div class="d-flex justify-center">
+            <custom-rating :rating="reviewLocal.rating"></custom-rating>
+          </div>
         </v-col>
       </v-row>
     </v-card-text>

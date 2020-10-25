@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <span>
     <span class="subtitle-1" v-if="label">{{ label }}</span>
     <div class="d-flex align-center">
       <v-rating
@@ -11,7 +11,7 @@
       ></v-rating>
       <span class="grey--text subtitle-2"> ({{ ratingLocal }}) </span>
     </div>
-  </div>
+  </span>
 </template>
 
 <script>
