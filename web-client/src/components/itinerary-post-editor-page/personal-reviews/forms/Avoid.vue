@@ -17,8 +17,8 @@
         <v-list-item-content>
           <v-list-item-subtitle class="secondary--text">
             {{ index + 1 }}.
-            <span v-if="avoid.text">
-              {{ avoid.text }}
+            <span v-if="avoid">
+              {{ avoid }}
             </span>
           </v-list-item-subtitle>
         </v-list-item-content>
@@ -77,11 +77,7 @@
         <v-card-text>
           <v-row dense>
             <v-col cols="12">
-              <v-textarea
-                outlined
-                label="Avoid *"
-                v-model="form.text"
-              ></v-textarea>
+              <v-textarea outlined label="Avoid *" v-model="avoid"></v-textarea>
             </v-col>
           </v-row>
         </v-card-text>
@@ -117,9 +113,6 @@
 <script>
 import CustomAlertDialog from "@/components/custom/AlertDialog";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
-const defaultPersonalAvoidForm = {
-  text: "",
-};
 
 export default {
   name: "itinerary-post-editor-page-personal-avoids-form",
@@ -136,9 +129,8 @@ export default {
   data() {
     return {
       isDialogOpen: false,
-      form: Object.assign({}, defaultPersonalAvoidForm),
-      defaultPersonalAvoidForm,
       avoidsLocal: this.avoids,
+      avoid: "",
       operation: "add",
       selectedAvoidIndex: null,
       isCustomAlertDialogOpen: false,
@@ -146,8 +138,7 @@ export default {
   },
   computed: {
     isFormValid() {
-      const { text } = this.form;
-      return text;
+      return this.avoid;
     },
     avoidCount() {
       return this.avoidsLocal.length + 1;
@@ -168,22 +159,22 @@ export default {
       this.isDialogOpen = true;
     },
     addAvoid() {
-      this.avoidsLocal = this.avoidsLocal.push(this.form);
+      this.avoidsLocal = this.avoidsLocal.push(this.avoid);
       this.clearForm();
       this.isDialogOpen = false;
     },
-    openUpdateAvoidDialog(tip, index) {
+    openUpdateAvoidDialog(avoid, index) {
       this.selectedAvoidIndex = index;
-      this.form = Object.assign({}, tip);
+      this.avoid = avoid;
       this.operation = "update";
       this.isDialogOpen = true;
     },
     updateAvoid() {
-      this.avoidsLocal = this.avoidsLocal.map((tip, index) => {
+      this.avoidsLocal = this.avoidsLocal.map((avoid, index) => {
         if (index === this.selectedAvoidIndex) {
-          tip = Object.assign({}, this.form);
+          avoid = this.avoid;
         }
-        return tip;
+        return avoid;
       });
       this.clearForm();
       this.selectedAvoidIndex = null;
@@ -201,7 +192,7 @@ export default {
       this.isCustomAlertDialogOpen = false;
     },
     clearForm() {
-      this.form = Object.assign({}, this.defaultPersonalAvoidForm);
+      this.avoid = "";
     },
   },
 };
