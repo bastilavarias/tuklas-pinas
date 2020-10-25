@@ -15,7 +15,9 @@
         ></itinerary-post-editor-page-personal-restaurants-review-form>
       </v-tab-item>
       <v-tab-item>
-        <itinerary-post-editor-page-personal-lodgings-review-form></itinerary-post-editor-page-personal-lodgings-review-form>
+        <itinerary-post-editor-page-personal-lodgings-review-form
+          :reviews.sync="form.lodgings"
+        ></itinerary-post-editor-page-personal-lodgings-review-form>
       </v-tab-item>
       <v-tab-item>
         <itinerary-post-editor-page-personal-transportation-review-form></itinerary-post-editor-page-personal-transportation-review-form>
@@ -51,6 +53,7 @@ import ItineraryPostEditorPagePersonalAvoidForm from "@/components/itinerary-pos
 
 const defaultPersonalReviewForm = {
   restaurants: [],
+  lodgings: [],
 };
 
 export default {
