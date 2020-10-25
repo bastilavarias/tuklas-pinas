@@ -99,7 +99,9 @@
                       <span class="subtitle-1">Personal Reviews</span>
                     </v-col>
                     <v-col cols="12">
-                      <itinerary-post-editor-page-personal-reviews-field></itinerary-post-editor-page-personal-reviews-field>
+                      <itinerary-post-editor-page-personal-reviews-field
+                        :review.sync="form.review"
+                      ></itinerary-post-editor-page-personal-reviews-field>
                     </v-col>
                   </v-row>
                 </v-card-text>
@@ -108,7 +110,7 @@
                   <v-btn color="secondary" class="text-capitalize" outlined
                     >Save as Draft</v-btn
                   >
-                  <v-btn color="primary">Post</v-btn>
+                  <v-btn color="primary" @click="createItinerary">Post</v-btn>
                 </v-card-actions>
               </v-card>
             </v-col>
@@ -138,7 +140,7 @@
 
 <script>
 import CustomFileDropzone from "@/components/custom/FileDropzone";
-import ItineraryPostEditorPagePersonalReviewsField from "@/components/itinerary-post-editor-page/personal-reviews-field/Index";
+import ItineraryPostEditorPagePersonalReviewsField from "@/components/itinerary-post-editor-page/personal-reviews/Field";
 import GenericPostingGuidelinesCard from "@/components/generic/card/PostingGuidelines";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
 import GenericBasicFooter from "@/components/generic/footer/Basic";
@@ -167,8 +169,14 @@ const defaultItineraryForm = {
     lodgings: [],
     transportation: [],
     activities: [],
-    internetAccess: {},
-    finance: {},
+    internetAccess: {
+      text: "",
+      rating: 0,
+    },
+    finance: {
+      text: "",
+      rating: 0,
+    },
     tips: [],
     avoids: [],
   },
@@ -200,6 +208,24 @@ export default {
     genericTravelEvents() {
       return this.$store.state.generic.travelEvents;
     },
+    totalDestinations() {
+      return this.form.itinerary.days
+        .map((day) => day.destinationsCount)
+        .reduce((flat, next) => flat + next, 0);
+    },
+    totalExpenses() {
+      return this.form.itinerary.days
+        .map((day) => day.expenses)
+        .reduce((flat, next) => flat + next, 0);
+    },
+  },
+  watch: {
+    totalDestinations(val) {
+      this.form.itinerary.totalDestinations = val;
+    },
+    totalExpenses(val) {
+      this.form.itinerary.totalExpenses = val;
+    },
   },
   methods: {
     async fetchGenericDestinations() {
@@ -211,6 +237,9 @@ export default {
       this.isFetchGenericTravelEventsStart = true;
       await this.$store.dispatch(FETCH_GENERIC_TRAVEL_EVENTS);
       this.isFetchGenericTravelEventsStart = false;
+    },
+    async createItinerary() {
+      console.log(this.form);
     },
   },
   async created() {

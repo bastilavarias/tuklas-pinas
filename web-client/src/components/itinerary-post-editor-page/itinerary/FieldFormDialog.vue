@@ -231,6 +231,16 @@ export default {
       const selectedDateString = this.daysLocal[lastItemIndex].date;
       return moment(selectedDateString).add(2, "d").toISOString();
     },
+    destinationsCount() {
+      const total = this.form.timestamps.length;
+      return total ? total : 0;
+    },
+    expenses() {
+      const total = this.form.timestamps
+        .map((timestamp) => parseInt(timestamp.expenses))
+        .reduce((flat, next) => flat + next, 0);
+      return total ? total : 0;
+    },
   },
   watch: {
     isOpen(val) {
@@ -280,6 +290,8 @@ export default {
         day: this.dayCount,
         date: this.form.date,
         timestamps: this.form.timestamps,
+        destinationsCount: this.destinationsCount,
+        expenses: this.expenses,
       };
       this.daysLocal = this.daysLocal.push(day);
       this.clearForm();
@@ -289,6 +301,8 @@ export default {
       this.daysLocal = this.daysLocal.map((item) => {
         if (item.day === this.selectedDay.day) {
           item = Object.assign({}, this.form);
+          item.destinationsCount = this.destinationsCount;
+          item.expenses = this.expenses;
         }
         return item;
       });

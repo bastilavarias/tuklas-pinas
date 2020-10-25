@@ -25,16 +25,16 @@
               </v-list-item-subtitle>
             </v-list-item-content>
           </template>
-          <template v-slot:item.totalDestinations="{ item }">
+          <template v-slot:item.destinationsCount="{ item }">
             <span class="text-capitalize"
-              >{{ totalDestinations(item.timestamps) }} Destination<span
-                v-if="totalDestinations(item.timestamps) > 1"
+              >{{ item.destinationsCount }} Destination<span
+                v-if="item.destinationsCount > 1"
                 >s</span
               ></span
             >
           </template>
-          <template v-slot:item.totalExpenses="{ item }">
-            <span>{{ formatMoney(totalExpenses(item.timestamps)) }}</span>
+          <template v-slot:item.expenses="{ item }">
+            <span>{{ formatMoney(item.expenses) }}</span>
           </template>
           <template v-slot:item.actions="{ item }">
             <custom-tooltip-button
@@ -96,13 +96,13 @@ export default {
           align: "left",
         },
         {
-          text: "Total Destinations",
-          value: "totalDestinations",
+          text: "Destinations",
+          value: "destinationsCount",
           sortable: true,
         },
         {
-          text: "Total Expenses",
-          value: "totalExpenses",
+          text: "Expenses",
+          value: "expenses",
           sortable: true,
         },
         {
@@ -127,16 +127,6 @@ export default {
     },
   },
   methods: {
-    totalDestinations(timestamps) {
-      const total = timestamps.length;
-      return total ? total : 0;
-    },
-    totalExpenses(timestamps) {
-      const total = timestamps
-        .map((timestamp) => parseInt(timestamp.expenses))
-        .reduce((flat, next) => flat + next, 0);
-      return total ? total : 0;
-    },
     openCreateDayFormDialog() {
       this.dayFormDialogOperation = "create";
       this.selectedDay = {};
