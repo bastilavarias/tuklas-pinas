@@ -37,7 +37,7 @@
                     <v-col cols="12">
                       <v-autocomplete
                         outlined
-                        label="Destination *"
+                        label="Destinations *"
                         single-line
                         :loading="isFetchGenericDestinationsStart"
                         :items="genericDestinations"
@@ -208,8 +208,7 @@ export default {
         this.form
       );
       this.isCreateTravelStoryPostStart = false;
-      console.log(createdTravelStoryPost);
-      const isObjectValid = this.validateObject(createdTravelStoryPost);
+      const isObjectValid = this.validateObject(createdTravelStoryPost, "id");
       if (isObjectValid)
         return await this.$router.push({
           name: "travel-story-post-page",

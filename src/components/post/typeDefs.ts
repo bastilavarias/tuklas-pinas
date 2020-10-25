@@ -5,14 +5,13 @@ import TravelEvent from "../../database/entities/TravelEvent";
 import PostItinerary from "../../database/entities/PostItinerary";
 import PostReview from "../../database/entities/PostReview";
 
-interface IBasePostInput {
+export interface IBasePostInput {
   title: string;
   text: string;
-  isDraft: boolean;
   destinationsID: number[];
   travelEventsID: number[];
   categories: string[];
-  files: Express.Multer.File[];
+  files: ICloudinaryFileMeta[];
 }
 
 export interface ITravelStoryPostSoftDetails extends Post {
@@ -50,6 +49,9 @@ export interface IPostModelSaveDetailsInput {
   isDraft: boolean;
   accountID: number;
 }
+
+export interface IPostModelUpdateDetailsInput
+  extends IPostModelSaveDetailsInput {}
 
 export interface IPostModelSaveFileInput extends ICloudinaryFileMeta {
   postID: number;

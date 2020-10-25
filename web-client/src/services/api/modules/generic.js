@@ -16,6 +16,10 @@ const genericApiService = {
   async fetchTravelEvents() {
     return await apiService.get("/generic/travel-events");
   },
+
+  async fetchTransportation() {
+    return await apiService.get("/generic/transportation");
+  },
 };
 
 export default genericApiService;

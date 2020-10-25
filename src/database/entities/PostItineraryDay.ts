@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 import PostItinerary from "./PostItinerary";
 import PostItineraryDayTimestamp from "./PostItineraryDayTimestamp";
+import { ColumnNumericTransformer } from "../helper";
 
 @Entity()
 export default class PostItineraryDay extends BaseEntity {
@@ -32,6 +33,7 @@ export default class PostItineraryDay extends BaseEntity {
 
   @Column("numeric", {
     nullable: false,
+    transformer: new ColumnNumericTransformer(),
   })
   expenses: number;
 

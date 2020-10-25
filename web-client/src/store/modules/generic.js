@@ -3,11 +3,13 @@ import {
   FETCH_GENERIC_DESTINATIONS,
   FETCH_GENERIC_NATIONALITIES,
   FETCH_GENERIC_SEXES,
+  FETCH_GENERIC_TRANSPORTATION,
   FETCH_GENERIC_TRAVEL_EVENTS,
   SET_GENERIC_DESTINATIONS,
   SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS,
   SET_GENERIC_NATIONALITIES,
   SET_GENERIC_SEXES,
+  SET_GENERIC_TRANSPORTATION,
   SET_GENERIC_TRAVEL_EVENTS,
 } from "@/store/types/generic";
 
@@ -22,6 +24,7 @@ const genericStore = {
       text: "",
       color: "",
     },
+    transportation: [],
   },
   mutations: {
     [SET_GENERIC_NATIONALITIES](state, nationalities) {
@@ -41,6 +44,9 @@ const genericStore = {
     },
     [SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS](state, configs) {
       state.globalSnackbarConfigs = Object.assign({}, configs);
+    },
+    [SET_GENERIC_TRANSPORTATION](state, transportation) {
+      state.transportation = transportation;
     },
   },
   actions: {
@@ -76,6 +82,15 @@ const genericStore = {
         const result = await genericApiService.fetchTravelEvents();
         const travelEvents = result ? result.data : [];
         commit(SET_GENERIC_TRAVEL_EVENTS, travelEvents);
+      } catch (error) {
+        throw new Error(`[RWV] ApiService ${error}`);
+      }
+    },
+    async [FETCH_GENERIC_TRANSPORTATION]({ commit }) {
+      try {
+        const result = await genericApiService.fetchTransportation();
+        const transportation = result ? result.data : [];
+        commit(SET_GENERIC_TRANSPORTATION, transportation);
       } catch (error) {
         throw new Error(`[RWV] ApiService ${error}`);
       }

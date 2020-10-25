@@ -1,43 +1,48 @@
 <template>
   <v-menu
-    v-model="menu"
+    ref="menu"
+    v-model="menu2"
     :close-on-content-click="false"
     :nudge-right="40"
+    :return-value.sync="timeLocal"
     transition="scale-transition"
     offset-y
+    max-width="290px"
     min-width="290px"
   >
     <template v-slot:activator="{ on, attrs }">
       <v-text-field
-        :value="formattedDate"
+        :value="formatTime(timeLocal)"
         :label="label"
         :filled="filled"
         :single-line="singleLine"
-        :outlined="outlined"
         :rounded="rounded"
+        :outlined="outlined"
         readonly
         v-bind="attrs"
         v-on="on"
-        :disabled="disabled"
+        :rules="rules"
+        :disabled="readonly"
       ></v-text-field>
     </template>
-    <v-date-picker
-      v-model="dateLocal"
-      @input="menu = false"
-      :disabled="disabled"
-      :show-current="showCurrent"
+    <v-time-picker
+      v-if="menu2"
+      v-model="timeLocal"
+      full-width
+      @click:minute="$refs.menu.save(timeLocal)"
+      :readonly="readonly"
       :min="min"
-    ></v-date-picker>
+    ></v-time-picker>
   </v-menu>
 </template>
 
 <script>
-import moment from "moment";
+import commonUtilities from "@/common/utilities";
 
 export default {
-  name: "custom-date-picker",
+  name: "custom-time-picker",
   props: {
-    date: {
+    time: {
       required: true,
     },
     label: {
@@ -60,11 +65,11 @@ export default {
       type: Boolean,
       required: false,
     },
-    disabled: {
-      type: Boolean,
+    rules: {
+      type: Array,
       required: false,
     },
-    showCurrent: {
+    readonly: {
       type: Boolean,
       required: false,
     },
@@ -75,23 +80,17 @@ export default {
   },
   data() {
     return {
-      dateLocal: this.date,
-      menu: false,
+      timeLocal: this.time,
+      menu2: false,
     };
   },
-  computed: {
-    formattedDate() {
-      return this.dateLocal
-        ? moment(this.dateLocal).format("MMMM Do YYYY")
-        : "";
-    },
-  },
+  mixins: [commonUtilities],
   watch: {
-    date(val) {
-      this.dateLocal = val;
+    time(val) {
+      this.timeLocal = val;
     },
-    dateLocal(val) {
-      this.$emit("update:date", val);
+    timeLocal(val) {
+      this.$emit("update:time", val);
     },
   },
 };
