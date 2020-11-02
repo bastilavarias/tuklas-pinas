@@ -184,7 +184,7 @@ export default {
     ItineraryPostEditorPagePersonalReviewsField,
     CustomFileDropzone,
   },
-  mixins: [commonUtilities],
+  mixins: [commonUtilities, commonValidation],
   data() {
     return {
       isFetchGenericDestinationsStart: false,
@@ -237,7 +237,7 @@ export default {
         CREATE_ITINERARY_POST,
         this.form
       );
-      const isObjectValid = this.validateObject(createdItineraryPost, "id");
+      const isObjectValid = this.validateObject(createdItineraryPost);
       if (isObjectValid)
         return await this.$router.push({
           name: "itinerary-post-page",

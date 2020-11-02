@@ -208,7 +208,7 @@ export default {
         this.form
       );
       this.isCreateTravelStoryPostStart = false;
-      const isObjectValid = this.validateObject(createdTravelStoryPost, "id");
+      const isObjectValid = this.validateObject(createdTravelStoryPost);
       if (isObjectValid)
         return await this.$router.push({
           name: "travel-story-post-page",

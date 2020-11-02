@@ -169,7 +169,7 @@ export default {
       this.$emit("update:isOpen", val);
     },
     selectedTimestamp(val) {
-      if (this.validateObject(val, "time") && this.operation === "update") {
+      if (this.validateObject(val) && this.operation === "update") {
         this.form = Object.assign({}, val);
       } else {
         this.clearForm();
