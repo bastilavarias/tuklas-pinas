@@ -18,7 +18,7 @@
           </v-col>
           <v-col cols="12">
             <template v-for="(post, index) in posts">
-              <generic-travel-story-post-preview-card
+              <generic-post-preview-card
                 :postID="post.id"
                 :type="post.type"
                 class-name="mb-5"
@@ -26,12 +26,9 @@
                 :createdAt="post.createdAt"
                 :title="post.title"
                 :text="post.text"
-                :travel-events="post.travelEvents"
-                :destinations="post.destinations"
-                :categories="post.categories"
                 :files="post.files"
                 :key="index"
-              ></generic-travel-story-post-preview-card>
+              ></generic-post-preview-card>
             </template>
             <infinite-loading
               @infinite="fetchPosts"
@@ -79,20 +76,18 @@ import GenericMiniProfileSideCard from "@/components/generic/card/MiniProfile";
 import GenericTopCategoriesSideCard from "@/components/generic/card/TopCategories";
 import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEventsExplorer";
 import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedPeople";
-import GenericItineraryPostPreviewCard from "@/components/generic/card/ItineraryPostPreview";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
-import GenericTravelStoryPostPreviewCard from "@/components/generic/card/TravelStoryPostPreview";
 import commonUtilities from "@/common/utilities";
 import FeedPagePostsTypeTabs from "@/components/feed-page/PostsTypeTabs";
 import { FETCH_NEW_POSTS } from "@/store/types/post";
 import GenericPleaseWaitProgressCircular from "@/components/generic/progress-circular/PleaseWait";
+import GenericPostPreviewCard from "@/components/generic/card/PostPreview";
 export default {
   components: {
+    GenericPostPreviewCard,
     GenericPleaseWaitProgressCircular,
     FeedPagePostsTypeTabs,
-    GenericTravelStoryPostPreviewCard,
     GenericStickyFooter,
-    GenericItineraryPostPreviewCard,
     GenericSuggestedPeopleSideCard,
     GenericMiniEventsExplorerSideCard,
     GenericTopCategoriesSideCard,
@@ -128,7 +123,6 @@ export default {
           this.skip
         );
         if (fetchedPosts.length === 0) return $state.complete();
-        console.log(fetchedPosts);
         this.posts = [...this.posts, ...fetchedPosts];
         this.skip += 5;
         this.scrollPage += 1;

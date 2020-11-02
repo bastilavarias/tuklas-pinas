@@ -35,8 +35,9 @@
       </v-avatar>
     </div>
     <carousel
+      v-if="type === 'travel-story'"
       :items="1"
-      dots
+      :dots="false"
       :nav="false"
       :autoplay="false"
       :mouse-drag="false"
@@ -44,7 +45,6 @@
       pull-drag
       free-drag
       style="position: relative"
-      v-if="type === 'travel-story'"
     >
       <template v-for="(file, index) in files">
         <custom-video-player
@@ -73,24 +73,33 @@
         </v-btn>
       </template>
     </carousel>
-    <div class="px-4 py-1 d-flex justify-space-between align-center">
-      <span class="caption">
-        {{ travelEvents.length > 1 ? "Events" : "Event" }}:
-        <template
-          v-for="(event, index) in travelEvents"
-          v-if="travelEvents.length > 1"
-        >
-          <span :key="index" class="mr-1"> {{ event.name }}, </span>
-        </template>
-      </span>
-    </div>
-    <v-divider> </v-divider>
-    <div class="px-4 py-1 d-flex justify-space-between align-center">
-      <span class="caption"
-        >Destination: <span class="font-italic"> Destination </span></span
-      >
-      <v-icon small color="primary">mdi-map-marker</v-icon>
-    </div>
+    <masonry
+      v-if="type === 'itinerary' && files.length > 1"
+      :cols="2"
+      :gutter="0"
+    >
+      <template v-for="(file, index) in files">
+        <custom-video-player
+          v-if="file.format === 'mp4'"
+          :url="file.url"
+        ></custom-video-player>
+        <v-img
+          :key="index"
+          width="100%"
+          height="auto"
+          :src="file.url"
+          :laz-src="file.url"
+          v-else
+        ></v-img>
+      </template>
+    </masonry>
+    <v-img
+      v-if="type === 'itinerary' && files.length === 1"
+      :src="files[0].url"
+      :lazy-src="files[0].url"
+      width="100%"
+      height="auto"
+    ></v-img>
     <v-divider> </v-divider>
     <v-card-actions>
       <v-btn depressed text>
@@ -122,7 +131,7 @@ import CustomVideoPlayer from "@/components/custom/VideoPlayer";
 import moment from "moment";
 
 export default {
-  name: "generic-travel-story-post-preview-card",
+  name: "generic-post-preview-card",
   components: {
     CustomVideoPlayer,
     GenericPostHeaderCard,
@@ -161,18 +170,6 @@ export default {
     },
     text: {
       type: String,
-      required: true,
-    },
-    travelEvents: {
-      type: Array,
-      required: true,
-    },
-    destinations: {
-      type: Array,
-      required: true,
-    },
-    categories: {
-      type: Array,
       required: true,
     },
     files: {

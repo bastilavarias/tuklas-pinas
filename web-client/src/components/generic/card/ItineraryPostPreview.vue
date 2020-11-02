@@ -11,13 +11,7 @@
     <div class="mb-3">
       <masonry :cols="3" :gutter="5">
         <template v-for="(image, index) in images">
-          <v-img
-            :key="index"
-            width="100%"
-            height="auto"
-            :src="image"
-            class="mb-1"
-          ></v-img>
+          <v-img :key="index" width="100%" height="auto" :src="image"></v-img>
         </template>
       </masonry>
     </div>

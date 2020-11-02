@@ -53,7 +53,7 @@ import ProfilePageEventsSideCard from "@/components/profile-page/EventsSideCard"
 import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedPeople";
 import GenericItineraryPostPreviewCard from "@/components/generic/card/ItineraryPostPreview";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
-import GenericTravelStoryPostPreviewCard from "@/components/generic/card/TravelStoryPostPreview";
+import GenericTravelStoryPostPreviewCard from "@/components/generic/card/PostPreview";
 import commonUtilities from "@/common/utilities";
 export default {
   components: {
