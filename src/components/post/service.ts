@@ -20,23 +20,24 @@ import Post from "../../database/entities/Post";
 
 const postService = {
   async createTravelStory(
-    accountID: number,
+    postID: number,
     input: IPostServiceCreateTravelStoryInput
   ): Promise<Post> {
-    const savePostDetailsInput: IPostModelSaveDetailsInput = {
+    const updateDetailsInput: IPostModelUpdateDetailsInput = {
       title: input.title,
       text: input.text,
       type: "travel-story",
       isDraft: false,
-      accountID,
+      accountID: 0,
     };
-    const savedPostDetails = await postModel.saveDetails(savePostDetailsInput);
-    await this.saveDestinations(savedPostDetails.id, input.destinationsID);
-    await this.saveCategories(savedPostDetails.id, input.categories);
-    await this.saveTravelEvents(savedPostDetails.id, input.travelEventsID);
-    // @ts-ignore
-    await this.saveFiles(savedPostDetails.id, input.files);
-    return postModel.getTravelStorySoftDetails(savedPostDetails.id);
+    const updatedDetails = await postModel.updateDetails(
+      postID,
+      updateDetailsInput
+    );
+    await this.saveDestinations(updatedDetails.id, input.destinationsID);
+    await this.saveCategories(updatedDetails.id, input.categories);
+    await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
+    return postModel.getTravelStorySoftDetails(updatedDetails.id);
   },
 
   async createItinerary(

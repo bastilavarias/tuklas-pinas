@@ -256,7 +256,7 @@ export default {
       this.$emit("update:days", val);
     },
     selectedDay(val) {
-      if (this.validateObject(val, "day") && this.operation === "update") {
+      if (this.validateObject(val) && this.operation === "update") {
         this.form = Object.assign({}, val);
       } else {
         this.clearForm();

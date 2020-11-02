@@ -7,34 +7,26 @@ import { SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS } from "@/store/types/generic";
 
 const postStore = {
   actions: {
-    async [CREATE_TRAVEL_STORY_POST]({ commit }, form) {
+    async [CREATE_TRAVEL_STORY_POST](
+      { commit },
+      { title, text, destinationsID, categories, travelEventsID, files }
+    ) {
       try {
-        const {
+        const formData = new FormData();
+        files.map((file) => formData.append("files", file));
+        const uploadFilesResult = await postService.uploadFiles(formData);
+        const uploadedPostFiles = uploadFilesResult.data;
+        const form = {
           title,
           text,
           destinationsID,
-          categories,
           travelEventsID,
-          files,
-        } = form;
-        const formData = new FormData();
-        formData.append("title", title);
-        formData.append("text", text);
-        destinationsID.map((id, index) =>
-          formData.append(`destinationsID[${index}]`, id)
+          categories,
+        };
+        const result = await postService.createTravelStory(
+          uploadedPostFiles.id,
+          form
         );
-        if (categories.length > 0) {
-          categories.map((id, index) =>
-            formData.append(`categories[${index}]`, id)
-          );
-        } else {
-          formData.append("categories[0]", "");
-        }
-        travelEventsID.map((id, index) =>
-          formData.append(`travelEventsID[${index}]`, id)
-        );
-        files.map((file) => formData.append("files", file));
-        const result = await postService.createTravelStory(formData);
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,
           text: "Creating travel story done!",
@@ -68,17 +60,18 @@ const postStore = {
         const uploadFilesResult = await postService.uploadFiles(formData);
         const uploadedPostFiles = uploadFilesResult.data;
         const form = {
-          postID: uploadedPostFiles.id,
           title,
           text,
           destinationsID,
           travelEventsID,
           categories,
-          files: uploadedPostFiles.files,
           itinerary,
           review,
         };
-        const createdItineraryPost = await postService.createItinerary(form);
+        const createdItineraryPost = await postService.createItinerary(
+          uploadedPostFiles.id,
+          form
+        );
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,
           text: "Creating itinerary done!",

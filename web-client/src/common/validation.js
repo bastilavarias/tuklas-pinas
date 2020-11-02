@@ -1,10 +1,10 @@
 const commonValidation = {
   methods: {
-    validateObject(testObject, property) {
+    validateObject(testObject) {
       return (
         typeof testObject === "object" &&
         testObject !== null &&
-        testObject.hasOwnProperty(property)
+        Object.keys(testObject).length > 0
       );
     },
   },
