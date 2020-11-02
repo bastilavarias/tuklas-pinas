@@ -10,11 +10,14 @@ import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
 import apiService from "@/services/api";
 import InfiniteLoading from "vue-infinite-loading";
+import VueVideoPlayer from "vue-video-player";
+import "video.js/dist/video-js.css";
 
 Vue.config.productionTip = false;
 Vue.use(VueMasonry);
 Vue.use(VueFileAgent);
 Vue.use(InfiniteLoading);
+Vue.use(VueVideoPlayer);
 
 delete Icon.Default.prototype._getIconUrl;
 Icon.Default.mergeOptions({

@@ -18,16 +18,20 @@
           </v-col>
           <v-col cols="12">
             <template v-for="(post, index) in posts">
-              <div v-if="index">
-                <generic-travel-story-post-preview-card
-                  class-name="mb-5"
-                  v-if="post.type === 'travel-story'"
-                ></generic-travel-story-post-preview-card>
-                <generic-itinerary-post-preview-card
-                  class-name="mb-5"
-                  v-if="post.type === 'itinerary'"
-                ></generic-itinerary-post-preview-card>
-              </div>
+              <generic-travel-story-post-preview-card
+                :postID="post.id"
+                :type="post.type"
+                class-name="mb-5"
+                :author="post.author"
+                :createdAt="post.createdAt"
+                :title="post.title"
+                :text="post.text"
+                :travel-events="post.travelEvents"
+                :destinations="post.destinations"
+                :categories="post.categories"
+                :files="post.files"
+                :key="index"
+              ></generic-travel-story-post-preview-card>
             </template>
             <infinite-loading
               @infinite="fetchPosts"
@@ -124,6 +128,7 @@ export default {
           this.skip
         );
         if (fetchedPosts.length === 0) return $state.complete();
+        console.log(fetchedPosts);
         this.posts = [...this.posts, ...fetchedPosts];
         this.skip += 5;
         this.scrollPage += 1;
