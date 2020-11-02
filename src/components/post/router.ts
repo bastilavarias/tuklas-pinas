@@ -23,4 +23,10 @@ postRouter.post(
   postController.uploadFiles
 );
 
+postRouter.get(
+  "/new-posts/:skip",
+  passport.authenticate("jwt", { session: false }),
+  postController.fetchNewPosts
+);
+
 export default postRouter;

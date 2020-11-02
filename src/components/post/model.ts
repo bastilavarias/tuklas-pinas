@@ -17,6 +17,7 @@ import {
   IItineraryPostSoftDetails,
   IPostModelSaveReviewInput,
   IPostModelUpdateDetailsInput,
+  IGenericSoftPost,
 } from "./typeDefs";
 import Post from "../../database/entities/Post";
 import PostFile from "../../database/entities/PostFile";
@@ -248,7 +249,27 @@ const postModel = {
     }).save();
   },
 
-  async getBasePostSoftDetails(postID: number): Promise<Post> {
+  async fetchNewPosts(skip: number): Promise<IGenericSoftPost[]> {
+    const isDeleted = false;
+    const isDraft = false;
+    const raw = await getRepository(Post)
+      .createQueryBuilder("post")
+      .select(["id", "type"])
+      .where(`post."isDeleted" = :isDeleted`, { isDeleted })
+      .andWhere(`post."isDraft" = :isDraft`, { isDraft })
+      .orderBy(`post."createdAt"`, "ASC")
+      .skip(skip)
+      .getRawMany();
+    return await Promise.all(
+      raw.map(async (item) =>
+        item.type === "travel-story"
+          ? await this.getTravelStorySoftDetails(item.id)
+          : await this.getItinerarySoftDetails(item.id)
+      )
+    );
+  },
+
+  async getBaseSoftDetails(postID: number): Promise<Post> {
     const gotDetails = <Post>await Post.findOne(postID, {
       relations: ["author"],
     });
@@ -401,7 +422,7 @@ const postModel = {
   ): Promise<Post> {
     const { title, text, type } = input;
     await Post.update({ id: postID }, { title, text, type });
-    return await this.getBasePostSoftDetails(postID);
+    return await this.getBaseSoftDetails(postID);
   },
 };
 

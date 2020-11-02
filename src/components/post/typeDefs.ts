@@ -156,3 +156,7 @@ export interface IPostModelSaveReviewInput {
   postInternetAccessReviewID: number;
   postFinanceReviewID: number;
 }
+
+export type IGenericSoftPost =
+  | ITravelStoryPostSoftDetails
+  | IItineraryPostSoftDetails;

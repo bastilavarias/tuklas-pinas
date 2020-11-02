@@ -63,6 +63,10 @@ const postService = {
     return postModel.getItinerarySoftDetails(updatedDetails.id);
   },
 
+  async fetchNewPosts(skip: number) {
+    return await postModel.fetchNewPosts(skip);
+  },
+
   async uploadFiles(
     accountID: number,
     files: Express.Multer.File[]
@@ -76,7 +80,7 @@ const postService = {
     };
     const savedPostDetails = await postModel.saveDetails(savePostDetailsInput);
     await this.saveFiles(savedPostDetails.id, files);
-    return postModel.getBasePostSoftDetails(savedPostDetails.id);
+    return postModel.getBaseSoftDetails(savedPostDetails.id);
   },
 
   async saveDestinations(postID: number, destinationsID: number[]) {
