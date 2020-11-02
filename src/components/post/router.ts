@@ -12,7 +12,7 @@ postRouter.post(
 );
 
 postRouter.post(
-  "/create-itinerary",
+  "/create-itinerary/:postID",
   passport.authenticate("jwt", { session: false }),
   postController.createItinerary
 );

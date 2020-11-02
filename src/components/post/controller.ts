@@ -21,7 +21,7 @@ const postController = {
 
   async createItinerary(request: Request, response: Response) {
     try {
-      const postID = parseInt(request.body.postID) || 0;
+      const postID = parseInt(request.params.postID) || 0;
       const input: IPostServiceCreateItineraryInput = {
         title: request.body.title || "",
         text: request.body.text || "",

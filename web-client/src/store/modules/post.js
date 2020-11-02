@@ -68,7 +68,6 @@ const postStore = {
         const uploadFilesResult = await postService.uploadFiles(formData);
         const uploadedPostFiles = uploadFilesResult.data;
         const form = {
-          postID: uploadedPostFiles.id,
           title,
           text,
           destinationsID,
@@ -78,7 +77,10 @@ const postStore = {
           itinerary,
           review,
         };
-        const createdItineraryPost = await postService.createItinerary(form);
+        const createdItineraryPost = await postService.createItinerary(
+          uploadedPostFiles.id,
+          form
+        );
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,
           text: "Creating itinerary done!",
