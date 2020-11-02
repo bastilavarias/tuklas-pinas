@@ -13,33 +13,36 @@
       </v-col>
       <v-col cols="12" md="6">
         <v-row>
+          <v-col cols="12 ">
+            <feed-page-posts-type-tabs></feed-page-posts-type-tabs>
+          </v-col>
           <v-col cols="12">
-            <v-tabs
-              v-model="tab"
-              color="primary"
-              background-color="#f2f2f2"
-              class="mb-10"
+            <template v-for="(post, index) in posts">
+              <div v-if="index">
+                <generic-travel-story-post-preview-card
+                  class-name="mb-5"
+                  v-if="post.type === 'travel-story'"
+                ></generic-travel-story-post-preview-card>
+                <generic-itinerary-post-preview-card
+                  class-name="mb-5"
+                  v-if="post.type === 'itinerary'"
+                ></generic-itinerary-post-preview-card>
+              </div>
+            </template>
+            <infinite-loading
+              @infinite="fetchPosts"
+              :identifier="scrollIdentifier"
             >
-              <template v-for="(tab, index) in tabSelections">
-                <v-tab :key="index">
-                  <span class="text-capitalize secondary--text subtitle-1">
-                    {{ tab }}
-                  </span>
-                </v-tab>
+              <template v-slot:spinner>
+                <generic-please-wait-progress-circular></generic-please-wait-progress-circular>
               </template>
-            </v-tabs>
-            <template v-for="n in [1, 2]">
-              <generic-travel-story-post-preview-card
-                :key="n"
-                class-name="mb-5"
-              ></generic-travel-story-post-preview-card>
-            </template>
-            <template v-for="n in [3, 4]">
-              <generic-itinerary-post-preview-card
-                :key="n"
-                class-name="mb-5"
-              ></generic-itinerary-post-preview-card>
-            </template>
+              <template v-slot:no-more
+                ><span class="caption">No more posts.</span></template
+              >
+              <template v-slot:no-results
+                ><span class="caption">No results.</span></template
+              >
+            </infinite-loading>
           </v-col>
         </v-row>
       </v-col>
@@ -76,8 +79,13 @@ import GenericItineraryPostPreviewCard from "@/components/generic/card/Itinerary
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
 import GenericTravelStoryPostPreviewCard from "@/components/generic/card/TravelStoryPostPreview";
 import commonUtilities from "@/common/utilities";
+import FeedPagePostsTypeTabs from "@/components/feed-page/PostsTypeTabs";
+import { FETCH_NEW_POSTS } from "@/store/types/post";
+import GenericPleaseWaitProgressCircular from "@/components/generic/progress-circular/PleaseWait";
 export default {
   components: {
+    GenericPleaseWaitProgressCircular,
+    FeedPagePostsTypeTabs,
     GenericTravelStoryPostPreviewCard,
     GenericStickyFooter,
     GenericItineraryPostPreviewCard,
@@ -86,12 +94,44 @@ export default {
     GenericTopCategoriesSideCard,
     GenericMiniProfileSideCard,
   },
+  mixins: [commonUtilities],
+
   data() {
     return {
-      tab: null,
-      tabSelections: ["Relevant", "New", "Trending"],
+      postType: this.$route.query.t || "relevant",
+      skip: 0,
+      posts: [],
+      scrollPage: 1,
+      scrollIdentifier: +new Date(),
     };
   },
-  mixins: [commonUtilities],
+
+  watch: {
+    async "$route.query"(val) {
+      this.postType = val.t || "relevant";
+      this.skip = 0;
+      this.scrollPage = 1;
+      this.scrollIdentifier = +new Date();
+      this.posts = [];
+    },
+  },
+
+  methods: {
+    async fetchPosts($state) {
+      if (this.postType === "new") {
+        const fetchedPosts = await this.$store.dispatch(
+          FETCH_NEW_POSTS,
+          this.skip
+        );
+        if (fetchedPosts.length === 0) return $state.complete();
+        this.posts = [...this.posts, ...fetchedPosts];
+        this.skip += 5;
+        this.scrollPage += 1;
+        $state.loaded();
+      } else {
+        $state.complete();
+      }
+    },
+  },
 };
 </script>

@@ -1,8 +1,9 @@
 import {
   CREATE_ITINERARY_POST,
   CREATE_TRAVEL_STORY_POST,
+  FETCH_NEW_POSTS,
 } from "@/store/types/post";
-import postService from "@/services/api/modules/post";
+import postApiService from "@/services/api/modules/post";
 import { SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS } from "@/store/types/generic";
 
 const postStore = {
@@ -14,8 +15,7 @@ const postStore = {
       try {
         const formData = new FormData();
         files.map((file) => formData.append("files", file));
-        const uploadFilesResult = await postService.uploadFiles(formData);
-        const uploadedPostFiles = uploadFilesResult.data;
+        const uploadedPostFiles = await postApiService.uploadFiles(formData);
         const form = {
           title,
           text,
@@ -23,7 +23,7 @@ const postStore = {
           travelEventsID,
           categories,
         };
-        const result = await postService.createTravelStory(
+        const result = await postApiService.createTravelStory(
           uploadedPostFiles.id,
           form
         );
@@ -57,8 +57,7 @@ const postStore = {
       try {
         const formData = new FormData();
         files.map((file) => formData.append("files", file));
-        const uploadFilesResult = await postService.uploadFiles(formData);
-        const uploadedPostFiles = uploadFilesResult.data;
+        const uploadedPostFiles = await postApiService.uploadFiles(formData);
         const form = {
           title,
           text,
@@ -68,7 +67,7 @@ const postStore = {
           itinerary,
           review,
         };
-        const createdItineraryPost = await postService.createItinerary(
+        const createdItineraryPost = await postApiService.createItinerary(
           uploadedPostFiles.id,
           form
         );
@@ -78,6 +77,17 @@ const postStore = {
           color: "success",
         });
         return createdItineraryPost || {};
+      } catch (error) {
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Something went wrong to the server. Please try again.",
+          color: "error",
+        });
+      }
+    },
+    async [FETCH_NEW_POSTS]({ commit }, skip) {
+      try {
+        return await postApiService.fetchNewPosts(skip);
       } catch (error) {
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,
