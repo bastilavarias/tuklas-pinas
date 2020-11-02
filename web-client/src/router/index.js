@@ -26,7 +26,7 @@ const routes = [
     component: () => import("../layouts/Main"),
     children: [
       {
-        path: "",
+        path: ":t?",
         name: "feed-page",
         component: () => import("../pages/Feed"),
       },

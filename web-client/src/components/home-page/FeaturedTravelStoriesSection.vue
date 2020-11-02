@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import GenericTravelStoryPostPreviewCard from "@/components/generic/card/TravelStoryPostPreview";
+import GenericTravelStoryPostPreviewCard from "@/components/generic/card/PostPreview";
 export default {
   name: "home-page-featured-travel-stories-div",
   components: { GenericTravelStoryPostPreviewCard },

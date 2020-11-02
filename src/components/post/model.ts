@@ -257,7 +257,7 @@ const postModel = {
       .select(["id", "type"])
       .where(`post."isDeleted" = :isDeleted`, { isDeleted })
       .andWhere(`post."isDraft" = :isDraft`, { isDraft })
-      .orderBy(`post."createdAt"`, "ASC")
+      .orderBy(`post."createdAt"`, "DESC")
       .skip(skip)
       .getRawMany();
     return await Promise.all(
@@ -285,7 +285,7 @@ const postModel = {
     const gotDetails: ITravelStoryPostSoftDetails = <
       ITravelStoryPostSoftDetails
     >await Post.findOne(postID, {
-      relations: ["author"],
+      relations: ["author", "author.profile"],
     });
     gotDetails.files = await this.getSoftDetailsFiles(gotDetails.id);
     gotDetails.destinations = await this.getDestinations(gotDetails.id);
@@ -301,7 +301,7 @@ const postModel = {
   ): Promise<IItineraryPostSoftDetails> {
     const gotDetails: IItineraryPostSoftDetails = <IItineraryPostSoftDetails>(
       await Post.findOne(postID, {
-        relations: ["author"],
+        relations: ["author", "author.profile"],
       })
     );
     gotDetails.files = await this.getSoftDetailsFiles(gotDetails.id);

@@ -1,7 +1,10 @@
 <template>
   <div class="px-4 py-3 d-flex align-start justify-space-between">
     <div class="mr-2">
-      <span class="caption">Sebastian Curtis T. Lavarias - 6 hrs ago</span>
+      <span class="caption"
+        ><span class="text-capitalize">{{ displayName }}</span> -
+        {{ displayTime }}</span
+      >
       <custom-router-link
         :to="{
           name:
@@ -12,32 +15,18 @@
         }"
         v-if="clickable"
       >
-        <span class="d-block mb-1 title font-weight-bold secondary--text"
-          >Lorem ipsum dolor sit amet.</span
+        <span
+          class="d-block mb-1 title font-weight-bold secondary--text"
+          v-if="title"
+          >{{ title }}</span
         >
       </custom-router-link>
       <span
         class="d-block mb-1 title font-weight-bold secondary--text"
         v-if="!clickable"
-        >Lorem ipsum dolor sit amet.</span
+        >{{ title }}</span
       >
-      <span class="body-2 d-block mb-3"
-        >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut deserunt
-        excepturi facilis laboriosam molestias neque placeat. Alias beatae eius
-        quisquam.</span
-      >
-      <div>
-        <template v-for="n in 4">
-          <v-chip
-            label
-            color="primary"
-            small
-            :class="`${n === 1 ? 'mr-1 mb-1' : 'ma-1'} font-weight-bold`"
-            :key="n"
-            >Category {{ n }}</v-chip
-          >
-        </template>
-      </div>
+      <span class="body-2 d-block mb-3" v-if="text">{{ text }}</span>
     </div>
     <v-avatar :size="40">
       <v-img
@@ -49,6 +38,8 @@
 
 <script>
 import CustomRouterLink from "@/components/custom/RouterLink";
+import moment from "moment";
+
 export default {
   name: "generic-post-header-card",
   components: { CustomRouterLink },
@@ -60,6 +51,26 @@ export default {
     type: {
       type: String,
       required: false,
+    },
+    author: {
+      type: Object,
+      required: true,
+    },
+    createdAt: {
+      type: String,
+      required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    text: {
+      type: String,
+      required: true,
+    },
+    categories: {
+      type: Array,
+      required: true,
     },
   },
 };

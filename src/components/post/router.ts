@@ -25,7 +25,7 @@ postRouter.post(
 
 postRouter.get(
   "/new-posts/:skip",
-  passport.authenticate("jwt", { session: false }),
+  // passport.authenticate("jwt", { session: false }),
   postController.fetchNewPosts
 );
 

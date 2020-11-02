@@ -15,8 +15,7 @@
         color="transparent"
         depressed
         :to="{ name: 'feed-page' }"
-        exact
-        exact-active-class="primary"
+        active-class="primary"
       >
         <span class="mr-1 text-capitalize">Feed</span>
         <v-icon>mdi-home-modern</v-icon>
