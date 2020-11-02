@@ -46,6 +46,17 @@ const postController = {
     }
   },
 
+  async fetchNewPosts(request: Request, response: Response) {
+    try {
+      const skip = parseInt(request.params.skip) || 0;
+      const result = await postService.fetchNewPosts(skip);
+      response.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      response.status(400).json(error);
+    }
+  },
+
   async uploadFiles(request: Request, response: Response) {
     try {
       // @ts-ignore
