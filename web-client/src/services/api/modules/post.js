@@ -1,8 +1,11 @@
 import apiService from "@/services/api";
 
 const postService = {
-  async createTravelStory(formData) {
-    return await apiService.post("/post/create-travel-story", formData);
+  async createTravelStory(postID, formData) {
+    return await apiService.post(
+      `/post/create-travel-story/${postID}`,
+      formData
+    );
   },
   async createItinerary(postID, form) {
     const result = await apiService.post(

@@ -5,8 +5,7 @@ import multer from "../../multer";
 const postRouter = express.Router();
 
 postRouter.post(
-  "/create-travel-story",
-  multer.array("files"),
+  "/create-travel-story/:postID",
   passport.authenticate("jwt", { session: false }),
   postController.createTravelStory
 );

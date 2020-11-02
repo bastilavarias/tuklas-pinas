@@ -8,10 +8,16 @@ import {
 const postController = {
   async createTravelStory(request: Request, response: Response) {
     try {
-      // @ts-ignore
-      const accountID = request.user.id;
-      const input: IPostServiceCreateTravelStoryInput = request.body;
-      const result = await postService.createTravelStory(accountID, input);
+      const postID = parseInt(request.params.postID) || 0;
+      const input: IPostServiceCreateTravelStoryInput = {
+        title: request.body.title || "",
+        text: request.body.text || "",
+        destinationsID: request.body.destinationsID || [],
+        travelEventsID: request.body.travelEventsID || [],
+        categories: request.body.categories || [],
+        files: request.body.files || [],
+      };
+      const result = await postService.createTravelStory(postID, input);
       response.status(200).json(result);
     } catch (error) {
       console.log(error);
