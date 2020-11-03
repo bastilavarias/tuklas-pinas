@@ -40,7 +40,7 @@
         <v-card-title>
           <span class="font-weight-bold">Day {{ selectedDay.day }}</span>
           <div class="flex-grow-1"></div>
-          <v-btn icon @click="isItineraryDetailsDialogOpen = false">
+          <v-btn icon @click="isDayDialogOpen = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-card-title>
@@ -58,9 +58,8 @@
               {{ formatTime(item.time) }}
             </template>
             <template v-slot:item.transportation="{ item }">
-              {{ item.transportation }} -<span title="Fare">{{
-                formatMoney(item.fare)
-              }}</span>
+              {{ item.transportation }} -
+              <span title="Fare">{{ formatMoney(item.fare) }}</span>
             </template>
             <template v-slot:item.destination="{ item }">
               <span class="text-capitalize">{{ item.destination.name }}</span>

@@ -20,6 +20,6 @@
 
 <script>
 export default {
-  name: "itinerary-post-page-personal-reviews-card-tips-content",
+  name: "post-details-page-personal-reviews-card-tips-content",
 };
 </script>

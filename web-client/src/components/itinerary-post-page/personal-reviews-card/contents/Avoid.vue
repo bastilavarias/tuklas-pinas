@@ -20,6 +20,6 @@
 
 <script>
 export default {
-  name: "itinerary-post-page-personal-reviews-card-avoid-content",
+  name: "post-details-page-personal-reviews-card-avoid-content",
 };
 </script>

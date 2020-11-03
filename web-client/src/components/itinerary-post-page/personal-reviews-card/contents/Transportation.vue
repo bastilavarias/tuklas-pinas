@@ -24,6 +24,6 @@
 
 <script>
 export default {
-  name: "itinerary-post-page-personal-reviews-card-transportation-content",
+  name: "post-details-page-personal-reviews-card-transportation-content",
 };
 </script>

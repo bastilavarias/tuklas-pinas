@@ -20,7 +20,7 @@
             <itinerary-post-page-timeline-card></itinerary-post-page-timeline-card>
           </v-col>
           <v-col cols="12">
-            <itinerary-post-page-personal-reviews-card></itinerary-post-page-personal-reviews-card>
+            <post-details-page-personal-reviews-card></post-details-page-personal-reviews-card>
           </v-col>
           <v-col cols="12">
             <itinerary-post-page-tags-card></itinerary-post-page-tags-card>

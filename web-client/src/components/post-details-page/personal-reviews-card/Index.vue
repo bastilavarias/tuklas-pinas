@@ -12,28 +12,34 @@
     <div class="py-3">
       <v-tabs-items v-model="tab">
         <v-tab-item>
-          <itinerary-post-page-personal-reviews-card-restaurants-content></itinerary-post-page-personal-reviews-card-restaurants-content>
+          <post-details-page-personal-restaurant-reviews
+            :reviews="review.restaurants"
+          ></post-details-page-personal-restaurant-reviews>
         </v-tab-item>
         <v-tab-item>
-          <itinerary-post-page-personal-reviews-card-lodgings-content></itinerary-post-page-personal-reviews-card-lodgings-content>
+          <post-details-page-personal-lodging-reviews
+            :reviews="review.lodgings"
+          ></post-details-page-personal-lodging-reviews>
         </v-tab-item>
         <v-tab-item>
-          <itinerary-post-page-personal-reviews-card-transportation-content></itinerary-post-page-personal-reviews-card-transportation-content>
+          <post-details-page-personal-transportation-reviews
+            :reviews="review.transportation"
+          ></post-details-page-personal-transportation-reviews>
         </v-tab-item>
         <v-tab-item>
-          <itinerary-post-page-personal-reviews-card-activities-content></itinerary-post-page-personal-reviews-card-activities-content>
+          <post-details-page-personal-reviews-card-activities-content></post-details-page-personal-reviews-card-activities-content>
         </v-tab-item>
         <v-tab-item>
-          <itinerary-post-page-personal-reviews-card-internet-access-content></itinerary-post-page-personal-reviews-card-internet-access-content>
+          <post-details-page-personal-reviews-card-internet-access-content></post-details-page-personal-reviews-card-internet-access-content>
         </v-tab-item>
         <v-tab-item>
-          <itinerary-post-page-personal-reviews-card-finance-content></itinerary-post-page-personal-reviews-card-finance-content>
+          <post-details-page-personal-reviews-card-finance-content></post-details-page-personal-reviews-card-finance-content>
         </v-tab-item>
         <v-tab-item>
-          <itinerary-post-page-personal-reviews-card-tips-content></itinerary-post-page-personal-reviews-card-tips-content>
+          <post-details-page-personal-reviews-card-tips-content></post-details-page-personal-reviews-card-tips-content>
         </v-tab-item>
         <v-tab-item>
-          <itinerary-post-page-personal-reviews-card-avoid-content></itinerary-post-page-personal-reviews-card-avoid-content>
+          <post-details-page-personal-reviews-card-avoid-content></post-details-page-personal-reviews-card-avoid-content>
         </v-tab-item>
       </v-tabs-items>
     </div>
@@ -41,25 +47,33 @@
 </template>
 
 <script>
-import ItineraryPostPagePersonalReviewsCardRestaurantsContent from "@/components/itinerary-post-page/personal-reviews-card/contents/Restaurants";
-import ItineraryPostPagePersonalReviewsCardLodgingsContent from "@/components/itinerary-post-page/personal-reviews-card/contents/Lodgings";
-import ItineraryPostPagePersonalReviewsCardTransportationContent from "@/components/itinerary-post-page/personal-reviews-card/contents/Transportation";
-import ItineraryPostPagePersonalReviewsCardActivitiesContent from "@/components/itinerary-post-page/personal-reviews-card/contents/Activities";
-import ItineraryPostPagePersonalReviewsCardInternetAccessContent from "@/components/itinerary-post-page/personal-reviews-card/contents/InternetAccess";
-import ItineraryPostPagePersonalReviewsCardFinanceContent from "@/components/itinerary-post-page/personal-reviews-card/contents/Finance";
-import ItineraryPostPagePersonalReviewsCardTipsContent from "@/components/itinerary-post-page/personal-reviews-card/contents/Tips";
-import ItineraryPostPagePersonalReviewsCardAvoidContent from "@/components/itinerary-post-page/personal-reviews-card/contents/Avoid";
+import PostDetailsPagePersonalReviewsCardTransportationContent from "@/components/post-details-page/personal-reviews-card/contents/Transportation";
+import PostDetailsPagePersonalReviewsCardActivitiesContent from "@/components/post-details-page/personal-reviews-card/contents/Activities";
+import PostDetailsPagePersonalReviewsCardInternetAccessContent from "@/components/post-details-page/personal-reviews-card/contents/InternetAccess";
+import PostDetailsPagePersonalReviewsCardFinanceContent from "@/components/post-details-page/personal-reviews-card/contents/Finance";
+import PostDetailsPagePersonalReviewsCardTipsContent from "@/components/post-details-page/personal-reviews-card/contents/Tips";
+import PostDetailsPagePersonalReviewsCardAvoidContent from "@/components/post-details-page/personal-reviews-card/contents/Avoid";
+import PostDetailsPagePersonalRestaurantReviews from "@/components/post-details-page/personal-reviews-card/contents/Restaurant";
+import PostDetailsPagePersonalLodgingReviews from "@/components/post-details-page/personal-reviews-card/contents/Lodging";
+import PostDetailsPagePersonalTransportationReviews from "@/components/post-details-page/personal-reviews-card/contents/Transportation";
 export default {
-  name: "itinerary-post-page-personal-reviews-card",
+  name: "post-details-page-personal-review-card",
   components: {
-    ItineraryPostPagePersonalReviewsCardAvoidContent,
-    ItineraryPostPagePersonalReviewsCardTipsContent,
-    ItineraryPostPagePersonalReviewsCardFinanceContent,
-    ItineraryPostPagePersonalReviewsCardInternetAccessContent,
-    ItineraryPostPagePersonalReviewsCardActivitiesContent,
-    ItineraryPostPagePersonalReviewsCardTransportationContent,
-    ItineraryPostPagePersonalReviewsCardLodgingsContent,
-    ItineraryPostPagePersonalReviewsCardRestaurantsContent,
+    PostDetailsPagePersonalTransportationReviews,
+    PostDetailsPagePersonalLodgingReviews,
+    PostDetailsPagePersonalRestaurantReviews,
+    PostDetailsPagePersonalReviewsCardAvoidContent,
+    PostDetailsPagePersonalReviewsCardTipsContent,
+    PostDetailsPagePersonalReviewsCardFinanceContent,
+    PostDetailsPagePersonalReviewsCardInternetAccessContent,
+    PostDetailsPagePersonalReviewsCardActivitiesContent,
+    PostDetailsPagePersonalReviewsCardTransportationContent,
+  },
+  props: {
+    review: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
     return {

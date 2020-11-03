@@ -12,28 +12,28 @@
     <div class="py-3">
       <v-tabs-items v-model="tab">
         <v-tab-item>
-          <itinerary-post-page-personal-reviews-card-restaurants-content></itinerary-post-page-personal-reviews-card-restaurants-content>
+          <post-details-page-personal-reviews-card-restaurants-content></post-details-page-personal-reviews-card-restaurants-content>
         </v-tab-item>
         <v-tab-item>
-          <itinerary-post-page-personal-reviews-card-lodgings-content></itinerary-post-page-personal-reviews-card-lodgings-content>
+          <post-details-page-personal-reviews-card-lodgings-content></post-details-page-personal-reviews-card-lodgings-content>
         </v-tab-item>
         <v-tab-item>
-          <itinerary-post-page-personal-reviews-card-transportation-content></itinerary-post-page-personal-reviews-card-transportation-content>
+          <post-details-page-personal-reviews-card-transportation-content></post-details-page-personal-reviews-card-transportation-content>
         </v-tab-item>
         <v-tab-item>
-          <itinerary-post-page-personal-reviews-card-activities-content></itinerary-post-page-personal-reviews-card-activities-content>
+          <post-details-page-personal-reviews-card-activities-content></post-details-page-personal-reviews-card-activities-content>
         </v-tab-item>
         <v-tab-item>
-          <itinerary-post-page-personal-reviews-card-internet-access-content></itinerary-post-page-personal-reviews-card-internet-access-content>
+          <post-details-page-personal-reviews-card-internet-access-content></post-details-page-personal-reviews-card-internet-access-content>
         </v-tab-item>
         <v-tab-item>
-          <itinerary-post-page-personal-reviews-card-finance-content></itinerary-post-page-personal-reviews-card-finance-content>
+          <post-details-page-personal-reviews-card-finance-content></post-details-page-personal-reviews-card-finance-content>
         </v-tab-item>
         <v-tab-item>
-          <itinerary-post-page-personal-reviews-card-tips-content></itinerary-post-page-personal-reviews-card-tips-content>
+          <post-details-page-personal-reviews-card-tips-content></post-details-page-personal-reviews-card-tips-content>
         </v-tab-item>
         <v-tab-item>
-          <itinerary-post-page-personal-reviews-card-avoid-content></itinerary-post-page-personal-reviews-card-avoid-content>
+          <post-details-page-personal-reviews-card-avoid-content></post-details-page-personal-reviews-card-avoid-content>
         </v-tab-item>
       </v-tabs-items>
     </div>
@@ -50,7 +50,7 @@ import ItineraryPostPagePersonalReviewsCardFinanceContent from "@/components/iti
 import ItineraryPostPagePersonalReviewsCardTipsContent from "@/components/itinerary-post-page/personal-reviews-card/contents/Tips";
 import ItineraryPostPagePersonalReviewsCardAvoidContent from "@/components/itinerary-post-page/personal-reviews-card/contents/Avoid";
 export default {
-  name: "itinerary-post-page-personal-reviews-card",
+  name: "post-details-page-personal-reviews-card",
   components: {
     ItineraryPostPagePersonalReviewsCardAvoidContent,
     ItineraryPostPagePersonalReviewsCardTipsContent,

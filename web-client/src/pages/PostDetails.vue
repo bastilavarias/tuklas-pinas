@@ -38,7 +38,9 @@
             ></post-details-page-itinerary-table-card>
           </v-col>
           <v-col cols="12" v-if="isPostItinerary">
-            <itinerary-post-page-personal-reviews-card></itinerary-post-page-personal-reviews-card>
+            <post-details-page-personal-review-card
+              :review="postDetails.review"
+            ></post-details-page-personal-review-card>
           </v-col>
           <v-col cols="12">
             <itinerary-post-page-tags-card></itinerary-post-page-tags-card>
@@ -123,8 +125,6 @@
 <script>
 import GenericMiniProfileSideCard from "@/components/generic/card/MiniProfile";
 import GenericTopCategoriesSideCard from "@/components/generic/card/TopCategories";
-import ItineraryPostPageDetailCard from "@/components/itinerary-post-page/detail-card/Index";
-import ItineraryPostPagePersonalReviewsCard from "@/components/itinerary-post-page/personal-reviews-card/Index";
 import ItineraryPostPageTagsCard from "@/components/itinerary-post-page/TagsCard";
 import GenericCommentMedia from "@/components/generic/media/Comment";
 import GenericCommentReplyMedia from "@/components/generic/media/CommentReply";
@@ -138,8 +138,10 @@ import GenericPleaseWaitProgressCircular from "@/components/generic/progress-cir
 import PostDetailsPagePostTypeToolbar from "@/components/post-details-page/PostTypeToolbar";
 import PostDetailsPageDetailsCard from "@/components/post-details-page/DetailsCard";
 import PostDetailsPageItineraryTableCard from "@/components/post-details-page/ItineraryTableCard";
+import PostDetailsPagePersonalReviewCard from "@/components/post-details-page/personal-reviews-card/Index";
 export default {
   components: {
+    PostDetailsPagePersonalReviewCard,
     PostDetailsPageItineraryTableCard,
     PostDetailsPageDetailsCard,
     PostDetailsPagePostTypeToolbar,
@@ -151,8 +153,6 @@ export default {
     GenericCommentReplyMedia,
     GenericCommentMedia,
     ItineraryPostPageTagsCard,
-    ItineraryPostPagePersonalReviewsCard,
-    ItineraryPostPageDetailCard,
     GenericTopCategoriesSideCard,
     GenericMiniProfileSideCard,
   },
