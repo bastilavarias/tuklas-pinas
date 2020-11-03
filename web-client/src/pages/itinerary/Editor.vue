@@ -240,8 +240,8 @@ export default {
       const isObjectValid = this.validateObject(createdItineraryPost);
       if (isObjectValid)
         return await this.$router.push({
-          name: "itinerary-post-page",
-          params: { postID: createdItineraryPost.id },
+          name: "post-details-page",
+          params: { postID: createdItineraryPost.id, type: "itinerary" },
         });
       this.isCreateItineraryPostStart = false;
     },

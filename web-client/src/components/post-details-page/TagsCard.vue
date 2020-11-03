@@ -1,20 +1,28 @@
 <template>
   <v-card tile outlined>
     <div class="px-4 py-1">
-      <span class="subtitle-2 ma-1 d-block">Events</span>
-      <template v-for="n in 5">
-        <v-chip :key="n" class="ma-1 text-capitalize"> Event {{ n }} </v-chip>
+      <span class="subtitle-2 ma-1 d-block">Destinations</span>
+      <template v-for="(destination, index) in destinations">
+        <v-chip color="primary" :key="index" class="ma-2 text-capitalize" small>
+          {{ destination.name }}
+        </v-chip>
       </template>
     </div>
     <v-divider></v-divider>
     <div class="px-4 py-1">
-      <span class="subtitle-2 ma-1 d-block">Tour Guides</span>
-      <template v-for="n in 3">
-        <v-chip class="ma-1" :key="n">
-          <v-avatar left>
-            <v-icon>mdi-account-circle</v-icon>
-          </v-avatar>
-          Tour Guide {{ n }}
+      <span class="subtitle-2 ma-1 d-block">Events</span>
+      <template v-for="(event, index) in travelEvents">
+        <v-chip color="primary" :key="index" class="ma-2 text-capitalize" small>
+          {{ event.name }}
+        </v-chip>
+      </template>
+    </div>
+    <v-divider></v-divider>
+    <div class="px-4 py-1" v-if="categories.length > 1">
+      <span class="subtitle-2 ma-1 d-block">Categories</span>
+      <template v-for="(category, index) in categories">
+        <v-chip color="primary" :key="index" class="ma-2 text-capitalize" small>
+          #{{ category.name }}
         </v-chip>
       </template>
     </div>
@@ -23,6 +31,20 @@
 
 <script>
 export default {
-  name: "itinerary-post-page-tags-card",
+  name: "post-details-page-tags-card",
+  props: {
+    destinations: {
+      type: Array,
+      required: true,
+    },
+    travelEvents: {
+      type: Array,
+      required: true,
+    },
+    categories: {
+      type: Array,
+      required: true,
+    },
+  },
 };
 </script>

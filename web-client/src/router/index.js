@@ -87,6 +87,9 @@ const routes = [
         component: () => import("../pages/PostDetails"),
       },
     ],
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/tour-guides",

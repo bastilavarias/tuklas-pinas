@@ -43,7 +43,11 @@
             ></post-details-page-personal-review-card>
           </v-col>
           <v-col cols="12">
-            <itinerary-post-page-tags-card></itinerary-post-page-tags-card>
+            <post-details-page-tags-card
+              :destinations="postDetails.destinations"
+              :travel-events="postDetails.travelEvents"
+              :categories="postDetails.categories"
+            ></post-details-page-tags-card>
           </v-col>
           <v-col cols="12">
             <v-card outlined tile>
@@ -125,7 +129,6 @@
 <script>
 import GenericMiniProfileSideCard from "@/components/generic/card/MiniProfile";
 import GenericTopCategoriesSideCard from "@/components/generic/card/TopCategories";
-import ItineraryPostPageTagsCard from "@/components/itinerary-post-page/TagsCard";
 import GenericCommentMedia from "@/components/generic/media/Comment";
 import GenericCommentReplyMedia from "@/components/generic/media/CommentReply";
 import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEventsExplorer";
@@ -139,8 +142,10 @@ import PostDetailsPagePostTypeToolbar from "@/components/post-details-page/PostT
 import PostDetailsPageDetailsCard from "@/components/post-details-page/DetailsCard";
 import PostDetailsPageItineraryTableCard from "@/components/post-details-page/ItineraryTableCard";
 import PostDetailsPagePersonalReviewCard from "@/components/post-details-page/personal-reviews-card/Index";
+import PostDetailsPageTagsCard from "@/components/post-details-page/TagsCard";
 export default {
   components: {
+    PostDetailsPageTagsCard,
     PostDetailsPagePersonalReviewCard,
     PostDetailsPageItineraryTableCard,
     PostDetailsPageDetailsCard,
@@ -152,7 +157,6 @@ export default {
     GenericMiniEventsExplorerSideCard,
     GenericCommentReplyMedia,
     GenericCommentMedia,
-    ItineraryPostPageTagsCard,
     GenericTopCategoriesSideCard,
     GenericMiniProfileSideCard,
   },
@@ -179,7 +183,6 @@ export default {
         GET_POST_SOFT_DETAILS,
         payload
       );
-      console.log(gotPostDetails);
       this.postDetails = Object.assign({}, gotPostDetails);
       this.isGetPostSoftDetailsStart = false;
     },
