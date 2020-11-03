@@ -7,16 +7,10 @@
       <template v-for="(review, index) in reviews">
         <v-expansion-panel :key="index">
           <v-expansion-panel-header>
-            <span
-              >{{ index + 1 }}.
-              <span class="text-capitalize mr-2">{{ review.type }}</span
-              ><generic-rating-chip
-                :rating="review.rating"
-              ></generic-rating-chip
-            ></span>
+            Tip {{ index + 1 }}
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            To {{ review.destination.name }} - {{ review.text }}
+            {{ review.text }}
           </v-expansion-panel-content>
         </v-expansion-panel>
       </template>
@@ -27,7 +21,7 @@
 <script>
 import GenericRatingChip from "@/components/generic/chip/Rating";
 export default {
-  name: "post-details-page-personal-transportation-reviews",
+  name: "post-details-page-personal-tip-reviews",
   components: { GenericRatingChip },
   props: {
     reviews: {

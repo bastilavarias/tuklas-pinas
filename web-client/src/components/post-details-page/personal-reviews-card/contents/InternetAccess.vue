@@ -1,18 +1,29 @@
 <template>
-  <div class="px-3">
-    <span class="body-2"
-      >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci atque
-      eaque eius esse ex iure molestias, nesciunt optio quae quod recusandae
-      reiciendis suscipit tempore vitae voluptatum. Adipisci dolore dolorem esse
-      eveniet fugiat id incidunt itaque, libero, maiores odio perspiciatis
-      possimus quaerat quam quas quia saepe sequi sint voluptates. Fugit,
-      nihil.</span
-    >
-  </div>
+  <v-card-text>
+    <div class="text-center" v-if="!review.text">
+      <span class="caption font-italic">No reviews.</span>
+    </div>
+    <div v-if="review.text">
+      <div class="py-1">
+        {{ review.text }}
+      </div>
+      <div class="text-center">
+        <generic-rating-chip :rating="review.rating"></generic-rating-chip>
+      </div>
+    </div>
+  </v-card-text>
 </template>
 
 <script>
+import GenericRatingChip from "@/components/generic/chip/Rating";
 export default {
-  name: "post-details-page-personal-reviews-card-internet-access-content",
+  name: "post-details-page-personal-internet-access-review",
+  components: { GenericRatingChip },
+  props: {
+    review: {
+      type: Object,
+      required: true,
+    },
+  },
 };
 </script>

@@ -9,14 +9,14 @@
           <v-expansion-panel-header>
             <span
               >{{ index + 1 }}.
-              <span class="text-capitalize mr-2">{{ review.type }}</span
+              <span class="text-capitalize mr-2">{{ review.name }}</span
               ><generic-rating-chip
                 :rating="review.rating"
               ></generic-rating-chip
             ></span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            To {{ review.destination.name }} - {{ review.text }}
+            {{ review.destination.name }} - {{ review.text }}
           </v-expansion-panel-content>
         </v-expansion-panel>
       </template>
@@ -27,7 +27,7 @@
 <script>
 import GenericRatingChip from "@/components/generic/chip/Rating";
 export default {
-  name: "post-details-page-personal-transportation-reviews",
+  name: "post-details-page-personal-activity-reviews",
   components: { GenericRatingChip },
   props: {
     reviews: {

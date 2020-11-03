@@ -1,25 +1,33 @@
 <template>
-  <v-expansion-panels flat hover>
-    <template v-for="n in 5">
-      <v-expansion-panel :key="n">
-        <v-expansion-panel-header>
-          <span class="subtitle-2">{{ n }}. Avoid</span>
-        </v-expansion-panel-header>
-        <v-expansion-panel-content>
-          <span class="body-2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
-          </span>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </template>
-  </v-expansion-panels>
+  <div>
+    <v-card-text class="text-center" v-if="reviews.length === 0">
+      <span class="caption font-italic">No reviews.</span>
+    </v-card-text>
+    <v-expansion-panels flat hover>
+      <template v-for="(review, index) in reviews">
+        <v-expansion-panel :key="index">
+          <v-expansion-panel-header>
+            Avoid {{ index + 1 }}
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            {{ review.text }}
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </template>
+    </v-expansion-panels>
+  </div>
 </template>
 
 <script>
+import GenericRatingChip from "@/components/generic/chip/Rating";
 export default {
-  name: "post-details-page-personal-reviews-card-avoid-content",
+  name: "post-details-page-personal-avoid-reviews",
+  components: { GenericRatingChip },
+  props: {
+    reviews: {
+      type: Array,
+      required: true,
+    },
+  },
 };
 </script>

@@ -27,19 +27,29 @@
           ></post-details-page-personal-transportation-reviews>
         </v-tab-item>
         <v-tab-item>
-          <post-details-page-personal-reviews-card-activities-content></post-details-page-personal-reviews-card-activities-content>
+          <post-details-page-personal-activity-reviews
+            :reviews="review.activities"
+          ></post-details-page-personal-activity-reviews>
         </v-tab-item>
         <v-tab-item>
-          <post-details-page-personal-reviews-card-internet-access-content></post-details-page-personal-reviews-card-internet-access-content>
+          <post-details-page-personal-internet-access-review
+            :review="review.internetAccess"
+          ></post-details-page-personal-internet-access-review>
         </v-tab-item>
         <v-tab-item>
-          <post-details-page-personal-reviews-card-finance-content></post-details-page-personal-reviews-card-finance-content>
+          <post-details-page-personal-finance-review
+            :review="review.finance"
+          ></post-details-page-personal-finance-review>
         </v-tab-item>
         <v-tab-item>
-          <post-details-page-personal-reviews-card-tips-content></post-details-page-personal-reviews-card-tips-content>
+          <post-details-page-personal-tip-reviews
+            :reviews="review.tips"
+          ></post-details-page-personal-tip-reviews>
         </v-tab-item>
         <v-tab-item>
-          <post-details-page-personal-reviews-card-avoid-content></post-details-page-personal-reviews-card-avoid-content>
+          <post-details-page-personal-avoid-reviews
+            :reviews="review.avoids"
+          ></post-details-page-personal-avoid-reviews>
         </v-tab-item>
       </v-tabs-items>
     </div>
@@ -47,27 +57,25 @@
 </template>
 
 <script>
-import PostDetailsPagePersonalReviewsCardTransportationContent from "@/components/post-details-page/personal-reviews-card/contents/Transportation";
-import PostDetailsPagePersonalReviewsCardActivitiesContent from "@/components/post-details-page/personal-reviews-card/contents/Activities";
-import PostDetailsPagePersonalReviewsCardInternetAccessContent from "@/components/post-details-page/personal-reviews-card/contents/InternetAccess";
-import PostDetailsPagePersonalReviewsCardFinanceContent from "@/components/post-details-page/personal-reviews-card/contents/Finance";
-import PostDetailsPagePersonalReviewsCardTipsContent from "@/components/post-details-page/personal-reviews-card/contents/Tips";
-import PostDetailsPagePersonalReviewsCardAvoidContent from "@/components/post-details-page/personal-reviews-card/contents/Avoid";
 import PostDetailsPagePersonalRestaurantReviews from "@/components/post-details-page/personal-reviews-card/contents/Restaurant";
 import PostDetailsPagePersonalLodgingReviews from "@/components/post-details-page/personal-reviews-card/contents/Lodging";
 import PostDetailsPagePersonalTransportationReviews from "@/components/post-details-page/personal-reviews-card/contents/Transportation";
+import PostDetailsPagePersonalActivityReviews from "@/components/post-details-page/personal-reviews-card/contents/Activity";
+import PostDetailsPagePersonalInternetAccessReview from "@/components/post-details-page/personal-reviews-card/contents/InternetAccess";
+import PostDetailsPagePersonalFinanceReview from "@/components/post-details-page/personal-reviews-card/contents/Finance";
+import PostDetailsPagePersonalTipReviews from "@/components/post-details-page/personal-reviews-card/contents/Tip";
+import PostDetailsPagePersonalAvoidReviews from "@/components/post-details-page/personal-reviews-card/contents/Avoid";
 export default {
   name: "post-details-page-personal-review-card",
   components: {
+    PostDetailsPagePersonalAvoidReviews,
+    PostDetailsPagePersonalTipReviews,
+    PostDetailsPagePersonalFinanceReview,
+    PostDetailsPagePersonalInternetAccessReview,
+    PostDetailsPagePersonalActivityReviews,
     PostDetailsPagePersonalTransportationReviews,
     PostDetailsPagePersonalLodgingReviews,
     PostDetailsPagePersonalRestaurantReviews,
-    PostDetailsPagePersonalReviewsCardAvoidContent,
-    PostDetailsPagePersonalReviewsCardTipsContent,
-    PostDetailsPagePersonalReviewsCardFinanceContent,
-    PostDetailsPagePersonalReviewsCardInternetAccessContent,
-    PostDetailsPagePersonalReviewsCardActivitiesContent,
-    PostDetailsPagePersonalReviewsCardTransportationContent,
   },
   props: {
     review: {
