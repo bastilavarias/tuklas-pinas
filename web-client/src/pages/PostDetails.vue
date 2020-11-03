@@ -12,12 +12,42 @@
         </v-row>
       </v-col>
       <v-col cols="12" md="6">
-        <v-row>
+        <generic-please-wait-progress-circular
+          v-if="isGetPostSoftDetailsStart"
+        ></generic-please-wait-progress-circular>
+        <v-row v-if="!isGetPostSoftDetailsStart">
           <v-col cols="12">
-            <travel-story-post-page-detail-card></travel-story-post-page-detail-card>
+            <post-details-page-post-type-toolbar
+              :type="postDetails.type"
+            ></post-details-page-post-type-toolbar>
           </v-col>
           <v-col cols="12">
-            <travel-story-post-page-tags-card></travel-story-post-page-tags-card>
+            <post-details-page-details-card
+              :postID="postDetails.id"
+              :type="postDetails.type"
+              :author="postDetails.author"
+              :createdAt="postDetails.createdAt"
+              :title="postDetails.title"
+              :text="postDetails.text"
+              :files="postDetails.files"
+            ></post-details-page-details-card>
+          </v-col>
+          <v-col cols="12" v-if="isPostItinerary">
+            <post-details-page-itinerary-table-card
+              :itinerary="postDetails.itinerary"
+            ></post-details-page-itinerary-table-card>
+          </v-col>
+          <v-col cols="12" v-if="isPostItinerary">
+            <post-details-page-personal-review-card
+              :review="postDetails.review"
+            ></post-details-page-personal-review-card>
+          </v-col>
+          <v-col cols="12">
+            <post-details-page-tags-card
+              :destinations="postDetails.destinations"
+              :travel-events="postDetails.travelEvents"
+              :categories="postDetails.categories"
+            ></post-details-page-tags-card>
           </v-col>
           <v-col cols="12">
             <v-card outlined tile>
@@ -99,41 +129,70 @@
 <script>
 import GenericMiniProfileSideCard from "@/components/generic/card/MiniProfile";
 import GenericTopCategoriesSideCard from "@/components/generic/card/TopCategories";
-import TravelStoryPostPageDetailCard from "@/components/travel-story-post-page/detail-card/Index";
-import TravelStoryPostPageTagsCard from "@/components/travel-story-post-page/TagsCard";
 import GenericCommentMedia from "@/components/generic/media/Comment";
 import GenericCommentReplyMedia from "@/components/generic/media/CommentReply";
 import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEventsExplorer";
 import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedPeople";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
 import commonUtilities from "@/common/utilities";
+import { GET_POST_SOFT_DETAILS } from "@/store/types/post";
+import CustomTooltipButton from "@/components/custom/TooltipButton";
+import GenericPleaseWaitProgressCircular from "@/components/generic/progress-circular/PleaseWait";
+import PostDetailsPagePostTypeToolbar from "@/components/post-details-page/PostTypeToolbar";
+import PostDetailsPageDetailsCard from "@/components/post-details-page/DetailsCard";
+import PostDetailsPageItineraryTableCard from "@/components/post-details-page/ItineraryTableCard";
+import PostDetailsPagePersonalReviewCard from "@/components/post-details-page/personal-reviews-card/Index";
+import PostDetailsPageTagsCard from "@/components/post-details-page/TagsCard";
 export default {
   components: {
+    PostDetailsPageTagsCard,
+    PostDetailsPagePersonalReviewCard,
+    PostDetailsPageItineraryTableCard,
+    PostDetailsPageDetailsCard,
+    PostDetailsPagePostTypeToolbar,
+    GenericPleaseWaitProgressCircular,
+    CustomTooltipButton,
     GenericStickyFooter,
     GenericSuggestedPeopleSideCard,
     GenericMiniEventsExplorerSideCard,
     GenericCommentReplyMedia,
     GenericCommentMedia,
-    TravelStoryPostPageTagsCard,
-    TravelStoryPostPageDetailCard,
     GenericTopCategoriesSideCard,
     GenericMiniProfileSideCard,
   },
   data() {
     return {
-      images: [
-        "https://images.pexels.com/photos/902288/pexels-photo-902288.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "https://images.pexels.com/photos/2604843/pexels-photo-2604843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "https://images.pexels.com/photos/1076240/pexels-photo-1076240.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "https://images.pexels.com/photos/210367/pexels-photo-210367.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "https://images.pexels.com/photos/2475386/pexels-photo-2475386.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        "https://images.pexels.com/photos/1364554/pexels-photo-1364554.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-      ],
-      rating: 4,
-      isGalleryDialogOpen: false,
+      isGetPostSoftDetailsStart: false,
+      postDetails: {},
     };
   },
   mixins: [commonUtilities],
+  computed: {
+    isPostItinerary() {
+      return this.postDetails.type === "itinerary";
+    },
+  },
+  methods: {
+    async getPostSoftDetails(postID, type) {
+      this.isGetPostSoftDetailsStart = true;
+      const payload = {
+        postID,
+        type,
+      };
+      const gotPostDetails = await this.$store.dispatch(
+        GET_POST_SOFT_DETAILS,
+        payload
+      );
+      this.postDetails = Object.assign({}, gotPostDetails);
+      this.isGetPostSoftDetailsStart = false;
+    },
+  },
+  async created() {
+    const { postID, type } = this.$route.params;
+    const parametersNotValid = !postID || !type;
+    if (parametersNotValid) return this.goBack();
+    await this.getPostSoftDetails(postID, type);
+  },
 };
 </script>
 

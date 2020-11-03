@@ -34,7 +34,7 @@
               ></custom-tooltip-button>
             </div>
             <v-data-table
-              :headers="timestampTableHeaders"
+              :headers="timestampsTableHeaders"
               :items="sortedTimestamps"
               hide-default-footer
               :single-expand="singleExpand"
@@ -167,7 +167,7 @@ export default {
   data() {
     return {
       isOpenLocal: this.isOpen,
-      timestampTableHeaders: [
+      timestampsTableHeaders: [
         {
           text: "Time",
           value: "time",
@@ -201,6 +201,7 @@ export default {
         },
         { text: "", value: "data-table-expand" },
       ],
+
       singleExpand: true,
       isTimestampFormDialogOpen: false,
       form: Object.assign({}, defaultDayForm),

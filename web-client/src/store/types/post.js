@@ -1,3 +1,4 @@
 export const CREATE_TRAVEL_STORY_POST = "post/CREATE_TRAVEL_STORY";
 export const CREATE_ITINERARY_POST = "post/CREATE_ITINERARY";
 export const FETCH_NEW_POSTS = "post/FETCH_NEW";
+export const GET_POST_SOFT_DETAILS = "post/GET_SOFT_DETAILS";

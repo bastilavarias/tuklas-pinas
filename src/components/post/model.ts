@@ -394,7 +394,7 @@ const postModel = {
   ): Promise<PostItineraryDayTimestamp> {
     const gotTimestamp = await PostItineraryDayTimestamp.findOne(
       postItineraryDayTimestampID,
-      { relations: ["interests"] }
+      { relations: ["interests", "destination"] }
     );
     return gotTimestamp!;
   },
@@ -406,7 +406,9 @@ const postModel = {
         "restaurants",
         "lodgings",
         "transportation",
+        "transportation.destination",
         "activities",
+        "activities.destination",
         "internetAccess",
         "finance",
         "tips",

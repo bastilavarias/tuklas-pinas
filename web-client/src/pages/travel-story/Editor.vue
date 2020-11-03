@@ -211,8 +211,8 @@ export default {
       const isObjectValid = this.validateObject(createdTravelStoryPost);
       if (isObjectValid)
         return await this.$router.push({
-          name: "travel-story-post-page",
-          params: { postID: createdTravelStoryPost.id },
+          name: "post-details-page",
+          params: { postID: createdTravelStoryPost.id, type: "travel-story" },
         });
     },
   },
