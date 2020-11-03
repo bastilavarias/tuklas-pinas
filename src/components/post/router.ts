@@ -25,8 +25,14 @@ postRouter.post(
 
 postRouter.get(
   "/new-posts/:skip",
-  // passport.authenticate("jwt", { session: false }),
-  postController.fetchNewPosts
+  passport.authenticate("jwt", { session: false }),
+  postController.fetchNew
+);
+
+postRouter.get(
+  "/soft-details/:postID/:type",
+  passport.authenticate("jwt", { session: false }),
+  postController.getSoftDetails
 );
 
 export default postRouter;
