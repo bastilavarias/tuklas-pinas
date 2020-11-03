@@ -249,7 +249,7 @@ const postModel = {
     }).save();
   },
 
-  async fetchNewPosts(skip: number): Promise<IGenericSoftPost[]> {
+  async fetchNew(skip: number): Promise<IGenericSoftPost[]> {
     const isDeleted = false;
     const isDraft = false;
     const raw = await getRepository(Post)

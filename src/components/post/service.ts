@@ -13,6 +13,7 @@ import {
   IPostServiceCreateItineraryReview,
   IPostModelSaveReviewInput,
   IPostModelUpdateDetailsInput,
+  IGenericSoftPost,
 } from "./typeDefs";
 import cloudinaryService from "../cloudinary/service";
 import postModel from "./model";
@@ -63,8 +64,17 @@ const postService = {
     return postModel.getItinerarySoftDetails(updatedDetails.id);
   },
 
-  async fetchNewPosts(skip: number) {
-    return await postModel.fetchNewPosts(skip);
+  async fetchNew(skip: number) {
+    return await postModel.fetchNew(skip);
+  },
+
+  async getSoftDetails(
+    postID: number,
+    type: string
+  ): Promise<IGenericSoftPost> {
+    return type === "travel-story"
+      ? await postModel.getTravelStorySoftDetails(postID)
+      : await postModel.getItinerarySoftDetails(postID);
   },
 
   async uploadFiles(

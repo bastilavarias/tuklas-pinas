@@ -46,10 +46,22 @@ const postController = {
     }
   },
 
-  async fetchNewPosts(request: Request, response: Response) {
+  async fetchNew(request: Request, response: Response) {
     try {
       const skip = parseInt(request.params.skip) || 0;
-      const result = await postService.fetchNewPosts(skip);
+      const result = await postService.fetchNew(skip);
+      response.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      response.status(400).json(error);
+    }
+  },
+
+  async getSoftDetails(request: Request, response: Response) {
+    try {
+      const postID = parseInt(request.params.postID) || 0;
+      const type = request.params.type || "";
+      const result = await postService.getSoftDetails(postID, type);
       response.status(200).json(result);
     } catch (error) {
       console.log(error);
