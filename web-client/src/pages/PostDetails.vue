@@ -1,0 +1,212 @@
+<template>
+  <v-container>
+    <v-row>
+      <v-col cols="12" md="3">
+        <v-row>
+          <v-col cols="12">
+            <generic-mini-profile-side-card></generic-mini-profile-side-card>
+          </v-col>
+          <v-col cols="12">
+            <generic-top-categories-side-card></generic-top-categories-side-card>
+          </v-col>
+        </v-row>
+      </v-col>
+      <v-col cols="12" md="6">
+        <generic-please-wait-progress-circular
+          v-if="isGetPostSoftDetailsStart"
+        ></generic-please-wait-progress-circular>
+        <v-row v-if="!isGetPostSoftDetailsStart">
+          <v-col cols="12">
+            <post-details-page-post-type-toolbar
+              :type="postDetails.type"
+            ></post-details-page-post-type-toolbar>
+          </v-col>
+          <v-col cols="12">
+            <post-details-page-details-card
+              :postID="postDetails.id"
+              :type="postDetails.type"
+              :author="postDetails.author"
+              :createdAt="postDetails.createdAt"
+              :title="postDetails.title"
+              :text="postDetails.text"
+              :files="postDetails.files"
+            ></post-details-page-details-card>
+          </v-col>
+          <v-col cols="12" v-if="isPostItinerary">
+            <post-details-page-itinerary-table-card
+              :itinerary="postDetails.itinerary"
+            ></post-details-page-itinerary-table-card>
+          </v-col>
+          <v-col cols="12" v-if="isPostItinerary">
+            <itinerary-post-page-personal-reviews-card></itinerary-post-page-personal-reviews-card>
+          </v-col>
+          <v-col cols="12">
+            <itinerary-post-page-tags-card></itinerary-post-page-tags-card>
+          </v-col>
+          <v-col cols="12">
+            <v-card outlined tile>
+              <div class="px-4 pt-3">
+                <span class="caption"
+                  >Type your comment as Sebastian Curtis T. Lavarias</span
+                >
+              </div>
+              <v-card-text>
+                <v-row no-gutters>
+                  <v-col cols="12">
+                    <v-textarea
+                      label="Type your comment here"
+                      single-line
+                      outlined
+                    ></v-textarea>
+                  </v-col>
+                  <v-col cols="12">
+                    <div class="d-flex align-center justify-space-between">
+                      <div class="flex-grow-1"></div>
+                      <v-btn color="secondary">Comment</v-btn>
+                    </div>
+                  </v-col>
+                </v-row>
+              </v-card-text>
+            </v-card>
+          </v-col>
+          <v-col cols="12">
+            <v-card outlined tile>
+              <v-card-title>
+                <span>Comments</span>
+                <div class="flex-grow-1"></div>
+                <div>
+                  <v-btn icon>
+                    <v-icon>mdi-sort</v-icon>
+                  </v-btn>
+                </div>
+              </v-card-title>
+              <template v-for="n in 5">
+                <generic-comment-media :key="n" class-name="pb-1">
+                  <template v-for="n2 in 5">
+                    <generic-comment-reply-media
+                      :key="n2"
+                    ></generic-comment-reply-media>
+                    <v-divider v-if="n2 !== 5"></v-divider>
+                  </template>
+                </generic-comment-media>
+                <v-divider v-if="n !== 5"></v-divider>
+              </template>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-col>
+      <v-col cols="12" md="3" ref="stickyParent">
+        <v-row>
+          <v-col cols="12">
+            <generic-mini-events-explorer-side-card></generic-mini-events-explorer-side-card>
+          </v-col>
+          <v-col cols="12">
+            <generic-suggested-people-side-card></generic-suggested-people-side-card>
+          </v-col>
+          <v-col cols="12">
+            <div
+              :style="{
+                position: 'relative',
+                height: `${stickyParentHeight}px`,
+              }"
+            >
+              <generic-sticky-footer></generic-sticky-footer>
+            </div>
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
+    <router-view></router-view>
+  </v-container>
+</template>
+
+<script>
+import GenericMiniProfileSideCard from "@/components/generic/card/MiniProfile";
+import GenericTopCategoriesSideCard from "@/components/generic/card/TopCategories";
+import ItineraryPostPageDetailCard from "@/components/itinerary-post-page/detail-card/Index";
+import ItineraryPostPagePersonalReviewsCard from "@/components/itinerary-post-page/personal-reviews-card/Index";
+import ItineraryPostPageTagsCard from "@/components/itinerary-post-page/TagsCard";
+import GenericCommentMedia from "@/components/generic/media/Comment";
+import GenericCommentReplyMedia from "@/components/generic/media/CommentReply";
+import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEventsExplorer";
+import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedPeople";
+import GenericStickyFooter from "@/components/generic/footer/Sticky";
+import commonUtilities from "@/common/utilities";
+import { GET_POST_SOFT_DETAILS } from "@/store/types/post";
+import CustomTooltipButton from "@/components/custom/TooltipButton";
+import GenericPleaseWaitProgressCircular from "@/components/generic/progress-circular/PleaseWait";
+import PostDetailsPagePostTypeToolbar from "@/components/post-details-page/PostTypeToolbar";
+import PostDetailsPageDetailsCard from "@/components/post-details-page/DetailsCard";
+import PostDetailsPageItineraryTableCard from "@/components/post-details-page/ItineraryTableCard";
+export default {
+  components: {
+    PostDetailsPageItineraryTableCard,
+    PostDetailsPageDetailsCard,
+    PostDetailsPagePostTypeToolbar,
+    GenericPleaseWaitProgressCircular,
+    CustomTooltipButton,
+    GenericStickyFooter,
+    GenericSuggestedPeopleSideCard,
+    GenericMiniEventsExplorerSideCard,
+    GenericCommentReplyMedia,
+    GenericCommentMedia,
+    ItineraryPostPageTagsCard,
+    ItineraryPostPagePersonalReviewsCard,
+    ItineraryPostPageDetailCard,
+    GenericTopCategoriesSideCard,
+    GenericMiniProfileSideCard,
+  },
+  data() {
+    return {
+      isGetPostSoftDetailsStart: false,
+      postDetails: {},
+    };
+  },
+  mixins: [commonUtilities],
+  computed: {
+    isPostItinerary() {
+      return this.postDetails.type === "itinerary";
+    },
+  },
+  methods: {
+    async getPostSoftDetails(postID, type) {
+      this.isGetPostSoftDetailsStart = true;
+      const payload = {
+        postID,
+        type,
+      };
+      const gotPostDetails = await this.$store.dispatch(
+        GET_POST_SOFT_DETAILS,
+        payload
+      );
+      console.log(gotPostDetails);
+      this.postDetails = Object.assign({}, gotPostDetails);
+      this.isGetPostSoftDetailsStart = false;
+    },
+  },
+  async created() {
+    const { postID, type } = this.$route.params;
+    const parametersNotValid = !postID || !type;
+    if (parametersNotValid) return this.goBack();
+    await this.getPostSoftDetails(postID, type);
+  },
+};
+</script>
+
+<style scoped>
+.next-image-button,
+.previous-image-button {
+  position: absolute;
+  z-index: 2;
+}
+
+.next-image-button {
+  top: 40%;
+  left: 1%;
+}
+
+.previous-image-button {
+  top: 40%;
+  right: 1%;
+}
+</style>

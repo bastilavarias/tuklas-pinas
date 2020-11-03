@@ -111,6 +111,7 @@ export default {
           sortable: false,
         },
       ],
+
       itineraryLocal: this.itinerary,
       selectedDay: {},
       dayFormDialogOperation: "create",

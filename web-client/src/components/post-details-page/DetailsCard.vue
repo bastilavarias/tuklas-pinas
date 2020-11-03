@@ -1,24 +1,14 @@
 <template>
-  <v-card
-    outlined
-    tile
-    :class="`${hasShadow ? 'custom-shadow' : ''} ${className}`"
-  >
+  <v-card outlined tile>
     <div class="px-4 py-3 d-flex align-start justify-space-between">
       <div class="mr-2">
         <span class="caption"
           ><span class="text-capitalize">{{ displayName }}</span> -
           {{ displayTime }}</span
         >
-        <custom-router-link
-          :to="{ name: 'post-details-page', params: { postID, type } }"
-          v-if="title"
-        >
-          <span class="d-block mb-1 title font-weight-bold secondary--text">{{
-            title
-          }}</span>
-        </custom-router-link>
-
+        <span class="d-block mb-1 title font-weight-bold secondary--text">{{
+          title
+        }}</span>
         <span class="body-2 d-block mb-3" v-if="text">{{ text }}</span>
       </div>
       <v-avatar :size="40">
@@ -102,9 +92,13 @@
         <v-icon class="mr-1">mdi-comment-outline</v-icon>
         <span class="caption font-weight-bold">1K+</span>
       </v-btn>
-      <div class="flex-grow-1"></div>
       <v-btn depressed text @click="isShareDialogOpen = true">
         <v-icon class="mr-1">mdi-share-outline</v-icon>
+        <span class="caption font-weight-bold">1K+</span>
+      </v-btn>
+      <div class="flex-grow-1"></div>
+      <v-btn depressed text>
+        <v-icon class="mr-1">mdi-bookmark-outline</v-icon>
         <span class="caption font-weight-bold">1K+</span>
       </v-btn>
     </v-card-actions>
@@ -115,20 +109,17 @@
 </template>
 
 <script>
-import Carousel from "vue-owl-carousel";
-import CustomRouterLink from "@/components/custom/RouterLink";
-import GenericPostShareDialog from "@/components/generic/dialog/PostShare";
 import GenericPostHeaderCard from "@/components/generic/card/PostHeader";
-import CustomVideoPlayer from "@/components/custom/VideoPlayer";
+import GenericPostShareDialog from "@/components/generic/dialog/PostShare";
 import moment from "moment";
-
+import CustomVideoPlayer from "@/components/custom/VideoPlayer";
+import Carousel from "vue-owl-carousel";
 export default {
-  name: "generic-post-preview-card",
+  name: "post-details-page-details-card",
   components: {
     CustomVideoPlayer,
-    GenericPostHeaderCard,
     GenericPostShareDialog,
-    CustomRouterLink,
+    GenericPostHeaderCard,
     Carousel,
   },
   props: {
@@ -139,14 +130,6 @@ export default {
     type: {
       type: String,
       required: true,
-    },
-    className: {
-      type: String,
-      required: false,
-    },
-    hasShadow: {
-      type: Boolean,
-      required: false,
     },
     author: {
       type: Object,
@@ -169,14 +152,11 @@ export default {
       required: true,
     },
   },
-
   data() {
     return {
-      rating: 4,
       isShareDialogOpen: false,
     };
   },
-
   computed: {
     displayName() {
       const { firstName, lastName } = this.author.profile;

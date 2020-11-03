@@ -78,46 +78,15 @@ const routes = [
     },
   },
   {
-    path: "/travel-story-post",
+    path: "/post-details",
     component: () => import("../layouts/Main"),
     children: [
       {
-        path: ":postID",
-        name: "travel-story-post-page",
-        component: () => import("../pages/travel-story/Post"),
-        children: [
-          {
-            path: "gallery/:imageID",
-            name: "travel-story-post-gallery-page",
-            component: () => import("../pages/travel-story/Gallery"),
-          },
-        ],
+        path: ":postID/:type",
+        name: "post-details-page",
+        component: () => import("../pages/PostDetails"),
       },
     ],
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
-    path: "/itinerary-post",
-    component: () => import("../layouts/Main"),
-    children: [
-      {
-        path: ":postID",
-        name: "itinerary-post-page",
-        component: () => import("../pages/itinerary/Post"),
-        children: [
-          {
-            path: "gallery/:imageID",
-            name: "itinerary-post-gallery-page",
-            component: () => import("../pages/itinerary/Gallery"),
-          },
-        ],
-      },
-    ],
-    meta: {
-      requiresAuth: true,
-    },
   },
   {
     path: "/tour-guides",
