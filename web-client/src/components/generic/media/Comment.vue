@@ -1,19 +1,21 @@
 <template>
-  <v-card :class="`${className}`" flat color="transparent">
+  <v-card
+    :id="`comment-media-${commentID}`"
+    :class="`${className}`"
+    flat
+    color="transparent"
+  >
     <div class="px-4 pt-3">
       <div class="d-flex align-start justify-space-between mb-2">
         <div class="mr-2">
-          <div>
-            <span class="caption"
-              >Sebastian Curtis T. Lavarias - 6 hrs ago</span
-            >
+          <div class="caption">
+            <span class="text-capitalize">{{
+              formatName(author.profile.firstName, author.profile.lastName)
+            }}</span>
+            - {{ formatRelativeTime(createdAt) }}
           </div>
           <div class="mb-3">
-            <span class="subtitle-2 text-justify"
-              >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore
-              obcaecati qui temporibus. Distinctio, eveniet illum non obcaecati
-              quisquam repellendus ut.</span
-            >
+            <span class="subtitle-2 text-justify">{{ text }}</span>
           </div>
         </div>
         <v-avatar :size="40">
@@ -68,42 +70,61 @@
             </v-card-text>
           </v-card>
         </v-col>
-        <v-col cols="12">
-          <span
-            class="subtitle-2 cursor-pointer"
-            @click="shouldShowReplies = !shouldShowReplies"
-          >
-            {{ shouldShowReplies ? "Hide Replies" : "Show Replies" }}
-            <v-icon color="secondary">
-              {{ shouldShowReplies ? "mdi-chevron-up" : "mdi-chevron-down" }}
-            </v-icon>
-          </span>
-        </v-col>
-        <v-col cols="12" v-if="shouldShowReplies">
-          <slot></slot>
-        </v-col>
-        <v-col cols="12" v-if="shouldShowReplies">
-          <span class="subtitle-2 cursor-pointer">
-            <span>Show more replies</span>
-            <v-icon color="secondary"> </v-icon>
-          </span>
-        </v-col>
+        <!--        <v-col cols="12">-->
+        <!--          <span-->
+        <!--            class="subtitle-2 cursor-pointer"-->
+        <!--            @click="shouldShowReplies = !shouldShowReplies"-->
+        <!--          >-->
+        <!--            {{ shouldShowReplies ? "Hide Replies" : "Show Replies" }}-->
+        <!--            <v-icon color="secondary">-->
+        <!--              {{ shouldShowReplies ? "mdi-chevron-up" : "mdi-chevron-down" }}-->
+        <!--            </v-icon>-->
+        <!--          </span>-->
+        <!--        </v-col>-->
+        <!--        <v-col cols="12" v-if="shouldShowReplies">-->
+        <!--          <slot></slot>-->
+        <!--        </v-col>-->
+        <!--        <v-col cols="12" v-if="shouldShowReplies">-->
+        <!--          <span class="subtitle-2 cursor-pointer">-->
+        <!--            <span>Show more replies</span>-->
+        <!--            <v-icon color="secondary"> </v-icon>-->
+        <!--          </span>-->
+        <!--        </v-col>-->
+        <!--        -->
       </v-row>
     </div>
   </v-card>
 </template>
 
 <script>
+import commonUtilities from "@/common/utilities";
+
 export default {
   name: "generic-comment-media",
 
   props: {
+    commentID: {
+      type: Number,
+      required: true,
+    },
     className: {
       type: String,
       required: false,
     },
+    text: {
+      type: String,
+      required: true,
+    },
+    author: {
+      type: Object,
+      required: true,
+    },
+    createdAt: {
+      type: String,
+      required: true,
+    },
   },
-
+  mixins: [commonUtilities],
   data() {
     return {
       shouldShowReplyField: false,

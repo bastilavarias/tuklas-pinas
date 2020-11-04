@@ -43,7 +43,7 @@
             >
               <template v-slot:top> </template>
               <template v-slot:item.time="{ item }">
-                {{ formatTime(item.time) }}
+                {{ formatStandardTime(item.time) }}
               </template>
               <template v-slot:item.destination="{ item }">
                 {{ getDestinationName(item.destinationID) }}

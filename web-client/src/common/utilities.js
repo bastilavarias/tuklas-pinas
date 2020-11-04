@@ -29,7 +29,7 @@ const commonUtilities = {
         this.stickyParentHeight = 0;
       }
     },
-    formatTime(time) {
+    formatStandardTime(time) {
       return time ? moment(time, "hh:mm").format("LT") : "";
     },
     formatMoney(money) {
@@ -37,6 +37,12 @@ const commonUtilities = {
     },
     formatDate(date) {
       return date ? moment(date).format("MMMM D, YYYY") : "";
+    },
+    formatName(firstName, lastName) {
+      return `${firstName} ${lastName}`;
+    },
+    formatRelativeTime(time) {
+      return time ? moment(time).startOf("hour").fromNow() : "";
     },
     scrollToTop() {
       window.scrollTo(0, 0);

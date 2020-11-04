@@ -3,9 +3,11 @@ import {
   CREATE_TRAVEL_STORY_POST,
   FETCH_NEW_POSTS,
   GET_POST_SOFT_DETAILS,
+  SEND_POST_COMMENT,
 } from "@/store/types/post";
 import postApiService from "@/services/api/modules/post";
 import { SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS } from "@/store/types/generic";
+import apiService from "@/services/api";
 
 const postStore = {
   actions: {
@@ -78,6 +80,24 @@ const postStore = {
           color: "success",
         });
         return createdItineraryPost || {};
+      } catch (error) {
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Something went wrong to the server. Please try again.",
+          color: "error",
+        });
+      }
+    },
+    async [SEND_POST_COMMENT]({ commit }, { postID, text }) {
+      try {
+        const form = { text };
+        const sentComment = await postApiService.sendComment(postID, form);
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Comment successfully sent!",
+          color: "success",
+        });
+        return sentComment || {};
       } catch (error) {
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,
