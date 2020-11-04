@@ -38,6 +38,9 @@ const commonUtilities = {
     formatDate(date) {
       return date ? moment(date).format("MMMM D, YYYY") : "";
     },
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
   },
 
   mounted() {

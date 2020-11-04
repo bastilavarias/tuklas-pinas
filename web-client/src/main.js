@@ -4,8 +4,6 @@ import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 import VueMasonry from "vue-masonry-css";
-import VueFileAgent from "vue-file-agent";
-import "vue-file-agent/dist/vue-file-agent.css";
 import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
 import apiService from "@/services/api";
@@ -15,7 +13,6 @@ import "video.js/dist/video-js.css";
 
 Vue.config.productionTip = false;
 Vue.use(VueMasonry);
-Vue.use(VueFileAgent);
 Vue.use(InfiniteLoading);
 Vue.use(VueVideoPlayer);
 

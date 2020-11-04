@@ -7,8 +7,8 @@
     <div class="px-4 py-3 d-flex align-start justify-space-between">
       <div class="mr-2">
         <span class="caption"
-          ><span class="text-capitalize">{{ displayName }}</span> -
-          {{ displayTime }}</span
+          ><span class="text-capitalize">{{ displayName }}</span> - Posted
+          {{ displayPostType }} {{ displayTime }}</span
         >
         <custom-router-link
           :to="{ name: 'post-details-page', params: { postID, type } }"
@@ -27,72 +27,11 @@
         ></v-img>
       </v-avatar>
     </div>
-    <carousel
-      v-if="type === 'travel-story'"
-      :items="1"
-      :dots="false"
-      :nav="false"
-      :autoplay="false"
-      :mouse-drag="false"
-      touch-drag
-      pull-drag
-      free-drag
-      style="position: relative"
-    >
-      <template v-for="(file, index) in files">
-        <custom-video-player
-          :url="file.url"
-          v-if="file.format === 'mp4'"
-        ></custom-video-player>
-        <v-img
-          :key="index"
-          height="300"
-          :src="file.url"
-          :lazy-src="file.url"
-          class="d-block mx-auto"
-          position="center"
-          cover
-          v-else
-        ></v-img>
-      </template>
-      <template slot="prev">
-        <v-btn fab color="white" small class="next-image-button">
-          <v-icon small color="black">mdi-chevron-left</v-icon>
-        </v-btn>
-      </template>
-      <template slot="next" v-if="files.length > 1">
-        <v-btn fab color="white" small class="previous-image-button">
-          <v-icon small color="black">mdi-chevron-right</v-icon>
-        </v-btn>
-      </template>
-    </carousel>
-    <masonry
-      v-if="type === 'itinerary' && files.length > 1"
-      :cols="2"
-      :gutter="0"
-    >
-      <template v-for="(file, index) in files">
-        <custom-video-player
-          v-if="file.format === 'mp4'"
-          :url="file.url"
-        ></custom-video-player>
-        <v-img
-          :key="index"
-          width="100%"
-          height="auto"
-          :src="file.url"
-          :laz-src="file.url"
-          v-else
-        ></v-img>
-      </template>
-    </masonry>
-    <v-img
-      v-if="type === 'itinerary' && files.length === 1"
-      :src="files[0].url"
-      :lazy-src="files[0].url"
-      width="100%"
-      height="auto"
-    ></v-img>
+    <custom-post-gallery-preview
+      :type="type"
+      :files="files"
+    ></custom-post-gallery-preview>
+    <v-divider></v-divider>
     <v-card-actions>
       <v-btn depressed text>
         <v-icon class="mr-1">mdi-heart-outline</v-icon>
@@ -115,21 +54,21 @@
 </template>
 
 <script>
-import Carousel from "vue-owl-carousel";
 import CustomRouterLink from "@/components/custom/RouterLink";
 import GenericPostShareDialog from "@/components/generic/dialog/PostShare";
 import GenericPostHeaderCard from "@/components/generic/card/PostHeader";
 import CustomVideoPlayer from "@/components/custom/VideoPlayer";
 import moment from "moment";
+import CustomPostGalleryPreview from "@/components/custom/PostGalleryPreview";
 
 export default {
   name: "generic-post-preview-card",
   components: {
+    CustomPostGalleryPreview,
     CustomVideoPlayer,
     GenericPostHeaderCard,
     GenericPostShareDialog,
     CustomRouterLink,
-    Carousel,
   },
   props: {
     postID: {
@@ -186,6 +125,13 @@ export default {
       return this.createdAt
         ? moment(this.createdAt).startOf("hour").fromNow()
         : "";
+    },
+    displayPostType() {
+      const postType = {
+        "travel-story": "a Travel Story",
+        itinerary: "an Itinerary",
+      };
+      return postType[this.type];
     },
   },
 };
