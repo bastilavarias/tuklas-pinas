@@ -188,6 +188,7 @@ export default {
     },
   },
   async created() {
+    this.scrollToTop();
     const { postID, type } = this.$route.params;
     const parametersNotValid = !postID || !type;
     if (parametersNotValid) return this.goBack();
@@ -195,21 +196,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.next-image-button,
-.previous-image-button {
-  position: absolute;
-  z-index: 2;
-}
-
-.next-image-button {
-  top: 40%;
-  left: 1%;
-}
-
-.previous-image-button {
-  top: 40%;
-  right: 1%;
-}
-</style>
