@@ -55,7 +55,10 @@
                 <span class="caption"
                   >Type your comment as
                   <span class="text-capitalize">{{
-                    credentials.profile.firstName
+                    formatName(
+                      credentials.profile.firstName,
+                      credentials.profile.lastName
+                    )
                   }}</span>
                 </span>
               </div>
@@ -107,16 +110,10 @@
                   :created-at="comment.createdAt"
                   :author="comment.author"
                   :text="comment.text"
+                  :replies="comment.replies"
                 >
-                  <!--                  <template v-for="n2 in 5">-->
-                  <!--                    <generic-comment-reply-media-->
-                  <!--                      :key="n2"-->
-                  <!--                    ></generic-comment-reply-media>-->
-                  <!--                    <v-divider v-if="n2 !== 5"></v-divider>-->
-                  <!--                  </template>-->
-                  <!--                  -->
                 </generic-comment-media>
-                <v-divider v-if="index !== 5"></v-divider>
+                <v-divider v-if="index !== comments.length - 1"></v-divider>
               </template>
             </v-card>
           </v-col>

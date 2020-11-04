@@ -41,8 +41,14 @@
           <v-card outlined tile>
             <div class="px-4 pt-3">
               <span class="caption"
-                >Type your reply as Sebastian Curtis T. Lavarias</span
-              >
+                >Type your comment as
+                <span class="text-capitalize">{{
+                  formatName(
+                    credentials.profile.firstName,
+                    credentials.profile.lastName
+                  )
+                }}</span>
+              </span>
             </div>
             <v-card-text>
               <v-row no-gutters>
@@ -51,6 +57,7 @@
                     label="Type your reply here"
                     single-line
                     outlined
+                    v-model="reply"
                   ></v-textarea>
                 </v-col>
                 <v-col cols="12">
@@ -63,12 +70,31 @@
                       @click="shouldShowReplyField = false"
                       >Cancel</v-btn
                     >
-                    <v-btn color="secondary">Reply</v-btn>
+                    <v-btn
+                      color="secondary"
+                      :disabled="!isReplyValid"
+                      @click="sendReply"
+                      :loading="isSendReplyStart"
+                      >Reply</v-btn
+                    >
                   </div>
                 </v-col>
               </v-row>
             </v-card-text>
           </v-card>
+        </v-col>
+        <v-col cols="12">
+          <template v-for="(reply, index) in repliesLocal">
+            <generic-comment-reply-media
+              :key="index"
+              class-name="pb-1"
+              :replyID="reply.id"
+              :created-at="reply.createdAt"
+              :author="reply.author"
+              :text="reply.text"
+            >
+            </generic-comment-reply-media>
+          </template>
         </v-col>
         <!--        <v-col cols="12">-->
         <!--          <span-->
@@ -98,10 +124,13 @@
 
 <script>
 import commonUtilities from "@/common/utilities";
+import { SEND_POST_COMMENT_REPLY } from "@/store/types/post";
+import commonValidation from "@/common/validation";
+import GenericCommentReplyMedia from "@/components/generic/media/CommentReply";
 
 export default {
   name: "generic-comment-media",
-
+  components: { GenericCommentReplyMedia },
   props: {
     commentID: {
       type: Number,
@@ -123,13 +152,54 @@ export default {
       type: String,
       required: true,
     },
+    replies: {
+      type: Array,
+      required: true,
+    },
   },
-  mixins: [commonUtilities],
+  mixins: [commonUtilities, commonValidation],
   data() {
     return {
       shouldShowReplyField: false,
-      shouldShowReplies: false,
+      isSendReplyStart: false,
+      reply: "",
+      repliesLocal: this.replies,
     };
+  },
+  computed: {
+    credentials() {
+      return this.$store.state.authentication.credentials;
+    },
+    shouldShowReplies() {
+      return this.replies.length > 1;
+    },
+    isReplyValid() {
+      return this.reply;
+    },
+  },
+  watch: {
+    replies(val) {
+      this.repliesLocal = val;
+    },
+
+    repliesLocal(val) {
+      this.$emit("update:replies");
+    },
+  },
+  methods: {
+    async sendReply() {
+      this.isSendReplyStart = true;
+      const payload = {
+        commentID: this.commentID,
+        text: this.reply,
+      };
+      const sentReply = await this.$store.dispatch(
+        SEND_POST_COMMENT_REPLY,
+        payload
+      );
+      this.isSendReplyStart = false;
+      this.repliesLocal = [sentReply, ...this.repliesLocal];
+    },
   },
 };
 </script>
