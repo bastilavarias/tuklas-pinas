@@ -160,3 +160,14 @@ export interface IPostModelSaveReviewInput {
 export type IGenericSoftPost =
   | ITravelStoryPostSoftDetails
   | IItineraryPostSoftDetails;
+
+export interface IBaseCommentInput {
+  text: string;
+}
+
+export interface IPostServiceSendCommentInput extends IBaseCommentInput {}
+
+export interface IPostModelSaveCommentInput extends IBaseCommentInput {
+  postID: number;
+  accountID: number;
+}

@@ -3,6 +3,7 @@ import postService from "./service";
 import {
   IPostServiceCreateItineraryInput,
   IPostServiceCreateTravelStoryInput,
+  IPostServiceSendCommentInput,
 } from "./typeDefs";
 
 const postController = {
@@ -39,6 +40,22 @@ const postController = {
         review: request.body.review || [],
       };
       const result = await postService.createItinerary(postID, input);
+      response.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      response.status(400).json(error);
+    }
+  },
+
+  async sendComment(request: Request, response: Response) {
+    try {
+      // @ts-ignore
+      const accountID = request.user.id;
+      const postID = parseInt(request.params.postID) || 0;
+      const input: IPostServiceSendCommentInput = {
+        text: request.body.text || "",
+      };
+      const result = await postService.sendComment(accountID, postID, input);
       response.status(200).json(result);
     } catch (error) {
       console.log(error);
