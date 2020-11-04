@@ -171,3 +171,10 @@ export interface IPostModelSaveCommentInput extends IBaseCommentInput {
   postID: number;
   accountID: number;
 }
+
+export interface IPostModelSaveCommentReplyInput extends IBaseCommentInput {
+  commentID: number;
+  accountID: number;
+}
+
+export interface IPostServiceSendCommentReplyInput extends IBaseCommentInput {}

@@ -4,15 +4,12 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   ManyToOne,
-  OneToMany,
-  JoinColumn,
 } from "typeorm";
-import Post from "./Post";
 import Account from "./Account";
-import PostCommentReply from "./PostCommentReply";
+import PostComment from "./PostComment";
 
 @Entity()
-export default class PostComment extends BaseEntity {
+export default class PostCommentReply extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -34,10 +31,6 @@ export default class PostComment extends BaseEntity {
   })
   isDeleted: boolean;
 
-  @ManyToOne(() => Post, (post) => post.files)
-  post: Post;
-
-  @OneToMany(() => PostCommentReply, (reply) => reply.comment)
-  @JoinColumn({ name: "commentId" })
-  replies: PostCommentReply[];
+  @ManyToOne(() => PostComment, (comment) => comment.replies)
+  comment: PostComment;
 }

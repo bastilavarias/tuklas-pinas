@@ -23,6 +23,12 @@ postRouter.post(
 );
 
 postRouter.post(
+  "/send-comment-reply/:commentID",
+  passport.authenticate("jwt", { session: false }),
+  postController.sendCommentReply
+);
+
+postRouter.post(
   "/upload-files",
   multer.array("files"),
   passport.authenticate("jwt", { session: false }),
