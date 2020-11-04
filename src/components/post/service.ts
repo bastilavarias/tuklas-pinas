@@ -16,11 +16,14 @@ import {
   IGenericSoftPost,
   IPostServiceSendCommentInput,
   IPostModelSaveCommentInput,
+  IPostServiceSendCommentReplyInput,
+  IPostModelSaveCommentReplyInput,
 } from "./typeDefs";
 import cloudinaryService from "../cloudinary/service";
 import postModel from "./model";
 import Post from "../../database/entities/Post";
 import PostComment from "../../database/entities/PostComment";
+import PostCommentReply from "../../database/entities/PostCommentReply";
 
 const postService = {
   async createTravelStory(
@@ -78,6 +81,19 @@ const postService = {
       text: input.text,
     };
     return await postModel.saveComment(saveCommentInput);
+  },
+
+  async sendCommentReply(
+    accountID: number,
+    commentID: number,
+    input: IPostServiceSendCommentReplyInput
+  ): Promise<PostCommentReply> {
+    const saveCommentInput: IPostModelSaveCommentReplyInput = {
+      accountID,
+      commentID,
+      text: input.text,
+    };
+    return await postModel.saveCommentReply(saveCommentInput);
   },
 
   async fetchNew(skip: number) {

@@ -19,6 +19,7 @@ import {
   IPostModelUpdateDetailsInput,
   IGenericSoftPost,
   IPostModelSaveCommentInput,
+  IPostModelSaveCommentReplyInput,
 } from "./typeDefs";
 import Post from "../../database/entities/Post";
 import PostFile from "../../database/entities/PostFile";
@@ -43,6 +44,7 @@ import PostReviewTip from "../../database/entities/PostReviewTip";
 import PostReviewAvoid from "../../database/entities/PostReviewAvoid";
 import PostReview from "../../database/entities/PostReview";
 import PostComment from "../../database/entities/PostComment";
+import PostCommentReply from "../../database/entities/PostCommentReply";
 
 const postModel = {
   async saveDetails(input: IPostModelSaveDetailsInput): Promise<Post> {
@@ -261,6 +263,18 @@ const postModel = {
     return await this.getComment(savedComment.id);
   },
 
+  async saveCommentReply(
+    input: IPostModelSaveCommentReplyInput
+  ): Promise<PostCommentReply> {
+    const { text, accountID, commentID } = input;
+    const savedComment = await PostCommentReply.create({
+      comment: { id: commentID },
+      author: { id: accountID },
+      text,
+    }).save();
+    return await this.getCommentReply(savedComment.id);
+  },
+
   async fetchNew(skip: number): Promise<IGenericSoftPost[]> {
     const isDeleted = false;
     const isDraft = false;
@@ -432,11 +446,20 @@ const postModel = {
 
   async getComment(commentID: number): Promise<PostComment> {
     const gotComment = await PostComment.findOne(commentID, {
-      relations: ["author", "author.profile"],
+      relations: ["author", "author.profile", "replies"],
     });
     //@ts-ignore
     delete gotComment?.author.password;
     return gotComment!;
+  },
+
+  async getCommentReply(commentID: number): Promise<PostCommentReply> {
+    const gotCommentReply = await PostCommentReply.findOne(commentID, {
+      relations: ["author", "author.profile"],
+    });
+    //@ts-ignore
+    delete gotCommentReply?.author.password;
+    return gotCommentReply!;
   },
 
   async updateDetails(
