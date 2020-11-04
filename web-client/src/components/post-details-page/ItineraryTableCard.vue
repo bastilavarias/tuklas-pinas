@@ -55,7 +55,7 @@
             show-expand
           >
             <template v-slot:item.time="{ item }">
-              {{ formatTime(item.time) }}
+              {{ formatStandardTime(item.time) }}
             </template>
             <template v-slot:item.transportation="{ item }">
               {{ item.transportation }} -

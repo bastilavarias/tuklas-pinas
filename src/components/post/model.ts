@@ -252,7 +252,13 @@ const postModel = {
   },
 
   async saveComment(input: IPostModelSaveCommentInput): Promise<PostComment> {
-    return await PostComment.create(input).save();
+    const { text, accountID, postID } = input;
+    const savedComment = await PostComment.create({
+      post: { id: postID },
+      author: { id: accountID },
+      text,
+    }).save();
+    return await this.getComment(savedComment.id);
   },
 
   async fetchNew(skip: number): Promise<IGenericSoftPost[]> {
@@ -422,6 +428,15 @@ const postModel = {
       ],
     });
     return gotReview!;
+  },
+
+  async getComment(commentID: number): Promise<PostComment> {
+    const gotComment = await PostComment.findOne(commentID, {
+      relations: ["author", "author.profile"],
+    });
+    //@ts-ignore
+    delete gotComment?.author.password;
+    return gotComment!;
   },
 
   async updateDetails(

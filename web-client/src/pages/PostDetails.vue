@@ -53,8 +53,11 @@
             <v-card outlined tile>
               <div class="px-4 pt-3">
                 <span class="caption"
-                  >Type your comment as Sebastian Curtis T. Lavarias</span
-                >
+                  >Type your comment as
+                  <span class="text-capitalize">{{
+                    credentials.profile.firstName
+                  }}</span>
+                </span>
               </div>
               <v-card-text>
                 <v-row no-gutters>
@@ -63,12 +66,19 @@
                       label="Type your comment here"
                       single-line
                       outlined
+                      v-model="comment"
                     ></v-textarea>
                   </v-col>
                   <v-col cols="12">
                     <div class="d-flex align-center justify-space-between">
                       <div class="flex-grow-1"></div>
-                      <v-btn color="secondary">Comment</v-btn>
+                      <v-btn
+                        color="secondary"
+                        @click="sendComment"
+                        :disabled="!isCommentValid"
+                        :loading="isSendCommentStart"
+                        >Comment</v-btn
+                      >
                     </div>
                   </v-col>
                 </v-row>
@@ -86,16 +96,27 @@
                   </v-btn>
                 </div>
               </v-card-title>
-              <template v-for="n in 5">
-                <generic-comment-media :key="n" class-name="pb-1">
-                  <template v-for="n2 in 5">
-                    <generic-comment-reply-media
-                      :key="n2"
-                    ></generic-comment-reply-media>
-                    <v-divider v-if="n2 !== 5"></v-divider>
-                  </template>
+              <v-card-text class="text-center" v-if="comments.length === 0">
+                <span class="caption font-italic">No comments.</span>
+              </v-card-text>
+              <template v-for="(comment, index) in comments">
+                <generic-comment-media
+                  :key="index"
+                  class-name="pb-1"
+                  :commentID="comment.id"
+                  :created-at="comment.createdAt"
+                  :author="comment.author"
+                  :text="comment.text"
+                >
+                  <!--                  <template v-for="n2 in 5">-->
+                  <!--                    <generic-comment-reply-media-->
+                  <!--                      :key="n2"-->
+                  <!--                    ></generic-comment-reply-media>-->
+                  <!--                    <v-divider v-if="n2 !== 5"></v-divider>-->
+                  <!--                  </template>-->
+                  <!--                  -->
                 </generic-comment-media>
-                <v-divider v-if="n !== 5"></v-divider>
+                <v-divider v-if="index !== 5"></v-divider>
               </template>
             </v-card>
           </v-col>
@@ -135,7 +156,7 @@ import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEve
 import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedPeople";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
 import commonUtilities from "@/common/utilities";
-import { GET_POST_SOFT_DETAILS } from "@/store/types/post";
+import { GET_POST_SOFT_DETAILS, SEND_POST_COMMENT } from "@/store/types/post";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
 import GenericPleaseWaitProgressCircular from "@/components/generic/progress-circular/PleaseWait";
 import PostDetailsPagePostTypeToolbar from "@/components/post-details-page/PostTypeToolbar";
@@ -143,6 +164,7 @@ import PostDetailsPageDetailsCard from "@/components/post-details-page/DetailsCa
 import PostDetailsPageItineraryTableCard from "@/components/post-details-page/ItineraryTableCard";
 import PostDetailsPagePersonalReviewCard from "@/components/post-details-page/personal-reviews-card/Index";
 import PostDetailsPageTagsCard from "@/components/post-details-page/TagsCard";
+import commonValidation from "@/common/validation";
 export default {
   components: {
     PostDetailsPageTagsCard,
@@ -164,12 +186,21 @@ export default {
     return {
       isGetPostSoftDetailsStart: false,
       postDetails: {},
+      isSendCommentStart: false,
+      comment: "",
+      comments: [],
     };
   },
-  mixins: [commonUtilities],
+  mixins: [commonUtilities, commonValidation],
   computed: {
     isPostItinerary() {
       return this.postDetails.type === "itinerary";
+    },
+    credentials() {
+      return this.$store.state.authentication.credentials;
+    },
+    isCommentValid() {
+      return this.comment;
     },
   },
   methods: {
@@ -185,6 +216,26 @@ export default {
       );
       this.postDetails = Object.assign({}, gotPostDetails);
       this.isGetPostSoftDetailsStart = false;
+    },
+    async sendComment() {
+      this.isSendCommentStart = true;
+      const { postID } = this.$route.params;
+      const payload = { postID, text: this.comment };
+      const sentComment = await this.$store.dispatch(
+        SEND_POST_COMMENT,
+        payload
+      );
+      this.isSendCommentStart = false;
+      const isCommentValid = this.validateObject(sentComment);
+      if (isCommentValid) {
+        this.comments = [sentComment, ...this.comments];
+        this.comment = "";
+        this.$nextTick(async () => {
+          await this.$vuetify.goTo(`#comment-media-${sentComment.id}`, {
+            offset: 150,
+          });
+        });
+      }
     },
   },
   async created() {

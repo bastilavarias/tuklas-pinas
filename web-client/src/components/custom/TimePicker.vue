@@ -12,7 +12,7 @@
   >
     <template v-slot:activator="{ on, attrs }">
       <v-text-field
-        :value="formatTime(timeLocal)"
+        :value="formatStandardTime(timeLocal)"
         :label="label"
         :filled="filled"
         :single-line="singleLine"
