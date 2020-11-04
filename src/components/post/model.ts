@@ -18,6 +18,7 @@ import {
   IPostModelSaveReviewInput,
   IPostModelUpdateDetailsInput,
   IGenericSoftPost,
+  IPostModelSaveCommentInput,
 } from "./typeDefs";
 import Post from "../../database/entities/Post";
 import PostFile from "../../database/entities/PostFile";
@@ -41,6 +42,7 @@ import PostReviewFinance from "../../database/entities/PostReviewFinance";
 import PostReviewTip from "../../database/entities/PostReviewTip";
 import PostReviewAvoid from "../../database/entities/PostReviewAvoid";
 import PostReview from "../../database/entities/PostReview";
+import PostComment from "../../database/entities/PostComment";
 
 const postModel = {
   async saveDetails(input: IPostModelSaveDetailsInput): Promise<Post> {
@@ -247,6 +249,10 @@ const postModel = {
       review: { id: postReviewID },
       text,
     }).save();
+  },
+
+  async saveComment(input: IPostModelSaveCommentInput): Promise<PostComment> {
+    return await PostComment.create(input).save();
   },
 
   async fetchNew(skip: number): Promise<IGenericSoftPost[]> {

@@ -14,10 +14,13 @@ import {
   IPostModelSaveReviewInput,
   IPostModelUpdateDetailsInput,
   IGenericSoftPost,
+  IPostServiceSendCommentInput,
+  IPostModelSaveCommentInput,
 } from "./typeDefs";
 import cloudinaryService from "../cloudinary/service";
 import postModel from "./model";
 import Post from "../../database/entities/Post";
+import PostComment from "../../database/entities/PostComment";
 
 const postService = {
   async createTravelStory(
@@ -62,6 +65,19 @@ const postService = {
     await this.saveItineraryDetails(updatedDetails.id, input.itinerary);
     await this.saveReviews(updatedDetails.id, input.review);
     return postModel.getItinerarySoftDetails(updatedDetails.id);
+  },
+
+  async sendComment(
+    accountID: number,
+    postID: number,
+    input: IPostServiceSendCommentInput
+  ): Promise<PostComment> {
+    const saveCommentInput: IPostModelSaveCommentInput = {
+      accountID,
+      postID,
+      text: input.text,
+    };
+    return await postModel.saveComment(saveCommentInput);
   },
 
   async fetchNew(skip: number) {
