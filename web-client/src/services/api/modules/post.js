@@ -39,9 +39,9 @@ const postApiService = {
     return result.data || [];
   },
 
-  async fetchComments(postID, type, skip) {
+  async fetchComments(postID, sort, skip) {
     const result = await apiService.get(
-      `/post/comments/${postID}/${type}/${skip}`
+      `/post/comments/${postID}/${sort}/${skip}`
     );
     return result.data || [];
   },

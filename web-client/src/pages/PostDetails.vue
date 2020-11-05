@@ -94,7 +94,7 @@
                 <span>Comments</span>
                 <div class="flex-grow-1"></div>
                 <post-details-page-comments-sort-button-menu
-                  :sort.sync="commentsType"
+                  :sort.sync="commentsSort"
                 ></post-details-page-comments-sort-button-menu>
               </v-card-title>
               <template v-for="(comment, index) in comments">
@@ -212,7 +212,7 @@ export default {
       scrollPage: 1,
       scrollIdentifier: +new Date(),
       isFetchCommentsStart: false,
-      commentsType: "new",
+      commentsSort: "relevant",
     };
   },
   mixins: [commonUtilities, commonValidation],
@@ -225,6 +225,15 @@ export default {
     },
     isCommentValid() {
       return this.comment;
+    },
+  },
+  watch: {
+    commentsSort(val) {
+      this.commentsSort = val;
+      this.skip = 0;
+      this.scrollPage = 1;
+      this.scrollIdentifier = +new Date();
+      this.comments = [];
     },
   },
   methods: {
@@ -263,11 +272,11 @@ export default {
     },
     async fetchComments($state) {
       this.isFetchCommentsStart = true;
-      if (this.commentsType === "new") {
+      if (this.commentsSort === "new") {
         const { postID } = this.$route.params;
         const payload = {
           postID,
-          type: this.commentsType,
+          sort: this.commentsSort,
           skip: this.skip,
         };
         const fetchedComments = await this.$store.dispatch(

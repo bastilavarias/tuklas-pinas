@@ -140,9 +140,9 @@ const postStore = {
         });
       }
     },
-    async [FETCH_POST_COMMENTS]({ commit }, { postID, type, skip }) {
+    async [FETCH_POST_COMMENTS]({ commit }, { postID, sort, skip }) {
       try {
-        return await postApiService.fetchComments(postID, type, skip);
+        return await postApiService.fetchComments(postID, sort, skip);
       } catch (error) {
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,
