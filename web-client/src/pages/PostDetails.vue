@@ -110,7 +110,9 @@
                   :created-at="comment.createdAt"
                   :author="comment.author"
                   :text="comment.text"
-                  :replies="comment.replies"
+                  :replies.sync="comment.replies"
+                  :reactions.sync="comment.reactions"
+                  :reactionsCount.sync="comment.reactionsCount"
                 >
                 </generic-comment-media>
                 <v-divider v-if="index !== comments.length - 1"></v-divider>

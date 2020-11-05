@@ -45,4 +45,7 @@ export default class PostComment extends BaseEntity {
   @OneToMany(() => PostCommentReaction, (reply) => reply.comment)
   @JoinColumn({ name: "commentId" })
   reactions: PostCommentReaction[];
+
+  repliesCount?: number;
+  reactionsCount?: number;
 }

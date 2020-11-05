@@ -26,9 +26,16 @@
       </div>
     </div>
     <v-card-actions>
-      <v-btn depressed text>
-        <v-icon class="mr-1">mdi-heart-outline</v-icon>
-        <span class="caption font-weight-bold">1K+</span>
+      <v-btn
+        depressed
+        text
+        :disabled="isSendReactionStart || isRemoveReactionStart"
+        @click="react"
+      >
+        <v-icon class="mr-1" :color="isUserReacted ? 'error' : ''">{{
+          isUserReacted ? "mdi-heart" : "mdi-heart-outline"
+        }}</v-icon>
+        <span class="caption font-weight-bold">{{ reactionsCountLocal }}</span>
       </v-btn>
       <v-btn depressed text @click="shouldShowReplyField = true">
         <v-icon class="mr-1">mdi-reply-outline</v-icon>
@@ -103,7 +110,11 @@
 
 <script>
 import commonUtilities from "@/common/utilities";
-import { SEND_POST_COMMENT_REPLY } from "@/store/types/post";
+import {
+  REMOVE_POST_COMMENT_REACTION,
+  SEND_POST_COMMENT_REACTION,
+  SEND_POST_COMMENT_REPLY,
+} from "@/store/types/post";
 import commonValidation from "@/common/validation";
 import GenericCommentReplyMedia from "@/components/generic/media/CommentReply";
 
@@ -135,6 +146,14 @@ export default {
       type: Array,
       required: true,
     },
+    reactions: {
+      type: Array,
+      required: true,
+    },
+    reactionsCount: {
+      type: Number,
+      required: true,
+    },
   },
   mixins: [commonUtilities, commonValidation],
   data() {
@@ -143,6 +162,10 @@ export default {
       isSendReplyStart: false,
       reply: "",
       repliesLocal: this.replies,
+      reactionsLocal: this.reactions,
+      reactionsCountLocal: this.reactionsCount,
+      isSendReactionStart: false,
+      isRemoveReactionStart: false,
     };
   },
   computed: {
@@ -152,6 +175,12 @@ export default {
     isReplyValid() {
       return this.reply;
     },
+    isUserReacted() {
+      const foundUser = this.reactionsLocal.find(
+        (reaction) => reaction.account.id === this.credentials.id
+      );
+      return this.validateObject(foundUser);
+    },
   },
   watch: {
     replies(val) {
@@ -160,6 +189,14 @@ export default {
 
     repliesLocal(val) {
       this.$emit("update:replies", val);
+    },
+
+    reactions(val) {
+      this.reactionsLocal = val;
+    },
+
+    reactionsLocal(val) {
+      this.$emit("update:reactions", val);
     },
   },
   methods: {
@@ -178,6 +215,44 @@ export default {
       this.shouldShowReplyField = false;
       this.reply = "";
     },
+    async sendReaction() {
+      this.isSendReactionStart = true;
+      const payload = {
+        commentID: this.commentID,
+        type: "heart",
+      };
+      const sentReaction = await this.$store.dispatch(
+        SEND_POST_COMMENT_REACTION,
+        payload
+      );
+      const isReactionValid = this.validateObject(sentReaction);
+      if (isReactionValid) {
+        this.reactionsLocal = [...this.reactionsLocal, sentReaction];
+        this.reactionsCountLocal += 1;
+      }
+      this.isSendReactionStart = false;
+    },
+    async removeReaction() {
+      this.isRemoveReactionStart = true;
+      const isReactionRemoved = await this.$store.dispatch(
+        REMOVE_POST_COMMENT_REACTION,
+        this.commentID
+      );
+      if (isReactionRemoved) {
+        this.reactionsLocal = this.reactionsLocal.filter(
+          (reaction) => reaction.account.id !== this.credentials.id
+        );
+        this.reactionsCountLocal -= 1;
+      }
+      this.isRemoveReactionStart = false;
+    },
+    async react() {
+      if (this.isUserReacted) {
+        return await this.removeReaction();
+      }
+      await this.sendReaction();
+    },
   },
+  async sendReaction() {},
 };
 </script>

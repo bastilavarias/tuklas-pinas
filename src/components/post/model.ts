@@ -526,8 +526,18 @@ const postModel = {
 
   async getComment(commentID: number): Promise<PostComment> {
     const gotComment = await PostComment.findOne(commentID, {
-      relations: ["author", "author.profile", "replies"],
+      relations: [
+        "author",
+        "author.profile",
+        "replies",
+        "reactions",
+        "reactions.account",
+      ],
     });
+    gotComment!.repliesCount = await this.countCommentReplies(gotComment!.id);
+    gotComment!.reactionsCount = await this.countCommentReactions(
+      gotComment!.id
+    );
     //@ts-ignore
     delete gotComment?.author.password;
     return gotComment!;
@@ -605,8 +615,20 @@ const postModel = {
     return await PostComment.count({ where: { post: { id: postID } } });
   },
 
+  async countCommentReplies(commentID: number): Promise<number> {
+    return await PostCommentReply.count({
+      where: { comment: { id: commentID } },
+    });
+  },
+
   async countReactions(postID: number): Promise<number> {
     return await PostReaction.count({ where: { post: { id: postID } } });
+  },
+
+  async countCommentReactions(commentID: number): Promise<number> {
+    return await PostCommentReaction.count({
+      where: { comment: { id: commentID } },
+    });
   },
 
   async deleteReaction(reactionID: number) {
