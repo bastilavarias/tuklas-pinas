@@ -83,6 +83,20 @@ const postController = {
     }
   },
 
+  async sendReaction(request: Request, response: Response) {
+    try {
+      // @ts-ignore
+      const accountID = request.user.id;
+      const postID = parseInt(request.params.postID) || 0;
+      const type = request.params.type || "";
+      const result = await postService.sendReaction(postID, accountID, type);
+      response.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      response.status(400).json(error);
+    }
+  },
+
   async fetchNew(request: Request, response: Response) {
     try {
       const skip = parseInt(request.params.skip) || 0;
