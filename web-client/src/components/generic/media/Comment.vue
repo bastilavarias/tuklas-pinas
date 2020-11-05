@@ -39,7 +39,7 @@
       </v-btn>
       <v-btn depressed text @click="shouldShowReplyField = true">
         <v-icon class="mr-1">mdi-reply-outline</v-icon>
-        <span class="caption font-weight-bold">1K+</span>
+        <span class="caption font-weight-bold">{{ repliesCountLocal }}</span>
       </v-btn>
     </v-card-actions>
     <div class="pl-10 pr-3 pt-3">
@@ -154,6 +154,10 @@ export default {
       type: Number,
       required: true,
     },
+    repliesCount: {
+      type: Number,
+      required: true,
+    },
   },
   mixins: [commonUtilities, commonValidation],
   data() {
@@ -164,6 +168,7 @@ export default {
       repliesLocal: this.replies,
       reactionsLocal: this.reactions,
       reactionsCountLocal: this.reactionsCount,
+      repliesCountLocal: this.repliesCount,
       isSendReactionStart: false,
       isRemoveReactionStart: false,
     };
@@ -186,17 +191,26 @@ export default {
     replies(val) {
       this.repliesLocal = val;
     },
-
     repliesLocal(val) {
       this.$emit("update:replies", val);
     },
-
     reactions(val) {
       this.reactionsLocal = val;
     },
-
     reactionsLocal(val) {
       this.$emit("update:reactions", val);
+    },
+    reactionsCount(val) {
+      this.reactionsCountLocal = val;
+    },
+    reactionsCountLocal(val) {
+      this.$emit("update:reactionsCount", val);
+    },
+    repliesCount(val) {
+      this.repliesCountLocal = val;
+    },
+    repliesCountLocal(val) {
+      this.$emit("update:repliesCount", val);
     },
   },
   methods: {
@@ -212,6 +226,7 @@ export default {
       );
       this.isSendReplyStart = false;
       this.repliesLocal = [sentReply, ...this.repliesLocal];
+      this.repliesCountLocal += 1;
       this.shouldShowReplyField = false;
       this.reply = "";
     },

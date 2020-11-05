@@ -115,6 +115,24 @@ const postController = {
     }
   },
 
+  async sendCommentReplyReaction(request: Request, response: Response) {
+    try {
+      // @ts-ignore
+      const accountID = request.user.id;
+      const replyID = parseInt(request.params.replyID) || 0;
+      const type = request.params.type || "";
+      const result = await postService.sendCommentReplyReaction(
+        replyID,
+        accountID,
+        type
+      );
+      response.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      response.status(400).json(error);
+    }
+  },
+
   async fetchNew(request: Request, response: Response) {
     try {
       const skip = parseInt(request.params.skip) || 0;

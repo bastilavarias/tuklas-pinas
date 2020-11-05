@@ -4,9 +4,12 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   ManyToOne,
+  OneToMany,
+  JoinColumn,
 } from "typeorm";
 import Account from "./Account";
 import PostComment from "./PostComment";
+import PostCommentReaction from "./PostCommentReaction";
 
 @Entity()
 export default class PostCommentReply extends BaseEntity {
@@ -33,4 +36,10 @@ export default class PostCommentReply extends BaseEntity {
 
   @ManyToOne(() => PostComment, (comment) => comment.replies)
   comment: PostComment;
+
+  @OneToMany(() => PostCommentReaction, (reply) => reply.comment)
+  @JoinColumn({ name: "replyId" })
+  reactions: PostCommentReaction[];
+
+  reactionsCount?: number;
 }
