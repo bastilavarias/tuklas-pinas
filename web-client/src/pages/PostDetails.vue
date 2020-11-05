@@ -254,7 +254,6 @@ export default {
         GET_POST_SOFT_DETAILS,
         payload
       );
-      console.log(gotPostDetails);
       this.postDetails = Object.assign({}, gotPostDetails);
       this.isGetPostSoftDetailsStart = false;
     },

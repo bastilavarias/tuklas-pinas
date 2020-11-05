@@ -29,8 +29,8 @@
       <v-btn
         depressed
         text
-        :disabled="isSendReactionStart"
-        @click="sendReaction"
+        :disabled="isSendReactionStart || isRemoveReactionStart"
+        @click="react"
       >
         <v-icon class="mr-1" :color="isUserReacted ? 'error' : ''">{{
           isUserReacted ? "mdi-heart" : "mdi-heart-outline"
@@ -111,9 +111,9 @@
 <script>
 import commonUtilities from "@/common/utilities";
 import {
+  REMOVE_POST_COMMENT_REACTION,
   SEND_POST_COMMENT_REACTION,
   SEND_POST_COMMENT_REPLY,
-  SEND_POST_REACTION,
 } from "@/store/types/post";
 import commonValidation from "@/common/validation";
 import GenericCommentReplyMedia from "@/components/generic/media/CommentReply";
@@ -165,6 +165,7 @@ export default {
       reactionsLocal: this.reactions,
       reactionsCountLocal: this.reactionsCount,
       isSendReactionStart: false,
+      isRemoveReactionStart: false,
     };
   },
   computed: {
@@ -220,7 +221,6 @@ export default {
         commentID: this.commentID,
         type: "heart",
       };
-      console.log(payload);
       const sentReaction = await this.$store.dispatch(
         SEND_POST_COMMENT_REACTION,
         payload
@@ -231,6 +231,26 @@ export default {
         this.reactionsCountLocal += 1;
       }
       this.isSendReactionStart = false;
+    },
+    async removeReaction() {
+      this.isRemoveReactionStart = true;
+      const isReactionRemoved = await this.$store.dispatch(
+        REMOVE_POST_COMMENT_REACTION,
+        this.commentID
+      );
+      if (isReactionRemoved) {
+        this.reactionsLocal = this.reactionsLocal.filter(
+          (reaction) => reaction.account.id !== this.credentials.id
+        );
+        this.reactionsCountLocal -= 1;
+      }
+      this.isRemoveReactionStart = false;
+    },
+    async react() {
+      if (this.isUserReacted) {
+        return await this.removeReaction();
+      }
+      await this.sendReaction();
     },
   },
   async sendReaction() {},
