@@ -35,6 +35,12 @@ postRouter.post(
 );
 
 postRouter.post(
+  "/remove-reaction/:postID",
+  passport.authenticate("jwt", { session: false }),
+  postController.removeReaction
+);
+
+postRouter.post(
   "/upload-files",
   multer.array("files"),
   passport.authenticate("jwt", { session: false }),

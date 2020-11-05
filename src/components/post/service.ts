@@ -107,9 +107,29 @@ const postService = {
       accountID
     );
     if (gotReaction) {
-      return gotReaction;
+      await postModel.deleteReaction(gotReaction.id);
+      await gotReaction;
     }
     return await postModel.saveReaction(postID, accountID, type);
+  },
+
+  async removeReaction(
+    postID: number,
+    accountID: number
+  ): Promise<{ isRemoved: boolean }> {
+    const gotReaction = await postModel.getReactionByPostIDAndAccountID(
+      postID,
+      accountID
+    );
+    if (gotReaction) {
+      await postModel.deleteReaction(gotReaction.id);
+      return {
+        isRemoved: true,
+      };
+    }
+    return {
+      isRemoved: false,
+    };
   },
 
   async fetchNew(skip: number): Promise<IGenericSoftPost[]> {
