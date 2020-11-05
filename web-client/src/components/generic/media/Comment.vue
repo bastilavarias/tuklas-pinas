@@ -96,27 +96,6 @@
             </generic-comment-reply-media>
           </template>
         </v-col>
-        <!--        <v-col cols="12">-->
-        <!--          <span-->
-        <!--            class="subtitle-2 cursor-pointer"-->
-        <!--            @click="shouldShowReplies = !shouldShowReplies"-->
-        <!--          >-->
-        <!--            {{ shouldShowReplies ? "Hide Replies" : "Show Replies" }}-->
-        <!--            <v-icon color="secondary">-->
-        <!--              {{ shouldShowReplies ? "mdi-chevron-up" : "mdi-chevron-down" }}-->
-        <!--            </v-icon>-->
-        <!--          </span>-->
-        <!--        </v-col>-->
-        <!--        <v-col cols="12" v-if="shouldShowReplies">-->
-        <!--          <slot></slot>-->
-        <!--        </v-col>-->
-        <!--        <v-col cols="12" v-if="shouldShowReplies">-->
-        <!--          <span class="subtitle-2 cursor-pointer">-->
-        <!--            <span>Show more replies</span>-->
-        <!--            <v-icon color="secondary"> </v-icon>-->
-        <!--          </span>-->
-        <!--        </v-col>-->
-        <!--        -->
       </v-row>
     </div>
   </v-card>
@@ -170,9 +149,6 @@ export default {
     credentials() {
       return this.$store.state.authentication.credentials;
     },
-    shouldShowReplies() {
-      return this.replies.length > 1;
-    },
     isReplyValid() {
       return this.reply;
     },
@@ -183,7 +159,7 @@ export default {
     },
 
     repliesLocal(val) {
-      this.$emit("update:replies");
+      this.$emit("update:replies", val);
     },
   },
   methods: {
@@ -199,6 +175,8 @@ export default {
       );
       this.isSendReplyStart = false;
       this.repliesLocal = [sentReply, ...this.repliesLocal];
+      this.shouldShowReplyField = false;
+      this.reply = "";
     },
   },
 };

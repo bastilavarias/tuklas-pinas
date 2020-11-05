@@ -5,7 +5,7 @@
     flat
     color="transparent"
   >
-    <div class="pt-3">
+    <div class="pt-3 pl-4">
       <div class="d-flex align-start justify-space-between mb-2">
         <div class="mr-2">
           <div class="caption">
