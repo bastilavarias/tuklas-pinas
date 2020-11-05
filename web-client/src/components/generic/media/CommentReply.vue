@@ -30,7 +30,7 @@
         depressed
         text
         :disabled="isSendReactionStart || isRemoveReactionStart"
-        @click="sendReaction"
+        @click="react"
       >
         <v-icon class="mr-1" :color="isUserReacted ? 'error' : ''">{{
           isUserReacted ? "mdi-heart" : "mdi-heart-outline"
@@ -44,7 +44,11 @@
 <script>
 import commonUtilities from "@/common/utilities";
 import commonValidation from "@/common/validation";
-import { SEND_POST_COMMENT_REPLY_REACTION } from "@/store/types/post";
+import {
+  REMOVE_POST_COMMENT_REACTION,
+  REMOVE_POST_COMMENT_REPLY_REACTION,
+  SEND_POST_COMMENT_REPLY_REACTION,
+} from "@/store/types/post";
 
 export default {
   name: "generic-comment-reply-media",
@@ -130,6 +134,26 @@ export default {
         this.reactionsCountLocal += 1;
       }
       this.isSendReactionStart = false;
+    },
+    async removeReaction() {
+      this.isRemoveReactionStart = true;
+      const isReactionRemoved = await this.$store.dispatch(
+        REMOVE_POST_COMMENT_REPLY_REACTION,
+        this.replyID
+      );
+      if (isReactionRemoved) {
+        this.reactionsLocal = this.reactionsLocal.filter(
+          (reaction) => reaction.account.id !== this.credentials.id
+        );
+        this.reactionsCountLocal -= 1;
+      }
+      this.isRemoveReactionStart = false;
+    },
+    async react() {
+      if (this.isUserReacted) {
+        return await this.removeReaction();
+      }
+      await this.sendReaction();
     },
   },
 };

@@ -270,6 +270,5 @@ export default {
       await this.sendReaction();
     },
   },
-  async sendReaction() {},
 };
 </script>

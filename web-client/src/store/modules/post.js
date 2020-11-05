@@ -5,6 +5,7 @@ import {
   FETCH_POST_COMMENTS,
   GET_POST_SOFT_DETAILS,
   REMOVE_POST_COMMENT_REACTION,
+  REMOVE_POST_COMMENT_REPLY_REACTION,
   REMOVE_POST_REACTION,
   SEND_POST_COMMENT,
   SEND_POST_COMMENT_REACTION,
@@ -209,6 +210,18 @@ const postStore = {
         });
       }
     },
+    async [REMOVE_POST_REACTION]({ commit }, postID) {
+      try {
+        const isRemoved = await postApiService.removeReaction(postID);
+        return isRemoved || false;
+      } catch (error) {
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Something went wrong to the server. Please try again.",
+          color: "error",
+        });
+      }
+    },
     async [REMOVE_POST_COMMENT_REACTION]({ commit }, commentID) {
       try {
         const isRemoved = await postApiService.removeCommentReaction(commentID);
@@ -221,9 +234,11 @@ const postStore = {
         });
       }
     },
-    async [REMOVE_POST_REACTION]({ commit }, postID) {
+    async [REMOVE_POST_COMMENT_REPLY_REACTION]({ commit }, replyID) {
       try {
-        const isRemoved = await postApiService.removeReaction(postID);
+        const isRemoved = await postApiService.removeCommentReplyReaction(
+          replyID
+        );
         return isRemoved || false;
       } catch (error) {
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
