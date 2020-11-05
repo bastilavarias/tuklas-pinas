@@ -535,6 +535,22 @@ const postModel = {
     return gotReaction!;
   },
 
+  async getReactionByPostIDAndAccountID(
+    postID: number,
+    accountID: number
+  ): Promise<PostReaction> {
+    const gotReaction = await PostReaction.findOne({
+      where: {
+        post: { id: postID },
+        account: { id: accountID },
+      },
+      relations: ["account"],
+    });
+    //@ts-ignore
+    delete gotReaction?.account.password;
+    return gotReaction!;
+  },
+
   async updateDetails(
     postID: number,
     input: IPostModelUpdateDetailsInput

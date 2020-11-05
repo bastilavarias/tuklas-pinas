@@ -102,6 +102,13 @@ const postService = {
     accountID: number,
     type: string
   ): Promise<PostReaction> {
+    const gotReaction = await postModel.getReactionByPostIDAndAccountID(
+      postID,
+      accountID
+    );
+    if (gotReaction) {
+      return gotReaction;
+    }
     return await postModel.saveReaction(postID, accountID, type);
   },
 
