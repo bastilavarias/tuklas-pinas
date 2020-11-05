@@ -376,12 +376,14 @@ const postModel = {
     const gotDetails: ITravelStoryPostSoftDetails = <
       ITravelStoryPostSoftDetails
     >await Post.findOne(postID, {
-      relations: ["author", "author.profile"],
+      relations: ["author", "author.profile", "reactions", "reactions.account"],
     });
     gotDetails.files = await this.getSoftDetailsFiles(gotDetails.id);
     gotDetails.destinations = await this.getDestinations(gotDetails.id);
     gotDetails.categories = await this.getCategories(gotDetails.id);
     gotDetails.travelEvents = await this.getTravelEvents(gotDetails.id);
+    gotDetails.commentsCount = await this.countComments(gotDetails.id);
+    gotDetails.reactionsCount = await this.countReactions(gotDetails.id);
     // @ts-ignore
     delete gotDetails.author.password;
     return gotDetails!;

@@ -41,12 +41,6 @@ postRouter.post(
 );
 
 postRouter.post(
-  "/remove-reaction/:postID",
-  passport.authenticate("jwt", { session: false }),
-  postController.removeReaction
-);
-
-postRouter.post(
   "/upload-files",
   multer.array("files"),
   passport.authenticate("jwt", { session: false }),
@@ -69,6 +63,18 @@ postRouter.get(
   "/soft-details/:postID/:type",
   passport.authenticate("jwt", { session: false }),
   postController.getSoftDetails
+);
+
+postRouter.delete(
+  "/remove-reaction/:postID",
+  passport.authenticate("jwt", { session: false }),
+  postController.removeReaction
+);
+
+postRouter.delete(
+  "/remove-comment-reaction/:commentID",
+  passport.authenticate("jwt", { session: false }),
+  postController.removeCommentReaction
 );
 
 export default postRouter;
