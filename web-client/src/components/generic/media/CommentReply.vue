@@ -1,19 +1,21 @@
 <template>
-  <v-card :class="`${className}`" flat color="transparent">
-    <div class="pt-3">
+  <v-card
+    :id="`reply-media-${replyID}`"
+    :class="`${className}`"
+    flat
+    color="transparent"
+  >
+    <div class="pt-3 pl-4">
       <div class="d-flex align-start justify-space-between mb-2">
         <div class="mr-2">
-          <div>
-            <span class="caption"
-              >Sebastian Curtis T. Lavarias - 6 hrs ago</span
-            >
+          <div class="caption">
+            <span class="text-capitalize">{{
+              formatName(author.profile.firstName, author.profile.lastName)
+            }}</span>
+            - {{ formatRelativeTime(createdAt) }}
           </div>
           <div class="mb-3">
-            <span class="subtitle-2 text-justify"
-              >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore
-              obcaecati qui temporibus. Distinctio, eveniet illum non obcaecati
-              quisquam repellendus ut.</span
-            >
+            <span class="subtitle-2 text-justify">{{ text }}</span>
           </div>
         </div>
         <v-avatar :size="40">
@@ -33,14 +35,33 @@
 </template>
 
 <script>
+import commonUtilities from "@/common/utilities";
+
 export default {
   name: "generic-comment-reply-media",
 
   props: {
+    replyID: {
+      type: Number,
+      required: true,
+    },
     className: {
       type: String,
       required: false,
     },
+    text: {
+      type: String,
+      required: true,
+    },
+    author: {
+      type: Object,
+      required: true,
+    },
+    createdAt: {
+      type: String,
+      required: true,
+    },
   },
+  mixins: [commonUtilities],
 };
 </script>

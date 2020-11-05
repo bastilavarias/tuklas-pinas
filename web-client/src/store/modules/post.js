@@ -4,6 +4,7 @@ import {
   FETCH_NEW_POSTS,
   GET_POST_SOFT_DETAILS,
   SEND_POST_COMMENT,
+  SEND_POST_COMMENT_REPLY,
 } from "@/store/types/post";
 import postApiService from "@/services/api/modules/post";
 import { SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS } from "@/store/types/generic";
@@ -95,6 +96,27 @@ const postStore = {
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,
           text: "Comment successfully sent!",
+          color: "success",
+        });
+        return sentComment || {};
+      } catch (error) {
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Something went wrong to the server. Please try again.",
+          color: "error",
+        });
+      }
+    },
+    async [SEND_POST_COMMENT_REPLY]({ commit }, { commentID, text }) {
+      try {
+        const form = { text };
+        const sentComment = await postApiService.sendCommentReply(
+          commentID,
+          form
+        );
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Reply successfully sent!",
           color: "success",
         });
         return sentComment || {};

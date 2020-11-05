@@ -41,8 +41,8 @@ const commonUtilities = {
     formatName(firstName, lastName) {
       return `${firstName} ${lastName}`;
     },
-    formatRelativeTime(time) {
-      return time ? moment(time).startOf("hour").fromNow() : "";
+    formatRelativeTime(date) {
+      return date ? moment(new Date(date), "YYYYMMDD").fromNow() : "";
     },
     scrollToTop() {
       window.scrollTo(0, 0);

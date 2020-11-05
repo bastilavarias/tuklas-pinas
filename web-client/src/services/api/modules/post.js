@@ -21,6 +21,14 @@ const postApiService = {
     return result.data || {};
   },
 
+  async sendCommentReply(commentID, form) {
+    const result = await apiService.post(
+      `/post/send-comment-reply/${commentID}`,
+      form
+    );
+    return result.data || {};
+  },
+
   async uploadFiles(formData) {
     const result = await apiService.post("/post/upload-files", formData);
     return result.data || [];
