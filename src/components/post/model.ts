@@ -47,6 +47,7 @@ import PostComment from "../../database/entities/PostComment";
 import PostCommentReply from "../../database/entities/PostCommentReply";
 import PostReaction from "../../database/entities/PostReaction";
 import PostCommentReaction from "../../database/entities/PostCommentReaction";
+import PostCommentReplyReaction from "../../database/entities/PostCommentReplyReaction";
 
 const postModel = {
   async saveDetails(input: IPostModelSaveDetailsInput): Promise<Post> {
@@ -303,6 +304,19 @@ const postModel = {
     return await this.getCommentReaction(savedReaction.id);
   },
 
+  async saveCommentReplyReaction(
+    replyID: number,
+    accountID: number,
+    type: string
+  ): Promise<PostCommentReplyReaction> {
+    const savedReaction = await PostCommentReplyReaction.create({
+      reply: { id: replyID },
+      account: { id: accountID },
+      type,
+    }).save();
+    return await this.getCommentReplyReaction(savedReaction.id);
+  },
+
   async fetchNew(skip: number): Promise<IGenericSoftPost[]> {
     const isDeleted = false;
     const isDraft = false;
@@ -547,6 +561,9 @@ const postModel = {
     const gotCommentReply = await PostCommentReply.findOne(replyID, {
       relations: ["author", "author.profile"],
     });
+    gotCommentReply!.reactionsCount = await this.countCommentReplyReactions(
+      gotCommentReply!.id
+    );
     //@ts-ignore
     delete gotCommentReply?.author.password;
     return gotCommentReply!;
@@ -563,6 +580,17 @@ const postModel = {
 
   async getCommentReaction(reactionID: number): Promise<PostCommentReaction> {
     const gotReaction = await PostCommentReaction.findOne(reactionID, {
+      relations: ["account"],
+    });
+    //@ts-ignore
+    delete gotReaction?.account.password;
+    return gotReaction!;
+  },
+
+  async getCommentReplyReaction(
+    reactionID: number
+  ): Promise<PostCommentReplyReaction> {
+    const gotReaction = await PostCommentReplyReaction.findOne(reactionID, {
       relations: ["account"],
     });
     //@ts-ignore
@@ -602,6 +630,22 @@ const postModel = {
     return gotReaction!;
   },
 
+  async getCommentReactionByReplyIDAndAccountID(
+    replyID: number,
+    accountID: number
+  ): Promise<PostCommentReplyReaction> {
+    const gotReaction = await PostCommentReplyReaction.findOne({
+      where: {
+        reply: { id: replyID },
+        account: { id: accountID },
+      },
+      relations: ["account"],
+    });
+    //@ts-ignore
+    delete gotReaction?.account.password;
+    return gotReaction!;
+  },
+
   async updateDetails(
     postID: number,
     input: IPostModelUpdateDetailsInput
@@ -631,6 +675,12 @@ const postModel = {
     });
   },
 
+  async countCommentReplyReactions(replyID: number): Promise<number> {
+    return await PostCommentReplyReaction.count({
+      where: { reply: { id: replyID } },
+    });
+  },
+
   async deleteReaction(reactionID: number) {
     await getRepository(PostReaction)
       .createQueryBuilder("reaction")
@@ -645,6 +695,15 @@ const postModel = {
       .createQueryBuilder("reaction")
       .delete()
       .from(PostCommentReaction)
+      .where("id = :id", { id: reactionID })
+      .execute();
+  },
+
+  async deleteCommentReplyReaction(reactionID: number) {
+    await getRepository(PostCommentReplyReaction)
+      .createQueryBuilder("reaction")
+      .delete()
+      .from(PostCommentReplyReaction)
       .where("id = :id", { id: reactionID })
       .execute();
   },
