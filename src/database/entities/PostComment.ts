@@ -10,6 +10,7 @@ import {
 import Post from "./Post";
 import Account from "./Account";
 import PostCommentReply from "./PostCommentReply";
+import PostCommentReaction from "./PostCommentReaction";
 
 @Entity()
 export default class PostComment extends BaseEntity {
@@ -40,4 +41,8 @@ export default class PostComment extends BaseEntity {
   @OneToMany(() => PostCommentReply, (reply) => reply.comment)
   @JoinColumn({ name: "commentId" })
   replies: PostCommentReply[];
+
+  @OneToMany(() => PostCommentReaction, (reply) => reply.comment)
+  @JoinColumn({ name: "commentId" })
+  reactions: PostCommentReaction[];
 }

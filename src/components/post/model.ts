@@ -46,6 +46,7 @@ import PostReview from "../../database/entities/PostReview";
 import PostComment from "../../database/entities/PostComment";
 import PostCommentReply from "../../database/entities/PostCommentReply";
 import PostReaction from "../../database/entities/PostReaction";
+import PostCommentReaction from "../../database/entities/PostCommentReaction";
 
 const postModel = {
   async saveDetails(input: IPostModelSaveDetailsInput): Promise<Post> {
@@ -287,6 +288,19 @@ const postModel = {
       type,
     }).save();
     return await this.getReaction(savedReaction.id);
+  },
+
+  async saveCommentReaction(
+    commentID: number,
+    accountID: number,
+    type: string
+  ): Promise<PostCommentReaction> {
+    const savedReaction = await PostCommentReaction.create({
+      comment: { id: commentID },
+      account: { id: accountID },
+      type,
+    }).save();
+    return await this.getCommentReaction(savedReaction.id);
   },
 
   async fetchNew(skip: number): Promise<IGenericSoftPost[]> {
@@ -535,6 +549,15 @@ const postModel = {
     return gotReaction!;
   },
 
+  async getCommentReaction(reactionID: number): Promise<PostCommentReaction> {
+    const gotReaction = await PostCommentReaction.findOne(reactionID, {
+      relations: ["account"],
+    });
+    //@ts-ignore
+    delete gotReaction?.account.password;
+    return gotReaction!;
+  },
+
   async getReactionByPostIDAndAccountID(
     postID: number,
     accountID: number
@@ -542,6 +565,22 @@ const postModel = {
     const gotReaction = await PostReaction.findOne({
       where: {
         post: { id: postID },
+        account: { id: accountID },
+      },
+      relations: ["account"],
+    });
+    //@ts-ignore
+    delete gotReaction?.account.password;
+    return gotReaction!;
+  },
+
+  async getCommentReactionByCommentIDAndAccountID(
+    commentID: number,
+    accountID: number
+  ): Promise<PostCommentReaction> {
+    const gotReaction = await PostCommentReaction.findOne({
+      where: {
+        comment: { id: commentID },
         account: { id: accountID },
       },
       relations: ["account"],
@@ -573,6 +612,15 @@ const postModel = {
       .createQueryBuilder("reaction")
       .delete()
       .from(PostReaction)
+      .where("id = :id", { id: reactionID })
+      .execute();
+  },
+
+  async deleteCommentReaction(reactionID: number) {
+    await getRepository(PostCommentReaction)
+      .createQueryBuilder("reaction")
+      .delete()
+      .from(PostCommentReaction)
       .where("id = :id", { id: reactionID })
       .execute();
   },

@@ -2,7 +2,7 @@
   <v-menu offset-y>
     <template v-slot:activator="{ on, attrs }">
       <v-btn v-bind="attrs" v-on="on" text>
-        <span class="text-capitalize mr-1"> Sort By </span>
+        <span class="text-capitalize mr-1"> {{ sortLocal }} </span>
         <v-icon>mdi-sort</v-icon>
       </v-btn>
     </template>

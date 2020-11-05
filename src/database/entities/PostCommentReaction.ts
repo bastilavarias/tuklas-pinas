@@ -5,19 +5,19 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
 } from "typeorm";
-import Post from "./Post";
 import Account from "./Account";
+import PostComment from "./PostComment";
 
 @Entity()
-export default class PostReaction extends BaseEntity {
+export default class PostCommentReaction extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   type: string;
 
-  @ManyToOne(() => Post, (post) => post.files)
-  post: Post;
+  @ManyToOne(() => PostComment, (comment) => comment.reactions)
+  comment: PostComment;
 
   @ManyToOne(() => Account)
   account: Account;

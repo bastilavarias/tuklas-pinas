@@ -35,6 +35,12 @@ postRouter.post(
 );
 
 postRouter.post(
+  "/send-comment-reaction/:commentID/:type",
+  passport.authenticate("jwt", { session: false }),
+  postController.sendCommentReaction
+);
+
+postRouter.post(
   "/remove-reaction/:postID",
   passport.authenticate("jwt", { session: false }),
   postController.removeReaction

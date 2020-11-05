@@ -25,6 +25,7 @@ import Post from "../../database/entities/Post";
 import PostComment from "../../database/entities/PostComment";
 import PostCommentReply from "../../database/entities/PostCommentReply";
 import PostReaction from "../../database/entities/PostReaction";
+import PostCommentReaction from "../../database/entities/PostCommentReaction";
 
 const postService = {
   async createTravelStory(
@@ -108,9 +109,25 @@ const postService = {
     );
     if (gotReaction) {
       await postModel.deleteReaction(gotReaction.id);
-      await gotReaction;
+      return gotReaction;
     }
     return await postModel.saveReaction(postID, accountID, type);
+  },
+
+  async sendCommentReaction(
+    commentID: number,
+    accountID: number,
+    type: string
+  ): Promise<PostCommentReaction> {
+    const gotReaction = await postModel.getCommentReactionByCommentIDAndAccountID(
+      commentID,
+      accountID
+    );
+    if (gotReaction) {
+      await postModel.deleteCommentReaction(gotReaction.id);
+      return gotReaction;
+    }
+    return await postModel.saveCommentReaction(commentID, accountID, type);
   },
 
   async removeReaction(
