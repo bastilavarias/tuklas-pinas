@@ -30,6 +30,9 @@
               :title="postDetails.title"
               :text="postDetails.text"
               :files="postDetails.files"
+              :reactions-count.sync="postDetails.reactionsCount"
+              :comments-count="postDetails.commentsCount"
+              :reactions.sync="postDetails.reactions"
             ></post-details-page-details-card>
           </v-col>
           <v-col cols="12" v-if="isPostItinerary">
@@ -62,7 +65,7 @@
                   }}</span>
                 </span>
               </div>
-              <v-card-text>
+              <v-card-text id="comment-area">
                 <v-row no-gutters>
                   <v-col cols="12">
                     <v-textarea
@@ -91,7 +94,9 @@
           <v-col cols="12">
             <v-card outlined tile>
               <v-card-title>
-                <span>Comments</span>
+                <span
+                  ><span>{{ postDetails.commentsCount }}</span> Comments</span
+                >
                 <div class="flex-grow-1"></div>
                 <post-details-page-comments-sort-button-menu
                   :sort.sync="commentsSort"
@@ -263,6 +268,7 @@ export default {
       if (isCommentValid) {
         this.comments = [sentComment, ...this.comments];
         this.comment = "";
+        this.postDetails.commentsCount += 1;
         this.$nextTick(async () => {
           await this.$vuetify.goTo(`#comment-media-${sentComment.id}`, {
             offset: 150,

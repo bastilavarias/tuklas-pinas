@@ -29,6 +29,18 @@ const postApiService = {
     return result.data || {};
   },
 
+  async sendReaction(postID, type) {
+    const result = await apiService.post(
+      `/post/send-reaction/${postID}/${type}`
+    );
+    return result.data || {};
+  },
+
+  async removeReaction(postID) {
+    const result = await apiService.post(`/post/remove-reaction/${postID}`);
+    return result.data.isRemoved || {};
+  },
+
   async uploadFiles(formData) {
     const result = await apiService.post("/post/upload-files", formData);
     return result.data || [];

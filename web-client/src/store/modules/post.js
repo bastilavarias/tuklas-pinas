@@ -4,8 +4,10 @@ import {
   FETCH_NEW_POSTS,
   FETCH_POST_COMMENTS,
   GET_POST_SOFT_DETAILS,
+  REMOVE_POST_REACTION,
   SEND_POST_COMMENT,
   SEND_POST_COMMENT_REPLY,
+  SEND_POST_REACTION,
 } from "@/store/types/post";
 import postApiService from "@/services/api/modules/post";
 import { SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS } from "@/store/types/generic";
@@ -121,6 +123,30 @@ const postStore = {
           color: "success",
         });
         return sentComment || {};
+      } catch (error) {
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Something went wrong to the server. Please try again.",
+          color: "error",
+        });
+      }
+    },
+    async [SEND_POST_REACTION]({ commit }, { postID, type }) {
+      try {
+        const sentReaction = await postApiService.sendReaction(postID, type);
+        return sentReaction || {};
+      } catch (error) {
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Something went wrong to the server. Please try again.",
+          color: "error",
+        });
+      }
+    },
+    async [REMOVE_POST_REACTION]({ commit }, postID) {
+      try {
+        const isRemoved = await postApiService.removeReaction(postID);
+        return isRemoved || false;
       } catch (error) {
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,
