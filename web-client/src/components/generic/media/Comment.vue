@@ -99,6 +99,8 @@
               :created-at="reply.createdAt"
               :author="reply.author"
               :text="reply.text"
+              :reactions.sync="reply.reactions"
+              :reactions-count.sync="reply.reactionsCount"
             >
             </generic-comment-reply-media>
           </template>

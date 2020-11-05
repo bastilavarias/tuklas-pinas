@@ -9,6 +9,7 @@ import {
   SEND_POST_COMMENT,
   SEND_POST_COMMENT_REACTION,
   SEND_POST_COMMENT_REPLY,
+  SEND_POST_COMMENT_REPLY_REACTION,
   SEND_POST_REACTION,
 } from "@/store/types/post";
 import postApiService from "@/services/api/modules/post";
@@ -145,18 +146,6 @@ const postStore = {
         });
       }
     },
-    async [REMOVE_POST_REACTION]({ commit }, postID) {
-      try {
-        const isRemoved = await postApiService.removeReaction(postID);
-        return isRemoved || false;
-      } catch (error) {
-        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
-          isOpen: true,
-          text: "Something went wrong to the server. Please try again.",
-          color: "error",
-        });
-      }
-    },
     async [SEND_POST_COMMENT_REACTION]({ commit }, { commentID, type }) {
       try {
         const sentReaction = await postApiService.sendCommentReaction(
@@ -172,10 +161,13 @@ const postStore = {
         });
       }
     },
-    async [REMOVE_POST_COMMENT_REACTION]({ commit }, commentID) {
+    async [SEND_POST_COMMENT_REPLY_REACTION]({ commit }, { replyID, type }) {
       try {
-        const isRemoved = await postApiService.removeCommentReaction(commentID);
-        return isRemoved || false;
+        const sentReaction = await postApiService.sendCommentReplyReaction(
+          replyID,
+          type
+        );
+        return sentReaction || {};
       } catch (error) {
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,
@@ -209,6 +201,30 @@ const postStore = {
     async [GET_POST_SOFT_DETAILS]({ commit }, { postID, type }) {
       try {
         return await postApiService.getSoftDetails(postID, type);
+      } catch (error) {
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Something went wrong to the server. Please try again.",
+          color: "error",
+        });
+      }
+    },
+    async [REMOVE_POST_COMMENT_REACTION]({ commit }, commentID) {
+      try {
+        const isRemoved = await postApiService.removeCommentReaction(commentID);
+        return isRemoved || false;
+      } catch (error) {
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Something went wrong to the server. Please try again.",
+          color: "error",
+        });
+      }
+    },
+    async [REMOVE_POST_REACTION]({ commit }, postID) {
+      try {
+        const isRemoved = await postApiService.removeReaction(postID);
+        return isRemoved || false;
       } catch (error) {
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,

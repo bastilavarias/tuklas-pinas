@@ -43,6 +43,13 @@ const postApiService = {
     return result.data || {};
   },
 
+  async sendCommentReplyReaction(replyID, type) {
+    const result = await apiService.post(
+      `/post/send-comment-reply-reaction/${replyID}/${type}`
+    );
+    return result.data || {};
+  },
+
   async removeReaction(postID) {
     const result = await apiService.delete(`/post/remove-reaction/${postID}`);
     return result.data.isRemoved || {};
