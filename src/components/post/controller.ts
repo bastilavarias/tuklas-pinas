@@ -133,6 +133,19 @@ const postController = {
     }
   },
 
+  async removeReaction(request: Request, response: Response) {
+    try {
+      // @ts-ignore
+      const accountID = request.user.id;
+      const postID = parseInt(request.params.postID) || 0;
+      const result = await postService.removeReaction(postID, accountID);
+      response.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      response.status(400).json(error);
+    }
+  },
+
   async uploadFiles(request: Request, response: Response) {
     try {
       // @ts-ignore

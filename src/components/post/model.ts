@@ -567,6 +567,15 @@ const postModel = {
   async countReactions(postID: number): Promise<number> {
     return await PostReaction.count({ where: { post: { id: postID } } });
   },
+
+  async deleteReaction(reactionID: number) {
+    await getRepository(PostReaction)
+      .createQueryBuilder("reaction")
+      .delete()
+      .from(PostReaction)
+      .where("id = :id", { id: reactionID })
+      .execute();
+  },
 };
 
 export default postModel;
