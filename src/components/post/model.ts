@@ -295,6 +295,42 @@ const postModel = {
     );
   },
 
+  async fetchNewComments(postID: number, skip: number): Promise<PostComment[]> {
+    const isDeleted = false;
+    const raw = await getRepository(PostComment)
+      .createQueryBuilder("comment")
+      .select(["id"])
+      .where(`comment."postId" = :postID`, { postID })
+      .andWhere(`comment."isDeleted" = :isDeleted`, { isDeleted })
+      .orderBy(`comment."createdAt"`, "DESC")
+      .skip(skip)
+      .limit(10)
+      .getRawMany();
+    return await Promise.all(
+      raw.map(async (item) => {
+        const gotComment = await this.getComment(item.id);
+        gotComment.replies = await this.fetchCommentReplies(gotComment.id, 0);
+        return gotComment;
+      })
+    );
+  },
+
+  async fetchCommentReplies(commentID: number, skip: number) {
+    const isDeleted = false;
+    const raw = await getRepository(PostCommentReply)
+      .createQueryBuilder("reply")
+      .select(["id"])
+      .where(`reply."commentId" = :commentID`, { commentID })
+      .andWhere(`reply."isDeleted" = :isDeleted`, { isDeleted })
+      .orderBy(`reply."createdAt"`, "ASC")
+      .skip(skip)
+      .limit(6)
+      .getRawMany();
+    return await Promise.all(
+      raw.map(async (item) => await this.getCommentReply(item.id))
+    );
+  },
+
   async getBaseSoftDetails(postID: number): Promise<Post> {
     const gotDetails = <Post>await Post.findOne(postID, {
       relations: ["author"],

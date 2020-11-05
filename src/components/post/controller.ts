@@ -94,6 +94,19 @@ const postController = {
     }
   },
 
+  async fetchComments(request: Request, response: Response) {
+    try {
+      const postID = parseInt(request.params.postID) || 0;
+      const type = request.params.type || "";
+      const skip = parseInt(request.params.skip) || 0;
+      const result = await postService.fetchComments(postID, type, skip);
+      response.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      response.status(400).json(error);
+    }
+  },
+
   async getSoftDetails(request: Request, response: Response) {
     try {
       const postID = parseInt(request.params.postID) || 0;

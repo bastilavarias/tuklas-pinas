@@ -96,8 +96,17 @@ const postService = {
     return await postModel.saveCommentReply(saveCommentInput);
   },
 
-  async fetchNew(skip: number) {
+  async fetchNew(skip: number): Promise<IGenericSoftPost[]> {
     return await postModel.fetchNew(skip);
+  },
+
+  async fetchComments(
+    postID: number,
+    type: string,
+    skip: number
+  ): Promise<PostComment[]> {
+    if (type === "new") return postModel.fetchNewComments(postID, skip);
+    return [];
   },
 
   async getSoftDetails(

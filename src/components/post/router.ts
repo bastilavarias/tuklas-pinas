@@ -42,6 +42,12 @@ postRouter.get(
 );
 
 postRouter.get(
+  "/comments/:postID/:type/:skip",
+  passport.authenticate("jwt", { session: false }),
+  postController.fetchComments
+);
+
+postRouter.get(
   "/soft-details/:postID/:type",
   passport.authenticate("jwt", { session: false }),
   postController.getSoftDetails
