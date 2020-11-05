@@ -8,7 +8,7 @@ module.exports = [
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_NAME,
     synchronize: true,
-    logging: true,
+    logging: false,
     entities: ["src/database/entities/**/*.ts"],
     migrations: ["src/database/migrations/**/*.ts"],
     subscribers: ["src/database/subscribers/**/*.ts"],

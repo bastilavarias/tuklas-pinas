@@ -102,10 +102,10 @@ const postService = {
 
   async fetchComments(
     postID: number,
-    type: string,
+    sort: string,
     skip: number
   ): Promise<PostComment[]> {
-    if (type === "new") return postModel.fetchNewComments(postID, skip);
+    if (sort === "new") return postModel.fetchNewComments(postID, skip);
     return [];
   },
 

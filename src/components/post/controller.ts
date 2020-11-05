@@ -97,9 +97,9 @@ const postController = {
   async fetchComments(request: Request, response: Response) {
     try {
       const postID = parseInt(request.params.postID) || 0;
-      const type = request.params.type || "";
+      const sort = request.params.sort || "";
       const skip = parseInt(request.params.skip) || 0;
-      const result = await postService.fetchComments(postID, type, skip);
+      const result = await postService.fetchComments(postID, sort, skip);
       response.status(200).json(result);
     } catch (error) {
       console.log(error);

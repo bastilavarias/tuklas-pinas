@@ -284,7 +284,8 @@ const postModel = {
       .where(`post."isDeleted" = :isDeleted`, { isDeleted })
       .andWhere(`post."isDraft" = :isDraft`, { isDraft })
       .orderBy(`post."createdAt"`, "DESC")
-      .skip(skip)
+      .offset(skip)
+      .limit(5)
       .getRawMany();
     return await Promise.all(
       raw.map(async (item) =>
@@ -303,7 +304,7 @@ const postModel = {
       .where(`comment."postId" = :postID`, { postID })
       .andWhere(`comment."isDeleted" = :isDeleted`, { isDeleted })
       .orderBy(`comment."createdAt"`, "DESC")
-      .skip(skip)
+      .offset(skip)
       .limit(10)
       .getRawMany();
     return await Promise.all(

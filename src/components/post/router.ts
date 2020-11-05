@@ -42,7 +42,7 @@ postRouter.get(
 );
 
 postRouter.get(
-  "/comments/:postID/:type/:skip",
+  "/comments/:postID/:sort/:skip",
   passport.authenticate("jwt", { session: false }),
   postController.fetchComments
 );

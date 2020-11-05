@@ -93,15 +93,10 @@
               <v-card-title>
                 <span>Comments</span>
                 <div class="flex-grow-1"></div>
-                <div>
-                  <v-btn icon>
-                    <v-icon>mdi-sort</v-icon>
-                  </v-btn>
-                </div>
+                <post-details-page-comments-sort-button-menu
+                  :sort.sync="commentsSort"
+                ></post-details-page-comments-sort-button-menu>
               </v-card-title>
-              <v-card-text class="text-center" v-if="comments.length === 0">
-                <span class="caption font-italic">No comments.</span>
-              </v-card-text>
               <template v-for="(comment, index) in comments">
                 <generic-comment-media
                   :key="index"
@@ -115,6 +110,26 @@
                 </generic-comment-media>
                 <v-divider v-if="index !== comments.length - 1"></v-divider>
               </template>
+              <infinite-loading
+                @infinite="fetchComments"
+                :identifier="scrollIdentifier"
+              >
+                <template v-slot:spinner>
+                  <v-card-text>
+                    <generic-please-wait-progress-circular></generic-please-wait-progress-circular>
+                  </v-card-text>
+                </template>
+                <template v-slot:no-more
+                  ><v-card-text class="text-center">
+                    <span class="caption font-italic">No more comments.</span>
+                  </v-card-text></template
+                >
+                <template v-slot:no-results>
+                  <v-card-text class="text-center">
+                    <span class="caption font-italic">No comments yet.</span>
+                  </v-card-text></template
+                >
+              </infinite-loading>
             </v-card>
           </v-col>
         </v-row>
@@ -153,7 +168,12 @@ import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEve
 import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedPeople";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
 import commonUtilities from "@/common/utilities";
-import { GET_POST_SOFT_DETAILS, SEND_POST_COMMENT } from "@/store/types/post";
+import {
+  FETCH_NEW_POSTS,
+  FETCH_POST_COMMENTS,
+  GET_POST_SOFT_DETAILS,
+  SEND_POST_COMMENT,
+} from "@/store/types/post";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
 import GenericPleaseWaitProgressCircular from "@/components/generic/progress-circular/PleaseWait";
 import PostDetailsPagePostTypeToolbar from "@/components/post-details-page/PostTypeToolbar";
@@ -162,8 +182,10 @@ import PostDetailsPageItineraryTableCard from "@/components/post-details-page/It
 import PostDetailsPagePersonalReviewCard from "@/components/post-details-page/personal-reviews-card/Index";
 import PostDetailsPageTagsCard from "@/components/post-details-page/TagsCard";
 import commonValidation from "@/common/validation";
+import PostDetailsPageCommentsSortButtonMenu from "@/components/post-details-page/CommentsSortButtonMenu";
 export default {
   components: {
+    PostDetailsPageCommentsSortButtonMenu,
     PostDetailsPageTagsCard,
     PostDetailsPagePersonalReviewCard,
     PostDetailsPageItineraryTableCard,
@@ -186,6 +208,11 @@ export default {
       isSendCommentStart: false,
       comment: "",
       comments: [],
+      skip: 0,
+      scrollPage: 1,
+      scrollIdentifier: +new Date(),
+      isFetchCommentsStart: false,
+      commentsSort: "relevant",
     };
   },
   mixins: [commonUtilities, commonValidation],
@@ -198,6 +225,15 @@ export default {
     },
     isCommentValid() {
       return this.comment;
+    },
+  },
+  watch: {
+    commentsSort(val) {
+      this.commentsSort = val;
+      this.skip = 0;
+      this.scrollPage = 1;
+      this.scrollIdentifier = +new Date();
+      this.comments = [];
     },
   },
   methods: {
@@ -233,6 +269,29 @@ export default {
           });
         });
       }
+    },
+    async fetchComments($state) {
+      this.isFetchCommentsStart = true;
+      if (this.commentsSort === "new") {
+        const { postID } = this.$route.params;
+        const payload = {
+          postID,
+          sort: this.commentsSort,
+          skip: this.skip,
+        };
+        const fetchedComments = await this.$store.dispatch(
+          FETCH_POST_COMMENTS,
+          payload
+        );
+        if (fetchedComments.length === 0) return $state.complete();
+        this.comments = [...this.comments, ...fetchedComments];
+        this.skip += 10;
+        this.scrollPage += 1;
+        $state.loaded();
+      } else {
+        $state.complete();
+      }
+      this.isFetchCommentsStart = false;
     },
   },
   async created() {

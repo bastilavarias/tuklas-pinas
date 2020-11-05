@@ -39,6 +39,13 @@ const postApiService = {
     return result.data || [];
   },
 
+  async fetchComments(postID, sort, skip) {
+    const result = await apiService.get(
+      `/post/comments/${postID}/${sort}/${skip}`
+    );
+    return result.data || [];
+  },
+
   async getSoftDetails(postID, type) {
     const result = await apiService.get(`/post/soft-details/${postID}/${type}`);
     return result.data || {};
