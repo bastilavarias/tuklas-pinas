@@ -112,7 +112,8 @@
                   :text="comment.text"
                   :replies.sync="comment.replies"
                   :reactions.sync="comment.reactions"
-                  :reactionsCount.sync="comment.reactionsCount"
+                  :reactions-count.sync="comment.reactionsCount"
+                  :replies-count.sync="comment.repliesCount"
                 >
                 </generic-comment-media>
                 <v-divider v-if="index !== comments.length - 1"></v-divider>
