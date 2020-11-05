@@ -185,6 +185,25 @@ const postService = {
     };
   },
 
+  async removeCommentReplyReaction(
+    replyID: number,
+    accountID: number
+  ): Promise<{ isRemoved: boolean }> {
+    const gotReaction = await postModel.getCommentReactionByReplyIDAndAccountID(
+      replyID,
+      accountID
+    );
+    if (gotReaction) {
+      await postModel.deleteCommentReplyReaction(gotReaction.id);
+      return {
+        isRemoved: true,
+      };
+    }
+    return {
+      isRemoved: false,
+    };
+  },
+
   async fetchNew(skip: number): Promise<IGenericSoftPost[]> {
     return await postModel.fetchNew(skip);
   },

@@ -198,6 +198,22 @@ const postController = {
     }
   },
 
+  async removeCommentReplyReaction(request: Request, response: Response) {
+    try {
+      // @ts-ignore
+      const accountID = request.user.id;
+      const replyID = parseInt(request.params.replyID) || 0;
+      const result = await postService.removeCommentReplyReaction(
+        replyID,
+        accountID
+      );
+      response.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      response.status(400).json(error);
+    }
+  },
+
   async uploadFiles(request: Request, response: Response) {
     try {
       // @ts-ignore
