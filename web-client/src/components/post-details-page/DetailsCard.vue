@@ -8,9 +8,9 @@
           }}</span>
           - {{ formatRelativeTime(createdAt) }}</span
         >
-        <span class="d-block mb-1 title font-weight-bold secondary--text"
-          >{{ title }} {{ isUserReacted }}</span
-        >
+        <span class="d-block mb-1 title font-weight-bold secondary--text">{{
+          title
+        }}</span>
         <span class="body-2 d-block mb-3" v-if="text">{{ text }}</span>
       </div>
       <v-avatar :size="40">
@@ -34,7 +34,7 @@
         <v-icon class="mr-1" :color="isUserReacted ? 'error' : ''">{{
           isUserReacted ? "mdi-heart" : "mdi-heart-outline"
         }}</v-icon>
-        <span class="caption font-weight-bold">{{ reactionsCount }}</span>
+        <span class="caption font-weight-bold">{{ reactionsCountLocal }}</span>
       </v-btn>
       <v-btn depressed text @click="goToCommentArea">
         <v-icon class="mr-1">mdi-comment-outline</v-icon>

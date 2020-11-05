@@ -36,8 +36,22 @@ const postApiService = {
     return result.data || {};
   },
 
+  async sendCommentReaction(commentID, type) {
+    const result = await apiService.post(
+      `/post/send-comment-reaction/${commentID}/${type}`
+    );
+    return result.data || {};
+  },
+
   async removeReaction(postID) {
-    const result = await apiService.post(`/post/remove-reaction/${postID}`);
+    const result = await apiService.delete(`/post/remove-reaction/${postID}`);
+    return result.data.isRemoved || {};
+  },
+
+  async removeCommentReaction(commentID) {
+    const result = await apiService.delete(
+      `/post/remove-comment-reaction/${commentID}`
+    );
     return result.data.isRemoved || {};
   },
 
