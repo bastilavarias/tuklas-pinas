@@ -83,4 +83,10 @@ postRouter.delete(
   postController.removeCommentReaction
 );
 
+postRouter.delete(
+  "/remove-comment-reply-reaction/:replyID",
+  passport.authenticate("jwt", { session: false }),
+  postController.removeCommentReplyReaction
+);
+
 export default postRouter;
