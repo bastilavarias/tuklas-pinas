@@ -559,7 +559,7 @@ const postModel = {
 
   async getCommentReply(replyID: number): Promise<PostCommentReply> {
     const gotCommentReply = await PostCommentReply.findOne(replyID, {
-      relations: ["author", "author.profile"],
+      relations: ["author", "author.profile", "reactions", "reactions.account"],
     });
     gotCommentReply!.reactionsCount = await this.countCommentReplyReactions(
       gotCommentReply!.id

@@ -9,7 +9,7 @@ import {
 } from "typeorm";
 import Account from "./Account";
 import PostComment from "./PostComment";
-import PostCommentReaction from "./PostCommentReaction";
+import PostCommentReplyReaction from "./PostCommentReplyReaction";
 
 @Entity()
 export default class PostCommentReply extends BaseEntity {
@@ -37,9 +37,9 @@ export default class PostCommentReply extends BaseEntity {
   @ManyToOne(() => PostComment, (comment) => comment.replies)
   comment: PostComment;
 
-  @OneToMany(() => PostCommentReaction, (reply) => reply.comment)
+  @OneToMany(() => PostCommentReplyReaction, (reaction) => reaction.reply)
   @JoinColumn({ name: "replyId" })
-  reactions: PostCommentReaction[];
+  reactions: PostCommentReplyReaction[];
 
   reactionsCount?: number;
 }
