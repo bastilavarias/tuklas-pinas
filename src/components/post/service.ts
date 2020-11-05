@@ -24,6 +24,7 @@ import postModel from "./model";
 import Post from "../../database/entities/Post";
 import PostComment from "../../database/entities/PostComment";
 import PostCommentReply from "../../database/entities/PostCommentReply";
+import PostReaction from "../../database/entities/PostReaction";
 
 const postService = {
   async createTravelStory(
@@ -94,6 +95,14 @@ const postService = {
       text: input.text,
     };
     return await postModel.saveCommentReply(saveCommentInput);
+  },
+
+  async sendReaction(
+    postID: number,
+    accountID: number,
+    type: string
+  ): Promise<PostReaction> {
+    return await postModel.saveReaction(postID, accountID, type);
   },
 
   async fetchNew(skip: number): Promise<IGenericSoftPost[]> {

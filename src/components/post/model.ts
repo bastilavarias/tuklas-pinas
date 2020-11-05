@@ -45,6 +45,7 @@ import PostReviewAvoid from "../../database/entities/PostReviewAvoid";
 import PostReview from "../../database/entities/PostReview";
 import PostComment from "../../database/entities/PostComment";
 import PostCommentReply from "../../database/entities/PostCommentReply";
+import PostReaction from "../../database/entities/PostReaction";
 
 const postModel = {
   async saveDetails(input: IPostModelSaveDetailsInput): Promise<Post> {
@@ -275,6 +276,19 @@ const postModel = {
     return await this.getCommentReply(savedComment.id);
   },
 
+  async saveReaction(
+    postID: number,
+    accountID: number,
+    type: string
+  ): Promise<PostReaction> {
+    const savedReaction = await PostReaction.create({
+      post: { id: postID },
+      account: { id: accountID },
+      type,
+    }).save();
+    return await this.getReaction(savedReaction.id);
+  },
+
   async fetchNew(skip: number): Promise<IGenericSoftPost[]> {
     const isDeleted = false;
     const isDraft = false;
@@ -364,7 +378,18 @@ const postModel = {
   ): Promise<IItineraryPostSoftDetails> {
     const gotDetails: IItineraryPostSoftDetails = <IItineraryPostSoftDetails>(
       await Post.findOne(postID, {
-        relations: ["author", "author.profile"],
+        relations: [
+          "author",
+          "author.profile",
+          "reactions",
+          "reactions.account",
+        ],
+      }).then((post) => {
+        post!.reactions.map((reaction) => {
+          // @ts-ignore
+          delete reaction.account.password;
+        });
+        return post;
       })
     );
     gotDetails.files = await this.getSoftDetailsFiles(gotDetails.id);
@@ -373,6 +398,8 @@ const postModel = {
     gotDetails.travelEvents = await this.getTravelEvents(gotDetails.id);
     gotDetails.itinerary = await this.getItinerary(gotDetails.id);
     gotDetails.review = await this.getReview(gotDetails.id);
+    gotDetails.commentsCount = await this.countComments(gotDetails.id);
+    gotDetails.reactionsCount = await this.countReactions(gotDetails.id);
     // @ts-ignore
     delete gotDetails.author.password;
     return gotDetails!;
@@ -490,13 +517,22 @@ const postModel = {
     return gotComment!;
   },
 
-  async getCommentReply(commentID: number): Promise<PostCommentReply> {
-    const gotCommentReply = await PostCommentReply.findOne(commentID, {
+  async getCommentReply(replyID: number): Promise<PostCommentReply> {
+    const gotCommentReply = await PostCommentReply.findOne(replyID, {
       relations: ["author", "author.profile"],
     });
     //@ts-ignore
     delete gotCommentReply?.author.password;
     return gotCommentReply!;
+  },
+
+  async getReaction(reactionID: number): Promise<PostReaction> {
+    const gotReaction = await PostReaction.findOne(reactionID, {
+      relations: ["account"],
+    });
+    //@ts-ignore
+    delete gotReaction?.account.password;
+    return gotReaction!;
   },
 
   async updateDetails(
@@ -506,6 +542,14 @@ const postModel = {
     const { title, text, type } = input;
     await Post.update({ id: postID }, { title, text, type });
     return await this.getBaseSoftDetails(postID);
+  },
+
+  async countComments(postID: number): Promise<number> {
+    return await PostComment.count({ where: { post: { id: postID } } });
+  },
+
+  async countReactions(postID: number): Promise<number> {
+    return await PostReaction.count({ where: { post: { id: postID } } });
   },
 };
 
