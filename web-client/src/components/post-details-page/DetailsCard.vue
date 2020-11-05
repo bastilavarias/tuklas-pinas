@@ -28,8 +28,8 @@
       <v-btn
         depressed
         text
-        @click="sendReaction"
-        :disabled="isSendReactionStart"
+        @click="react"
+        :disabled="isSendReactionStart || isRemoveReactionStart"
       >
         <v-icon class="mr-1" :color="isUserReacted ? 'error' : ''">{{
           isUserReacted ? "mdi-heart" : "mdi-heart-outline"
@@ -61,7 +61,7 @@ import GenericPostHeaderCard from "@/components/generic/card/PostHeader";
 import GenericPostShareDialog from "@/components/generic/dialog/PostShare";
 import CustomVideoPlayer from "@/components/custom/VideoPlayer";
 import CustomPostGalleryPreview from "@/components/custom/PostGalleryPreview";
-import { SEND_POST_REACTION } from "@/store/types/post";
+import { REMOVE_POST_REACTION, SEND_POST_REACTION } from "@/store/types/post";
 import commonUtilities from "@/common/utilities";
 import commonValidation from "@/common/validation";
 
@@ -119,6 +119,7 @@ export default {
     return {
       isShareDialogOpen: false,
       isSendReactionStart: false,
+      isRemoveReactionStart: false,
       reactionsLocal: this.reactions,
       reactionsCountLocal: this.reactionsCount,
     };
@@ -169,6 +170,26 @@ export default {
         this.reactionsCountLocal += 1;
       }
       this.isSendReactionStart = false;
+    },
+    async removeReaction() {
+      this.isRemoveReactionStart = true;
+      const isReactionRemoved = await this.$store.dispatch(
+        REMOVE_POST_REACTION,
+        this.postID
+      );
+      if (isReactionRemoved) {
+        this.reactionsLocal = this.reactionsLocal.filter(
+          (reaction) => reaction.account.id !== this.credentials.id
+        );
+        this.reactionsCountLocal -= 1;
+      }
+      this.isRemoveReactionStart = false;
+    },
+    async react() {
+      if (this.isUserReacted) {
+        return await this.removeReaction();
+      }
+      await this.sendReaction();
     },
   },
 };

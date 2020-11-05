@@ -6,3 +6,4 @@ export const GET_POST_SOFT_DETAILS = "post/GET_SOFT_DETAILS";
 export const SEND_POST_COMMENT = "post/SEND_COMMENT";
 export const SEND_POST_COMMENT_REPLY = "post/SEND_COMMENT_REPLY";
 export const SEND_POST_REACTION = "post/SEND_REACTION";
+export const REMOVE_POST_REACTION = "post/REMOVE_REACTION";
