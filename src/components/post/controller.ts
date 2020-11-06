@@ -133,10 +133,11 @@ const postController = {
     }
   },
 
-  async fetchNew(request: Request, response: Response) {
+  async fetch(request: Request, response: Response) {
     try {
+      const sort = request.params.sort || "";
       const skip = parseInt(request.params.skip) || 0;
-      const result = await postService.fetchNew(skip);
+      const result = await postService.fetch(sort, skip);
       response.status(200).json(result);
     } catch (error) {
       console.log(error);

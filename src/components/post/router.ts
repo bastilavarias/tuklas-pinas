@@ -54,9 +54,9 @@ postRouter.post(
 );
 
 postRouter.get(
-  "/new-posts/:skip",
+  "/posts/:sort/:skip",
   passport.authenticate("jwt", { session: false }),
-  postController.fetchNew
+  postController.fetch
 );
 
 postRouter.get(
