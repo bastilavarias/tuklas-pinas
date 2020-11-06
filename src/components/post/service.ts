@@ -207,6 +207,7 @@ const postService = {
   async fetch(sort: string, skip: number): Promise<IGenericSoftPost[]> {
     if (sort === "new") return await postModel.fetchNew(skip);
     if (sort === "relevant") return await postModel.fetchRelevant(skip);
+    if (sort === "trending") return await postModel.fetchTrending(skip);
     return [];
   },
 

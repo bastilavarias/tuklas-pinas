@@ -363,6 +363,30 @@ const postModel = {
     );
   },
 
+  async fetchTrending(skip: number): Promise<IGenericSoftPost[]> {
+    const isDeleted = false;
+    const isDraft = false;
+    const raw = await getRepository(Post)
+      .createQueryBuilder("post")
+      .leftJoin("post.reactions", "reactions")
+      .leftJoin("post.comments", "comments")
+      .select(["post.id as id", "post.type as type"])
+      .where(`post."isDeleted" = :isDeleted`, { isDeleted })
+      .andWhere(`post."isDraft" = :isDraft`, { isDraft })
+      .orderBy("COUNT(reactions.id) + COUNT(comments.id)", "DESC")
+      .offset(skip)
+      .groupBy("post.id")
+      .limit(5)
+      .getRawMany();
+    return await Promise.all(
+      raw.map(async (item) =>
+        item.type === "travel-story"
+          ? await this.getTravelStorySoftDetails(item.id)
+          : await this.getItinerarySoftDetails(item.id)
+      )
+    );
+  },
+
   async fetchNewComments(postID: number, skip: number): Promise<PostComment[]> {
     const isDeleted = false;
     const raw = await getRepository(PostComment)
