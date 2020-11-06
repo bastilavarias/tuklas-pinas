@@ -220,7 +220,7 @@ export default {
       scrollPage: 1,
       scrollIdentifier: +new Date(),
       isFetchCommentsStart: false,
-      commentsSort: "new",
+      commentsSort: "relevant",
     };
   },
   mixins: [commonUtilities, commonValidation],
@@ -281,25 +281,21 @@ export default {
     },
     async fetchComments($state) {
       this.isFetchCommentsStart = true;
-      if (this.commentsSort === "new") {
-        const { postID } = this.$route.params;
-        const payload = {
-          postID,
-          sort: this.commentsSort,
-          skip: this.skip,
-        };
-        const fetchedComments = await this.$store.dispatch(
-          FETCH_POST_COMMENTS,
-          payload
-        );
-        if (fetchedComments.length === 0) return $state.complete();
-        this.comments = [...this.comments, ...fetchedComments];
-        this.skip += 10;
-        this.scrollPage += 1;
-        $state.loaded();
-      } else {
-        $state.complete();
-      }
+      const { postID } = this.$route.params;
+      const payload = {
+        postID,
+        sort: this.commentsSort,
+        skip: this.skip,
+      };
+      const fetchedComments = await this.$store.dispatch(
+        FETCH_POST_COMMENTS,
+        payload
+      );
+      if (fetchedComments.length === 0) return $state.complete();
+      this.comments = [...this.comments, ...fetchedComments];
+      this.skip += 10;
+      this.scrollPage += 1;
+      $state.loaded();
       this.isFetchCommentsStart = false;
     },
   },
