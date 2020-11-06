@@ -1,6 +1,6 @@
 export const CREATE_TRAVEL_STORY_POST = "post/CREATE_TRAVEL_STORY";
 export const CREATE_ITINERARY_POST = "post/CREATE_ITINERARY";
-export const FETCH_NEW_POSTS = "post/FETCH_NEW";
+export const FETCH_POSTS = "post/FETCH";
 export const FETCH_POST_COMMENTS = "post/FETCH_COMMENTS";
 export const FETCH_POST_COMMENT_REPLIES = "post/FETCH_COMMENT_REPLIES";
 export const GET_POST_SOFT_DETAILS = "post/GET_SOFT_DETAILS";

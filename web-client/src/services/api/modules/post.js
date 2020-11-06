@@ -74,8 +74,8 @@ const postApiService = {
     return result.data || [];
   },
 
-  async fetchNew(skip) {
-    const result = await apiService.get(`/post/new-posts/${skip}`);
+  async fetch(type, skip) {
+    const result = await apiService.get(`/post/posts/${type}/${skip}`);
     return result.data || [];
   },
 

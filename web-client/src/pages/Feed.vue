@@ -82,7 +82,7 @@ import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedP
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
 import commonUtilities from "@/common/utilities";
 import FeedPagePostsTypeTabs from "@/components/feed-page/PostsTypeTabs";
-import { FETCH_NEW_POSTS } from "@/store/types/post";
+import { FETCH_POSTS } from "@/store/types/post";
 import GenericPleaseWaitProgressCircular from "@/components/generic/progress-circular/PleaseWait";
 import GenericPostPreviewCard from "@/components/generic/card/PostPreview";
 export default {
@@ -120,19 +120,16 @@ export default {
 
   methods: {
     async fetchPosts($state) {
-      if (this.postType === "new") {
-        const fetchedPosts = await this.$store.dispatch(
-          FETCH_NEW_POSTS,
-          this.skip
-        );
-        if (fetchedPosts.length === 0) return $state.complete();
-        this.posts = [...this.posts, ...fetchedPosts];
-        this.skip += 5;
-        this.scrollPage += 1;
-        $state.loaded();
-      } else {
-        $state.complete();
-      }
+      const payload = {
+        type: this.postType,
+        skip: this.skip,
+      };
+      const fetchedPosts = await this.$store.dispatch(FETCH_POSTS, payload);
+      if (fetchedPosts.length === 0) return $state.complete();
+      this.posts = [...this.posts, ...fetchedPosts];
+      this.skip += 5;
+      this.scrollPage += 1;
+      $state.loaded();
     },
   },
 };

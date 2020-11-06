@@ -177,7 +177,7 @@ import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedP
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
 import commonUtilities from "@/common/utilities";
 import {
-  FETCH_NEW_POSTS,
+  FETCH_POSTS,
   FETCH_POST_COMMENTS,
   GET_POST_SOFT_DETAILS,
   SEND_POST_COMMENT,
@@ -305,7 +305,7 @@ export default {
     if (parametersNotValid) return this.goBack();
     await this.getPostSoftDetails(postID, type);
     if (section === "comment-area")
-      return await this.$vuetify.goTo("#comment-area");
+      return await this.$vuetify.goTo("#comment-area", { offset: 150 });
     this.scrollToTop();
   },
 };
