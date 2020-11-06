@@ -358,6 +358,32 @@ const postModel = {
     );
   },
 
+  async fetchRelevantComments(
+    postID: number,
+    skip: number
+  ): Promise<PostComment[]> {
+    const isDeleted = false;
+    const raw = await getRepository(PostComment)
+      .createQueryBuilder("comment")
+      .leftJoin("comment.reactions", "reactions")
+      .leftJoin("comment.replies", "replies")
+      .select(["comment.id as id"])
+      .where(`comment."postId" = :postID`, { postID })
+      .andWhere(`comment."isDeleted" = :isDeleted`, { isDeleted })
+      .orderBy("COUNT(reactions.id) + COUNT(replies.id)", "DESC")
+      .groupBy("comment.id")
+      .offset(skip)
+      .limit(10)
+      .getRawMany();
+    return await Promise.all(
+      raw.map(async (item) => {
+        const gotComment = await this.getComment(item.id);
+        gotComment.replies = await this.fetchCommentReplies(gotComment.id, 0);
+        return gotComment;
+      })
+    );
+  },
+
   async fetchCommentReplies(commentID: number, skip: number) {
     const isDeleted = false;
     const raw = await getRepository(PostCommentReply)
