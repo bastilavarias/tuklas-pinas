@@ -35,7 +35,7 @@ const authenticationService = {
     }
     const saveImagePayload = {
       display:
-        "https://res.cloudinary.com/deqllunb9/image/upload/v1604638901/tuklas-pinas-development/profile/placeholder/profile-image_czob5g.png",
+        "https://res.cloudinary.com/deqllunb9/image/upload/v1604642053/tuklas-pinas-development/profile/placeholder/profile-image_txzc7g.png",
       cover:
         "https://res.cloudinary.com/deqllunb9/image/upload/v1604638869/tuklas-pinas-development/profile/placeholder/cover-photo_fqmhlh.png",
     };

@@ -44,7 +44,7 @@
                 ><span class="caption">No more posts.</span></template
               >
               <template v-slot:no-results
-                ><span class="caption">No results.</span></template
+                ><span class="caption">No posts.</span></template
               >
             </infinite-loading>
           </v-col>

@@ -12,10 +12,13 @@
           >
             <v-avatar class="mr-2" :size="30">
               <v-img
-                src="https://bastilavarias.github.io/assets/img/sebastian-lavarias.5c3a8fdd.png"
+                :src="profile.image.display"
+                :lazy-src="profile.image.display"
               ></v-img>
             </v-avatar>
-            <span class="text-capitalize mr-1">Sebastian</span>
+            <span class="text-capitalize mr-1 text-truncate">{{
+              displayFirstName
+            }}</span>
             <v-icon small>mdi-menu-down</v-icon>
           </v-btn>
         </template>
@@ -27,14 +30,17 @@
         <custom-router-link :to="{ name: 'profile-general-page' }">
           <v-list-item-avatar :size="50">
             <v-img
-              src="https://bastilavarias.github.io/assets/img/sebastian-lavarias.5c3a8fdd.png"
+              :src="profile.image.display"
+              :lazy-src="profile.image.display"
             ></v-img>
           </v-list-item-avatar>
         </custom-router-link>
         <v-list-item-content>
           <v-list-item-title>
             <custom-router-link :to="{ name: 'profile-general-page' }">
-              <span class="font-weight-bold secondary--text">Sebastian L.</span>
+              <span class="font-weight-bold secondary--text text-capitalize"
+                >{{ displayFirstName }} {{ displayLastName }}.</span
+              >
             </custom-router-link>
           </v-list-item-title>
           <v-list-item-subtitle>
@@ -86,7 +92,21 @@ export default {
       required: false,
     },
   },
-
+  computed: {
+    credentials() {
+      return this.$store.state.authentication.credentials;
+    },
+    profile() {
+      return this.credentials.profile;
+    },
+    displayFirstName() {
+      return this.profile.firstName.split(" ")[0];
+    },
+    displayLastName() {
+      if (this.profile.lastName) return this.profile.lastName.split("")[0];
+      return "";
+    },
+  },
   methods: {
     async signOut() {
       await this.$store.commit(PURGE_AUTHENTICATION);
