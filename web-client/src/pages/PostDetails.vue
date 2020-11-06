@@ -220,7 +220,7 @@ export default {
       scrollPage: 1,
       scrollIdentifier: +new Date(),
       isFetchCommentsStart: false,
-      commentsSort: "relevant",
+      commentsSort: "new",
     };
   },
   mixins: [commonUtilities, commonValidation],
@@ -304,11 +304,13 @@ export default {
     },
   },
   async created() {
-    this.scrollToTop();
-    const { postID, type } = this.$route.params;
+    const { postID, type, section } = this.$route.params;
     const parametersNotValid = !postID || !type;
     if (parametersNotValid) return this.goBack();
     await this.getPostSoftDetails(postID, type);
+    if (section === "comment-area")
+      return await this.$vuetify.goTo("#comment-area");
+    this.scrollToTop();
   },
 };
 </script>
