@@ -12,12 +12,11 @@
       <v-img
         height="100%"
         width="100%"
-        v-if="coverPhoto"
         class="cover-photo"
-        :src="coverPhotoPreview"
+        :src="coverPhotoPreviewLocal"
         position="center"
       ></v-img>
-      <div class="cover-photo-button-add">
+      <div class="cover-photo-button-add" v-if="!shouldHideOperationButton">
         <input
           type="file"
           ref="coverPhotoInput"
@@ -57,8 +56,8 @@
           accept="image/*"
           @change="setProfilePhoto"
         />
-        <v-avatar :size="125" color="grey" class="elevation-5">
-          <v-img :src="profilePhotoPreview" position="center"></v-img>
+        <v-avatar :size="175" color="grey" class="elevation-5">
+          <v-img :src="profilePhotoPreviewLocal" position="center"></v-img>
         </v-avatar>
         <v-btn
           color="white"
@@ -66,7 +65,7 @@
           x-small
           class="profile-photo-button-add"
           @click="$refs.profilePhotoInput.click()"
-          v-if="!profilePhoto"
+          v-if="!shouldHideOperationButton"
         >
           <v-icon color="black">mdi-camera-plus</v-icon>
         </v-btn>
@@ -105,6 +104,18 @@ export default {
       type: Number,
       required: false,
     },
+    coverPhotoPreview: {
+      type: String,
+      required: true,
+    },
+    displayImagePreview: {
+      type: String,
+      required: true,
+    },
+    operation: {
+      type: String,
+      required: true,
+    },
   },
   data() {
     return {
@@ -113,13 +124,16 @@ export default {
     };
   },
   computed: {
-    coverPhotoPreview() {
+    coverPhotoPreviewLocal() {
       if (this.coverPhoto) return URL.createObjectURL(this.coverPhoto);
-      return "";
+      return this.coverPhotoPreview;
     },
-    profilePhotoPreview() {
+    profilePhotoPreviewLocal() {
       if (this.profilePhoto) return URL.createObjectURL(this.profilePhoto);
-      return "";
+      return this.displayImagePreview;
+    },
+    shouldHideOperationButton() {
+      return this.operation === "update";
     },
   },
   methods: {
