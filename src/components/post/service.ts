@@ -217,6 +217,13 @@ const postService = {
     return [];
   },
 
+  async fetchCommentReplies(
+    commentID: number,
+    skip: number
+  ): Promise<PostCommentReply[]> {
+    return await postModel.fetchCommentReplies(commentID, skip);
+  },
+
   async getSoftDetails(
     postID: number,
     type: string

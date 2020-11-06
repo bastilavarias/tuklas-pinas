@@ -66,6 +66,12 @@ postRouter.get(
 );
 
 postRouter.get(
+  "/comment-replies/:commentID/:skip",
+  passport.authenticate("jwt", { session: false }),
+  postController.fetchCommentReplies
+);
+
+postRouter.get(
   "/soft-details/:postID/:type",
   passport.authenticate("jwt", { session: false }),
   postController.getSoftDetails
