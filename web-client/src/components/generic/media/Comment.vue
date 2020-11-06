@@ -104,6 +104,20 @@
             >
             </generic-comment-reply-media>
           </template>
+          <v-btn
+            color="secondary"
+            text
+            v-if="hasMoreReplies && !isFetchRepliesStart"
+            @click="fetchReplies"
+          >
+            <span class="text-capitalize">More Replies</span>
+            <v-icon>mdi-chevron-down</v-icon>
+          </v-btn>
+          <div class="text-center">
+            <generic-please-wait-progress-circular
+              v-if="isFetchRepliesStart"
+            ></generic-please-wait-progress-circular>
+          </div>
         </v-col>
       </v-row>
     </div>
@@ -113,16 +127,18 @@
 <script>
 import commonUtilities from "@/common/utilities";
 import {
+  FETCH_POST_COMMENT_REPLIES,
   REMOVE_POST_COMMENT_REACTION,
   SEND_POST_COMMENT_REACTION,
   SEND_POST_COMMENT_REPLY,
 } from "@/store/types/post";
 import commonValidation from "@/common/validation";
 import GenericCommentReplyMedia from "@/components/generic/media/CommentReply";
+import GenericPleaseWaitProgressCircular from "@/components/generic/progress-circular/PleaseWait";
 
 export default {
   name: "generic-comment-media",
-  components: { GenericCommentReplyMedia },
+  components: { GenericPleaseWaitProgressCircular, GenericCommentReplyMedia },
   props: {
     commentID: {
       type: Number,
@@ -173,6 +189,9 @@ export default {
       repliesCountLocal: this.repliesCount,
       isSendReactionStart: false,
       isRemoveReactionStart: false,
+      isFetchRepliesStart: false,
+      enableMoreRepliesButton: true,
+      skip: 6,
     };
   },
   computed: {
@@ -187,6 +206,12 @@ export default {
         (reaction) => reaction.account.id === this.credentials.id
       );
       return this.validateObject(foundUser);
+    },
+    hasMoreReplies() {
+      return (
+        this.repliesLocal.length < this.repliesCountLocal &&
+        this.enableMoreRepliesButton
+      );
     },
   },
   watch: {
@@ -268,6 +293,21 @@ export default {
         return await this.removeReaction();
       }
       await this.sendReaction();
+    },
+    async fetchReplies() {
+      this.isFetchRepliesStart = true;
+      const payload = {
+        commentID: this.commentID,
+        skip: this.skip,
+      };
+      const fetchedReplies = await this.$store.dispatch(
+        FETCH_POST_COMMENT_REPLIES,
+        payload
+      );
+      this.isFetchRepliesStart = false;
+      this.repliesLocal = [...this.repliesLocal, ...fetchedReplies];
+      this.skip += 6;
+      if (fetchedReplies.length < 5) this.enableMoreRepliesButton = false;
     },
   },
 };

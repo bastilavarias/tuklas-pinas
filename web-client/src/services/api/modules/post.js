@@ -86,6 +86,13 @@ const postApiService = {
     return result.data || [];
   },
 
+  async fetchCommentReplies(commentID, skip) {
+    const result = await apiService.get(
+      `/post/comment-replies/${commentID}/${skip}`
+    );
+    return result.data || [];
+  },
+
   async getSoftDetails(postID, type) {
     const result = await apiService.get(`/post/soft-details/${postID}/${type}`);
     return result.data || {};
