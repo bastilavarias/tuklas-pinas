@@ -2,6 +2,7 @@ import {
   CREATE_ITINERARY_POST,
   CREATE_TRAVEL_STORY_POST,
   FETCH_NEW_POSTS,
+  FETCH_POST_COMMENT_REPLIES,
   FETCH_POST_COMMENTS,
   GET_POST_SOFT_DETAILS,
   REMOVE_POST_COMMENT_REACTION,
@@ -191,6 +192,17 @@ const postStore = {
     async [FETCH_POST_COMMENTS]({ commit }, { postID, sort, skip }) {
       try {
         return await postApiService.fetchComments(postID, sort, skip);
+      } catch (error) {
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Something went wrong to the server. Please try again.",
+          color: "error",
+        });
+      }
+    },
+    async [FETCH_POST_COMMENT_REPLIES]({ commit }, { commentID, skip }) {
+      try {
+        return await postApiService.fetchCommentReplies(commentID, skip);
       } catch (error) {
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,
