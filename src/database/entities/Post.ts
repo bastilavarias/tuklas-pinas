@@ -12,6 +12,7 @@ import Account from "./Account";
 import PostFile from "./PostFile";
 import PostCategory from "./PostCategory";
 import PostReaction from "./PostReaction";
+import PostComment from "./PostComment";
 
 @Entity()
 export default class Post extends BaseEntity {
@@ -56,6 +57,10 @@ export default class Post extends BaseEntity {
   @OneToMany(() => PostCategory, (categories) => categories.post)
   @JoinColumn({ name: "postId" })
   categories: PostCategory[];
+
+  @OneToMany(() => PostComment, (comment) => comment.post)
+  @JoinColumn({ name: "postId" })
+  comments: PostComment[];
 
   @OneToMany(() => PostReaction, (reaction) => reaction.post)
   @JoinColumn({ name: "postId" })

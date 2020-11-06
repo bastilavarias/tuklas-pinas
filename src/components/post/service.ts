@@ -204,8 +204,10 @@ const postService = {
     };
   },
 
-  async fetchNew(skip: number): Promise<IGenericSoftPost[]> {
-    return await postModel.fetchNew(skip);
+  async fetch(sort: string, skip: number): Promise<IGenericSoftPost[]> {
+    if (sort === "new") return await postModel.fetchNew(skip);
+    if (sort === "relevant") return await postModel.fetchRelevant(skip);
+    return [];
   },
 
   async fetchComments(
