@@ -214,6 +214,8 @@ const postService = {
     skip: number
   ): Promise<PostComment[]> {
     if (sort === "new") return postModel.fetchNewComments(postID, skip);
+    if (sort === "relevant")
+      return postModel.fetchRelevantComments(postID, skip);
     return [];
   },
 
