@@ -19,6 +19,7 @@
           <v-col cols="12">
             <template v-for="(post, index) in posts">
               <generic-post-preview-card
+                :key="index"
                 :postID="post.id"
                 :type="post.type"
                 class-name="mb-5"
@@ -27,7 +28,9 @@
                 :title="post.title"
                 :text="post.text"
                 :files="post.files"
-                :key="index"
+                :reactions-count.sync="post.reactionsCount"
+                :comments-count="post.commentsCount"
+                :reactions.sync="post.reactions"
               ></generic-post-preview-card>
             </template>
             <infinite-loading

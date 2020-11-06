@@ -82,7 +82,7 @@ const routes = [
     component: () => import("../layouts/Main"),
     children: [
       {
-        path: ":postID/:type",
+        path: ":postID/:type/:section?",
         name: "post-details-page",
         component: () => import("../pages/PostDetails"),
       },
