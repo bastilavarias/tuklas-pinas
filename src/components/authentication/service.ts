@@ -10,6 +10,7 @@ import profileModel from "../profile/model";
 import utilityService from "../utility/service";
 import accountModel from "../account/model";
 import jsonwebtoken from "jsonwebtoken";
+import { IProfileModelSaveDetailsInput } from "../profile/typeDefs";
 
 const authenticationService = {
   async signup(
@@ -32,12 +33,23 @@ const authenticationService = {
       result.error.email = `${input.email} is already exists.`;
       return result;
     }
-    const profileSaveDetailsInput = {
+    const saveImagePayload = {
+      display:
+        "https://res.cloudinary.com/deqllunb9/image/upload/v1604638901/tuklas-pinas-development/profile/placeholder/profile-image_czob5g.png",
+      cover:
+        "https://res.cloudinary.com/deqllunb9/image/upload/v1604638869/tuklas-pinas-development/profile/placeholder/cover-photo_fqmhlh.png",
+    };
+    const savedImage = await profileModel.saveImage(
+      saveImagePayload.display,
+      saveImagePayload.cover
+    );
+    const profileSaveDetailsInput: IProfileModelSaveDetailsInput = {
       firstName: input.firstName,
       lastName: input.lastName,
       nationality: input.nationality,
       birthDate: input.birthDate,
       sex: input.sex,
+      imageID: savedImage.id,
     };
     const savedProfileDetails = await profileModel.saveDetails(
       profileSaveDetailsInput
