@@ -6,8 +6,8 @@ export default class ProfileImage extends BaseEntity {
   id: number;
 
   @Column("text", { nullable: false })
-  url: string;
+  display: string;
 
   @Column({ nullable: false })
-  publicID: string;
+  cover: string;
 }

@@ -17,10 +17,10 @@ const profileModel = {
     }).save();
   },
 
-  async saveImage(url: string, publicID: string): Promise<ProfileImage> {
+  async saveImage(display: string, cover: string): Promise<ProfileImage> {
     return await ProfileImage.create({
-      url,
-      publicID,
+      display,
+      cover,
     }).save();
   },
 };
