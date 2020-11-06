@@ -366,7 +366,7 @@ const postModel = {
       .where(`reply."commentId" = :commentID`, { commentID })
       .andWhere(`reply."isDeleted" = :isDeleted`, { isDeleted })
       .orderBy(`reply."createdAt"`, "ASC")
-      .skip(skip)
+      .offset(skip)
       .limit(6)
       .getRawMany();
     return await Promise.all(

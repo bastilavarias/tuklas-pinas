@@ -157,6 +157,18 @@ const postController = {
     }
   },
 
+  async fetchCommentReplies(request: Request, response: Response) {
+    try {
+      const commentID = parseInt(request.params.commentID) || 0;
+      const skip = parseInt(request.params.skip) || 0;
+      const result = await postService.fetchCommentReplies(commentID, skip);
+      response.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      response.status(400).json(error);
+    }
+  },
+
   async getSoftDetails(request: Request, response: Response) {
     try {
       const postID = parseInt(request.params.postID) || 0;
