@@ -3,26 +3,25 @@
     <div class="display-photo-container">
       <v-img
         class="cover-photo"
-        :src="require('@/assets/temp/cover-photo.jpeg')"
+        :src="profile.image.cover"
+        :lazy-src="profile.image.cover"
         position="center"
         width="100%"
         height="100%"
       ></v-img>
       <v-avatar :size="85" class="profile-photo elevation-5">
         <v-img
-          :src="require('@/assets/temp/profile-photo.jpg')"
+          :src="profile.image.display"
+          :lazy-src="profile.image.display"
           position="center"
         ></v-img>
       </v-avatar>
     </div>
     <div class="text-center mt-15 mb-5">
-      <h1 class="title font-weight-bold secondary--text">Sebastian Lavarias</h1>
-      <span>
-        <v-icon color="primary" class="mr-1" small>
-          mdi-map-marker-outline
-        </v-icon>
-        <span class="subtitle-2">Manila, Philippines</span></span
-      >
+      <h1 class="title font-weight-bold secondary--text text-capitalize">
+        {{ displayName }}
+      </h1>
+      <span class="subtitle-2 text-capitalize">{{ profile.nationality }}</span>
     </div>
     <v-card-text>
       <div class="mb-5">
@@ -53,6 +52,20 @@
 <script>
 export default {
   name: "generic-mini-profile-side-card",
+  computed: {
+    credentials() {
+      return this.$store.state.authentication.credentials;
+    },
+    profile() {
+      return this.credentials.profile;
+    },
+    displayName() {
+      const { firstName, lastName } = this.profile;
+      const name = `${firstName} ${lastName}`;
+      if (name.length <= 18) return name;
+      return `${name.slice(0, 15)}...`;
+    },
+  },
 };
 </script>
 
