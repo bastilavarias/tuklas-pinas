@@ -1,7 +1,7 @@
 import {
   CREATE_ITINERARY_POST,
   CREATE_TRAVEL_STORY_POST,
-  FETCH_NEW_POSTS,
+  FETCH_POSTS,
   FETCH_POST_COMMENT_REPLIES,
   FETCH_POST_COMMENTS,
   GET_POST_SOFT_DETAILS,
@@ -178,9 +178,9 @@ const postStore = {
         });
       }
     },
-    async [FETCH_NEW_POSTS]({ commit }, skip) {
+    async [FETCH_POSTS]({ commit }, { type, skip }) {
       try {
-        return await postApiService.fetchNew(skip);
+        return await postApiService.fetch(type, skip);
       } catch (error) {
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,
