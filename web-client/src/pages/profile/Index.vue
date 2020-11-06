@@ -16,9 +16,17 @@
 </template>
 <script>
 import ProfilePageHeader from "@/components/profile-page/Header";
+import {
+  FETCH_GENERIC_NATIONALITIES,
+  FETCH_GENERIC_SEXES,
+} from "@/store/types/generic";
 export default {
   components: {
     ProfilePageHeader,
+  },
+  async created() {
+    await this.$store.dispatch(FETCH_GENERIC_NATIONALITIES);
+    await this.$store.dispatch(FETCH_GENERIC_SEXES);
   },
 };
 </script>

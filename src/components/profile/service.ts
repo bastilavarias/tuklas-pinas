@@ -3,10 +3,7 @@ import profileModel from "./model";
 import cloudinaryService from "../cloudinary/service";
 
 const profileService = {
-  async updateDetails(
-    profileID: number,
-    input: IProfileServiceUpdateDetailsInput
-  ) {
+  async update(profileID: number, input: IProfileServiceUpdateDetailsInput) {
     const gotDetails = await profileModel.getDetails(profileID);
     if (input.displayImage) {
       const folder = "profile/display-images";

@@ -24,7 +24,13 @@
         </v-list-item-subtitle>
       </v-list-item-content>
       <v-list-item-action>
-        <v-btn color="secondary" outlined class="text-capitalize" rounded>
+        <v-btn
+          color="secondary"
+          outlined
+          class="text-capitalize"
+          rounded
+          @click="isUpdateProfileFormDialogShow = true"
+        >
           Update Profile
         </v-btn>
       </v-list-item-action>
@@ -41,18 +47,23 @@
         >
       </template>
     </v-tabs>
+    <profile-page-update-form-dialog
+      :is-open.sync="isUpdateProfileFormDialogShow"
+    ></profile-page-update-form-dialog>
   </v-card>
 </template>
 
 <script>
 import ProfilePageDisplayImagesInput from "@/components/profile-page/DisplayImagesInput";
 import commonUtilities from "@/common/utilities";
+import ProfilePageUpdateFormDialog from "@/components/profile-page/UpdateFormDialog";
 export default {
   name: "profile-page-header",
-  components: { ProfilePageDisplayImagesInput },
+  components: { ProfilePageUpdateFormDialog, ProfilePageDisplayImagesInput },
   mixins: [commonUtilities],
   data() {
     return {
+      isUpdateProfileFormDialogShow: false,
       tabSelections: [
         {
           text: `Sebastian's`,

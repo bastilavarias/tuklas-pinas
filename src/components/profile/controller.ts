@@ -4,7 +4,7 @@ import profileService from "./service";
 // import profileService from "./service";
 
 const profileController = {
-  async updateDetails(request: Request, response: Response) {
+  async update(request: Request, response: Response) {
     try {
       const profileID = parseInt(request.params.profileID) || 0;
       const input: IProfileServiceUpdateDetailsInput = {
@@ -18,7 +18,7 @@ const profileController = {
         //@ts-ignore
         coverPhoto: request.files[1] || null,
       };
-      const result = await profileService.updateDetails(profileID, input);
+      const result = await profileService.update(profileID, input);
       response.status(200).json(result);
     } catch (error) {
       console.log(error);

@@ -27,12 +27,12 @@
         <v-btn
           color="white"
           small
-          :depressed="!coverPhoto"
+          :depressed="!coverPhotoLocal"
           @click="$refs.coverPhotoInput.click()"
         >
           <v-icon small class="mr-2"> mdi-camera-plus </v-icon>
           <span class="text-capitalize"
-            >{{ coverPhoto ? "Change" : "Add" }} Cover Photo</span
+            >{{ coverPhotoLocal ? "Change" : "Add" }} Cover Photo</span
           >
         </v-btn>
       </div>
@@ -41,7 +41,7 @@
         color="white"
         x-small
         class="cover-photo-button-remove"
-        v-if="coverPhoto"
+        v-if="coverPhotoLocal"
         @click="clearCoverPhoto"
       >
         <v-icon>mdi-close</v-icon>
@@ -56,7 +56,11 @@
           accept="image/*"
           @change="setProfilePhoto"
         />
-        <v-avatar :size="175" color="grey" class="elevation-5">
+        <v-avatar
+          :size="operation === 'view' ? '150' : '175'"
+          color="grey"
+          class="elevation-5"
+        >
           <v-img :src="profilePhotoPreviewLocal" position="center"></v-img>
         </v-avatar>
         <v-btn
@@ -75,7 +79,7 @@
           x-small
           class="profile-photo-button-remove"
           @click="clearProfilePhoto"
-          v-if="profilePhoto"
+          v-if="displayImageLocal"
         >
           <v-icon color="black">mdi-close</v-icon>
         </v-btn>
@@ -116,43 +120,65 @@ export default {
       type: String,
       required: true,
     },
+    displayImage: {
+      required: false,
+    },
+    coverPhoto: {
+      required: false,
+    },
   },
   data() {
     return {
-      coverPhoto: null,
-      profilePhoto: null,
+      coverPhotoLocal: null,
+      displayImageLocal: null,
     };
   },
   computed: {
     coverPhotoPreviewLocal() {
-      if (this.coverPhoto) return URL.createObjectURL(this.coverPhoto);
+      if (this.coverPhotoLocal)
+        return URL.createObjectURL(this.coverPhotoLocal);
       return this.coverPhotoPreview;
     },
     profilePhotoPreviewLocal() {
-      if (this.profilePhoto) return URL.createObjectURL(this.profilePhoto);
+      if (this.displayImageLocal)
+        return URL.createObjectURL(this.displayImageLocal);
       return this.displayImagePreview;
     },
     shouldHideOperationButton() {
       return this.operation === "update";
     },
   },
+  watch: {
+    displayImage(val) {
+      this.displayImageLocal = val;
+    },
+    coverPhoto(val) {
+      this.coverPhotoLocal = val;
+    },
+    displayImageLocal(val) {
+      this.$emit("update:displayImage", val);
+    },
+    coverPhotoLocal(val) {
+      this.$emit("update:coverPhoto", val);
+    },
+  },
   methods: {
     setCoverPhoto(element) {
       const photo = element.target.files[0];
-      if (photo) this.coverPhoto = photo;
+      if (photo) this.coverPhotoLocal = photo;
       this.$refs.files = [];
     },
     clearCoverPhoto() {
-      this.coverPhoto = null;
+      this.coverPhotoLocal = null;
       this.$refs.coverPhotoInput.value = "";
     },
     setProfilePhoto(element) {
       const photo = element.target.files[0];
-      if (photo) this.profilePhoto = photo;
+      if (photo) this.displayImageLocal = photo;
       this.$refs.files = [];
     },
     clearProfilePhoto() {
-      this.profilePhoto = null;
+      this.displayImageLocal = null;
       this.$refs.profilePhotoInput.value = "";
     },
   },

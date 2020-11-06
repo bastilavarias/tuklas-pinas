@@ -117,6 +117,7 @@
                         label="Password *"
                       ></custom-password-text-field>
                     </v-col>
+
                     <v-col cols="12" md="6">
                       <custom-password-text-field
                         :password.sync="form.confirmPassword"
