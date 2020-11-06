@@ -16,7 +16,7 @@ const postController = {
         destinationsID: request.body.destinationsID || [],
         travelEventsID: request.body.travelEventsID || [],
         categories: request.body.categories || [],
-        files: request.body.files || [],
+        files: [],
       };
       const result = await postService.createTravelStory(postID, input);
       response.status(200).json(result);
@@ -35,7 +35,7 @@ const postController = {
         destinationsID: request.body.destinationsID || [],
         travelEventsID: request.body.travelEventsID || [],
         categories: request.body.categories || [],
-        files: request.body.files || [],
+        files: [],
         itinerary: request.body.itinerary || [],
         review: request.body.review || [],
       };

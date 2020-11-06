@@ -34,10 +34,8 @@ const authenticationService = {
       return result;
     }
     const saveImagePayload = {
-      display:
-        "https://res.cloudinary.com/deqllunb9/image/upload/v1604642053/tuklas-pinas-development/profile/placeholder/profile-image_txzc7g.png",
-      cover:
-        "https://res.cloudinary.com/deqllunb9/image/upload/v1604638869/tuklas-pinas-development/profile/placeholder/cover-photo_fqmhlh.png",
+      display: process.env.DEFAULT_PROFILE_DISPLAY_IMAGE_URL!,
+      cover: process.env.DEFAULT_PROFILE_COVER_PHOTO_URL!,
     };
     const savedImage = await profileModel.saveImage(
       saveImagePayload.display,
