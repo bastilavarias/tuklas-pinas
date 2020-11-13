@@ -4,7 +4,7 @@ import profileService from "./service";
 // import profileService from "./service";
 
 const profileController = {
-  async updateDetails(request: Request, response: Response) {
+  async update(request: Request, response: Response) {
     try {
       const profileID = parseInt(request.params.profileID) || 0;
       const input: IProfileServiceUpdateDetailsInput = {
@@ -14,11 +14,17 @@ const profileController = {
         birthDate: request.body.birthDate || "",
         sex: request.body.sex || "",
         //@ts-ignore
-        displayImage: request.files[0] || null,
+        displayImage: request.files.displayImage
+          ? //@ts-ignore
+            request.files.displayImage[0]
+          : null,
         //@ts-ignore
-        coverPhoto: request.files[1] || null,
+        coverPhoto: request.files.coverPhoto
+          ? //@ts-ignore
+            request.files.coverPhoto[0]
+          : null,
       };
-      const result = await profileService.updateDetails(profileID, input);
+      const result = await profileService.update(profileID, input);
       response.status(200).json(result);
     } catch (error) {
       console.log(error);

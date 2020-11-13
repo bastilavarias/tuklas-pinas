@@ -3,33 +3,28 @@ import profileModel from "./model";
 import cloudinaryService from "../cloudinary/service";
 
 const profileService = {
-  async updateDetails(
-    profileID: number,
-    input: IProfileServiceUpdateDetailsInput
-  ) {
+  async update(profileID: number, input: IProfileServiceUpdateDetailsInput) {
     const gotDetails = await profileModel.getDetails(profileID);
     if (input.displayImage) {
       const folder = "profile/display-images";
-      const uploadedDisplayImage = await cloudinaryService.upload(
+      const uploadedImage = await cloudinaryService.upload(
         input.displayImage,
         folder
       );
-      await profileModel.updateImage(
+      await profileModel.updateDisplayImage(
         gotDetails.image.id,
-        uploadedDisplayImage.url,
-        gotDetails.image.cover
+        uploadedImage.url
       );
     }
     if (input.coverPhoto) {
       const folder = "profile/cover-photos";
-      const uploadedCoverPhoto = await cloudinaryService.upload(
-        input.displayImage,
+      const uploadedImage = await cloudinaryService.upload(
+        input.coverPhoto,
         folder
       );
-      await profileModel.updateImage(
+      await profileModel.updateCoverPhoto(
         gotDetails.image.id,
-        gotDetails.image.display,
-        uploadedCoverPhoto.url
+        uploadedImage.url
       );
     }
     return await profileModel.updateDetails(profileID, input);

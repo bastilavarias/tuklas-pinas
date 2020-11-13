@@ -2,9 +2,7 @@
   <v-row>
     <v-col cols="12" md="3">
       <v-row>
-        <v-col cols="12">
-          <profile-page-events-side-card></profile-page-events-side-card>
-        </v-col>
+        <v-col cols="12"> </v-col>
       </v-row>
     </v-col>
     <v-col cols="12" md="6">
@@ -12,20 +10,7 @@
         <v-col cols="12">
           <profile-page-posts-card></profile-page-posts-card>
         </v-col>
-        <v-col cols="12">
-          <template v-for="n in [1]">
-            <generic-travel-story-post-preview-card
-              :key="n"
-              class-name="mb-5"
-            ></generic-travel-story-post-preview-card>
-          </template>
-          <template v-for="n in [2]">
-            <generic-itinerary-post-preview-card
-              :key="n"
-              class-name="mb-5"
-            ></generic-itinerary-post-preview-card>
-          </template>
-        </v-col>
+        <v-col cols="12"> </v-col>
       </v-row>
     </v-col>
     <v-col cols="12" md="3" ref="stickyParent">
@@ -51,15 +36,11 @@
 import ProfilePagePostsCard from "@/components/profile-page/PostsCard";
 import ProfilePageEventsSideCard from "@/components/profile-page/EventsSideCard";
 import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedPeople";
-import GenericItineraryPostPreviewCard from "@/components/generic/card/ItineraryPostPreview";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
-import GenericTravelStoryPostPreviewCard from "@/components/generic/card/PostPreview";
 import commonUtilities from "@/common/utilities";
 export default {
   components: {
-    GenericTravelStoryPostPreviewCard,
     GenericStickyFooter,
-    GenericItineraryPostPreviewCard,
     GenericSuggestedPeopleSideCard,
     ProfilePageEventsSideCard,
     ProfilePagePostsCard,

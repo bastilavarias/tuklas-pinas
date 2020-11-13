@@ -5,10 +5,14 @@ import profileController from "./controller";
 import multer from "../../multer";
 
 profileRouter.put(
-  "/update-details/:profileID",
+  "/update/:profileID",
   passport.authenticate("jwt", { session: false }),
-  multer.array("images"),
-  profileController.updateDetails
+  // multer.array("images"),
+  multer.fields([
+    { name: "displayImage", maxCount: 1 },
+    { name: "coverPhoto", maxCount: 1 },
+  ]),
+  profileController.update
 );
 
 export default profileRouter;

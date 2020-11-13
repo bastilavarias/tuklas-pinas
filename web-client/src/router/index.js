@@ -169,7 +169,7 @@ const routes = [
           {
             path: "",
             name: "profile-general-page",
-            component: () => import("../pages/profile/Wall"),
+            component: () => import("../pages/profile/General"),
           },
           {
             path: "travel-history",

@@ -4,6 +4,7 @@ import {
   AUTHENTICATION_SIGNUP,
   SET_AUTHENTICATION,
   PURGE_AUTHENTICATION,
+  SET_AUTHENTICATION_CREDENTIALS,
 } from "@/store/types/authentication";
 import tokenService from "@/services/token";
 import authenticationApiService from "@/services/api/modules/authentication";
@@ -22,11 +23,13 @@ const authenticationStore = {
       state.isAuthenticated = true;
       state.credentials = tokenService.decode();
     },
-
     [PURGE_AUTHENTICATION](state) {
       tokenService.remove();
       state.isAuthenticated = false;
       state.credentials = {};
+    },
+    [SET_AUTHENTICATION_CREDENTIALS](state, credentials) {
+      state.credentials = credentials;
     },
   },
 

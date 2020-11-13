@@ -20,7 +20,8 @@
         </div>
         <v-avatar :size="40">
           <v-img
-            src="https://bastilavarias.github.io/assets/img/sebastian-lavarias.5c3a8fdd.png"
+            :src="author.profile.image.display"
+            :lazy-src="author.profile.image.display"
           ></v-img>
         </v-avatar>
       </div>
