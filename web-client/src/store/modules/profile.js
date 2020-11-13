@@ -26,9 +26,6 @@ const profileStore = {
         formData.append("sex", sex);
         formData.append("displayImage", displayImage);
         formData.append("coverPhoto", coverPhoto);
-        // [displayImage, coverPhoto].map((image) =>
-        //   formData.append(`images`, image)
-        // );
         const updatedProfile = await profileApiService.update(
           profileID,
           formData
