@@ -57,7 +57,7 @@
           @change="setProfilePhoto"
         />
         <v-avatar
-          :size="operation === 'view' ? '150' : '175'"
+          :size="operation === 'view' ? '125' : '150'"
           color="grey"
           class="elevation-5"
         >
@@ -208,8 +208,9 @@ export default {
 }
 .profile-photo-container {
   position: absolute;
-  bottom: -15%;
+  bottom: -50%;
   left: 2%;
+  transform: translate(2%, -50%);
 }
 .profile-photo-child-container {
   position: relative;

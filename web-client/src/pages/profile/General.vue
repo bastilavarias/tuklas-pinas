@@ -2,9 +2,7 @@
   <v-row>
     <v-col cols="12" md="3">
       <v-row>
-        <v-col cols="12">
-          <profile-page-events-side-card></profile-page-events-side-card>
-        </v-col>
+        <v-col cols="12"> </v-col>
       </v-row>
     </v-col>
     <v-col cols="12" md="6">

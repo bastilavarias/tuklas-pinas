@@ -12,16 +12,6 @@
         <v-list-item-title class="font-weight-bold title text-capitalize">{{
           formatName(profile.firstName, profile.lastName)
         }}</v-list-item-title>
-        <v-list-item-subtitle class="body-1">
-          <span class="mr-5">
-            <span class="font-weight-bold"> 99 </span>
-            Followers
-          </span>
-          <span>
-            <span class="font-weight-bold"> 99 </span>
-            Following
-          </span>
-        </v-list-item-subtitle>
       </v-list-item-content>
       <v-list-item-action>
         <v-btn
@@ -35,6 +25,7 @@
         </v-btn>
       </v-list-item-action>
     </v-list-item>
+    <v-divider></v-divider>
     <v-tabs color="primary">
       <template v-for="(tab, index) in tabSelections">
         <v-tab
@@ -66,7 +57,7 @@ export default {
       isUpdateProfileFormDialogShow: false,
       tabSelections: [
         {
-          text: `Sebastian's`,
+          text: `Posts`,
           to: { name: "profile-general-page" },
         },
         {

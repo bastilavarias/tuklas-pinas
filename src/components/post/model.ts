@@ -618,6 +618,7 @@ const postModel = {
       relations: [
         "author",
         "author.profile",
+        "author.profile.image",
         "replies",
         "reactions",
         "reactions.account",
@@ -634,7 +635,13 @@ const postModel = {
 
   async getCommentReply(replyID: number): Promise<PostCommentReply> {
     const gotCommentReply = await PostCommentReply.findOne(replyID, {
-      relations: ["author", "author.profile", "reactions", "reactions.account"],
+      relations: [
+        "author",
+        "author.profile",
+        "author.profile.image",
+        "reactions",
+        "reactions.account",
+      ],
     });
     gotCommentReply!.reactionsCount = await this.countCommentReplyReactions(
       gotCommentReply!.id
