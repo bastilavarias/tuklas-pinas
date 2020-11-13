@@ -49,8 +49,12 @@ const profileModel = {
     return gotDetails!;
   },
 
-  async updateImage(imageID: number, display: string, cover: string) {
-    await ProfileImage.update({ id: imageID }, { display, cover });
+  async updateDisplayImage(imageID: number, url: string) {
+    await ProfileImage.update({ id: imageID }, { display: url });
+  },
+
+  async updateCoverPhoto(imageID: number, url: string) {
+    await ProfileImage.update({ id: imageID }, { cover: url });
   },
 };
 
