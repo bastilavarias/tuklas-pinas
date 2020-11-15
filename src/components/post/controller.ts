@@ -3,6 +3,7 @@ import postService from "./service";
 import {
   IPostServiceCreateItineraryInput,
   IPostServiceCreateTravelStoryInput,
+  IPostServiceSaveTravelStoryDraftInput,
   IPostServiceSendCommentInput,
 } from "./typeDefs";
 
@@ -19,6 +20,25 @@ const postController = {
         files: [],
       };
       const result = await postService.createTravelStory(postID, input);
+      response.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      response.status(400).json(error);
+    }
+  },
+
+  async saveTravelStoryDraft(request: Request, response: Response) {
+    try {
+      const postID = parseInt(request.params.postID) || 0;
+      const input: IPostServiceSaveTravelStoryDraftInput = {
+        title: request.body.title || "",
+        text: request.body.text || "",
+        destinationsID: request.body.destinationsID || [],
+        travelEventsID: request.body.travelEventsID || [],
+        categories: request.body.categories || [],
+        files: [],
+      };
+      const result = await postService.saveTravelStoryDraft(postID, input);
       response.status(200).json(result);
     } catch (error) {
       console.log(error);
@@ -233,7 +253,8 @@ const postController = {
       const accountID = request.user.id;
       // @ts-ignore
       const files: Express.Multer.File[] = request.files;
-      const result = await postService.uploadFiles(accountID, files);
+      const isDraft: boolean = request.params.isDraft === "true";
+      const result = await postService.uploadFiles(accountID, files, isDraft);
       response.status(200).json(result);
     } catch (error) {
       console.log(error);

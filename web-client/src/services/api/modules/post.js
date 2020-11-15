@@ -8,6 +8,13 @@ const postApiService = {
     );
   },
 
+  async saveTravelStoryDraft(postID, formData) {
+    return await apiService.post(
+      `/post/save-travel-story-draft/${postID}`,
+      formData
+    );
+  },
+
   async createItinerary(postID, form) {
     const result = await apiService.post(
       `/post/create-itinerary/${postID}`,
@@ -69,8 +76,11 @@ const postApiService = {
     return result.data.isRemoved || {};
   },
 
-  async uploadFiles(formData) {
-    const result = await apiService.post("/post/upload-files", formData);
+  async uploadFiles(formData, isDraft) {
+    const result = await apiService.post(
+      `/post/upload-files/${isDraft}`,
+      formData
+    );
     return result.data || [];
   },
 

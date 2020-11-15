@@ -78,7 +78,13 @@
                 </v-card-text>
                 <v-card-actions>
                   <div class="flex-grow-1"></div>
-                  <v-btn color="secondary" class="text-capitalize" outlined
+                  <v-btn
+                    color="secondary"
+                    class="text-capitalize"
+                    outlined
+                    @click="saveTravelStoryPostDraft"
+                    :loading="isSaveTravelStoryPostDraftStart"
+                    :disabled="!isSaveTravelStoryDraftFormValid"
                     >Save as Draft</v-btn
                   >
                   <v-btn
@@ -139,7 +145,10 @@ import {
   FETCH_GENERIC_TRAVEL_EVENTS,
 } from "@/store/types/generic";
 import GenericCategoryCombobox from "@/components/generic/combobox/Category";
-import { CREATE_TRAVEL_STORY_POST } from "@/store/types/post";
+import {
+  CREATE_TRAVEL_STORY_POST,
+  SAVE_TRAVEL_STORY_POST_DRAFT,
+} from "@/store/types/post";
 import commonValidation from "@/common/validation";
 
 const defaultTravelStoryForm = {
@@ -164,6 +173,7 @@ export default {
       isFetchGenericDestinationsStart: false,
       isFetchGenericTravelEventsStart: false,
       isCreateTravelStoryPostStart: false,
+      isSaveTravelStoryPostDraftStart: false,
       form: Object.assign({}, defaultTravelStoryForm),
       defaultTravelStoryForm,
     };
@@ -188,6 +198,10 @@ export default {
         isTravelEventsIDIsNotEmpty &&
         isFilesIsNotEmptyAndExceeding
       );
+    },
+    isSaveTravelStoryDraftFormValid() {
+      const { title } = this.form;
+      return title;
     },
   },
   methods: {
@@ -214,6 +228,15 @@ export default {
           name: "post-details-page",
           params: { postID: createdTravelStoryPost.id, type: "travel-story" },
         });
+    },
+    async saveTravelStoryPostDraft() {
+      this.isSaveTravelStoryPostDraftStart = true;
+      const savedDraft = await this.$store.dispatch(
+        SAVE_TRAVEL_STORY_POST_DRAFT,
+        this.form
+      );
+      console.log(savedDraft);
+      this.isSaveTravelStoryPostDraftStart = false;
     },
   },
   async created() {
