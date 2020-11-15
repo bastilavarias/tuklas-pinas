@@ -13,10 +13,10 @@ import {
   SEND_POST_COMMENT_REPLY,
   SEND_POST_COMMENT_REPLY_REACTION,
   SEND_POST_REACTION,
+  SAVE_TRAVEL_STORY_POST_DRAFT,
 } from "@/store/types/post";
 import postApiService from "@/services/api/modules/post";
 import { SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS } from "@/store/types/generic";
-import apiService from "@/services/api";
 
 const postStore = {
   actions: {
@@ -27,7 +27,11 @@ const postStore = {
       try {
         const formData = new FormData();
         files.map((file) => formData.append("files", file));
-        const uploadedPostFiles = await postApiService.uploadFiles(formData);
+        const isDraft = false;
+        const uploadedPostFiles = await postApiService.uploadFiles(
+          formData,
+          isDraft
+        );
         const form = {
           title,
           text,
@@ -53,6 +57,45 @@ const postStore = {
         });
       }
     },
+
+    async [SAVE_TRAVEL_STORY_POST_DRAFT](
+      { commit },
+      { title, text, destinationsID, categories, travelEventsID, files }
+    ) {
+      try {
+        const formData = new FormData();
+        files.map((file) => formData.append("files", file));
+        const isDraft = true;
+        const uploadedPostFiles = await postApiService.uploadFiles(
+          formData,
+          isDraft
+        );
+        const form = {
+          title,
+          text,
+          destinationsID,
+          travelEventsID,
+          categories,
+        };
+        const result = await postApiService.saveTravelStoryDraft(
+          uploadedPostFiles.id,
+          form
+        );
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Saving travel story draft done!",
+          color: "success",
+        });
+        return result.data ? result.data : {};
+      } catch (error) {
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Something went wrong to the server. Please try again.",
+          color: "error",
+        });
+      }
+    },
+
     async [CREATE_ITINERARY_POST](
       { commit },
       {

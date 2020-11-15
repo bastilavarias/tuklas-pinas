@@ -11,6 +11,12 @@ postRouter.post(
 );
 
 postRouter.post(
+  "/save-travel-story-draft/:postID",
+  passport.authenticate("jwt", { session: false }),
+  postController.saveTravelStoryDraft
+);
+
+postRouter.post(
   "/create-itinerary/:postID",
   passport.authenticate("jwt", { session: false }),
   postController.createItinerary
@@ -47,7 +53,7 @@ postRouter.post(
 );
 
 postRouter.post(
-  "/upload-files",
+  "/upload-files/:isDraft",
   multer.array("files"),
   passport.authenticate("jwt", { session: false }),
   postController.uploadFiles

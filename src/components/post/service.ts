@@ -18,6 +18,7 @@ import {
   IPostModelSaveCommentInput,
   IPostServiceSendCommentReplyInput,
   IPostModelSaveCommentReplyInput,
+  IPostServiceSaveTravelStoryDraftInput,
 } from "./typeDefs";
 import cloudinaryService from "../cloudinary/service";
 import postModel from "./model";
@@ -38,6 +39,27 @@ const postService = {
       text: input.text,
       type: "travel-story",
       isDraft: false,
+      accountID: 0,
+    };
+    const updatedDetails = await postModel.updateDetails(
+      postID,
+      updateDetailsInput
+    );
+    await this.saveDestinations(updatedDetails.id, input.destinationsID);
+    await this.saveCategories(updatedDetails.id, input.categories);
+    await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
+    return postModel.getTravelStorySoftDetails(updatedDetails.id);
+  },
+
+  async saveTravelStoryDraft(
+    postID: number,
+    input: IPostServiceSaveTravelStoryDraftInput
+  ): Promise<Post> {
+    const updateDetailsInput: IPostModelUpdateDetailsInput = {
+      title: input.title,
+      text: input.text,
+      type: "travel-story",
+      isDraft: true,
       accountID: 0,
     };
     const updatedDetails = await postModel.updateDetails(
@@ -240,7 +262,8 @@ const postService = {
 
   async uploadFiles(
     accountID: number,
-    files: Express.Multer.File[]
+    files: Express.Multer.File[],
+    isDraft: boolean
   ): Promise<Post> {
     const savePostDetailsInput: IPostModelSaveDetailsInput = {
       title: "",
@@ -250,7 +273,7 @@ const postService = {
       accountID,
     };
     const savedPostDetails = await postModel.saveDetails(savePostDetailsInput);
-    await this.saveFiles(savedPostDetails.id, files);
+    await this.saveFiles(savedPostDetails.id, files, isDraft);
     return postModel.getBaseSoftDetails(savedPostDetails.id);
   },
 
@@ -290,7 +313,28 @@ const postService = {
     );
   },
 
-  async saveFiles(postID: number, files: Express.Multer.File[]) {
+  async saveFiles(
+    postID: number,
+    files: Express.Multer.File[],
+    isDraft: boolean
+  ) {
+    if (isDraft) {
+      await Promise.all(
+        files.map(async (file) => {
+          const savePostFileInput: IPostModelSaveFileInput = {
+            postID,
+            publicID: "",
+            fileName: file.originalname,
+            url: "",
+            format: file.mimetype === "image/jpeg" ? "jpg" : "mp4",
+            // @ts-ignore
+            data: file,
+          };
+          await postModel.saveFile(savePostFileInput);
+        })
+      );
+      return;
+    }
     const cloudinaryFolder = "posts";
     const uploadedFilesMeta = await Promise.all(
       files.map(
