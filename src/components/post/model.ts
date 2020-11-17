@@ -541,13 +541,7 @@ const postModel = {
   },
 
   async getFiles(postID: number): Promise<PostFile[]> {
-    return await getRepository(PostFile)
-      .createQueryBuilder("post_file")
-      .select("post_file.id", "id")
-      .addSelect("post_file.url", "url")
-      .addSelect("post_file.format", "format")
-      .where(`post_file."postId" = :postID`, { postID: postID })
-      .getRawMany();
+    return await PostFile.find({ where: { post: { id: postID } } });
   },
 
   async getDestinations(postID: number): Promise<Destination[]> {
@@ -762,8 +756,12 @@ const postModel = {
     postID: number,
     input: IPostModelUpdateDetailsInput
   ): Promise<Post> {
+    const currentDate = new Date();
     const { title, text, type } = input;
-    await Post.update({ id: postID }, { title, text, type });
+    await Post.update(
+      { id: postID },
+      { title, text, type, updatedAt: currentDate }
+    );
     return await this.getBaseSoftDetails(postID);
   },
 
@@ -818,6 +816,22 @@ const postModel = {
       .from(PostCommentReplyReaction)
       .where("id = :id", { id: reactionID })
       .execute();
+  },
+
+  async deleteDestinations(postID: number) {
+    await PostDestination.delete({ post: { id: postID } });
+  },
+
+  async deleteCategories(postID: number) {
+    await PostCategory.delete({ post: { id: postID } });
+  },
+
+  async deleteTravelEvents(postID: number) {
+    await PostTravelEvent.delete({ post: { id: postID } });
+  },
+
+  async deleteFiles(postID: number) {
+    await PostFile.delete({ post: { id: postID } });
   },
 };
 

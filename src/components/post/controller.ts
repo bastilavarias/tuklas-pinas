@@ -5,6 +5,7 @@ import {
   IPostServiceCreateTravelStoryInput,
   IPostServiceSaveTravelStoryDraftInput,
   IPostServiceSendCommentInput,
+  IPostServiceUpdateTravelStoryDraftInput,
 } from "./typeDefs";
 
 const postController = {
@@ -276,6 +277,39 @@ const postController = {
       // @ts-ignore
       const files: Express.Multer.File[] = request.files;
       const result = await postService.uploadFiles(accountID, files);
+      response.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      response.status(400).json(error);
+    }
+  },
+
+  async updateFiles(request: Request, response: Response) {
+    try {
+      // @ts-ignore
+      const postID = parseInt(request.params.postID) || 0;
+      // @ts-ignore
+      const files: Express.Multer.File[] = request.files;
+      const result = await postService.updateFiles(postID, files);
+      response.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      response.status(400).json(error);
+    }
+  },
+
+  async updateTravelStoryDraft(request: Request, response: Response) {
+    try {
+      const postID = parseInt(request.params.postID) || 0;
+      const input: IPostServiceUpdateTravelStoryDraftInput = {
+        title: request.body.title || "",
+        text: request.body.text || "",
+        destinationsID: request.body.destinationsID || [],
+        travelEventsID: request.body.travelEventsID || [],
+        categories: request.body.categories || [],
+        files: [],
+      };
+      const result = await postService.updateTravelStoryDraft(postID, input);
       response.status(200).json(result);
     } catch (error) {
       console.log(error);

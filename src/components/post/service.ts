@@ -19,6 +19,7 @@ import {
   IPostServiceSendCommentReplyInput,
   IPostModelSaveCommentReplyInput,
   IPostServiceSaveTravelStoryDraftInput,
+  IPostServiceUpdateTravelStoryDraftInput,
 } from "./typeDefs";
 import cloudinaryService from "../cloudinary/service";
 import postModel from "./model";
@@ -48,7 +49,7 @@ const postService = {
     await this.saveDestinations(updatedDetails.id, input.destinationsID);
     await this.saveCategories(updatedDetails.id, input.categories);
     await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
-    return postModel.getTravelStorySoftDetails(updatedDetails.id);
+    return postModel.getTravelStoryDetails(updatedDetails.id);
   },
 
   async saveTravelStoryDraft(
@@ -69,7 +70,7 @@ const postService = {
     await this.saveDestinations(updatedDetails.id, input.destinationsID);
     await this.saveCategories(updatedDetails.id, input.categories);
     await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
-    return postModel.getTravelStorySoftDetails(updatedDetails.id);
+    return postModel.getTravelStoryDetails(updatedDetails.id);
   },
 
   async createItinerary(
@@ -92,6 +93,7 @@ const postService = {
     await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
     await this.saveItineraryDetails(updatedDetails.id, input.itinerary);
     await this.saveReviews(updatedDetails.id, input.review);
+    // @ts-ignore
     return postModel.getItinerarySoftDetails(updatedDetails.id);
   },
 
@@ -441,6 +443,47 @@ const postService = {
         async (avoid) => await postModel.saveAvoidReview(savedReview.id, avoid)
       )
     );
+  },
+
+  async updateFiles(
+    postID: number,
+    files: Express.Multer.File[]
+  ): Promise<Post> {
+    if (files.length > 1) {
+      const gotFiles = await postModel.getFiles(postID);
+      await Promise.all(
+        gotFiles.map(
+          async (file) => await cloudinaryService.delete(file.publicID)
+        )
+      );
+      await postModel.deleteFiles(postID);
+      await this.saveFiles(postID, files);
+    }
+    return postModel.getBaseSoftDetails(postID);
+  },
+
+  async updateTravelStoryDraft(
+    postID: number,
+    input: IPostServiceUpdateTravelStoryDraftInput
+  ) {
+    const updateDetailsInput: IPostModelUpdateDetailsInput = {
+      title: input.title,
+      text: input.text,
+      type: "travel-story",
+      isDraft: true,
+      accountID: 0,
+    };
+    const updatedDetails = await postModel.updateDetails(
+      postID,
+      updateDetailsInput
+    );
+    await postModel.deleteDestinations(updatedDetails.id);
+    await postModel.deleteCategories(updatedDetails.id);
+    await postModel.deleteTravelEvents(updatedDetails.id);
+    await this.saveDestinations(updatedDetails.id, input.destinationsID);
+    await this.saveCategories(updatedDetails.id, input.categories);
+    await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
+    return await postModel.getTravelStoryDetails(updatedDetails.id);
   },
 };
 

@@ -113,4 +113,17 @@ postRouter.delete(
   postController.removeCommentReplyReaction
 );
 
+postRouter.put(
+  "/update-files/:postID",
+  multer.array("files"),
+  passport.authenticate("jwt", { session: false }),
+  postController.updateFiles
+);
+
+postRouter.put(
+  "/update-travel-story-draft/:postID",
+  passport.authenticate("jwt", { session: false }),
+  postController.updateTravelStoryDraft
+);
+
 export default postRouter;

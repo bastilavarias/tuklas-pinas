@@ -14,6 +14,7 @@ export interface IBasePostInput {
   files: ICloudinaryFileMeta[];
 }
 
+//@ts-ignore
 export interface ITravelStoryPostSoftDetails extends Post {
   destinations: Destination[];
   travelEvents: TravelEvent[];
@@ -181,3 +182,6 @@ export interface IPostModelSaveCommentReplyInput extends IBaseCommentInput {
 }
 
 export interface IPostServiceSendCommentReplyInput extends IBaseCommentInput {}
+
+export interface IPostServiceUpdateTravelStoryDraftInput
+  extends IBasePostInput {}

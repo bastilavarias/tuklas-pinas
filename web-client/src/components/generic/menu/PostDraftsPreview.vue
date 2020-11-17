@@ -15,6 +15,20 @@
       >
     </template>
     <v-list>
+      <v-list-item two-line :to="submitRoute">
+        <v-list-item-content>
+          <v-list-item-title class="font-weight-bold"
+            >Add new Post</v-list-item-title
+          >
+          <v-list-item-subtitle
+            >Lorem ipsum dolor sit amet.</v-list-item-subtitle
+          >
+        </v-list-item-content>
+        <v-list-item-icon>
+          <v-icon color="secondary">mdi-plus</v-icon>
+        </v-list-item-icon>
+      </v-list-item>
+      <v-divider></v-divider>
       <template v-for="(preview, index) in draftsPreview">
         <v-list-item
           :key="index"
@@ -27,7 +41,7 @@
         >
           <v-list-item-content>
             <v-list-item-subtitle
-              >last saved
+              >last update
               {{ formatRelativeTime(preview.updatedAt) }}</v-list-item-subtitle
             >
             <v-list-item-title class="font-weight-bold">{{
@@ -55,6 +69,10 @@ export default {
     },
     isLoading: {
       type: Boolean,
+      required: true,
+    },
+    submitRoute: {
+      type: Object,
       required: true,
     },
   },
