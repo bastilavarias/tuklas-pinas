@@ -121,7 +121,7 @@ postRouter.put(
 );
 
 postRouter.put(
-  "/update-travel-story-draft/:postID",
+  "/update-travel-story-draft/:postID/:isDraft",
   passport.authenticate("jwt", { session: false }),
   postController.updateTravelStoryDraft
 );

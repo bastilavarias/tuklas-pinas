@@ -301,6 +301,7 @@ const postController = {
   async updateTravelStoryDraft(request: Request, response: Response) {
     try {
       const postID = parseInt(request.params.postID) || 0;
+      const isDraft = request.params.isDraft === "true";
       const input: IPostServiceUpdateTravelStoryDraftInput = {
         title: request.body.title || "",
         text: request.body.text || "",
@@ -309,7 +310,11 @@ const postController = {
         categories: request.body.categories || [],
         files: [],
       };
-      const result = await postService.updateTravelStoryDraft(postID, input);
+      const result = await postService.updateTravelStoryDraft(
+        postID,
+        isDraft,
+        input
+      );
       response.status(200).json(result);
     } catch (error) {
       console.log(error);
