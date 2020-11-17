@@ -481,7 +481,13 @@ const postModel = {
     const gotDetails: ITravelStoryPostSoftDetails = <
       ITravelStoryPostSoftDetails
     >await Post.findOne(postID, {
-      relations: ["author", "author.profile", "reactions", "reactions.account"],
+      relations: [
+        "author",
+        "author.profile",
+        "author.profile.image",
+        "reactions",
+        "reactions.account",
+      ],
     });
     gotDetails.files = await this.getFiles(gotDetails.id);
     gotDetails.destinations = await this.getDestinations(gotDetails.id);
@@ -516,6 +522,7 @@ const postModel = {
         relations: [
           "author",
           "author.profile",
+          "author.profile.image",
           "reactions",
           "reactions.account",
         ],
