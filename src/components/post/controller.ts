@@ -190,6 +190,17 @@ const postController = {
     }
   },
 
+  async fetchTravelStoryDraftsPreview(request: Request, response: Response) {
+    try {
+      const authorID = parseInt(request.params.authorID) || 0;
+      const result = await postService.fetchTravelStoryDraftsPreview(authorID);
+      response.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      response.status(400).json(error);
+    }
+  },
+
   async getSoftDetails(request: Request, response: Response) {
     try {
       const postID = parseInt(request.params.postID) || 0;
@@ -253,8 +264,7 @@ const postController = {
       const accountID = request.user.id;
       // @ts-ignore
       const files: Express.Multer.File[] = request.files;
-      const isDraft: boolean = request.params.isDraft === "true";
-      const result = await postService.uploadFiles(accountID, files, isDraft);
+      const result = await postService.uploadFiles(accountID, files);
       response.status(200).json(result);
     } catch (error) {
       console.log(error);

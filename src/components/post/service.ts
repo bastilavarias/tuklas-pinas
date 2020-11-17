@@ -3,7 +3,7 @@ import {
   IPostModelSaveCategoryInput,
   IPostModelSaveDestinationInput,
   IPostModelSaveDetailsInput,
-  IPostModelSaveFileInput,
+  IPostModelSaveFilePayload,
   IPostModelSaveItineraryDayInput,
   IPostModelSaveItineraryDayTimestampInput,
   IPostModelSaveItineraryInput,
@@ -48,7 +48,7 @@ const postService = {
     await this.saveDestinations(updatedDetails.id, input.destinationsID);
     await this.saveCategories(updatedDetails.id, input.categories);
     await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
-    return postModel.getTravelStorySoftDetails(updatedDetails.id);
+    return postModel.getTravelStoryDetails(updatedDetails.id);
   },
 
   async saveTravelStoryDraft(
@@ -69,7 +69,7 @@ const postService = {
     await this.saveDestinations(updatedDetails.id, input.destinationsID);
     await this.saveCategories(updatedDetails.id, input.categories);
     await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
-    return postModel.getTravelStorySoftDetails(updatedDetails.id);
+    return postModel.getTravelStoryDetails(updatedDetails.id);
   },
 
   async createItinerary(
@@ -92,7 +92,7 @@ const postService = {
     await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
     await this.saveItineraryDetails(updatedDetails.id, input.itinerary);
     await this.saveReviews(updatedDetails.id, input.review);
-    return postModel.getItinerarySoftDetails(updatedDetails.id);
+    return postModel.getItineraryDetails(updatedDetails.id);
   },
 
   async sendComment(
@@ -251,19 +251,22 @@ const postService = {
     return await postModel.fetchCommentReplies(commentID, skip);
   },
 
+  async fetchTravelStoryDraftsPreview(authorID: number) {
+    return await postModel.fetchTravelStoryDraftsPreview(authorID);
+  },
+
   async getSoftDetails(
     postID: number,
     type: string
   ): Promise<IGenericSoftPost> {
     return type === "travel-story"
-      ? await postModel.getTravelStorySoftDetails(postID)
-      : await postModel.getItinerarySoftDetails(postID);
+      ? await postModel.getTravelStoryDetails(postID)
+      : await postModel.getItineraryDetails(postID);
   },
 
   async uploadFiles(
     accountID: number,
-    files: Express.Multer.File[],
-    isDraft: boolean
+    files: Express.Multer.File[]
   ): Promise<Post> {
     const savePostDetailsInput: IPostModelSaveDetailsInput = {
       title: "",
@@ -273,7 +276,7 @@ const postService = {
       accountID,
     };
     const savedPostDetails = await postModel.saveDetails(savePostDetailsInput);
-    await this.saveFiles(savedPostDetails.id, files, isDraft);
+    await this.saveFiles(savedPostDetails.id, files);
     return postModel.getBaseSoftDetails(savedPostDetails.id);
   },
 
@@ -313,28 +316,7 @@ const postService = {
     );
   },
 
-  async saveFiles(
-    postID: number,
-    files: Express.Multer.File[],
-    isDraft: boolean
-  ) {
-    if (isDraft) {
-      await Promise.all(
-        files.map(async (file) => {
-          const savePostFileInput: IPostModelSaveFileInput = {
-            postID,
-            publicID: "",
-            fileName: file.originalname,
-            url: "",
-            format: file.mimetype === "image/jpeg" ? "jpg" : "mp4",
-            // @ts-ignore
-            data: file,
-          };
-          await postModel.saveFile(savePostFileInput);
-        })
-      );
-      return;
-    }
+  async saveFiles(postID: number, files: Express.Multer.File[]) {
     const cloudinaryFolder = "posts";
     const uploadedFilesMeta = await Promise.all(
       files.map(
@@ -346,16 +328,16 @@ const postService = {
         const fileData = await files.find(
           (file) => file.filename === meta.fileName
         );
-        const savePostFileInput: IPostModelSaveFileInput = {
-          postID,
+        const payload: IPostModelSaveFilePayload = {
           publicID: meta.publicID,
-          fileName: meta.fileName,
+          name: fileData!.originalname,
+          fileName: "",
           url: meta.url,
-          format: meta.format,
-          // @ts-ignore
-          data: fileData,
+          size: fileData!.size,
+          type: fileData!.mimetype,
+          format: fileData!.mimetype === "image/jpeg" ? "jpg" : "mp4",
         };
-        await postModel.saveFile(savePostFileInput);
+        await postModel.saveFile(postID, payload);
       })
     );
   },

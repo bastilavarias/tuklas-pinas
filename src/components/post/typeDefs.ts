@@ -55,9 +55,10 @@ export interface IPostModelSaveDetailsInput {
 export interface IPostModelUpdateDetailsInput
   extends IPostModelSaveDetailsInput {}
 
-export interface IPostModelSaveFileInput extends ICloudinaryFileMeta {
-  postID: number;
-  data: Buffer;
+export interface IPostModelSaveFilePayload extends ICloudinaryFileMeta {
+  name: string;
+  size: number;
+  type: string;
 }
 
 export interface IPostModelSaveDestinationInput {

@@ -235,7 +235,6 @@ export default {
         SAVE_TRAVEL_STORY_POST_DRAFT,
         this.form
       );
-      console.log(savedDraft);
       this.isSaveTravelStoryPostDraftStart = false;
     },
   },

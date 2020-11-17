@@ -76,11 +76,8 @@ const postApiService = {
     return result.data.isRemoved || {};
   },
 
-  async uploadFiles(formData, isDraft) {
-    const result = await apiService.post(
-      `/post/upload-files/${isDraft}`,
-      formData
-    );
+  async uploadFiles(formData) {
+    const result = await apiService.post("/post/upload-files", formData);
     return result.data || [];
   },
 

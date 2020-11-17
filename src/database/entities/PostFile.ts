@@ -19,10 +19,16 @@ export default class PostFile extends BaseEntity {
   publicID: string;
 
   @Column({ nullable: false })
-  format: string;
+  name: string;
 
-  @Column("bytea", { nullable: false })
-  data: Buffer;
+  @Column("bigint", { nullable: false })
+  size: number;
+
+  @Column({ nullable: false })
+  type: string;
+
+  @Column({ nullable: false })
+  format: string;
 
   @ManyToOne(() => Post, (post) => post.files)
   post: Post;

@@ -27,11 +27,7 @@ const postStore = {
       try {
         const formData = new FormData();
         files.map((file) => formData.append("files", file));
-        const isDraft = false;
-        const uploadedPostFiles = await postApiService.uploadFiles(
-          formData,
-          isDraft
-        );
+        const uploadedPostFiles = await postApiService.uploadFiles(formData);
         const form = {
           title,
           text,
@@ -65,11 +61,7 @@ const postStore = {
       try {
         const formData = new FormData();
         files.map((file) => formData.append("files", file));
-        const isDraft = true;
-        const uploadedPostFiles = await postApiService.uploadFiles(
-          formData,
-          isDraft
-        );
+        const uploadedPostFiles = await postApiService.uploadFiles(formData);
         const form = {
           title,
           text,
