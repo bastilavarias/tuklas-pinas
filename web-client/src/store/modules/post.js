@@ -15,7 +15,8 @@ import {
   SEND_POST_REACTION,
   SAVE_TRAVEL_STORY_POST_DRAFT,
   FETCH_TRAVEL_STORY_POST_DRAFTS_PREVIEW,
-  GET_TRAVEL_STORY_POST_DETAILS,
+  GET_TRAVEL_STORY_POST,
+  UPDATE_TRAVEL_STORY_POST_DRAFT,
 } from "@/store/types/post";
 import postApiService from "@/services/api/modules/post";
 import { SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS } from "@/store/types/generic";
@@ -71,7 +72,7 @@ const postStore = {
           travelEventsID,
           categories,
         };
-        const result = await postApiService.saveTravelStoryDraft(
+        const result = await postApiService.saveTravelStoryDraftDetails(
           uploadedPostFiles.id,
           form
         );
@@ -270,7 +271,7 @@ const postStore = {
         });
       }
     },
-    async [GET_TRAVEL_STORY_POST_DETAILS]({ commit }, postID) {
+    async [GET_TRAVEL_STORY_POST]({ commit }, postID) {
       try {
         return await postApiService.getTravelStoryDetails(postID);
       } catch (error) {
@@ -311,6 +312,42 @@ const postStore = {
           replyID
         );
         return isRemoved || false;
+      } catch (error) {
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Something went wrong to the server. Please try again.",
+          color: "error",
+        });
+      }
+    },
+    async [UPDATE_TRAVEL_STORY_POST_DRAFT](
+      { commit },
+      { postID, title, text, destinationsID, categories, travelEventsID, files }
+    ) {
+      try {
+        const formData = new FormData();
+        files.map((file) => formData.append("files", file));
+        const updatedPostFiles = await postApiService.updateFiles(
+          postID,
+          formData
+        );
+        const form = {
+          title,
+          text,
+          destinationsID,
+          travelEventsID,
+          categories,
+        };
+        const result = await postApiService.updateTravelStoryDraft(
+          updatedPostFiles.id,
+          form
+        );
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Updating travel story draft done!",
+          color: "success",
+        });
+        return result.data ? result.data : {};
       } catch (error) {
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,

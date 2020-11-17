@@ -14,21 +14,11 @@
                       isFetchDraftsPreviewStart || isGetTravelStoryDetailsStart
                     "
                     :drafts-preview="draftsPreview"
-                    v-if="mode === 'submit'"
-                  ></generic-post-drafts-preview-menu>
-                  <v-btn
-                    color="secondary"
-                    rounded
-                    small
-                    depressed
-                    :to="{
+                    :submit-route="{
                       name: 'travel-story-post-editor-page',
                       params: { mode: 'submit' },
                     }"
-                    v-if="mode === 'draft'"
-                    class="text-capitalize"
-                    >New Post</v-btn
-                  >
+                  ></generic-post-drafts-preview-menu>
                 </v-card-title>
                 <v-card-subtitle
                   >Lorem ipsum dolor sit amet, consectetur.</v-card-subtitle
@@ -39,7 +29,6 @@
                       <v-text-field
                         outlined
                         label="Title *"
-                        single-line
                         color="primary"
                         v-model="form.title"
                       ></v-text-field>
@@ -48,7 +37,6 @@
                       <v-textarea
                         outlined
                         label="Text *"
-                        single-line
                         color="primary"
                         v-model="form.text"
                       ></v-textarea>
@@ -57,7 +45,6 @@
                       <v-autocomplete
                         outlined
                         label="Destinations *"
-                        single-line
                         :loading="isFetchGenericDestinationsStart"
                         :items="genericDestinations"
                         multiple
@@ -70,7 +57,6 @@
                       <v-autocomplete
                         outlined
                         label="Travel Events *"
-                        single-line
                         :loading="isFetchGenericTravelEventsStart"
                         :items="genericTravelEvents"
                         multiple
@@ -83,7 +69,6 @@
                       <generic-category-combobox
                         outlined
                         label="Categories"
-                        single-line
                         :categories.sync="form.categories"
                       ></generic-category-combobox>
                     </v-col>
@@ -111,9 +96,9 @@
                     color="secondary"
                     class="text-capitalize"
                     outlined
-                    @click="saveTravelStoryPostDraft"
-                    :loading="isSaveTravelStoryPostDraftStart"
-                    :disabled="!isSaveTravelStoryDraftFormValid"
+                    :loading="isUpdateTravelStoryDraftStart"
+                    :disabled="!isUpdateTravelStoryDraftFormValid"
+                    @click="updateTravelStoryDraft"
                     v-if="mode === 'draft'"
                     >Update Draft</v-btn
                   >
@@ -178,8 +163,9 @@ import GenericCategoryCombobox from "@/components/generic/combobox/Category";
 import {
   CREATE_TRAVEL_STORY_POST,
   FETCH_TRAVEL_STORY_POST_DRAFTS_PREVIEW,
-  GET_TRAVEL_STORY_POST_DETAILS,
+  GET_TRAVEL_STORY_POST,
   SAVE_TRAVEL_STORY_POST_DRAFT,
+  UPDATE_TRAVEL_STORY_POST_DRAFT,
 } from "@/store/types/post";
 import commonValidation from "@/common/validation";
 import GenericPostDraftsPreviewMenu from "@/components/generic/menu/PostDraftsPreview";
@@ -214,6 +200,7 @@ export default {
       draftsPreview: [],
       mode: "",
       isGetTravelStoryDetailsStart: false,
+      isUpdateTravelStoryDraftStart: false,
     };
   },
   computed: {
@@ -238,6 +225,10 @@ export default {
       );
     },
     isSaveTravelStoryDraftFormValid() {
+      const { title } = this.form;
+      return title;
+    },
+    isUpdateTravelStoryDraftFormValid() {
       const { title } = this.form;
       return title;
     },
@@ -313,7 +304,7 @@ export default {
         travelEvents,
         categories,
         files,
-      } = await this.$store.dispatch(GET_TRAVEL_STORY_POST_DETAILS, postID);
+      } = await this.$store.dispatch(GET_TRAVEL_STORY_POST, postID);
       try {
         this.isGetTravelStoryDetailsStart = false;
         this.form.title = title;
@@ -329,6 +320,16 @@ export default {
       } catch (_) {
         this.form = Object.assign({}, this.defaultTravelStoryForm);
       }
+    },
+    async updateTravelStoryDraft() {
+      this.isUpdateTravelStoryDraftStart = true;
+      const postID = this.$route.params.postID | 0;
+      await this.$store.dispatch(UPDATE_TRAVEL_STORY_POST_DRAFT, {
+        ...this.form,
+        postID,
+      });
+      await this.fetchTravelStoryDraftsPreview();
+      this.isUpdateTravelStoryDraftStart = false;
     },
   },
   async created() {

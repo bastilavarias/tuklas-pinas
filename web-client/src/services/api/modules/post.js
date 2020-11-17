@@ -1,17 +1,14 @@
 import apiService from "@/services/api";
 
 const postApiService = {
-  async createTravelStory(postID, formData) {
-    return await apiService.post(
-      `/post/create-travel-story/${postID}`,
-      formData
-    );
+  async createTravelStory(postID, form) {
+    return await apiService.post(`/post/create-travel-story/${postID}`, form);
   },
 
-  async saveTravelStoryDraft(postID, formData) {
+  async saveTravelStoryDraftDetails(postID, form) {
     return await apiService.post(
       `/post/save-travel-story-draft/${postID}`,
-      formData
+      form
     );
   },
 
@@ -115,6 +112,21 @@ const postApiService = {
   async getTravelStoryDetails(postID) {
     const result = await apiService.get(`/post/travel-story/${postID}`);
     return result.data || {};
+  },
+
+  async updateTravelStoryDraft(postID, form) {
+    return await apiService.put(
+      `/post/update-travel-story-draft/${postID}`,
+      form
+    );
+  },
+
+  async updateFiles(postID, formData) {
+    const result = await apiService.put(
+      `/post/update-files/${postID}`,
+      formData
+    );
+    return result.data || [];
   },
 };
 
