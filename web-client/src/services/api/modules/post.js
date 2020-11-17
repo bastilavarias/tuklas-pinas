@@ -100,6 +100,13 @@ const postApiService = {
     return result.data || [];
   },
 
+  async fetchTravelStoryDraftsPreview(authorID) {
+    const result = await apiService.get(
+      `/post/drafts-preview/travel-story/${authorID}`
+    );
+    return result.data || [];
+  },
+
   async getSoftDetails(postID, type) {
     const result = await apiService.get(`/post/soft-details/${postID}/${type}`);
     return result.data || {};

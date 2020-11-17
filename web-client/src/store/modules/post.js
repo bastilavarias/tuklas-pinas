@@ -14,6 +14,7 @@ import {
   SEND_POST_COMMENT_REPLY_REACTION,
   SEND_POST_REACTION,
   SAVE_TRAVEL_STORY_POST_DRAFT,
+  FETCH_TRAVEL_STORY_POST_DRAFTS_PREVIEW,
 } from "@/store/types/post";
 import postApiService from "@/services/api/modules/post";
 import { SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS } from "@/store/types/generic";
@@ -238,6 +239,17 @@ const postStore = {
     async [FETCH_POST_COMMENT_REPLIES]({ commit }, { commentID, skip }) {
       try {
         return await postApiService.fetchCommentReplies(commentID, skip);
+      } catch (error) {
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Something went wrong to the server. Please try again.",
+          color: "error",
+        });
+      }
+    },
+    async [FETCH_TRAVEL_STORY_POST_DRAFTS_PREVIEW]({ commit }, authorID) {
+      try {
+        return await postApiService.fetchTravelStoryDraftsPreview(authorID);
       } catch (error) {
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,
