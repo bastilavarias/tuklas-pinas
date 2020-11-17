@@ -48,7 +48,7 @@ const postService = {
     await this.saveDestinations(updatedDetails.id, input.destinationsID);
     await this.saveCategories(updatedDetails.id, input.categories);
     await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
-    return postModel.getTravelStoryDetails(updatedDetails.id);
+    return postModel.getTravelStorySoftDetails(updatedDetails.id);
   },
 
   async saveTravelStoryDraft(
@@ -69,7 +69,7 @@ const postService = {
     await this.saveDestinations(updatedDetails.id, input.destinationsID);
     await this.saveCategories(updatedDetails.id, input.categories);
     await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
-    return postModel.getTravelStoryDetails(updatedDetails.id);
+    return postModel.getTravelStorySoftDetails(updatedDetails.id);
   },
 
   async createItinerary(
@@ -92,7 +92,7 @@ const postService = {
     await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
     await this.saveItineraryDetails(updatedDetails.id, input.itinerary);
     await this.saveReviews(updatedDetails.id, input.review);
-    return postModel.getItineraryDetails(updatedDetails.id);
+    return postModel.getItinerarySoftDetails(updatedDetails.id);
   },
 
   async sendComment(
@@ -260,8 +260,12 @@ const postService = {
     type: string
   ): Promise<IGenericSoftPost> {
     return type === "travel-story"
-      ? await postModel.getTravelStoryDetails(postID)
-      : await postModel.getItineraryDetails(postID);
+      ? await postModel.getTravelStorySoftDetails(postID)
+      : await postModel.getItinerarySoftDetails(postID);
+  },
+
+  async getTravelStoryDetails(postID: number): Promise<Post> {
+    return await postModel.getTravelStoryDetails(postID);
   },
 
   async uploadFiles(

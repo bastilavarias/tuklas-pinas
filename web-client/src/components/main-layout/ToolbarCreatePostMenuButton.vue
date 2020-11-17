@@ -62,7 +62,7 @@ export default {
           icon: "mdi-post",
           to: {
             name: "travel-story-post-editor-page",
-            params: { action: "submit" },
+            params: { mode: "submit" },
           },
         },
         {

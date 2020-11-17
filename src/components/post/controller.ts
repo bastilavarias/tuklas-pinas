@@ -213,6 +213,17 @@ const postController = {
     }
   },
 
+  async getTravelStoryDetails(request: Request, response: Response) {
+    try {
+      const postID = parseInt(request.params.postID) || 0;
+      const result = await postService.getTravelStoryDetails(postID);
+      response.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      response.status(400).json(error);
+    }
+  },
+
   async removeReaction(request: Request, response: Response) {
     try {
       // @ts-ignore

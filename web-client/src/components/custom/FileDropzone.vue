@@ -2,7 +2,6 @@
   <v-file-input
     v-model="filesLocal"
     color="primary"
-    counter
     :placeholder="label"
     multiple
     prepend-icon=""
