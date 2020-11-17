@@ -20,7 +20,7 @@
           <v-list-item-content>
             <v-list-item-subtitle
               >last saved
-              {{ formatRelativeTime(preview.createdAt) }}</v-list-item-subtitle
+              {{ formatRelativeTime(preview.updatedAt) }}</v-list-item-subtitle
             >
             <v-list-item-title class="font-weight-bold">{{
               preview.title

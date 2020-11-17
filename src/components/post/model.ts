@@ -337,8 +337,8 @@ const postModel = {
     return await Promise.all(
       raw.map(async (item) =>
         item.type === "travel-story"
-          ? await this.getTravelStoryDetails(item.id)
-          : await this.getItineraryDetails(item.id)
+          ? await this.getTravelStorySoftDetails(item.id)
+          : await this.getItinerarySoftDetails(item.id)
       )
     );
   },
@@ -362,8 +362,8 @@ const postModel = {
     return await Promise.all(
       raw.map(async (item) =>
         item.type === "travel-story"
-          ? await this.getTravelStoryDetails(item.id)
-          : await this.getItineraryDetails(item.id)
+          ? await this.getTravelStorySoftDetails(item.id)
+          : await this.getItinerarySoftDetails(item.id)
       )
     );
   },
@@ -386,8 +386,8 @@ const postModel = {
     return await Promise.all(
       raw.map(async (item) =>
         item.type === "travel-story"
-          ? await this.getTravelStoryDetails(item.id)
-          : await this.getItineraryDetails(item.id)
+          ? await this.getTravelStorySoftDetails(item.id)
+          : await this.getItinerarySoftDetails(item.id)
       )
     );
   },
@@ -457,7 +457,7 @@ const postModel = {
   async fetchTravelStoryDraftsPreview(authorID: number): Promise<Post[]> {
     return await getRepository(Post)
       .createQueryBuilder("post")
-      .select(["id", "title", "text", `"createdAt"`])
+      .select(["id", "title", "text", `"createdAt"`, `"updatedAt"`])
       .where(`post."isDraft" = true`)
       .andWhere(`post."authorId" = :authorID`, { authorID })
       .orderBy(`post."createdAt"`, "DESC")
@@ -468,21 +468,22 @@ const postModel = {
     const gotDetails = <Post>await Post.findOne(postID, {
       relations: ["author"],
     });
-    gotDetails.files = await this.getSoftDetailsFiles(gotDetails.id);
+    gotDetails.files = await this.getFiles(gotDetails.id);
     // @ts-ignore
     delete gotDetails.author.password;
     return gotDetails!;
   },
 
-  async getTravelStoryDetails(
+  async getTravelStorySoftDetails(
     postID: number
   ): Promise<ITravelStoryPostSoftDetails> {
+    // @ts-ignore
     const gotDetails: ITravelStoryPostSoftDetails = <
       ITravelStoryPostSoftDetails
     >await Post.findOne(postID, {
       relations: ["author", "author.profile", "reactions", "reactions.account"],
     });
-    gotDetails.files = await this.getSoftDetailsFiles(gotDetails.id);
+    gotDetails.files = await this.getFiles(gotDetails.id);
     gotDetails.destinations = await this.getDestinations(gotDetails.id);
     gotDetails.categories = await this.getCategories(gotDetails.id);
     gotDetails.travelEvents = await this.getTravelEvents(gotDetails.id);
@@ -493,7 +494,21 @@ const postModel = {
     return gotDetails!;
   },
 
-  async getItineraryDetails(
+  async getTravelStoryDetails(postID: number): Promise<Post> {
+    const gotDetails = await Post.findOne(postID, {
+      relations: [
+        "destinations",
+        "destinations.destination",
+        "travelEvents",
+        "travelEvents.travelEvent",
+        "categories",
+        "files",
+      ],
+    });
+    return gotDetails!;
+  },
+
+  async getItinerarySoftDetails(
     postID: number
   ): Promise<IItineraryPostSoftDetails> {
     const gotDetails: IItineraryPostSoftDetails = <IItineraryPostSoftDetails>(
@@ -512,7 +527,7 @@ const postModel = {
         return post;
       })
     );
-    gotDetails.files = await this.getSoftDetailsFiles(gotDetails.id);
+    gotDetails.files = await this.getFiles(gotDetails.id);
     gotDetails.destinations = await this.getDestinations(gotDetails.id);
     gotDetails.categories = await this.getCategories(gotDetails.id);
     gotDetails.travelEvents = await this.getTravelEvents(gotDetails.id);
@@ -525,7 +540,7 @@ const postModel = {
     return gotDetails!;
   },
 
-  async getSoftDetailsFiles(postID: number): Promise<PostFile[]> {
+  async getFiles(postID: number): Promise<PostFile[]> {
     return await getRepository(PostFile)
       .createQueryBuilder("post_file")
       .select("post_file.id", "id")

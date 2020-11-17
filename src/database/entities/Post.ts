@@ -13,6 +13,8 @@ import PostFile from "./PostFile";
 import PostCategory from "./PostCategory";
 import PostReaction from "./PostReaction";
 import PostComment from "./PostComment";
+import PostTravelEvent from "./PostTravelEvent";
+import PostDestination from "./PostDestination";
 
 @Entity()
 export default class Post extends BaseEntity {
@@ -41,6 +43,12 @@ export default class Post extends BaseEntity {
   })
   createdAt: Date;
 
+  @Column("timestamp with time zone", {
+    nullable: false,
+    default: () => "CURRENT_TIMESTAMP",
+  })
+  updatedAt: Date;
+
   @Column({
     nullable: false,
     default: () => false,
@@ -57,6 +65,14 @@ export default class Post extends BaseEntity {
   @OneToMany(() => PostCategory, (categories) => categories.post)
   @JoinColumn({ name: "postId" })
   categories: PostCategory[];
+
+  @OneToMany(() => PostTravelEvent, (travelEvent) => travelEvent.post)
+  @JoinColumn({ name: "postId" })
+  travelEvents: PostTravelEvent[];
+
+  @OneToMany(() => PostDestination, (destination) => destination.post)
+  @JoinColumn({ name: "postId" })
+  destinations: PostDestination[];
 
   @OneToMany(() => PostComment, (comment) => comment.post)
   @JoinColumn({ name: "postId" })
