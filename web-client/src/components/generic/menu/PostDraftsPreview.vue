@@ -16,7 +16,15 @@
     </template>
     <v-list>
       <template v-for="(preview, index) in draftsPreview">
-        <v-list-item :key="index" three-line>
+        <v-list-item
+          :key="index"
+          three-line
+          :to="{
+            name: 'travel-story-post-editor-page',
+            params: { mode: 'draft', postID: preview.id },
+          }"
+          exact
+        >
           <v-list-item-content>
             <v-list-item-subtitle
               >last saved

@@ -10,9 +10,25 @@
                   <span class="font-weight-bold">Submit Travel Story</span>
                   <div class="flex-grow-1"></div>
                   <generic-post-drafts-preview-menu
-                    :is-loading="isFetchDraftsPreviewStart"
+                    :is-loading="
+                      isFetchDraftsPreviewStart || isGetTravelStoryDetailsStart
+                    "
                     :drafts-preview="draftsPreview"
+                    v-if="mode === 'submit'"
                   ></generic-post-drafts-preview-menu>
+                  <v-btn
+                    color="secondary"
+                    rounded
+                    small
+                    depressed
+                    :to="{
+                      name: 'travel-story-post-editor-page',
+                      params: { mode: 'submit' },
+                    }"
+                    v-if="mode === 'draft'"
+                    class="text-capitalize"
+                    >New Post</v-btn
+                  >
                 </v-card-title>
                 <v-card-subtitle
                   >Lorem ipsum dolor sit amet, consectetur.</v-card-subtitle
@@ -22,7 +38,7 @@
                     <v-col cols="12">
                       <v-text-field
                         outlined
-                        label="Title"
+                        label="Title *"
                         single-line
                         color="primary"
                         v-model="form.title"
@@ -88,7 +104,18 @@
                     @click="saveTravelStoryPostDraft"
                     :loading="isSaveTravelStoryPostDraftStart"
                     :disabled="!isSaveTravelStoryDraftFormValid"
+                    v-if="mode === 'submit'"
                     >Save as Draft</v-btn
+                  >
+                  <v-btn
+                    color="secondary"
+                    class="text-capitalize"
+                    outlined
+                    @click="saveTravelStoryPostDraft"
+                    :loading="isSaveTravelStoryPostDraftStart"
+                    :disabled="!isSaveTravelStoryDraftFormValid"
+                    v-if="mode === 'draft'"
+                    >Update Draft</v-btn
                   >
                   <v-btn
                     color="primary"
@@ -151,6 +178,7 @@ import GenericCategoryCombobox from "@/components/generic/combobox/Category";
 import {
   CREATE_TRAVEL_STORY_POST,
   FETCH_TRAVEL_STORY_POST_DRAFTS_PREVIEW,
+  GET_TRAVEL_STORY_POST_DETAILS,
   SAVE_TRAVEL_STORY_POST_DRAFT,
 } from "@/store/types/post";
 import commonValidation from "@/common/validation";
@@ -184,6 +212,8 @@ export default {
       defaultTravelStoryForm,
       isFetchDraftsPreviewStart: false,
       draftsPreview: [],
+      mode: "",
+      isGetTravelStoryDetailsStart: false,
     };
   },
   computed: {
@@ -213,6 +243,20 @@ export default {
     },
     credentials() {
       return this.$store.state.authentication.credentials;
+    },
+  },
+  watch: {
+    async "$route.params.mode"(val) {
+      this.mode = val;
+      if (this.mode === "draft") {
+        const { postID } = this.$route.params;
+        await this.getTravelStoryDetails(postID);
+        return;
+      }
+      this.form = Object.assign({}, this.defaultTravelStoryForm);
+    },
+    async "$route.params.postID"(val) {
+      await this.getTravelStoryDetails(val);
     },
   },
   methods: {
@@ -247,8 +291,12 @@ export default {
         this.form
       );
       this.isSaveTravelStoryPostDraftStart = false;
+      if (this.validateObject(savedDraft)) {
+        this.mode = "submit";
+        this.form = Object.assign({}, this.defaultTravelStoryForm);
+      }
     },
-    async fetchDraftsPreview() {
+    async fetchTravelStoryDraftsPreview() {
       this.isFetchDraftsPreviewStart = true;
       this.draftsPreview = await this.$store.dispatch(
         FETCH_TRAVEL_STORY_POST_DRAFTS_PREVIEW,
@@ -256,11 +304,42 @@ export default {
       );
       this.isFetchDraftsPreviewStart = false;
     },
+    async getTravelStoryDetails(postID) {
+      this.isGetTravelStoryDetailsStart = true;
+      const {
+        title,
+        text,
+        destinations,
+        travelEvents,
+        categories,
+        files,
+      } = await this.$store.dispatch(GET_TRAVEL_STORY_POST_DETAILS, postID);
+      try {
+        this.isGetTravelStoryDetailsStart = false;
+        this.form.title = title;
+        this.form.text = text;
+        this.form.destinationsID = destinations
+          .map((item) => item.destination)
+          .map((destination) => destination.id);
+        this.form.travelEventsID = travelEvents
+          .map((item) => item.travelEvent)
+          .map((travelEvent) => travelEvent.id);
+        this.form.categories = categories.map((category) => category.name);
+        this.form.files = files;
+      } catch (_) {
+        this.form = Object.assign({}, this.defaultTravelStoryForm);
+      }
+    },
   },
   async created() {
+    const { mode, postID } = this.$route.params;
+    this.mode = mode;
+    if (this.mode && this.mode === "draft") {
+      await this.getTravelStoryDetails(postID);
+    }
     await this.fetchGenericDestinations();
     await this.fetchGenericTravelEvents();
-    await this.fetchDraftsPreview();
+    await this.fetchTravelStoryDraftsPreview();
   },
 };
 </script>

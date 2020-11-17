@@ -15,6 +15,7 @@ import {
   SEND_POST_REACTION,
   SAVE_TRAVEL_STORY_POST_DRAFT,
   FETCH_TRAVEL_STORY_POST_DRAFTS_PREVIEW,
+  GET_TRAVEL_STORY_POST_DETAILS,
 } from "@/store/types/post";
 import postApiService from "@/services/api/modules/post";
 import { SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS } from "@/store/types/generic";
@@ -261,6 +262,17 @@ const postStore = {
     async [GET_POST_SOFT_DETAILS]({ commit }, { postID, type }) {
       try {
         return await postApiService.getSoftDetails(postID, type);
+      } catch (error) {
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Something went wrong to the server. Please try again.",
+          color: "error",
+        });
+      }
+    },
+    async [GET_TRAVEL_STORY_POST_DETAILS]({ commit }, postID) {
+      try {
+        return await postApiService.getTravelStoryDetails(postID);
       } catch (error) {
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,

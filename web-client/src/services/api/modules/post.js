@@ -111,6 +111,11 @@ const postApiService = {
     const result = await apiService.get(`/post/soft-details/${postID}/${type}`);
     return result.data || {};
   },
+
+  async getTravelStoryDetails(postID) {
+    const result = await apiService.get(`/post/travel-story/${postID}`);
+    return result.data || {};
+  },
 };
 
 export default postApiService;
