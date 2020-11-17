@@ -4,7 +4,7 @@ import {
   IPostModelSaveCategoryInput,
   IPostModelSaveDestinationInput,
   IPostModelSaveDetailsInput,
-  IPostModelSaveFileInput,
+  IPostModelSaveFilePayload,
   IPostFinanceReviewInput,
   IPostInternetAccessReviewInput,
   IPostModelSaveItineraryDayInput,
@@ -61,13 +61,18 @@ const postModel = {
     }).save();
   },
 
-  async saveFile(input: IPostModelSaveFileInput): Promise<PostFile> {
-    const { url, publicID, format, data, postID } = input;
+  async saveFile(
+    postID: number,
+    payload: IPostModelSaveFilePayload
+  ): Promise<PostFile> {
+    const { url, publicID, format, name, size, type } = payload;
     return await PostFile.create({
       url,
       publicID,
-      data,
       format,
+      name,
+      size,
+      type,
       post: { id: postID },
     }).save();
   },
@@ -332,8 +337,8 @@ const postModel = {
     return await Promise.all(
       raw.map(async (item) =>
         item.type === "travel-story"
-          ? await this.getTravelStorySoftDetails(item.id)
-          : await this.getItinerarySoftDetails(item.id)
+          ? await this.getTravelStoryDetails(item.id)
+          : await this.getItineraryDetails(item.id)
       )
     );
   },
@@ -357,8 +362,8 @@ const postModel = {
     return await Promise.all(
       raw.map(async (item) =>
         item.type === "travel-story"
-          ? await this.getTravelStorySoftDetails(item.id)
-          : await this.getItinerarySoftDetails(item.id)
+          ? await this.getTravelStoryDetails(item.id)
+          : await this.getItineraryDetails(item.id)
       )
     );
   },
@@ -381,8 +386,8 @@ const postModel = {
     return await Promise.all(
       raw.map(async (item) =>
         item.type === "travel-story"
-          ? await this.getTravelStorySoftDetails(item.id)
-          : await this.getItinerarySoftDetails(item.id)
+          ? await this.getTravelStoryDetails(item.id)
+          : await this.getItineraryDetails(item.id)
       )
     );
   },
@@ -449,6 +454,16 @@ const postModel = {
     );
   },
 
+  async fetchTravelStoryDraftsPreview(authorID: number): Promise<Post[]> {
+    return await getRepository(Post)
+      .createQueryBuilder("post")
+      .select(["id", "title", "text", `"createdAt"`])
+      .where(`post."isDraft" = true`)
+      .andWhere(`post."authorId" = :authorID`, { authorID })
+      .orderBy(`post."createdAt"`, "DESC")
+      .getRawMany();
+  },
+
   async getBaseSoftDetails(postID: number): Promise<Post> {
     const gotDetails = <Post>await Post.findOne(postID, {
       relations: ["author"],
@@ -459,7 +474,7 @@ const postModel = {
     return gotDetails!;
   },
 
-  async getTravelStorySoftDetails(
+  async getTravelStoryDetails(
     postID: number
   ): Promise<ITravelStoryPostSoftDetails> {
     const gotDetails: ITravelStoryPostSoftDetails = <
@@ -478,7 +493,7 @@ const postModel = {
     return gotDetails!;
   },
 
-  async getItinerarySoftDetails(
+  async getItineraryDetails(
     postID: number
   ): Promise<IItineraryPostSoftDetails> {
     const gotDetails: IItineraryPostSoftDetails = <IItineraryPostSoftDetails>(

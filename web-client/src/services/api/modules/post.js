@@ -76,11 +76,8 @@ const postApiService = {
     return result.data.isRemoved || {};
   },
 
-  async uploadFiles(formData, isDraft) {
-    const result = await apiService.post(
-      `/post/upload-files/${isDraft}`,
-      formData
-    );
+  async uploadFiles(formData) {
+    const result = await apiService.post("/post/upload-files", formData);
     return result.data || [];
   },
 
@@ -99,6 +96,13 @@ const postApiService = {
   async fetchCommentReplies(commentID, skip) {
     const result = await apiService.get(
       `/post/comment-replies/${commentID}/${skip}`
+    );
+    return result.data || [];
+  },
+
+  async fetchTravelStoryDraftsPreview(authorID) {
+    const result = await apiService.get(
+      `/post/drafts-preview/travel-story/${authorID}`
     );
     return result.data || [];
   },

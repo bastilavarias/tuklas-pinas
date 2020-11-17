@@ -53,7 +53,7 @@ postRouter.post(
 );
 
 postRouter.post(
-  "/upload-files/:isDraft",
+  "/upload-files",
   multer.array("files"),
   passport.authenticate("jwt", { session: false }),
   postController.uploadFiles
@@ -63,6 +63,12 @@ postRouter.get(
   "/posts/:sort/:skip",
   passport.authenticate("jwt", { session: false }),
   postController.fetch
+);
+
+postRouter.get(
+  "/drafts-preview/travel-story/:authorID",
+  passport.authenticate("jwt", { session: false }),
+  postController.fetchTravelStoryDraftsPreview
 );
 
 postRouter.get(

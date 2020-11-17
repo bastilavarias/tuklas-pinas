@@ -9,7 +9,10 @@
                 <v-card-title>
                   <span class="font-weight-bold">Submit Travel Story</span>
                   <div class="flex-grow-1"></div>
-                  <v-chip color="secondary">Drafts 5</v-chip>
+                  <generic-post-drafts-preview-menu
+                    :is-loading="isFetchDraftsPreviewStart"
+                    :drafts-preview="draftsPreview"
+                  ></generic-post-drafts-preview-menu>
                 </v-card-title>
                 <v-card-subtitle
                   >Lorem ipsum dolor sit amet, consectetur.</v-card-subtitle
@@ -147,9 +150,11 @@ import {
 import GenericCategoryCombobox from "@/components/generic/combobox/Category";
 import {
   CREATE_TRAVEL_STORY_POST,
+  FETCH_TRAVEL_STORY_POST_DRAFTS_PREVIEW,
   SAVE_TRAVEL_STORY_POST_DRAFT,
 } from "@/store/types/post";
 import commonValidation from "@/common/validation";
+import GenericPostDraftsPreviewMenu from "@/components/generic/menu/PostDraftsPreview";
 
 const defaultTravelStoryForm = {
   title: "",
@@ -163,6 +168,7 @@ const defaultTravelStoryForm = {
 export default {
   mixins: [commonValidation],
   components: {
+    GenericPostDraftsPreviewMenu,
     GenericCategoryCombobox,
     GenericBasicFooter,
     GenericStickyFooter,
@@ -176,6 +182,8 @@ export default {
       isSaveTravelStoryPostDraftStart: false,
       form: Object.assign({}, defaultTravelStoryForm),
       defaultTravelStoryForm,
+      isFetchDraftsPreviewStart: false,
+      draftsPreview: [],
     };
   },
   computed: {
@@ -202,6 +210,9 @@ export default {
     isSaveTravelStoryDraftFormValid() {
       const { title } = this.form;
       return title;
+    },
+    credentials() {
+      return this.$store.state.authentication.credentials;
     },
   },
   methods: {
@@ -235,13 +246,21 @@ export default {
         SAVE_TRAVEL_STORY_POST_DRAFT,
         this.form
       );
-      console.log(savedDraft);
       this.isSaveTravelStoryPostDraftStart = false;
+    },
+    async fetchDraftsPreview() {
+      this.isFetchDraftsPreviewStart = true;
+      this.draftsPreview = await this.$store.dispatch(
+        FETCH_TRAVEL_STORY_POST_DRAFTS_PREVIEW,
+        this.credentials.id
+      );
+      this.isFetchDraftsPreviewStart = false;
     },
   },
   async created() {
     await this.fetchGenericDestinations();
     await this.fetchGenericTravelEvents();
+    await this.fetchDraftsPreview();
   },
 };
 </script>
