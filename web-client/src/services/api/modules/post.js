@@ -114,9 +114,9 @@ const postApiService = {
     return result.data || {};
   },
 
-  async updateTravelStoryDraft(postID, form) {
+  async updateTravelStoryDraft(postID, isDraft, form) {
     return await apiService.put(
-      `/post/update-travel-story-draft/${postID}`,
+      `/post/update-travel-story-draft/${postID}/${isDraft}`,
       form
     );
   },

@@ -322,7 +322,16 @@ const postStore = {
     },
     async [UPDATE_TRAVEL_STORY_POST_DRAFT](
       { commit },
-      { postID, title, text, destinationsID, categories, travelEventsID, files }
+      {
+        postID,
+        isDraft,
+        title,
+        text,
+        destinationsID,
+        categories,
+        travelEventsID,
+        files,
+      }
     ) {
       try {
         const formData = new FormData();
@@ -340,6 +349,7 @@ const postStore = {
         };
         const result = await postApiService.updateTravelStoryDraft(
           updatedPostFiles.id,
+          isDraft,
           form
         );
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {

@@ -18,6 +18,7 @@
                       name: 'travel-story-post-editor-page',
                       params: { mode: 'submit' },
                     }"
+                    v-if="draftsPreview.length > 0"
                   ></generic-post-drafts-preview-menu>
                 </v-card-title>
                 <v-card-subtitle
@@ -107,6 +108,15 @@
                     @click="createTravelStoryPost"
                     :loading="isCreateTravelStoryPostStart"
                     :disabled="!isCreateTravelStoryFormValid"
+                    v-if="mode === 'submit'"
+                    >CREATE</v-btn
+                  >
+                  <v-btn
+                    color="primary"
+                    @click="createTravelStoryDraft"
+                    :loading="isCreateTravelStoryDraftStart"
+                    :disabled="!isCreateTravelStoryFormValid"
+                    v-if="mode === 'draft'"
                     >CREATE</v-btn
                   >
                 </v-card-actions>
@@ -169,6 +179,7 @@ import {
 } from "@/store/types/post";
 import commonValidation from "@/common/validation";
 import GenericPostDraftsPreviewMenu from "@/components/generic/menu/PostDraftsPreview";
+import commonUtilities from "@/common/utilities";
 
 const defaultTravelStoryForm = {
   title: "",
@@ -180,7 +191,7 @@ const defaultTravelStoryForm = {
 };
 
 export default {
-  mixins: [commonValidation],
+  mixins: [commonValidation, commonUtilities],
   components: {
     GenericPostDraftsPreviewMenu,
     GenericCategoryCombobox,
@@ -201,6 +212,7 @@ export default {
       mode: "",
       isGetTravelStoryDetailsStart: false,
       isUpdateTravelStoryDraftStart: false,
+      isCreateTravelStoryDraftStart: false,
     };
   },
   computed: {
@@ -267,13 +279,13 @@ export default {
         CREATE_TRAVEL_STORY_POST,
         this.form
       );
-      this.isCreateTravelStoryPostStart = false;
       const isObjectValid = this.validateObject(createdTravelStoryPost);
       if (isObjectValid)
         return await this.$router.push({
           name: "post-details-page",
           params: { postID: createdTravelStoryPost.id, type: "travel-story" },
         });
+      this.isCreateTravelStoryPostStart = false;
     },
     async saveTravelStoryPostDraft() {
       this.isSaveTravelStoryPostDraftStart = true;
@@ -282,6 +294,7 @@ export default {
         this.form
       );
       this.isSaveTravelStoryPostDraftStart = false;
+      await this.fetchTravelStoryDraftsPreview();
       if (this.validateObject(savedDraft)) {
         this.mode = "submit";
         this.form = Object.assign({}, this.defaultTravelStoryForm);
@@ -324,15 +337,39 @@ export default {
     async updateTravelStoryDraft() {
       this.isUpdateTravelStoryDraftStart = true;
       const postID = this.$route.params.postID | 0;
-      await this.$store.dispatch(UPDATE_TRAVEL_STORY_POST_DRAFT, {
-        ...this.form,
+      const payload = {
         postID,
-      });
+        ...this.form,
+        isDraft: true,
+      };
+      await this.$store.dispatch(UPDATE_TRAVEL_STORY_POST_DRAFT, payload);
       await this.fetchTravelStoryDraftsPreview();
       this.isUpdateTravelStoryDraftStart = false;
     },
+    async createTravelStoryDraft() {
+      this.isCreateTravelStoryDraftStart = true;
+      const postID = this.$route.params.postID | 0;
+      const payload = {
+        postID,
+        ...this.form,
+        isDraft: false,
+      };
+      const createdPost = await this.$store.dispatch(
+        UPDATE_TRAVEL_STORY_POST_DRAFT,
+        payload
+      );
+      await this.fetchTravelStoryDraftsPreview();
+      const isObjectValid = this.validateObject(createdPost);
+      if (isObjectValid)
+        return await this.$router.push({
+          name: "post-details-page",
+          params: { postID: createdPost.id, type: "travel-story" },
+        });
+      this.isCreateTravelStoryDraftStart = false;
+    },
   },
   async created() {
+    this.scrollToTop();
     const { mode, postID } = this.$route.params;
     this.mode = mode;
     if (this.mode && this.mode === "draft") {

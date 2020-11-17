@@ -464,13 +464,14 @@ const postService = {
 
   async updateTravelStoryDraft(
     postID: number,
+    isDraft: boolean,
     input: IPostServiceUpdateTravelStoryDraftInput
   ) {
     const updateDetailsInput: IPostModelUpdateDetailsInput = {
       title: input.title,
       text: input.text,
       type: "travel-story",
-      isDraft: true,
+      isDraft,
       accountID: 0,
     };
     const updatedDetails = await postModel.updateDetails(
