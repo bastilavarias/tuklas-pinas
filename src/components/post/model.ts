@@ -460,6 +460,18 @@ const postModel = {
       .select(["id", "title", "text", `"createdAt"`, `"updatedAt"`])
       .where(`post."isDraft" = true`)
       .andWhere(`post."authorId" = :authorID`, { authorID })
+      .andWhere("post.type = 'travel-story'")
+      .orderBy(`post."createdAt"`, "DESC")
+      .getRawMany();
+  },
+
+  async fetchItineraryDraftsPreview(authorID: number): Promise<Post[]> {
+    return await getRepository(Post)
+      .createQueryBuilder("post")
+      .select(["id", "title", "text", `"createdAt"`, `"updatedAt"`])
+      .where(`post."isDraft" = true`)
+      .andWhere(`post."authorId" = :authorID`, { authorID })
+      .andWhere("post.type = 'itinerary'")
       .orderBy(`post."createdAt"`, "DESC")
       .getRawMany();
   },
@@ -509,6 +521,29 @@ const postModel = {
         "travelEvents.travelEvent",
         "categories",
         "files",
+      ],
+    });
+    return gotDetails!;
+  },
+
+  async getItineraryDetails(postID: number): Promise<Post> {
+    const gotDetails = await Post.findOne(postID, {
+      relations: [
+        "destinations",
+        "destinations.destination",
+        "travelEvents",
+        "travelEvents.travelEvent",
+        "categories",
+        "files",
+        "reviews",
+        "reviews.restaurants",
+        "reviews.lodgings",
+        "reviews.transportation",
+        "reviews.activities",
+        "reviews.internetAccess",
+        "reviews.finance",
+        "reviews.tips",
+        "reviews.avoids",
       ],
     });
     return gotDetails!;

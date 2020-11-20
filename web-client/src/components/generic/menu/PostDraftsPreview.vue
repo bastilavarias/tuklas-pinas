@@ -15,7 +15,10 @@
       >
     </template>
     <v-list>
-      <v-list-item two-line :to="submitRoute">
+      <v-list-item
+        two-line
+        :to="{ name: editorRouteName, params: { mode: 'submit' } }"
+      >
         <v-list-item-content>
           <v-list-item-title class="font-weight-bold"
             >Add new Post</v-list-item-title
@@ -34,7 +37,7 @@
           :key="index"
           three-line
           :to="{
-            name: 'travel-story-post-editor-page',
+            name: editorRouteName,
             params: { mode: 'draft', postID: preview.id },
           }"
           exact
@@ -44,10 +47,12 @@
               >last update
               {{ formatRelativeTime(preview.updatedAt) }}</v-list-item-subtitle
             >
-            <v-list-item-title class="font-weight-bold">{{
+            <v-list-item-title class="font-weight-bold text-truncate">{{
               preview.title
             }}</v-list-item-title>
-            <v-list-item-subtitle>{{ preview.text }}</v-list-item-subtitle>
+            <v-list-item-subtitle class="text-truncate">{{
+              preview.text
+            }}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
         <v-divider v-if="index !== draftsPreview.length - 1"></v-divider>
@@ -71,8 +76,8 @@ export default {
       type: Boolean,
       required: true,
     },
-    submitRoute: {
-      type: Object,
+    editorRouteName: {
+      type: String,
       required: true,
     },
   },

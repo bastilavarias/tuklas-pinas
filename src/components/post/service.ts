@@ -257,6 +257,10 @@ const postService = {
     return await postModel.fetchTravelStoryDraftsPreview(authorID);
   },
 
+  async fetchItineraryDraftsPreview(authorID: number) {
+    return await postModel.fetchItineraryDraftsPreview(authorID);
+  },
+
   async getSoftDetails(
     postID: number,
     type: string

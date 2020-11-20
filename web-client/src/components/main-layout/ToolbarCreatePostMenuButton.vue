@@ -71,7 +71,7 @@ export default {
           icon: "mdi-book-open",
           to: {
             name: "itinerary-post-editor-page",
-            params: { action: "submit" },
+            params: { mode: "submit" },
           },
         },
       ],
