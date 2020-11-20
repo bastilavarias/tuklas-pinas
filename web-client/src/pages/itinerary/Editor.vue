@@ -153,6 +153,7 @@ import ItineraryPostEditorPageItineraryField from "@/components/itinerary-post-e
 import {
   CREATE_ITINERARY_POST,
   FETCH_ITINERARY_POST_DRAFTS_PREVIEW,
+  GET_ITINERARY_POST_DETAILS,
   SAVE_ITINERARY_POST_DRAFT,
 } from "@/store/types/post";
 import GenericDestinationsAutocomplete from "@/components/generic/autocomplete/Destinations";
@@ -214,6 +215,7 @@ export default {
       draftsPreview: [],
       isSaveDraftStart: false,
       mode: "submit",
+      isGetDetailsStart: false,
     };
   },
   computed: {
@@ -247,6 +249,18 @@ export default {
     },
     totalExpenses(val) {
       this.form.itinerary.totalExpenses = val;
+    },
+    async "$route.params.mode"(val) {
+      this.mode = val;
+      if (this.mode === "draft") {
+        const { postID } = this.$route.params;
+        await this.getDetails(postID);
+        return;
+      }
+      this.clearForm();
+    },
+    async "$route.params.postID"(val) {
+      await this.getDetails(val);
     },
   },
   methods: {
@@ -295,6 +309,80 @@ export default {
         this.clearForm();
       }
     },
+    async getDetails(postID) {
+      this.isGetDetailsStart = true;
+      const {
+        title,
+        text,
+        destinations,
+        travelEvents,
+        categories,
+        files,
+        itinerary,
+        review,
+      } = await this.$store.dispatch(GET_ITINERARY_POST_DETAILS, postID);
+      this.isGetDetailsStart = false;
+      try {
+        this.isGetTravelStoryDetailsStart = false;
+        this.form.title = title;
+        this.form.text = text;
+        this.form.destinationsID = destinations
+          .map((item) => item.destination)
+          .map((destination) => destination.id);
+        this.form.travelEventsID = travelEvents
+          .map((item) => item.travelEvent)
+          .map((travelEvent) => travelEvent.id);
+        this.form.categories = categories.map((category) => category.name);
+        this.form.files = files;
+        this.form.itinerary = itinerary;
+        this.form.itinerary.days = itinerary.days.map((day) => {
+          day.timestamps = day.timestamps.map(
+            ({
+              time,
+              destination,
+              transportation,
+              interests,
+              fare,
+              expenses,
+              otherDetails,
+            }) => {
+              return {
+                time,
+                destinationID: destination.id,
+                transportation,
+                interests: interests.map((interest) => interest.name),
+                fare,
+                expenses,
+                otherDetails,
+              };
+            }
+          );
+          return day;
+        });
+        this.form.review = review;
+        this.form.review.transportation = review.transportation.map(
+          ({ type, text, rating, destination }) => ({
+            type,
+            text,
+            rating,
+            destinationID: destination.id,
+          })
+        );
+        this.form.review.activities = review.activities.map(
+          ({ name, text, rating, destination }) => ({
+            name,
+            text,
+            rating,
+            destinationID: destination.id,
+          })
+        );
+        this.form.review.tips = review.tips.map((tip) => tip.text);
+        this.form.review.avoids = review.avoids.map((avoid) => avoid.text);
+      } catch (_) {
+        console.log(_);
+        this.clearForm();
+      }
+    },
     clearForm() {
       this.form = Object.assign({}, this.defaultItineraryForm);
       this.form.itinerary = Object.assign(
@@ -328,6 +416,11 @@ export default {
   },
   async created() {
     this.scrollToTop();
+    const { mode, postID } = this.$route.params;
+    this.mode = mode;
+    if (this.mode && this.mode === "draft") {
+      await this.getDetails(postID);
+    }
     await this.fetchGenericDestinations();
     await this.fetchGenericTravelEvents();
     await this.$store.dispatch(FETCH_GENERIC_TRANSPORTATION);

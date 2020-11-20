@@ -170,7 +170,7 @@ import GenericCategoryCombobox from "@/components/generic/combobox/Category";
 import {
   CREATE_TRAVEL_STORY_POST,
   FETCH_TRAVEL_STORY_POST_DRAFTS_PREVIEW,
-  GET_TRAVEL_STORY_POST,
+  GET_TRAVEL_STORY_POST_DETAILS,
   SAVE_TRAVEL_STORY_POST_DRAFT,
   UPDATE_TRAVEL_STORY_POST_DRAFT,
 } from "@/store/types/post";
@@ -250,13 +250,13 @@ export default {
       this.mode = val;
       if (this.mode === "draft") {
         const { postID } = this.$route.params;
-        await this.getTravelStoryDetails(postID);
+        await this.getDetails(postID);
         return;
       }
       this.form = Object.assign({}, this.defaultTravelStoryForm);
     },
     async "$route.params.postID"(val) {
-      await this.getTravelStoryDetails(val);
+      await this.getDetails(val);
     },
   },
   methods: {
@@ -305,7 +305,7 @@ export default {
       );
       this.isFetchDraftsPreviewStart = false;
     },
-    async getTravelStoryDetails(postID) {
+    async getDetails(postID) {
       this.isGetTravelStoryDetailsStart = true;
       const {
         title,
@@ -314,9 +314,9 @@ export default {
         travelEvents,
         categories,
         files,
-      } = await this.$store.dispatch(GET_TRAVEL_STORY_POST, postID);
+      } = await this.$store.dispatch(GET_TRAVEL_STORY_POST_DETAILS, postID);
+      this.isGetTravelStoryDetailsStart = false;
       try {
-        this.isGetTravelStoryDetailsStart = false;
         this.form.title = title;
         this.form.text = text;
         this.form.destinationsID = destinations
@@ -370,7 +370,7 @@ export default {
     const { mode, postID } = this.$route.params;
     this.mode = mode;
     if (this.mode && this.mode === "draft") {
-      await this.getTravelStoryDetails(postID);
+      await this.getDetails(postID);
     }
     await this.fetchGenericDestinations();
     await this.fetchGenericTravelEvents();

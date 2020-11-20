@@ -14,7 +14,7 @@
         </v-col>
         <v-col cols="12">
           <div class="d-flex justify-center">
-            <custom-rating :rating="reviewLocal.rating"></custom-rating>
+            <custom-rating :rating.sync="reviewLocal.rating"></custom-rating>
           </div>
         </v-col>
       </v-row>

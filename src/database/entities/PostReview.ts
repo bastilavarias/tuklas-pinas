@@ -2,7 +2,6 @@ import {
   BaseEntity,
   Entity,
   JoinColumn,
-  ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -22,7 +21,8 @@ export default class PostReview extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Post)
+  @OneToOne(() => Post, (post) => post.review)
+  @JoinColumn({ name: "postId" })
   post: Post;
 
   @OneToMany(() => PostReviewRestaurant, (table) => table.review)

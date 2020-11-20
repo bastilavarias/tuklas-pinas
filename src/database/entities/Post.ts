@@ -85,9 +85,8 @@ export default class Post extends BaseEntity {
   @JoinColumn({ name: "postId" })
   reactions: PostReaction[];
 
-  @OneToMany(() => PostReview, (review) => review.post)
-  @JoinColumn({ name: "postId" })
-  reviews: PostReview[];
+  @OneToOne(() => PostReview, (review) => review.post)
+  review: PostReview;
 
   @OneToOne(() => PostItinerary, (itinerary) => itinerary.post)
   itinerary: PostItinerary;
