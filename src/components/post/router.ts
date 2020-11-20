@@ -17,6 +17,12 @@ postRouter.post(
 );
 
 postRouter.post(
+  "/save-itinerary-draft/:postID",
+  passport.authenticate("jwt", { session: false }),
+  postController.saveItineraryDraft
+);
+
+postRouter.post(
   "/create-itinerary/:postID",
   passport.authenticate("jwt", { session: false }),
   postController.createItinerary

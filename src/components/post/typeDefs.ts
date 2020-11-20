@@ -28,13 +28,17 @@ export interface IItineraryPostSoftDetails extends ITravelStoryPostSoftDetails {
 export interface IPostServiceCreateTravelStoryInput extends IBasePostInput {}
 
 export interface IPostServiceSaveTravelStoryDraftInput extends IBasePostInput {}
+export interface IPostServiceSaveItineraryDraftInput extends IBasePostInput {
+  itinerary: IPostItineraryInput;
+  review: IItineraryPostReviewInput;
+}
 
 export interface IPostServiceCreateItineraryInput extends IBasePostInput {
   itinerary: IPostItineraryInput;
-  review: IPostServiceCreateItineraryReview;
+  review: IItineraryPostReviewInput;
 }
 
-export interface IPostServiceCreateItineraryReview {
+export interface IItineraryPostReviewInput {
   restaurants: IPostRestaurantReviewInput[];
   lodgings: IPostLodgingReviewInput[];
   transportation: IPostTransportationReviewInput[];
@@ -53,7 +57,7 @@ export interface IPostModelSaveDetailsInput {
   accountID: number;
 }
 
-export interface IPostModelUpdateDetailsInput
+export interface IPostModelUpdateDetailsPayload
   extends IPostModelSaveDetailsInput {}
 
 export interface IPostModelSaveFilePayload extends ICloudinaryFileMeta {
@@ -101,13 +105,13 @@ export interface IPostItineraryInput {
   days: IPostItineraryDay[];
 }
 
-export interface IPostModelSaveItineraryInput {
+export interface IPostModelSaveItineraryPayload {
   postID: number;
   totalDestinations: number;
   totalExpenses: number;
 }
 
-export interface IPostModelSaveItineraryDayInput {
+export interface IPostModelSaveItineraryDayPayload {
   postItineraryID: number;
   date: Date;
   day: number;
@@ -115,7 +119,7 @@ export interface IPostModelSaveItineraryDayInput {
   expenses: number;
 }
 
-export interface IPostModelSaveItineraryDayTimestampInput {
+export interface IPostModelSaveItineraryDayTimestampPayload {
   postItineraryDayID: number;
   time: Date;
   fare: number;

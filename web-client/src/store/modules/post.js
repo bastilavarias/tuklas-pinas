@@ -17,6 +17,7 @@ import {
   FETCH_TRAVEL_STORY_POST_DRAFTS_PREVIEW,
   GET_TRAVEL_STORY_POST,
   UPDATE_TRAVEL_STORY_POST_DRAFT,
+  SAVE_ITINERARY_POST_DRAFT,
 } from "@/store/types/post";
 import postApiService from "@/services/api/modules/post";
 import { SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS } from "@/store/types/generic";
@@ -73,7 +74,7 @@ const postStore = {
           travelEventsID,
           categories,
         };
-        const result = await postApiService.saveTravelStoryDraftDetails(
+        const savedPostDetails = await postApiService.saveTravelStoryDraftDetails(
           uploadedPostFiles.id,
           form
         );
@@ -82,7 +83,7 @@ const postStore = {
           text: "Saving travel story draft done!",
           color: "success",
         });
-        return result.data ? result.data : {};
+        return savedPostDetails;
       } catch (error) {
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,
@@ -91,7 +92,6 @@ const postStore = {
         });
       }
     },
-
     async [CREATE_ITINERARY_POST](
       { commit },
       {
@@ -136,6 +136,51 @@ const postStore = {
         });
       }
     },
+    async [SAVE_ITINERARY_POST_DRAFT](
+      { commit },
+      {
+        title,
+        text,
+        destinationsID,
+        categories,
+        travelEventsID,
+        files,
+        itinerary,
+        review,
+      }
+    ) {
+      try {
+        const formData = new FormData();
+        files.map((file) => formData.append("files", file));
+        const uploadedPostFiles = await postApiService.uploadFiles(formData);
+        const form = {
+          title,
+          text,
+          destinationsID,
+          travelEventsID,
+          categories,
+          itinerary,
+          review,
+        };
+        const savedPostDetails = await postApiService.saveItineraryDraftDetails(
+          uploadedPostFiles.id,
+          form
+        );
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Saving itinerary draft done!",
+          color: "success",
+        });
+        return savedPostDetails || {};
+      } catch (error) {
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Something went wrong to the server. Please try again.",
+          color: "error",
+        });
+      }
+    },
+
     async [SEND_POST_COMMENT]({ commit }, { postID, text }) {
       try {
         const form = { text };

@@ -7,6 +7,7 @@ import {
   ManyToOne,
   OneToMany,
   JoinColumn,
+  OneToOne,
 } from "typeorm";
 import Account from "./Account";
 import PostFile from "./PostFile";
@@ -16,6 +17,7 @@ import PostComment from "./PostComment";
 import PostTravelEvent from "./PostTravelEvent";
 import PostDestination from "./PostDestination";
 import PostReview from "./PostReview";
+import PostItinerary from "./PostItinerary";
 
 @Entity()
 export default class Post extends BaseEntity {
@@ -86,6 +88,9 @@ export default class Post extends BaseEntity {
   @OneToMany(() => PostReview, (review) => review.post)
   @JoinColumn({ name: "postId" })
   reviews: PostReview[];
+
+  @OneToOne(() => PostItinerary, (itinerary) => itinerary.post)
+  itinerary: PostItinerary;
 
   commentsCount?: number;
   reactionsCount?: number;

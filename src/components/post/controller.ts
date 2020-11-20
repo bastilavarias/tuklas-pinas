@@ -3,6 +3,7 @@ import postService from "./service";
 import {
   IPostServiceCreateItineraryInput,
   IPostServiceCreateTravelStoryInput,
+  IPostServiceSaveItineraryDraftInput,
   IPostServiceSaveTravelStoryDraftInput,
   IPostServiceSendCommentInput,
   IPostServiceUpdateTravelStoryDraftInput,
@@ -40,6 +41,27 @@ const postController = {
         files: [],
       };
       const result = await postService.saveTravelStoryDraft(postID, input);
+      response.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      response.status(400).json(error);
+    }
+  },
+
+  async saveItineraryDraft(request: Request, response: Response) {
+    try {
+      const postID = parseInt(request.params.postID) || 0;
+      const input: IPostServiceSaveItineraryDraftInput = {
+        title: request.body.title || "",
+        text: request.body.text || "",
+        destinationsID: request.body.destinationsID || [],
+        travelEventsID: request.body.travelEventsID || [],
+        categories: request.body.categories || [],
+        files: [],
+        itinerary: request.body.itinerary || [],
+        review: request.body.review || [],
+      };
+      const result = await postService.saveItineraryDraft(postID, input);
       response.status(200).json(result);
     } catch (error) {
       console.log(error);
