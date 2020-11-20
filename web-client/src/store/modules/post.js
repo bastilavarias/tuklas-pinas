@@ -74,7 +74,7 @@ const postStore = {
           travelEventsID,
           categories,
         };
-        const result = await postApiService.saveTravelStoryDraftDetails(
+        const savedPostDetails = await postApiService.saveTravelStoryDraftDetails(
           uploadedPostFiles.id,
           form
         );
@@ -83,7 +83,7 @@ const postStore = {
           text: "Saving travel story draft done!",
           color: "success",
         });
-        return result.data ? result.data : {};
+        return savedPostDetails;
       } catch (error) {
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,

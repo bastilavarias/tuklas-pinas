@@ -2,10 +2,10 @@ import {
   BaseEntity,
   Column,
   Entity,
-  ManyToOne,
   JoinColumn,
   PrimaryGeneratedColumn,
   OneToMany,
+  OneToOne,
 } from "typeorm";
 import Post from "./Post";
 import PostItineraryDay from "./PostItineraryDay";
@@ -27,7 +27,8 @@ export default class PostItinerary extends BaseEntity {
   })
   totalExpenses: number;
 
-  @ManyToOne(() => Post)
+  @OneToOne(() => Post, (post) => post.itinerary)
+  @JoinColumn({ name: "postId" })
   post: Post;
 
   @OneToMany(

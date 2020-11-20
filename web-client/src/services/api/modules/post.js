@@ -6,14 +6,19 @@ const postApiService = {
   },
 
   async saveTravelStoryDraftDetails(postID, form) {
-    return await apiService.post(
+    const result = await apiService.post(
       `/post/save-travel-story-draft/${postID}`,
       form
     );
+    return result.data || {};
   },
 
   async saveItineraryDraftDetails(postID, form) {
-    return await apiService.post(`/post/save-itinerary-draft/${postID}`, form);
+    const result = await apiService.post(
+      `/post/save-itinerary-draft/${postID}`,
+      form
+    );
+    return result.data || {};
   },
 
   async createItinerary(postID, form) {

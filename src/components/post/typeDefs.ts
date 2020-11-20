@@ -57,7 +57,7 @@ export interface IPostModelSaveDetailsInput {
   accountID: number;
 }
 
-export interface IPostModelUpdateDetailsInput
+export interface IPostModelUpdateDetailsPayload
   extends IPostModelSaveDetailsInput {}
 
 export interface IPostModelSaveFilePayload extends ICloudinaryFileMeta {
@@ -105,13 +105,13 @@ export interface IPostItineraryInput {
   days: IPostItineraryDay[];
 }
 
-export interface IPostModelSaveItineraryInput {
+export interface IPostModelSaveItineraryPayload {
   postID: number;
   totalDestinations: number;
   totalExpenses: number;
 }
 
-export interface IPostModelSaveItineraryDayInput {
+export interface IPostModelSaveItineraryDayPayload {
   postItineraryID: number;
   date: Date;
   day: number;
@@ -119,7 +119,7 @@ export interface IPostModelSaveItineraryDayInput {
   expenses: number;
 }
 
-export interface IPostModelSaveItineraryDayTimestampInput {
+export interface IPostModelSaveItineraryDayTimestampPayload {
   postItineraryDayID: number;
   time: Date;
   fare: number;

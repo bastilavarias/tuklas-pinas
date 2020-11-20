@@ -7,16 +7,16 @@ import {
   IPostModelSaveFilePayload,
   IPostFinanceReviewInput,
   IPostInternetAccessReviewInput,
-  IPostModelSaveItineraryDayInput,
-  IPostModelSaveItineraryDayTimestampInput,
-  IPostModelSaveItineraryInput,
+  IPostModelSaveItineraryDayPayload,
+  IPostModelSaveItineraryDayTimestampPayload,
+  IPostModelSaveItineraryPayload,
   IPostModelSaveTravelEventInput,
   IPostRestaurantReviewInput,
   IPostLodgingReviewInput,
   IPostTransportationReviewInput,
   IItineraryPostSoftDetails,
   IPostModelSaveReviewInput,
-  IPostModelUpdateDetailsInput,
+  IPostModelUpdateDetailsPayload,
   IGenericSoftPost,
   IPostModelSaveCommentInput,
   IPostModelSaveCommentReplyInput,
@@ -102,7 +102,7 @@ const postModel = {
   },
 
   async saveItinerary(
-    input: IPostModelSaveItineraryInput
+    input: IPostModelSaveItineraryPayload
   ): Promise<PostItinerary> {
     const { postID, totalDestinations, totalExpenses } = input;
     return await PostItinerary.create({
@@ -113,7 +113,7 @@ const postModel = {
   },
 
   async saveItineraryDay(
-    input: IPostModelSaveItineraryDayInput
+    input: IPostModelSaveItineraryDayPayload
   ): Promise<PostItineraryDay> {
     const { postItineraryID, date, destinationsCount, expenses, day } = input;
     return await PostItineraryDay.create({
@@ -126,7 +126,7 @@ const postModel = {
   },
 
   async saveItineraryDayTimestamp(
-    input: IPostModelSaveItineraryDayTimestampInput
+    input: IPostModelSaveItineraryDayTimestampPayload
   ): Promise<PostItineraryDayTimestamp> {
     const {
       postItineraryDayID,
@@ -535,6 +535,9 @@ const postModel = {
         "travelEvents.travelEvent",
         "categories",
         "files",
+        "itinerary",
+        "itinerary.days",
+        "itinerary.days.timestamps",
         "reviews",
         "reviews.restaurants",
         "reviews.lodgings",
@@ -626,20 +629,8 @@ const postModel = {
   async getItinerary(postID: number): Promise<PostItinerary> {
     const foundItinerary = await PostItinerary.findOne({
       where: { post: { id: postID } },
-      relations: ["days"],
+      relations: ["days", "days.timestamps"],
     });
-    foundItinerary!.days = await Promise.all(
-      foundItinerary!.days.map(async (day) => {
-        const gotDay = await this.getItineraryDay(day.id);
-        gotDay.timestamps = await Promise.all(
-          gotDay.timestamps.map(
-            async (timestamp) =>
-              await this.getItineraryDayTimestamp(timestamp.id)
-          )
-        );
-        return gotDay;
-      })
-    );
     return foundItinerary!;
   },
 
@@ -796,7 +787,7 @@ const postModel = {
 
   async updateDetails(
     postID: number,
-    input: IPostModelUpdateDetailsInput
+    input: IPostModelUpdateDetailsPayload
   ): Promise<Post> {
     const currentDate = new Date();
     const { title, text, type, isDraft } = input;

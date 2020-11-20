@@ -280,7 +280,6 @@ export default {
         FETCH_ITINERARY_POST_DRAFTS_PREVIEW,
         this.credentials.id
       );
-      console.log(this.draftsPreview);
       this.isFetchDraftsPreviewStart = false;
     },
     async saveDraft() {
@@ -289,13 +288,42 @@ export default {
         SAVE_ITINERARY_POST_DRAFT,
         this.form
       );
-      console.log(savedDraftPostDetails);
       this.isSaveDraftStart = false;
       await this.fetchDraftsPreview();
       if (this.validateObject(savedDraftPostDetails)) {
         this.mode = "submit";
-        this.form = Object.assign({}, this.defaultItineraryForm);
+        this.clearForm();
       }
+    },
+    clearForm() {
+      this.form = Object.assign({}, this.defaultItineraryForm);
+      this.form.itinerary = Object.assign(
+        {},
+        {
+          totalDestinations: 0,
+          totalExpenses: 0,
+          days: [],
+        }
+      );
+      this.form.review = Object.assign(
+        {},
+        {
+          restaurants: [],
+          lodgings: [],
+          transportation: [],
+          activities: [],
+          internetAccess: {
+            text: "",
+            rating: 0,
+          },
+          finance: {
+            text: "",
+            rating: 0,
+          },
+          tips: [],
+          avoids: [],
+        }
+      );
     },
   },
   async created() {

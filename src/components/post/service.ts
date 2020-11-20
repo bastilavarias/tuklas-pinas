@@ -4,15 +4,15 @@ import {
   IPostModelSaveDestinationInput,
   IPostModelSaveDetailsInput,
   IPostModelSaveFilePayload,
-  IPostModelSaveItineraryDayInput,
-  IPostModelSaveItineraryDayTimestampInput,
-  IPostModelSaveItineraryInput,
+  IPostModelSaveItineraryDayPayload,
+  IPostModelSaveItineraryDayTimestampPayload,
+  IPostModelSaveItineraryPayload,
   IPostModelSaveTravelEventInput,
   IPostServiceCreateTravelStoryInput,
   IPostServiceCreateItineraryInput,
   IItineraryPostReviewInput,
   IPostModelSaveReviewInput,
-  IPostModelUpdateDetailsInput,
+  IPostModelUpdateDetailsPayload,
   IGenericSoftPost,
   IPostServiceSendCommentInput,
   IPostModelSaveCommentInput,
@@ -36,7 +36,7 @@ const postService = {
     postID: number,
     input: IPostServiceCreateTravelStoryInput
   ): Promise<Post> {
-    const updateDetailsInput: IPostModelUpdateDetailsInput = {
+    const updateDetailsInput: IPostModelUpdateDetailsPayload = {
       title: input.title,
       text: input.text,
       type: "travel-story",
@@ -57,7 +57,7 @@ const postService = {
     postID: number,
     input: IPostServiceSaveTravelStoryDraftInput
   ): Promise<Post> {
-    const updateDetailsInput: IPostModelUpdateDetailsInput = {
+    const updateDetailsInput: IPostModelUpdateDetailsPayload = {
       title: input.title,
       text: input.text,
       type: "travel-story",
@@ -78,7 +78,7 @@ const postService = {
     postID: number,
     input: IPostServiceSaveItineraryDraftInput
   ): Promise<Post> {
-    const updateDetailsInput: IPostModelUpdateDetailsInput = {
+    const updateDetailsPayload: IPostModelUpdateDetailsPayload = {
       title: input.title,
       text: input.text,
       type: "itinerary",
@@ -87,7 +87,7 @@ const postService = {
     };
     const updatedDetails = await postModel.updateDetails(
       postID,
-      updateDetailsInput
+      updateDetailsPayload
     );
     await this.saveDestinations(updatedDetails.id, input.destinationsID);
     await this.saveCategories(updatedDetails.id, input.categories);
@@ -101,7 +101,7 @@ const postService = {
     postID: number,
     input: IPostServiceCreateItineraryInput
   ): Promise<Post> {
-    const updateDetailsInput: IPostModelUpdateDetailsInput = {
+    const updateDetailsInput: IPostModelUpdateDetailsPayload = {
       title: input.title,
       text: input.text,
       type: "itinerary",
@@ -377,17 +377,17 @@ const postService = {
   },
 
   async saveItineraryDetails(postID: number, itinerary: IPostItineraryInput) {
-    const savePostItineraryInput: IPostModelSaveItineraryInput = {
+    const saveItineraryPayload: IPostModelSaveItineraryPayload = {
       postID,
       totalDestinations: itinerary.totalDestinations,
       totalExpenses: itinerary.totalExpenses,
     };
     const savedPostItinerary = await postModel.saveItinerary(
-      savePostItineraryInput
+      saveItineraryPayload
     );
     await Promise.all(
       itinerary.days.map(async (item) => {
-        const savePostItineraryDayInput: IPostModelSaveItineraryDayInput = {
+        const saveDayPayload: IPostModelSaveItineraryDayPayload = {
           postItineraryID: savedPostItinerary.id,
           date: item.date,
           day: item.day,
@@ -395,11 +395,11 @@ const postService = {
           expenses: item.expenses,
         };
         const savedItineraryDay = await postModel.saveItineraryDay(
-          savePostItineraryDayInput
+          saveDayPayload
         );
         await Promise.all(
           item.timestamps.map(async (timestamp) => {
-            const savePostItineraryDayTimestampInput: IPostModelSaveItineraryDayTimestampInput = {
+            const saveTimestampPayload: IPostModelSaveItineraryDayTimestampPayload = {
               postItineraryDayID: savedItineraryDay.id,
               time: timestamp.time,
               transportation: timestamp.transportation,
@@ -409,7 +409,7 @@ const postService = {
               destinationID: timestamp.destinationID,
             };
             const savedItineraryDayTimestamp = await postModel.saveItineraryDayTimestamp(
-              savePostItineraryDayTimestampInput
+              saveTimestampPayload
             );
             timestamp.interests.map(
               async (name) =>
@@ -495,7 +495,7 @@ const postService = {
     isDraft: boolean,
     input: IPostServiceUpdateTravelStoryDraftInput
   ) {
-    const updateDetailsInput: IPostModelUpdateDetailsInput = {
+    const updateDetailsInput: IPostModelUpdateDetailsPayload = {
       title: input.title,
       text: input.text,
       type: "travel-story",
