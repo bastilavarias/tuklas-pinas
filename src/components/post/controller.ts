@@ -202,6 +202,17 @@ const postController = {
     }
   },
 
+  async fetchItineraryDraftsPreview(request: Request, response: Response) {
+    try {
+      const authorID = parseInt(request.params.authorID) || 0;
+      const result = await postService.fetchItineraryDraftsPreview(authorID);
+      response.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      response.status(400).json(error);
+    }
+  },
+
   async getSoftDetails(request: Request, response: Response) {
     try {
       const postID = parseInt(request.params.postID) || 0;

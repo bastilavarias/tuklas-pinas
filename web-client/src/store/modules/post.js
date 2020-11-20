@@ -20,6 +20,7 @@ import {
 } from "@/store/types/post";
 import postApiService from "@/services/api/modules/post";
 import { SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS } from "@/store/types/generic";
+import { FETCH_ITINERARY_POST_DRAFTS_PREVIEW } from "@/store/types/post";
 
 const postStore = {
   actions: {
@@ -252,6 +253,17 @@ const postStore = {
     async [FETCH_TRAVEL_STORY_POST_DRAFTS_PREVIEW]({ commit }, authorID) {
       try {
         return await postApiService.fetchTravelStoryDraftsPreview(authorID);
+      } catch (error) {
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Something went wrong to the server. Please try again.",
+          color: "error",
+        });
+      }
+    },
+    async [FETCH_ITINERARY_POST_DRAFTS_PREVIEW]({ commit }, authorID) {
+      try {
+        return await postApiService.fetchItineraryDraftsPreview(authorID);
       } catch (error) {
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,

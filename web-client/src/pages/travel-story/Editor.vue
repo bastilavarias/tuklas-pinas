@@ -14,10 +14,7 @@
                       isFetchDraftsPreviewStart || isGetTravelStoryDetailsStart
                     "
                     :drafts-preview="draftsPreview"
-                    :submit-route="{
-                      name: 'travel-story-post-editor-page',
-                      params: { mode: 'submit' },
-                    }"
+                    editor-route-name="travel-story-post-editor-page"
                     v-if="draftsPreview.length > 0"
                   ></generic-post-drafts-preview-menu>
                 </v-card-title>
@@ -294,13 +291,13 @@ export default {
         this.form
       );
       this.isSaveTravelStoryPostDraftStart = false;
-      await this.fetchTravelStoryDraftsPreview();
+      await this.fetchDraftsPreview();
       if (this.validateObject(savedDraft)) {
         this.mode = "submit";
         this.form = Object.assign({}, this.defaultTravelStoryForm);
       }
     },
-    async fetchTravelStoryDraftsPreview() {
+    async fetchDraftsPreview() {
       this.isFetchDraftsPreviewStart = true;
       this.draftsPreview = await this.$store.dispatch(
         FETCH_TRAVEL_STORY_POST_DRAFTS_PREVIEW,
@@ -343,7 +340,7 @@ export default {
         isDraft: true,
       };
       await this.$store.dispatch(UPDATE_TRAVEL_STORY_POST_DRAFT, payload);
-      await this.fetchTravelStoryDraftsPreview();
+      await this.fetchDraftsPreview();
       this.isUpdateTravelStoryDraftStart = false;
     },
     async createTravelStoryDraft() {
@@ -358,7 +355,7 @@ export default {
         UPDATE_TRAVEL_STORY_POST_DRAFT,
         payload
       );
-      await this.fetchTravelStoryDraftsPreview();
+      await this.fetchDraftsPreview();
       const isObjectValid = this.validateObject(createdPost);
       if (isObjectValid)
         return await this.$router.push({
@@ -377,7 +374,7 @@ export default {
     }
     await this.fetchGenericDestinations();
     await this.fetchGenericTravelEvents();
-    await this.fetchTravelStoryDraftsPreview();
+    await this.fetchDraftsPreview();
   },
 };
 </script>

@@ -15,6 +15,7 @@ import PostReaction from "./PostReaction";
 import PostComment from "./PostComment";
 import PostTravelEvent from "./PostTravelEvent";
 import PostDestination from "./PostDestination";
+import PostReview from "./PostReview";
 
 @Entity()
 export default class Post extends BaseEntity {
@@ -81,6 +82,10 @@ export default class Post extends BaseEntity {
   @OneToMany(() => PostReaction, (reaction) => reaction.post)
   @JoinColumn({ name: "postId" })
   reactions: PostReaction[];
+
+  @OneToMany(() => PostReview, (review) => review.post)
+  @JoinColumn({ name: "postId" })
+  reviews: PostReview[];
 
   commentsCount?: number;
   reactionsCount?: number;

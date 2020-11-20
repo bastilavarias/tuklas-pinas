@@ -68,7 +68,7 @@ const routes = [
     component: () => import("../layouts/Main"),
     children: [
       {
-        path: ":action",
+        path: ":mode/:postID?",
         name: "itinerary-post-editor-page",
         component: () => import("../pages/itinerary/Editor"),
       },

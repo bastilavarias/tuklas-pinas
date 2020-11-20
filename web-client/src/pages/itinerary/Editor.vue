@@ -9,7 +9,12 @@
                 <v-card-title>
                   <span class="font-weight-bold">Submit Itinerary</span>
                   <div class="flex-grow-1"></div>
-                  <v-chip color="secondary">Drafts 5</v-chip>
+                  <generic-post-drafts-preview-menu
+                    :is-loading="isFetchDraftsPreviewStart"
+                    :drafts-preview="draftsPreview"
+                    editor-route-name="itinerary-post-editor-page"
+                    v-if="draftsPreview.length > 0"
+                  ></generic-post-drafts-preview-menu>
                 </v-card-title>
                 <v-card-subtitle
                   >Lorem ipsum dolor sit amet, consectetur.</v-card-subtitle
@@ -138,10 +143,14 @@ import {
 } from "@/store/types/generic";
 import GenericCategoryCombobox from "@/components/generic/combobox/Category";
 import ItineraryPostEditorPageItineraryField from "@/components/itinerary-post-editor-page/itinerary/Field";
-import { CREATE_ITINERARY_POST } from "@/store/types/post";
+import {
+  CREATE_ITINERARY_POST,
+  FETCH_ITINERARY_POST_DRAFTS_PREVIEW,
+} from "@/store/types/post";
 import GenericDestinationsAutocomplete from "@/components/generic/autocomplete/Destinations";
 import commonValidation from "@/common/validation";
 import commonUtilities from "@/common/utilities";
+import GenericPostDraftsPreviewMenu from "@/components/generic/menu/PostDraftsPreview";
 
 const defaultItineraryForm = {
   title: "",
@@ -175,6 +184,7 @@ const defaultItineraryForm = {
 
 export default {
   components: {
+    GenericPostDraftsPreviewMenu,
     GenericDestinationsAutocomplete,
     ItineraryPostEditorPageItineraryField,
     GenericCategoryCombobox,
@@ -192,6 +202,8 @@ export default {
       isCreateItineraryPostStart: false,
       form: Object.assign({}, defaultItineraryForm),
       defaultItineraryForm,
+      isFetchDraftsPreviewStart: false,
+      draftsPreview: [],
     };
   },
   computed: {
@@ -210,6 +222,9 @@ export default {
       return this.form.itinerary.days
         .map((day) => day.expenses)
         .reduce((flat, next) => flat + next, 0);
+    },
+    credentials() {
+      return this.$store.state.authentication.credentials;
     },
   },
   watch: {
@@ -245,11 +260,21 @@ export default {
         });
       this.isCreateItineraryPostStart = false;
     },
+    async fetchDraftsPreview() {
+      this.isFetchDraftsPreviewStart = true;
+      this.draftsPreview = await this.$store.dispatch(
+        FETCH_ITINERARY_POST_DRAFTS_PREVIEW,
+        this.credentials.id
+      );
+      this.isFetchDraftsPreviewStart = false;
+    },
   },
   async created() {
+    this.scrollToTop();
     await this.fetchGenericDestinations();
     await this.fetchGenericTravelEvents();
     await this.$store.dispatch(FETCH_GENERIC_TRANSPORTATION);
+    await this.fetchDraftsPreview();
   },
 };
 </script>

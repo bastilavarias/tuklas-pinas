@@ -72,6 +72,12 @@ postRouter.get(
 );
 
 postRouter.get(
+  "/drafts-preview/itinerary/:authorID",
+  passport.authenticate("jwt", { session: false }),
+  postController.fetchItineraryDraftsPreview
+);
+
+postRouter.get(
   "/comments/:postID/:sort/:skip",
   passport.authenticate("jwt", { session: false }),
   postController.fetchComments
