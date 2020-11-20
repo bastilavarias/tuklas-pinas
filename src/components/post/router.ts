@@ -107,6 +107,12 @@ postRouter.get(
   postController.getTravelStoryDetails
 );
 
+postRouter.get(
+  "/itinerary/:postID",
+  passport.authenticate("jwt", { session: false }),
+  postController.getItineraryDetails
+);
+
 postRouter.delete(
   "/remove-reaction/:postID",
   passport.authenticate("jwt", { session: false }),

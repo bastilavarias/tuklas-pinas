@@ -130,6 +130,11 @@ const postApiService = {
     return result.data || {};
   },
 
+  async getItineraryDetails(postID) {
+    const result = await apiService.get(`/post/itinerary/${postID}`);
+    return result.data || {};
+  },
+
   async updateTravelStoryDraft(postID, isDraft, form) {
     return await apiService.put(
       `/post/update-travel-story-draft/${postID}/${isDraft}`,

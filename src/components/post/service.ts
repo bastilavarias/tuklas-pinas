@@ -30,6 +30,7 @@ import PostCommentReply from "../../database/entities/PostCommentReply";
 import PostReaction from "../../database/entities/PostReaction";
 import PostCommentReaction from "../../database/entities/PostCommentReaction";
 import PostCommentReplyReaction from "../../database/entities/PostCommentReplyReaction";
+import utilityService from "../utility/service";
 
 const postService = {
   async createTravelStory(
@@ -298,6 +299,10 @@ const postService = {
     return await postModel.getTravelStoryDetails(postID);
   },
 
+  async getItineraryDetails(postID: number): Promise<Post> {
+    return await postModel.getItineraryDetails(postID);
+  },
+
   async uploadFiles(
     accountID: number,
     files: Express.Multer.File[]
@@ -369,7 +374,7 @@ const postService = {
           url: meta.url,
           size: fileData!.size,
           type: fileData!.mimetype,
-          format: fileData!.mimetype === "image/jpeg" ? "jpg" : "mp4",
+          format: utilityService.selectFileFormat(fileData!.mimetype),
         };
         await postModel.saveFile(postID, payload);
       })

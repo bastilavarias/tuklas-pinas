@@ -18,6 +18,19 @@ const utilityService = {
   ): boolean {
     return bcrypt.compareSync(plainTextPassword, hashedPassword);
   },
+
+  selectFileFormat(mimetype: string) {
+    switch (mimetype) {
+      case "image/jpeg":
+        return "jpeg";
+      case "image/jpg":
+        return "jpg";
+      case "image/png":
+        return "png";
+      default:
+        return "mp4";
+    }
+  },
 };
 
 export default utilityService;
