@@ -84,9 +84,9 @@
                     color="secondary"
                     class="text-capitalize"
                     outlined
-                    @click="saveTravelStoryPostDraft"
-                    :loading="isSaveTravelStoryPostDraftStart"
-                    :disabled="!isSaveTravelStoryDraftFormValid"
+                    @click="saveDraft"
+                    :loading="isSaveDraftStart"
+                    :disabled="!isSaveDraftFormValid"
                     v-if="mode === 'submit'"
                     >Save as Draft</v-btn
                   >
@@ -95,7 +95,7 @@
                     class="text-capitalize"
                     outlined
                     :loading="isUpdateTravelStoryDraftStart"
-                    :disabled="!isUpdateTravelStoryDraftFormValid"
+                    :disabled="!isUpdateDraftFormValid"
                     @click="updateTravelStoryDraft"
                     v-if="mode === 'draft'"
                     >Update Draft</v-btn
@@ -201,7 +201,7 @@ export default {
       isFetchGenericDestinationsStart: false,
       isFetchGenericTravelEventsStart: false,
       isCreateTravelStoryPostStart: false,
-      isSaveTravelStoryPostDraftStart: false,
+      isSaveDraftStart: false,
       form: Object.assign({}, defaultTravelStoryForm),
       defaultTravelStoryForm,
       isFetchDraftsPreviewStart: false,
@@ -233,11 +233,11 @@ export default {
         isFilesIsNotEmptyAndExceeding
       );
     },
-    isSaveTravelStoryDraftFormValid() {
+    isSaveDraftFormValid() {
       const { title } = this.form;
       return title;
     },
-    isUpdateTravelStoryDraftFormValid() {
+    isUpdateDraftFormValid() {
       const { title } = this.form;
       return title;
     },
@@ -284,15 +284,15 @@ export default {
         });
       this.isCreateTravelStoryPostStart = false;
     },
-    async saveTravelStoryPostDraft() {
-      this.isSaveTravelStoryPostDraftStart = true;
-      const savedDraft = await this.$store.dispatch(
+    async saveDraft() {
+      this.isSaveDraftStart = true;
+      const savedPostDraftDetails = await this.$store.dispatch(
         SAVE_TRAVEL_STORY_POST_DRAFT,
         this.form
       );
-      this.isSaveTravelStoryPostDraftStart = false;
+      this.isSaveDraftStart = false;
       await this.fetchDraftsPreview();
-      if (this.validateObject(savedDraft)) {
+      if (this.validateObject(savedPostDraftDetails)) {
         this.mode = "submit";
         this.form = Object.assign({}, this.defaultTravelStoryForm);
       }

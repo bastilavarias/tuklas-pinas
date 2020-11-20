@@ -12,6 +12,10 @@ const postApiService = {
     );
   },
 
+  async saveItineraryDraftDetails(postID, form) {
+    return await apiService.post(`/post/save-itinerary-draft/${postID}`, form);
+  },
+
   async createItinerary(postID, form) {
     const result = await apiService.post(
       `/post/create-itinerary/${postID}`,

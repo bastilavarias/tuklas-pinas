@@ -10,7 +10,7 @@ import {
   IPostModelSaveTravelEventInput,
   IPostServiceCreateTravelStoryInput,
   IPostServiceCreateItineraryInput,
-  IPostServiceCreateItineraryReview,
+  IItineraryPostReviewInput,
   IPostModelSaveReviewInput,
   IPostModelUpdateDetailsInput,
   IGenericSoftPost,
@@ -20,6 +20,7 @@ import {
   IPostModelSaveCommentReplyInput,
   IPostServiceSaveTravelStoryDraftInput,
   IPostServiceUpdateTravelStoryDraftInput,
+  IPostServiceSaveItineraryDraftInput,
 } from "./typeDefs";
 import cloudinaryService from "../cloudinary/service";
 import postModel from "./model";
@@ -71,6 +72,29 @@ const postService = {
     await this.saveCategories(updatedDetails.id, input.categories);
     await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
     return postModel.getTravelStoryDetails(updatedDetails.id);
+  },
+
+  async saveItineraryDraft(
+    postID: number,
+    input: IPostServiceSaveItineraryDraftInput
+  ): Promise<Post> {
+    const updateDetailsInput: IPostModelUpdateDetailsInput = {
+      title: input.title,
+      text: input.text,
+      type: "itinerary",
+      isDraft: true,
+      accountID: 0,
+    };
+    const updatedDetails = await postModel.updateDetails(
+      postID,
+      updateDetailsInput
+    );
+    await this.saveDestinations(updatedDetails.id, input.destinationsID);
+    await this.saveCategories(updatedDetails.id, input.categories);
+    await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
+    await this.saveReviews(updatedDetails.id, input.review);
+    await this.saveItineraryDetails(updatedDetails.id, input.itinerary);
+    return postModel.getItineraryDetails(updatedDetails.id);
   },
 
   async createItinerary(
@@ -400,7 +424,7 @@ const postService = {
     );
   },
 
-  async saveReviews(postID: number, review: IPostServiceCreateItineraryReview) {
+  async saveReviews(postID: number, review: IItineraryPostReviewInput) {
     const savedInternetAccessReview = await postModel.saveInternetAccessReview(
       review.internetAccess
     );

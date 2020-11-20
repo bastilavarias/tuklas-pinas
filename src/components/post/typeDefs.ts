@@ -28,13 +28,17 @@ export interface IItineraryPostSoftDetails extends ITravelStoryPostSoftDetails {
 export interface IPostServiceCreateTravelStoryInput extends IBasePostInput {}
 
 export interface IPostServiceSaveTravelStoryDraftInput extends IBasePostInput {}
+export interface IPostServiceSaveItineraryDraftInput extends IBasePostInput {
+  itinerary: IPostItineraryInput;
+  review: IItineraryPostReviewInput;
+}
 
 export interface IPostServiceCreateItineraryInput extends IBasePostInput {
   itinerary: IPostItineraryInput;
-  review: IPostServiceCreateItineraryReview;
+  review: IItineraryPostReviewInput;
 }
 
-export interface IPostServiceCreateItineraryReview {
+export interface IItineraryPostReviewInput {
   restaurants: IPostRestaurantReviewInput[];
   lodgings: IPostLodgingReviewInput[];
   transportation: IPostTransportationReviewInput[];

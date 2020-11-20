@@ -103,7 +103,14 @@
                 </v-card-text>
                 <v-card-actions>
                   <div class="flex-grow-1"></div>
-                  <v-btn color="secondary" class="text-capitalize" outlined
+                  <v-btn
+                    color="secondary"
+                    class="text-capitalize"
+                    outlined
+                    @click="saveDraft"
+                    :loading="isSaveDraftStart"
+                    :disabled="!isSaveDraftFormValid"
+                    v-if="mode === 'submit'"
                     >Save as Draft</v-btn
                   >
                   <v-btn
@@ -146,6 +153,7 @@ import ItineraryPostEditorPageItineraryField from "@/components/itinerary-post-e
 import {
   CREATE_ITINERARY_POST,
   FETCH_ITINERARY_POST_DRAFTS_PREVIEW,
+  SAVE_ITINERARY_POST_DRAFT,
 } from "@/store/types/post";
 import GenericDestinationsAutocomplete from "@/components/generic/autocomplete/Destinations";
 import commonValidation from "@/common/validation";
@@ -204,6 +212,8 @@ export default {
       defaultItineraryForm,
       isFetchDraftsPreviewStart: false,
       draftsPreview: [],
+      isSaveDraftStart: false,
+      mode: "submit",
     };
   },
   computed: {
@@ -225,6 +235,10 @@ export default {
     },
     credentials() {
       return this.$store.state.authentication.credentials;
+    },
+    isSaveDraftFormValid() {
+      const { title } = this.form;
+      return title;
     },
   },
   watch: {
@@ -266,7 +280,22 @@ export default {
         FETCH_ITINERARY_POST_DRAFTS_PREVIEW,
         this.credentials.id
       );
+      console.log(this.draftsPreview);
       this.isFetchDraftsPreviewStart = false;
+    },
+    async saveDraft() {
+      this.isSaveDraftStart = true;
+      const savedDraftPostDetails = await this.$store.dispatch(
+        SAVE_ITINERARY_POST_DRAFT,
+        this.form
+      );
+      console.log(savedDraftPostDetails);
+      this.isSaveDraftStart = false;
+      await this.fetchDraftsPreview();
+      if (this.validateObject(savedDraftPostDetails)) {
+        this.mode = "submit";
+        this.form = Object.assign({}, this.defaultItineraryForm);
+      }
     },
   },
   async created() {
