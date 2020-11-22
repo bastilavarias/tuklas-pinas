@@ -20,6 +20,7 @@ import {
   IGenericSoftPost,
   IPostModelSaveCommentInput,
   IPostModelSaveCommentReplyInput,
+  IPostItineraryPayload,
 } from "./typeDefs";
 import Post from "../../database/entities/Post";
 import PostFile from "../../database/entities/PostFile";
@@ -476,13 +477,22 @@ const postModel = {
       .getRawMany();
   },
 
-  async getBaseSoftDetails(postID: number): Promise<Post> {
-    const gotDetails = <Post>await Post.findOne(postID, {
-      relations: ["author"],
-    });
-    gotDetails.files = await this.getFiles(gotDetails.id);
-    // @ts-ignore
-    delete gotDetails.author.password;
+  async getRawDetails(postID: number): Promise<Post> {
+    const gotDetails = getRepository(Post)
+      .createQueryBuilder("post")
+      .select([
+        "id",
+        "title",
+        "text",
+        "type",
+        `"isDraft"`,
+        `"createdAt"`,
+        `"updatedAt"`,
+        `"isDeleted"`,
+        `"authorId"`,
+      ])
+      .where("post.id = :postID", { postID })
+      .getRawOne();
     return gotDetails!;
   },
 
@@ -638,23 +648,6 @@ const postModel = {
     return foundItinerary!;
   },
 
-  async getItineraryDay(postItineraryDayID: number): Promise<PostItineraryDay> {
-    const gotDay = await PostItineraryDay.findOne(postItineraryDayID, {
-      relations: ["timestamps"],
-    });
-    return gotDay!;
-  },
-
-  async getItineraryDayTimestamp(
-    postItineraryDayTimestampID: number
-  ): Promise<PostItineraryDayTimestamp> {
-    const gotTimestamp = await PostItineraryDayTimestamp.findOne(
-      postItineraryDayTimestampID,
-      { relations: ["interests", "destination"] }
-    );
-    return gotTimestamp!;
-  },
-
   async getReview(postID: number): Promise<PostReview> {
     const gotReview = await PostReview.findOne({
       where: { post: { id: postID } },
@@ -789,6 +782,15 @@ const postModel = {
     return gotReaction!;
   },
 
+  async getItineraryRawDetailsByPostID(postID: number): Promise<PostItinerary> {
+    const gotDetails = getRepository(PostItinerary)
+      .createQueryBuilder("itinerary")
+      .select(["id", `"totalDestinations"`, `"totalExpenses"`])
+      .where(`itinerary."postId" = :postID`, { postID })
+      .getRawOne();
+    return gotDetails!;
+  },
+
   async updateDetails(
     postID: number,
     input: IPostModelUpdateDetailsPayload
@@ -799,7 +801,15 @@ const postModel = {
       { id: postID },
       { title, text, type, updatedAt: currentDate, isDraft }
     );
-    return await this.getBaseSoftDetails(postID);
+    return await this.getRawDetails(postID);
+  },
+
+  async updateItinerary(itineraryID: number, payload: IPostItineraryPayload) {
+    const { totalExpenses, totalDestinations } = payload;
+    await PostItinerary.update(
+      { id: itineraryID },
+      { totalDestinations, totalExpenses }
+    );
   },
 
   async countComments(postID: number): Promise<number> {
@@ -869,6 +879,10 @@ const postModel = {
 
   async deleteFiles(postID: number) {
     await PostFile.delete({ post: { id: postID } });
+  },
+
+  async deleteItineraryDays(itineraryID: number) {
+    await PostItineraryDay.delete({ itinerary: { id: itineraryID } });
   },
 };
 

@@ -114,6 +114,16 @@
                     >Save as Draft</v-btn
                   >
                   <v-btn
+                    color="secondary"
+                    class="text-capitalize"
+                    outlined
+                    @click="updateDraft"
+                    :loading="isUpdateDraftStart"
+                    :disabled="!isUpdateDraftFormValid"
+                    v-if="mode === 'draft'"
+                    >Update Draft</v-btn
+                  >
+                  <v-btn
                     color="primary"
                     @click="createItineraryPost"
                     :loading="isCreateItineraryPostStart"
@@ -155,6 +165,7 @@ import {
   FETCH_ITINERARY_POST_DRAFTS_PREVIEW,
   GET_ITINERARY_POST_DETAILS,
   SAVE_ITINERARY_POST_DRAFT,
+  UPDATE_ITINERARY_POST_DRAFT,
 } from "@/store/types/post";
 import GenericDestinationsAutocomplete from "@/components/generic/autocomplete/Destinations";
 import commonValidation from "@/common/validation";
@@ -214,6 +225,7 @@ export default {
       isFetchDraftsPreviewStart: false,
       draftsPreview: [],
       isSaveDraftStart: false,
+      isUpdateDraftStart: false,
       mode: "submit",
       isGetDetailsStart: false,
     };
@@ -239,6 +251,10 @@ export default {
       return this.$store.state.authentication.credentials;
     },
     isSaveDraftFormValid() {
+      const { title } = this.form;
+      return title;
+    },
+    isUpdateDraftFormValid() {
       const { title } = this.form;
       return title;
     },
@@ -308,6 +324,18 @@ export default {
         this.mode = "submit";
         this.clearForm();
       }
+    },
+    async updateDraft() {
+      this.isUpdateDraftStart = true;
+      const postID = this.$route.params.postID | 0;
+      const payload = {
+        postID,
+        ...this.form,
+        isDraft: true,
+      };
+      await this.$store.dispatch(UPDATE_ITINERARY_POST_DRAFT, payload);
+      await this.fetchDraftsPreview();
+      this.isUpdateDraftStart = false;
     },
     async getDetails(postID) {
       this.isGetDetailsStart = true;

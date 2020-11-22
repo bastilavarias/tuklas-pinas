@@ -1,5 +1,5 @@
 import {
-  IPostItineraryInput,
+  IPostItineraryPayload,
   IPostModelSaveCategoryInput,
   IPostModelSaveDestinationInput,
   IPostModelSaveDetailsInput,
@@ -21,6 +21,7 @@ import {
   IPostServiceSaveTravelStoryDraftInput,
   IPostServiceUpdateTravelStoryDraftInput,
   IPostServiceSaveItineraryDraftInput,
+  IPostServiceUpdateItineraryDraftInput,
 } from "./typeDefs";
 import cloudinaryService from "../cloudinary/service";
 import postModel from "./model";
@@ -316,7 +317,7 @@ const postService = {
     };
     const savedPostDetails = await postModel.saveDetails(savePostDetailsInput);
     await this.saveFiles(savedPostDetails.id, files);
-    return postModel.getBaseSoftDetails(savedPostDetails.id);
+    return postModel.getRawDetails(savedPostDetails.id);
   },
 
   async saveDestinations(postID: number, destinationsID: number[]) {
@@ -381,7 +382,7 @@ const postService = {
     );
   },
 
-  async saveItineraryDetails(postID: number, itinerary: IPostItineraryInput) {
+  async saveItineraryDetails(postID: number, itinerary: IPostItineraryPayload) {
     const saveItineraryPayload: IPostModelSaveItineraryPayload = {
       postID,
       totalDestinations: itinerary.totalDestinations,
@@ -394,6 +395,55 @@ const postService = {
       itinerary.days.map(async (item) => {
         const saveDayPayload: IPostModelSaveItineraryDayPayload = {
           postItineraryID: savedPostItinerary.id,
+          date: item.date,
+          day: item.day,
+          destinationsCount: item.destinationsCount,
+          expenses: item.expenses,
+        };
+        const savedItineraryDay = await postModel.saveItineraryDay(
+          saveDayPayload
+        );
+        await Promise.all(
+          item.timestamps.map(async (timestamp) => {
+            const saveTimestampPayload: IPostModelSaveItineraryDayTimestampPayload = {
+              postItineraryDayID: savedItineraryDay.id,
+              time: timestamp.time,
+              transportation: timestamp.transportation,
+              fare: timestamp.fare,
+              expenses: timestamp.expenses,
+              otherDetails: timestamp.otherDetails,
+              destinationID: timestamp.destinationID,
+            };
+            const savedItineraryDayTimestamp = await postModel.saveItineraryDayTimestamp(
+              saveTimestampPayload
+            );
+            timestamp.interests.map(
+              async (name) =>
+                await postModel.saveItineraryDayTimestampInterest(
+                  savedItineraryDayTimestamp.id,
+                  name
+                )
+            );
+          })
+        );
+      })
+    );
+  },
+
+  async updateItineraryDetails(
+    itineraryID: number,
+    itinerary: IPostItineraryPayload
+  ) {
+    const updateItineraryPayload: IPostItineraryPayload = {
+      totalDestinations: itinerary.totalDestinations,
+      totalExpenses: itinerary.totalExpenses,
+      days: itinerary.days,
+    };
+    await postModel.updateItinerary(itineraryID, updateItineraryPayload);
+    await Promise.all(
+      itinerary.days.map(async (item) => {
+        const saveDayPayload: IPostModelSaveItineraryDayPayload = {
+          postItineraryID: itineraryID,
           date: item.date,
           day: item.day,
           destinationsCount: item.destinationsCount,
@@ -492,7 +542,7 @@ const postService = {
       await postModel.deleteFiles(postID);
       await this.saveFiles(postID, files);
     }
-    return postModel.getBaseSoftDetails(postID);
+    return postModel.getRawDetails(postID);
   },
 
   async updateTravelStoryDraft(
@@ -518,6 +568,36 @@ const postService = {
     await this.saveCategories(updatedDetails.id, input.categories);
     await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
     return await postModel.getTravelStoryDetails(updatedDetails.id);
+  },
+
+  async updateItineraryDraft(
+    postID: number,
+    isDraft: boolean,
+    input: IPostServiceUpdateItineraryDraftInput
+  ) {
+    const updateDetailsPayload: IPostModelUpdateDetailsPayload = {
+      title: input.title,
+      text: input.text,
+      type: "itinerary",
+      isDraft,
+      accountID: 0,
+    };
+    const updatedDetails = await postModel.updateDetails(
+      postID,
+      updateDetailsPayload
+    );
+    const gotItineraryRawDetails = await postModel.getItineraryRawDetailsByPostID(
+      updatedDetails.id
+    );
+    await postModel.deleteDestinations(updatedDetails.id);
+    await postModel.deleteCategories(updatedDetails.id);
+    await postModel.deleteTravelEvents(updatedDetails.id);
+    await postModel.deleteItineraryDays(gotItineraryRawDetails.id);
+    await this.saveDestinations(updatedDetails.id, input.destinationsID);
+    await this.saveCategories(updatedDetails.id, input.categories);
+    await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
+    await this.updateItineraryDetails(updatedDetails.id, input.itinerary);
+    return await postModel.getItineraryDetails(postID);
   },
 };
 

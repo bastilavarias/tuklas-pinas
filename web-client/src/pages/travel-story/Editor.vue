@@ -94,9 +94,9 @@
                     color="secondary"
                     class="text-capitalize"
                     outlined
-                    :loading="isUpdateTravelStoryDraftStart"
+                    :loading="isUpdateDraftStart"
                     :disabled="!isUpdateDraftFormValid"
-                    @click="updateTravelStoryDraft"
+                    @click="updateDraft"
                     v-if="mode === 'draft'"
                     >Update Draft</v-btn
                   >
@@ -208,7 +208,7 @@ export default {
       draftsPreview: [],
       mode: "",
       isGetTravelStoryDetailsStart: false,
-      isUpdateTravelStoryDraftStart: false,
+      isUpdateDraftStart: false,
       isCreateTravelStoryDraftStart: false,
     };
   },
@@ -331,8 +331,8 @@ export default {
         this.form = Object.assign({}, this.defaultTravelStoryForm);
       }
     },
-    async updateTravelStoryDraft() {
-      this.isUpdateTravelStoryDraftStart = true;
+    async updateDraft() {
+      this.isUpdateDraftStart = true;
       const postID = this.$route.params.postID | 0;
       const payload = {
         postID,
@@ -341,7 +341,7 @@ export default {
       };
       await this.$store.dispatch(UPDATE_TRAVEL_STORY_POST_DRAFT, payload);
       await this.fetchDraftsPreview();
-      this.isUpdateTravelStoryDraftStart = false;
+      this.isUpdateDraftStart = false;
     },
     async createTravelStoryDraft() {
       this.isCreateTravelStoryDraftStart = true;
