@@ -13,7 +13,6 @@ import {
   IItineraryPostReviewInput,
   IPostModelSaveReviewInput,
   IPostModelUpdateDetailsPayload,
-  IGenericSoftPost,
   IPostServiceSendCommentInput,
   IPostModelSaveCommentInput,
   IPostServiceSendCommentReplyInput,
@@ -254,7 +253,7 @@ const postService = {
     };
   },
 
-  async fetch(sort: string, skip: number): Promise<IGenericSoftPost[]> {
+  async fetch(sort: string, skip: number): Promise<Post[]> {
     if (sort === "new") return await postModel.fetchNew(skip);
     if (sort === "relevant") return await postModel.fetchRelevant(skip);
     if (sort === "trending") return await postModel.fetchTrending(skip);
@@ -287,13 +286,10 @@ const postService = {
     return await postModel.fetchItineraryDraftsPreview(authorID);
   },
 
-  async getSoftDetails(
-    postID: number,
-    type: string
-  ): Promise<IGenericSoftPost> {
+  async getSoftDetails(postID: number, type: string): Promise<Post> {
     return type === "travel-story"
-      ? await postModel.getTravelStorySoftDetails(postID)
-      : await postModel.getItinerarySoftDetails(postID);
+      ? await this.getTravelStoryDetails(postID)
+      : await this.getItineraryDetails(postID);
   },
 
   async getTravelStoryDetails(postID: number): Promise<Post> {

@@ -245,7 +245,7 @@ export default {
     },
   },
   methods: {
-    async getPostSoftDetails(postID, type) {
+    async getPostDetails(postID, type) {
       this.isGetPostSoftDetailsStart = true;
       const payload = {
         postID,
@@ -255,9 +255,18 @@ export default {
         GET_POST_SOFT_DETAILS,
         payload
       );
-      this.postDetails = Object.assign({}, gotPostDetails);
       this.isGetPostSoftDetailsStart = false;
+      try {
+        this.postDetails = Object.assign({}, gotPostDetails);
+        this.postDetails.destinations = gotPostDetails.destinations.map(
+          (item) => item.destination
+        );
+        this.postDetails.travelEvents = gotPostDetails.travelEvents.map(
+          (item) => item.travelEvent
+        );
+      } catch (_) {}
     },
+
     async sendComment() {
       this.isSendCommentStart = true;
       const { postID } = this.$route.params;
@@ -303,7 +312,7 @@ export default {
     const { postID, type, section } = this.$route.params;
     const parametersNotValid = !postID || !type;
     if (parametersNotValid) return this.goBack();
-    await this.getPostSoftDetails(postID, type);
+    await this.getPostDetails(postID, type);
     if (section === "comment-area")
       return await this.$vuetify.goTo("#comment-area", { offset: 150 });
     this.scrollToTop();

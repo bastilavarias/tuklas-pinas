@@ -3,7 +3,7 @@
     <v-card-title class="font-weight-bold">Itinerary</v-card-title>
     <v-data-table
       :headers="daysTableHeaders"
-      :items="itinerary.days"
+      :items="sortedDays"
       hide-default-footer
     >
       <template v-slot:item.date="{ item }">
@@ -48,7 +48,7 @@
         <v-card-text>
           <v-data-table
             :headers="timestampsTableHeaders"
-            :items="selectedDay.timestamps"
+            :items="sortedTimestamps"
             hide-default-footer
             :single-expand="singleExpand"
             item-key="time"
@@ -99,6 +99,7 @@
 <script>
 import commonUtilities from "@/common/utilities";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
+import moment from "moment";
 
 export default {
   name: "post-details-page-itinerary-table-card",
@@ -170,6 +171,19 @@ export default {
     };
   },
   mixins: [commonUtilities],
+  computed: {
+    sortedDays() {
+      return this.itinerary.days.sort((flat, next) => flat.day - next.day);
+    },
+    sortedTimestamps() {
+      const timestamps = this.selectedDay.timestamps
+        ? this.selectedDay.timestamps
+        : [];
+      return timestamps.sort(
+        (flat, next) => parseInt(flat.time) - parseInt(next.time)
+      );
+    },
+  },
   methods: {
     openItineraryDayDialog(day) {
       this.selectedDay = day;

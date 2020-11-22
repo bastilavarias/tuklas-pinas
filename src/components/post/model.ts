@@ -1,6 +1,5 @@
 import {
   IPostActivityReviewInput,
-  ITravelStoryPostSoftDetails,
   IPostModelSaveCategoryInput,
   IPostModelSaveDestinationInput,
   IPostModelSaveDetailsInput,
@@ -14,10 +13,8 @@ import {
   IPostRestaurantReviewInput,
   IPostLodgingReviewInput,
   IPostTransportationReviewInput,
-  IItineraryPostSoftDetails,
   IPostModelSaveReviewInput,
   IPostModelUpdateDetailsPayload,
-  IGenericSoftPost,
   IPostModelSaveCommentInput,
   IPostModelSaveCommentReplyInput,
   IPostItineraryPayload,
@@ -26,11 +23,8 @@ import Post from "../../database/entities/Post";
 import PostFile from "../../database/entities/PostFile";
 import { getRepository } from "typeorm";
 import PostDestination from "../../database/entities/PostDestination";
-import Destination from "../../database/entities/Destination";
-import genericModel from "../generic/model";
 import PostCategory from "../../database/entities/PostCategory";
 import PostTravelEvent from "../../database/entities/PostTravelEvent";
-import TravelEvent from "../../database/entities/TravelEvent";
 import PostItineraryDay from "../../database/entities/PostItineraryDay";
 import PostItineraryDayTimestamp from "../../database/entities/PostItineraryDayTimestamp";
 import PostItinerary from "../../database/entities/PostItinerary";
@@ -323,7 +317,7 @@ const postModel = {
     return await this.getCommentReplyReaction(savedReaction.id);
   },
 
-  async fetchNew(skip: number): Promise<IGenericSoftPost[]> {
+  async fetchNew(skip: number): Promise<Post[]> {
     const isDeleted = false;
     const isDraft = false;
     const raw = await getRepository(Post)
@@ -338,13 +332,13 @@ const postModel = {
     return await Promise.all(
       raw.map(async (item) =>
         item.type === "travel-story"
-          ? await this.getTravelStorySoftDetails(item.id)
-          : await this.getItinerarySoftDetails(item.id)
+          ? await this.getTravelStoryDetails(item.id)
+          : await this.getItineraryDetails(item.id)
       )
     );
   },
 
-  async fetchRelevant(skip: number): Promise<IGenericSoftPost[]> {
+  async fetchRelevant(skip: number): Promise<Post[]> {
     const isDeleted = false;
     const isDraft = false;
     const raw = await getRepository(Post)
@@ -363,13 +357,13 @@ const postModel = {
     return await Promise.all(
       raw.map(async (item) =>
         item.type === "travel-story"
-          ? await this.getTravelStorySoftDetails(item.id)
-          : await this.getItinerarySoftDetails(item.id)
+          ? await this.getTravelStoryDetails(item.id)
+          : await this.getItineraryDetails(item.id)
       )
     );
   },
 
-  async fetchTrending(skip: number): Promise<IGenericSoftPost[]> {
+  async fetchTrending(skip: number): Promise<Post[]> {
     const isDeleted = false;
     const isDraft = false;
     const raw = await getRepository(Post)
@@ -387,8 +381,8 @@ const postModel = {
     return await Promise.all(
       raw.map(async (item) =>
         item.type === "travel-story"
-          ? await this.getTravelStorySoftDetails(item.id)
-          : await this.getItinerarySoftDetails(item.id)
+          ? await this.getTravelStoryDetails(item.id)
+          : await this.getItineraryDetails(item.id)
       )
     );
   },
@@ -496,32 +490,6 @@ const postModel = {
     return gotDetails!;
   },
 
-  async getTravelStorySoftDetails(
-    postID: number
-  ): Promise<ITravelStoryPostSoftDetails> {
-    // @ts-ignore
-    const gotDetails: ITravelStoryPostSoftDetails = <
-      ITravelStoryPostSoftDetails
-    >await Post.findOne(postID, {
-      relations: [
-        "author",
-        "author.profile",
-        "author.profile.image",
-        "reactions",
-        "reactions.account",
-      ],
-    });
-    gotDetails.files = await this.getFiles(gotDetails.id);
-    gotDetails.destinations = await this.getDestinations(gotDetails.id);
-    gotDetails.categories = await this.getCategories(gotDetails.id);
-    gotDetails.travelEvents = await this.getTravelEvents(gotDetails.id);
-    gotDetails.commentsCount = await this.countComments(gotDetails.id);
-    gotDetails.reactionsCount = await this.countReactions(gotDetails.id);
-    // @ts-ignore
-    delete gotDetails.author.password;
-    return gotDetails!;
-  },
-
   async getTravelStoryDetails(postID: number): Promise<Post> {
     const gotDetails = await Post.findOne(postID, {
       relations: [
@@ -531,7 +499,20 @@ const postModel = {
         "travelEvents.travelEvent",
         "categories",
         "files",
+        "author",
+        "author.profile",
+        "author.profile.image",
+        "reactions",
+        "reactions.account",
       ],
+    }).then(async (post) => {
+      post!.commentsCount = await this.countComments(post!.id);
+      post!.reactionsCount = await this.countReactions(post!.id);
+      post!.reactions.map((reaction) => {
+        // @ts-ignore
+        delete reaction.account.password;
+      });
+      return post;
     });
     return gotDetails!;
   },
@@ -561,110 +542,26 @@ const postModel = {
         "review.finance",
         "review.tips",
         "review.avoids",
+        "author",
+        "author.profile",
+        "author.profile.image",
+        "reactions",
+        "reactions.account",
       ],
+    }).then(async (post) => {
+      post!.commentsCount = await this.countComments(post!.id);
+      post!.reactionsCount = await this.countReactions(post!.id);
+      post!.reactions.map((reaction) => {
+        // @ts-ignore
+        delete reaction.account.password;
+      });
+      return post;
     });
-    return gotDetails!;
-  },
-
-  async getItinerarySoftDetails(
-    postID: number
-  ): Promise<IItineraryPostSoftDetails> {
-    const gotDetails: IItineraryPostSoftDetails = <IItineraryPostSoftDetails>(
-      await Post.findOne(postID, {
-        relations: [
-          "author",
-          "author.profile",
-          "author.profile.image",
-          "reactions",
-          "reactions.account",
-        ],
-      }).then((post) => {
-        post!.reactions.map((reaction) => {
-          // @ts-ignore
-          delete reaction.account.password;
-        });
-        return post;
-      })
-    );
-    gotDetails.files = await this.getFiles(gotDetails.id);
-    gotDetails.destinations = await this.getDestinations(gotDetails.id);
-    gotDetails.categories = await this.getCategories(gotDetails.id);
-    gotDetails.travelEvents = await this.getTravelEvents(gotDetails.id);
-    gotDetails.itinerary = await this.getItinerary(gotDetails.id);
-    gotDetails.review = await this.getReview(gotDetails.id);
-    gotDetails.commentsCount = await this.countComments(gotDetails.id);
-    gotDetails.reactionsCount = await this.countReactions(gotDetails.id);
-    // @ts-ignore
-    delete gotDetails.author.password;
     return gotDetails!;
   },
 
   async getFiles(postID: number): Promise<PostFile[]> {
     return await PostFile.find({ where: { post: { id: postID } } });
-  },
-
-  async getDestinations(postID: number): Promise<Destination[]> {
-    const raw = await getRepository(PostDestination)
-      .createQueryBuilder("post_destination")
-      .select("post_destination.id", "id")
-      .addSelect(`post_destination."destinationId"`, "destinationID")
-      .where(`post_destination."postId" = :postID`, { postID: postID })
-      .getRawMany();
-    return await Promise.all(
-      raw.map(
-        async (postDestination) =>
-          await genericModel.getDestination(postDestination.destinationID)
-      )
-    );
-  },
-
-  async getCategories(postID: number): Promise<PostCategory[]> {
-    return await getRepository(PostCategory)
-      .createQueryBuilder("post_category")
-      .select("DISTINCT post_category.name", "name")
-      .where(`post_category."postId" = :postID`, { postID: postID })
-      .getRawMany();
-  },
-
-  async getTravelEvents(postID: number): Promise<TravelEvent[]> {
-    const raw = await getRepository(PostTravelEvent)
-      .createQueryBuilder("post_travel_event")
-      .select(`post_travel_event."travelEventId"`, "travelEventID")
-      .where(`post_travel_event."postId" = :postID`, { postID: postID })
-      .getRawMany();
-    return await Promise.all(
-      raw.map(
-        async (postTravelEvent) =>
-          await genericModel.getTravelEvent(postTravelEvent.travelEventID)
-      )
-    );
-  },
-
-  async getItinerary(postID: number): Promise<PostItinerary> {
-    const foundItinerary = await PostItinerary.findOne({
-      where: { post: { id: postID } },
-      relations: ["days", "days.timestamps"],
-    });
-    return foundItinerary!;
-  },
-
-  async getReview(postID: number): Promise<PostReview> {
-    const gotReview = await PostReview.findOne({
-      where: { post: { id: postID } },
-      relations: [
-        "restaurants",
-        "lodgings",
-        "transportation",
-        "transportation.destination",
-        "activities",
-        "activities.destination",
-        "internetAccess",
-        "finance",
-        "tips",
-        "avoids",
-      ],
-    });
-    return gotReview!;
   },
 
   async getComment(commentID: number): Promise<PostComment> {
