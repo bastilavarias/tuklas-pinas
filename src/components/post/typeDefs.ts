@@ -43,8 +43,8 @@ export interface IItineraryPostReviewInput {
   lodgings: IPostLodgingReviewInput[];
   transportation: IPostTransportationReviewInput[];
   activities: IPostActivityReviewInput[];
-  internetAccess: IPostInternetAccessReviewInput;
-  finance: IPostFinanceReviewInput;
+  internetAccess: IPostInternetAccessReviewPayload;
+  finance: IPostFinanceReviewPayload;
   tips: string[];
   avoids: string[];
 }
@@ -151,13 +151,13 @@ export interface IPostActivityReviewInput {
   rating: number;
 }
 
-export interface IPostInternetAccessReviewInput {
+export interface IPostInternetAccessReviewPayload {
   text: string;
   rating: number;
 }
 
-export interface IPostFinanceReviewInput
-  extends IPostInternetAccessReviewInput {}
+export interface IPostFinanceReviewPayload
+  extends IPostInternetAccessReviewPayload {}
 
 export interface IPostModelSaveReviewInput {
   postID: number;

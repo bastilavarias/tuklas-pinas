@@ -94,7 +94,7 @@ const postService = {
     await this.saveDestinations(updatedDetails.id, input.destinationsID);
     await this.saveCategories(updatedDetails.id, input.categories);
     await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
-    await this.saveReviews(updatedDetails.id, input.review);
+    await this.saveReview(updatedDetails.id, input.review);
     await this.saveItineraryDetails(updatedDetails.id, input.itinerary);
     return postModel.getItineraryDetails(updatedDetails.id);
   },
@@ -118,7 +118,7 @@ const postService = {
     await this.saveCategories(updatedDetails.id, input.categories);
     await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
     await this.saveItineraryDetails(updatedDetails.id, input.itinerary);
-    await this.saveReviews(updatedDetails.id, input.review);
+    await this.saveReview(updatedDetails.id, input.review);
     // @ts-ignore
     return postModel.getItinerarySoftDetails(updatedDetails.id);
   },
@@ -479,7 +479,7 @@ const postService = {
     );
   },
 
-  async saveReviews(postID: number, review: IItineraryPostReviewInput) {
+  async saveReview(postID: number, review: IItineraryPostReviewInput) {
     const savedInternetAccessReview = await postModel.saveInternetAccessReview(
       review.internetAccess
     );
@@ -524,6 +524,65 @@ const postService = {
     await Promise.all(
       review.avoids.map(
         async (avoid) => await postModel.saveAvoidReview(savedReview.id, avoid)
+      )
+    );
+  },
+
+  async updateReview(postID: number, review: IItineraryPostReviewInput) {
+    const gotReviewRawDetails = await postModel.getReviewRawDetailsByPostID(
+      postID
+    );
+    await postModel.deleteReviewRestaurants(gotReviewRawDetails.id);
+    await postModel.deleteReviewLodgings(gotReviewRawDetails.id);
+    await postModel.deletePostReviewTransportation(gotReviewRawDetails.id);
+    await postModel.deletePostReviewActivities(gotReviewRawDetails.id);
+    await postModel.deletePostReviewTips(gotReviewRawDetails.id);
+    await postModel.deletePostReviewAvoids(gotReviewRawDetails.id);
+    await postModel.updateInternetAccessReview(
+      gotReviewRawDetails.internetAccessID,
+      review.internetAccess
+    );
+    await postModel.updateFinanceReview(
+      gotReviewRawDetails.financeID,
+      review.finance
+    );
+    await Promise.all(
+      review.restaurants.map(
+        async (restaurant) =>
+          await postModel.saveRestaurantReview(
+            gotReviewRawDetails.id,
+            restaurant
+          )
+      )
+    );
+    await Promise.all(
+      review.lodgings.map(
+        async (lodging) =>
+          await postModel.saveLodgingReview(gotReviewRawDetails.id, lodging)
+      )
+    );
+    await Promise.all(
+      review.transportation.map(
+        async (item) =>
+          await postModel.saveTransportationReview(gotReviewRawDetails.id, item)
+      )
+    );
+    await Promise.all(
+      review.activities.map(
+        async (activity) =>
+          await postModel.saveActivityReview(gotReviewRawDetails.id, activity)
+      )
+    );
+    await Promise.all(
+      review.tips.map(
+        async (tip) =>
+          await postModel.saveTipReview(gotReviewRawDetails.id, tip)
+      )
+    );
+    await Promise.all(
+      review.avoids.map(
+        async (avoid) =>
+          await postModel.saveAvoidReview(gotReviewRawDetails.id, avoid)
       )
     );
   },
@@ -593,10 +652,14 @@ const postService = {
     await postModel.deleteCategories(updatedDetails.id);
     await postModel.deleteTravelEvents(updatedDetails.id);
     await postModel.deleteItineraryDays(gotItineraryRawDetails.id);
+    await this.updateItineraryDetails(
+      gotItineraryRawDetails.id,
+      input.itinerary
+    );
+    await this.updateReview(postID, input.review);
     await this.saveDestinations(updatedDetails.id, input.destinationsID);
     await this.saveCategories(updatedDetails.id, input.categories);
     await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
-    await this.updateItineraryDetails(updatedDetails.id, input.itinerary);
     return await postModel.getItineraryDetails(postID);
   },
 };

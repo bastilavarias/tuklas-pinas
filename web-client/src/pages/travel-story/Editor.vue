@@ -15,7 +15,6 @@
                     "
                     :drafts-preview="draftsPreview"
                     editor-route-name="travel-story-post-editor-page"
-                    v-if="draftsPreview.length > 0"
                   ></generic-post-drafts-preview-menu>
                 </v-card-title>
                 <v-card-subtitle
@@ -104,7 +103,7 @@
                     color="primary"
                     @click="createTravelStoryPost"
                     :loading="isCreateTravelStoryPostStart"
-                    :disabled="!isCreateTravelStoryFormValid"
+                    :disabled="!isCreateFormValid"
                     v-if="mode === 'submit'"
                     >CREATE</v-btn
                   >
@@ -112,7 +111,7 @@
                     color="primary"
                     @click="createTravelStoryDraft"
                     :loading="isCreateTravelStoryDraftStart"
-                    :disabled="!isCreateTravelStoryFormValid"
+                    :disabled="!isCreateFormValid"
                     v-if="mode === 'draft'"
                     >CREATE</v-btn
                   >
@@ -219,7 +218,7 @@ export default {
     genericTravelEvents() {
       return this.$store.state.generic.travelEvents;
     },
-    isCreateTravelStoryFormValid() {
+    isCreateFormValid() {
       const { title, text, destinationsID, travelEventsID, files } = this.form;
       const isDestinationsIDIsNotEmpty = destinationsID.length > 0;
       const isTravelEventsIDIsNotEmpty = travelEventsID.length > 0;

@@ -5,8 +5,8 @@ import {
   IPostModelSaveDestinationInput,
   IPostModelSaveDetailsInput,
   IPostModelSaveFilePayload,
-  IPostFinanceReviewInput,
-  IPostInternetAccessReviewInput,
+  IPostFinanceReviewPayload,
+  IPostInternetAccessReviewPayload,
   IPostModelSaveItineraryDayPayload,
   IPostModelSaveItineraryDayTimestampPayload,
   IPostModelSaveItineraryPayload,
@@ -223,7 +223,7 @@ const postModel = {
   },
 
   async saveInternetAccessReview(
-    input: IPostInternetAccessReviewInput
+    input: IPostInternetAccessReviewPayload
   ): Promise<PostReviewInternetAccess> {
     const { text, rating } = input;
     return await PostReviewInternetAccess.create({
@@ -233,7 +233,7 @@ const postModel = {
   },
 
   async saveFinanceReview(
-    input: IPostFinanceReviewInput
+    input: IPostFinanceReviewPayload
   ): Promise<PostReviewFinance> {
     const { text, rating } = input;
     return await PostReviewFinance.create({
@@ -791,6 +791,21 @@ const postModel = {
     return gotDetails!;
   },
 
+  async getReviewRawDetailsByPostID(
+    postID: number
+  ): Promise<{ id: number; internetAccessID: number; financeID: number }> {
+    const gotDetails = getRepository(PostReview)
+      .createQueryBuilder("review")
+      .select([
+        "id",
+        `"internetAccessId" as "internetAccessID"`,
+        `"financeId" as "financeID"`,
+      ])
+      .where(`review."postId" = :postID`, { postID })
+      .getRawOne();
+    return gotDetails!;
+  },
+
   async updateDetails(
     postID: number,
     input: IPostModelUpdateDetailsPayload
@@ -810,6 +825,25 @@ const postModel = {
       { id: itineraryID },
       { totalDestinations, totalExpenses }
     );
+  },
+
+  async updateInternetAccessReview(
+    internetAccessReviewID: number,
+    payload: IPostInternetAccessReviewPayload
+  ) {
+    const { text, rating } = payload;
+    await PostReviewInternetAccess.update(
+      { id: internetAccessReviewID },
+      { text, rating }
+    );
+  },
+
+  async updateFinanceReview(
+    financeReviewID: number,
+    payload: IPostFinanceReviewPayload
+  ) {
+    const { text, rating } = payload;
+    await PostReviewFinance.update({ id: financeReviewID }, { text, rating });
   },
 
   async countComments(postID: number): Promise<number> {
@@ -883,6 +917,30 @@ const postModel = {
 
   async deleteItineraryDays(itineraryID: number) {
     await PostItineraryDay.delete({ itinerary: { id: itineraryID } });
+  },
+
+  async deleteReviewRestaurants(reviewID: number) {
+    await PostReviewRestaurant.delete({ review: { id: reviewID } });
+  },
+
+  async deleteReviewLodgings(reviewID: number) {
+    await PostReviewLodging.delete({ review: { id: reviewID } });
+  },
+
+  async deletePostReviewTransportation(reviewID: number) {
+    await PostReviewTransportation.delete({ review: { id: reviewID } });
+  },
+
+  async deletePostReviewActivities(reviewID: number) {
+    await PostReviewActivity.delete({ review: { id: reviewID } });
+  },
+
+  async deletePostReviewTips(reviewID: number) {
+    await PostReviewTip.delete({ review: { id: reviewID } });
+  },
+
+  async deletePostReviewAvoids(reviewID: number) {
+    await PostReviewAvoid.delete({ review: { id: reviewID } });
   },
 };
 

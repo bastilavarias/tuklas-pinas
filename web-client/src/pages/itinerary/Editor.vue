@@ -13,7 +13,6 @@
                     :is-loading="isFetchDraftsPreviewStart"
                     :drafts-preview="draftsPreview"
                     editor-route-name="itinerary-post-editor-page"
-                    v-if="draftsPreview.length > 0"
                   ></generic-post-drafts-preview-menu>
                 </v-card-title>
                 <v-card-subtitle
@@ -126,8 +125,9 @@
                   <v-btn
                     color="primary"
                     @click="createItineraryPost"
+                    :disabled="!isCreateFormValid"
                     :loading="isCreateItineraryPostStart"
-                    >Post</v-btn
+                    >Create</v-btn
                   >
                 </v-card-actions>
               </v-card>
@@ -257,6 +257,29 @@ export default {
     isUpdateDraftFormValid() {
       const { title } = this.form;
       return title;
+    },
+    isCreateFormValid() {
+      const {
+        title,
+        text,
+        destinationsID,
+        travelEventsID,
+        files,
+        itinerary,
+      } = this.form;
+      const isDestinationsIDIsNotEmpty = destinationsID.length > 0;
+      const isTravelEventsIDIsNotEmpty = travelEventsID.length > 0;
+      const isFilesIsNotEmptyAndExceeding =
+        files.length > 0 && files.length < 26;
+      const hasItineraryDays = itinerary.days.length > 0;
+      return (
+        title &&
+        text &&
+        isDestinationsIDIsNotEmpty &&
+        isTravelEventsIDIsNotEmpty &&
+        isFilesIsNotEmptyAndExceeding &&
+        hasItineraryDays
+      );
     },
   },
   watch: {
@@ -407,7 +430,6 @@ export default {
         this.form.review.tips = review.tips.map((tip) => tip.text);
         this.form.review.avoids = review.avoids.map((avoid) => avoid.text);
       } catch (_) {
-        console.log(_);
         this.clearForm();
       }
     },
