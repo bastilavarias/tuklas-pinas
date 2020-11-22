@@ -127,6 +127,15 @@
                     @click="createItineraryPost"
                     :disabled="!isCreateFormValid"
                     :loading="isCreateItineraryPostStart"
+                    v-if="mode === 'submit'"
+                    >Create</v-btn
+                  >
+                  <v-btn
+                    color="primary"
+                    @click="createDraft"
+                    :disabled="!isCreateFormValid"
+                    :loading="isCreateDraftStart"
+                    v-if="mode === 'draft'"
                     >Create</v-btn
                   >
                 </v-card-actions>
@@ -226,6 +235,7 @@ export default {
       draftsPreview: [],
       isSaveDraftStart: false,
       isUpdateDraftStart: false,
+      isCreateDraftStart: false,
       mode: "submit",
       isGetDetailsStart: false,
     };
@@ -359,6 +369,27 @@ export default {
       await this.$store.dispatch(UPDATE_ITINERARY_POST_DRAFT, payload);
       await this.fetchDraftsPreview();
       this.isUpdateDraftStart = false;
+    },
+    async createDraft() {
+      this.isCreateDraftStart = true;
+      const postID = this.$route.params.postID | 0;
+      const payload = {
+        postID,
+        ...this.form,
+        isDraft: false,
+      };
+      const createdPost = await this.$store.dispatch(
+        UPDATE_ITINERARY_POST_DRAFT,
+        payload
+      );
+      await this.fetchDraftsPreview();
+      const isObjectValid = this.validateObject(createdPost);
+      if (isObjectValid)
+        return await this.$router.push({
+          name: "post-details-page",
+          params: { postID: createdPost.id, type: "itinerary" },
+        });
+      this.isCreateDraftStart = false;
     },
     async getDetails(postID) {
       this.isGetDetailsStart = true;
