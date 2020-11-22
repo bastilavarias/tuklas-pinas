@@ -15,6 +15,10 @@ export default class PostItineraryDayTimestampInterest extends BaseEntity {
   @Column("text", { nullable: true })
   name: string;
 
-  @ManyToOne(() => PostItineraryDayTimestamp)
+  @ManyToOne(
+    () => PostItineraryDayTimestamp,
+    (timestamp) => timestamp.interests,
+    { onDelete: "CASCADE" }
+  )
   timestamp: PostItineraryDayTimestamp;
 }

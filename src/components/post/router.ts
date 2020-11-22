@@ -144,4 +144,10 @@ postRouter.put(
   postController.updateTravelStoryDraft
 );
 
+postRouter.put(
+  "/update-itinerary-draft/:postID/:isDraft",
+  passport.authenticate("jwt", { session: false }),
+  postController.updateItineraryDraft
+);
+
 export default postRouter;

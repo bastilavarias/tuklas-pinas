@@ -13,7 +13,6 @@
                     :is-loading="isFetchDraftsPreviewStart"
                     :drafts-preview="draftsPreview"
                     editor-route-name="itinerary-post-editor-page"
-                    v-if="draftsPreview.length > 0"
                   ></generic-post-drafts-preview-menu>
                 </v-card-title>
                 <v-card-subtitle
@@ -114,10 +113,21 @@
                     >Save as Draft</v-btn
                   >
                   <v-btn
+                    color="secondary"
+                    class="text-capitalize"
+                    outlined
+                    @click="updateDraft"
+                    :loading="isUpdateDraftStart"
+                    :disabled="!isUpdateDraftFormValid"
+                    v-if="mode === 'draft'"
+                    >Update Draft</v-btn
+                  >
+                  <v-btn
                     color="primary"
                     @click="createItineraryPost"
+                    :disabled="!isCreateFormValid"
                     :loading="isCreateItineraryPostStart"
-                    >Post</v-btn
+                    >Create</v-btn
                   >
                 </v-card-actions>
               </v-card>
@@ -155,6 +165,7 @@ import {
   FETCH_ITINERARY_POST_DRAFTS_PREVIEW,
   GET_ITINERARY_POST_DETAILS,
   SAVE_ITINERARY_POST_DRAFT,
+  UPDATE_ITINERARY_POST_DRAFT,
 } from "@/store/types/post";
 import GenericDestinationsAutocomplete from "@/components/generic/autocomplete/Destinations";
 import commonValidation from "@/common/validation";
@@ -214,6 +225,7 @@ export default {
       isFetchDraftsPreviewStart: false,
       draftsPreview: [],
       isSaveDraftStart: false,
+      isUpdateDraftStart: false,
       mode: "submit",
       isGetDetailsStart: false,
     };
@@ -241,6 +253,33 @@ export default {
     isSaveDraftFormValid() {
       const { title } = this.form;
       return title;
+    },
+    isUpdateDraftFormValid() {
+      const { title } = this.form;
+      return title;
+    },
+    isCreateFormValid() {
+      const {
+        title,
+        text,
+        destinationsID,
+        travelEventsID,
+        files,
+        itinerary,
+      } = this.form;
+      const isDestinationsIDIsNotEmpty = destinationsID.length > 0;
+      const isTravelEventsIDIsNotEmpty = travelEventsID.length > 0;
+      const isFilesIsNotEmptyAndExceeding =
+        files.length > 0 && files.length < 26;
+      const hasItineraryDays = itinerary.days.length > 0;
+      return (
+        title &&
+        text &&
+        isDestinationsIDIsNotEmpty &&
+        isTravelEventsIDIsNotEmpty &&
+        isFilesIsNotEmptyAndExceeding &&
+        hasItineraryDays
+      );
     },
   },
   watch: {
@@ -308,6 +347,18 @@ export default {
         this.mode = "submit";
         this.clearForm();
       }
+    },
+    async updateDraft() {
+      this.isUpdateDraftStart = true;
+      const postID = this.$route.params.postID | 0;
+      const payload = {
+        postID,
+        ...this.form,
+        isDraft: true,
+      };
+      await this.$store.dispatch(UPDATE_ITINERARY_POST_DRAFT, payload);
+      await this.fetchDraftsPreview();
+      this.isUpdateDraftStart = false;
     },
     async getDetails(postID) {
       this.isGetDetailsStart = true;
@@ -379,7 +430,6 @@ export default {
         this.form.review.tips = review.tips.map((tip) => tip.text);
         this.form.review.avoids = review.avoids.map((avoid) => avoid.text);
       } catch (_) {
-        console.log(_);
         this.clearForm();
       }
     },

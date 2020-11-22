@@ -19,6 +19,7 @@ import {
   UPDATE_TRAVEL_STORY_POST_DRAFT,
   SAVE_ITINERARY_POST_DRAFT,
   GET_ITINERARY_POST_DETAILS,
+  UPDATE_ITINERARY_POST_DRAFT,
 } from "@/store/types/post";
 import postApiService from "@/services/api/modules/post";
 import { SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS } from "@/store/types/generic";
@@ -424,6 +425,56 @@ const postStore = {
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,
           text: "Updating travel story draft done!",
+          color: "success",
+        });
+        return result.data ? result.data : {};
+      } catch (error) {
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Something went wrong to the server. Please try again.",
+          color: "error",
+        });
+      }
+    },
+    async [UPDATE_ITINERARY_POST_DRAFT](
+      { commit },
+      {
+        postID,
+        isDraft,
+        title,
+        text,
+        destinationsID,
+        categories,
+        travelEventsID,
+        files,
+        itinerary,
+        review,
+      }
+    ) {
+      try {
+        const formData = new FormData();
+        files.map((file) => formData.append("files", file));
+        const updatedPostFiles = await postApiService.updateFiles(
+          postID,
+          formData
+        );
+        const form = {
+          title,
+          text,
+          destinationsID,
+          travelEventsID,
+          categories,
+          itinerary,
+          review,
+        };
+        const result = await postApiService.updateItineraryDraft(
+          updatedPostFiles.id,
+          isDraft,
+          form
+        );
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Updating itinerary draft done!",
           color: "success",
         });
         return result.data ? result.data : {};

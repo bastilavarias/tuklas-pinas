@@ -29,12 +29,12 @@ export interface IPostServiceCreateTravelStoryInput extends IBasePostInput {}
 
 export interface IPostServiceSaveTravelStoryDraftInput extends IBasePostInput {}
 export interface IPostServiceSaveItineraryDraftInput extends IBasePostInput {
-  itinerary: IPostItineraryInput;
+  itinerary: IPostItineraryPayload;
   review: IItineraryPostReviewInput;
 }
 
 export interface IPostServiceCreateItineraryInput extends IBasePostInput {
-  itinerary: IPostItineraryInput;
+  itinerary: IPostItineraryPayload;
   review: IItineraryPostReviewInput;
 }
 
@@ -43,8 +43,8 @@ export interface IItineraryPostReviewInput {
   lodgings: IPostLodgingReviewInput[];
   transportation: IPostTransportationReviewInput[];
   activities: IPostActivityReviewInput[];
-  internetAccess: IPostInternetAccessReviewInput;
-  finance: IPostFinanceReviewInput;
+  internetAccess: IPostInternetAccessReviewPayload;
+  finance: IPostFinanceReviewPayload;
   tips: string[];
   avoids: string[];
 }
@@ -99,7 +99,7 @@ export interface IPostItineraryDay {
   timestamps: IPostItineraryTimestamp[];
 }
 
-export interface IPostItineraryInput {
+export interface IPostItineraryPayload {
   totalDestinations: number;
   totalExpenses: number;
   days: IPostItineraryDay[];
@@ -151,13 +151,13 @@ export interface IPostActivityReviewInput {
   rating: number;
 }
 
-export interface IPostInternetAccessReviewInput {
+export interface IPostInternetAccessReviewPayload {
   text: string;
   rating: number;
 }
 
-export interface IPostFinanceReviewInput
-  extends IPostInternetAccessReviewInput {}
+export interface IPostFinanceReviewPayload
+  extends IPostInternetAccessReviewPayload {}
 
 export interface IPostModelSaveReviewInput {
   postID: number;
@@ -189,3 +189,8 @@ export interface IPostServiceSendCommentReplyInput extends IBaseCommentInput {}
 
 export interface IPostServiceUpdateTravelStoryDraftInput
   extends IBasePostInput {}
+
+export interface IPostServiceUpdateItineraryDraftInput extends IBasePostInput {
+  itinerary: IPostItineraryPayload;
+  review: IItineraryPostReviewInput;
+}

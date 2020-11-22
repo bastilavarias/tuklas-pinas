@@ -6,6 +6,7 @@ import {
   IPostServiceSaveItineraryDraftInput,
   IPostServiceSaveTravelStoryDraftInput,
   IPostServiceSendCommentInput,
+  IPostServiceUpdateItineraryDraftInput,
   IPostServiceUpdateTravelStoryDraftInput,
 } from "./typeDefs";
 
@@ -355,6 +356,32 @@ const postController = {
         files: [],
       };
       const result = await postService.updateTravelStoryDraft(
+        postID,
+        isDraft,
+        input
+      );
+      response.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      response.status(400).json(error);
+    }
+  },
+
+  async updateItineraryDraft(request: Request, response: Response) {
+    try {
+      const postID = parseInt(request.params.postID) || 0;
+      const isDraft = request.params.isDraft === "true";
+      const input: IPostServiceUpdateItineraryDraftInput = {
+        title: request.body.title || "",
+        text: request.body.text || "",
+        destinationsID: request.body.destinationsID || [],
+        travelEventsID: request.body.travelEventsID || [],
+        categories: request.body.categories || [],
+        files: [],
+        itinerary: request.body.itinerary || [],
+        review: request.body.review || [],
+      };
+      const result = await postService.updateItineraryDraft(
         postID,
         isDraft,
         input

@@ -1,5 +1,5 @@
 import {
-  IPostItineraryInput,
+  IPostItineraryPayload,
   IPostModelSaveCategoryInput,
   IPostModelSaveDestinationInput,
   IPostModelSaveDetailsInput,
@@ -21,6 +21,7 @@ import {
   IPostServiceSaveTravelStoryDraftInput,
   IPostServiceUpdateTravelStoryDraftInput,
   IPostServiceSaveItineraryDraftInput,
+  IPostServiceUpdateItineraryDraftInput,
 } from "./typeDefs";
 import cloudinaryService from "../cloudinary/service";
 import postModel from "./model";
@@ -93,7 +94,7 @@ const postService = {
     await this.saveDestinations(updatedDetails.id, input.destinationsID);
     await this.saveCategories(updatedDetails.id, input.categories);
     await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
-    await this.saveReviews(updatedDetails.id, input.review);
+    await this.saveReview(updatedDetails.id, input.review);
     await this.saveItineraryDetails(updatedDetails.id, input.itinerary);
     return postModel.getItineraryDetails(updatedDetails.id);
   },
@@ -117,7 +118,7 @@ const postService = {
     await this.saveCategories(updatedDetails.id, input.categories);
     await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
     await this.saveItineraryDetails(updatedDetails.id, input.itinerary);
-    await this.saveReviews(updatedDetails.id, input.review);
+    await this.saveReview(updatedDetails.id, input.review);
     // @ts-ignore
     return postModel.getItinerarySoftDetails(updatedDetails.id);
   },
@@ -316,7 +317,7 @@ const postService = {
     };
     const savedPostDetails = await postModel.saveDetails(savePostDetailsInput);
     await this.saveFiles(savedPostDetails.id, files);
-    return postModel.getBaseSoftDetails(savedPostDetails.id);
+    return postModel.getRawDetails(savedPostDetails.id);
   },
 
   async saveDestinations(postID: number, destinationsID: number[]) {
@@ -381,7 +382,7 @@ const postService = {
     );
   },
 
-  async saveItineraryDetails(postID: number, itinerary: IPostItineraryInput) {
+  async saveItineraryDetails(postID: number, itinerary: IPostItineraryPayload) {
     const saveItineraryPayload: IPostModelSaveItineraryPayload = {
       postID,
       totalDestinations: itinerary.totalDestinations,
@@ -429,7 +430,56 @@ const postService = {
     );
   },
 
-  async saveReviews(postID: number, review: IItineraryPostReviewInput) {
+  async updateItineraryDetails(
+    itineraryID: number,
+    itinerary: IPostItineraryPayload
+  ) {
+    const updateItineraryPayload: IPostItineraryPayload = {
+      totalDestinations: itinerary.totalDestinations,
+      totalExpenses: itinerary.totalExpenses,
+      days: itinerary.days,
+    };
+    await postModel.updateItinerary(itineraryID, updateItineraryPayload);
+    await Promise.all(
+      itinerary.days.map(async (item) => {
+        const saveDayPayload: IPostModelSaveItineraryDayPayload = {
+          postItineraryID: itineraryID,
+          date: item.date,
+          day: item.day,
+          destinationsCount: item.destinationsCount,
+          expenses: item.expenses,
+        };
+        const savedItineraryDay = await postModel.saveItineraryDay(
+          saveDayPayload
+        );
+        await Promise.all(
+          item.timestamps.map(async (timestamp) => {
+            const saveTimestampPayload: IPostModelSaveItineraryDayTimestampPayload = {
+              postItineraryDayID: savedItineraryDay.id,
+              time: timestamp.time,
+              transportation: timestamp.transportation,
+              fare: timestamp.fare,
+              expenses: timestamp.expenses,
+              otherDetails: timestamp.otherDetails,
+              destinationID: timestamp.destinationID,
+            };
+            const savedItineraryDayTimestamp = await postModel.saveItineraryDayTimestamp(
+              saveTimestampPayload
+            );
+            timestamp.interests.map(
+              async (name) =>
+                await postModel.saveItineraryDayTimestampInterest(
+                  savedItineraryDayTimestamp.id,
+                  name
+                )
+            );
+          })
+        );
+      })
+    );
+  },
+
+  async saveReview(postID: number, review: IItineraryPostReviewInput) {
     const savedInternetAccessReview = await postModel.saveInternetAccessReview(
       review.internetAccess
     );
@@ -478,6 +528,65 @@ const postService = {
     );
   },
 
+  async updateReview(postID: number, review: IItineraryPostReviewInput) {
+    const gotReviewRawDetails = await postModel.getReviewRawDetailsByPostID(
+      postID
+    );
+    await postModel.deleteReviewRestaurants(gotReviewRawDetails.id);
+    await postModel.deleteReviewLodgings(gotReviewRawDetails.id);
+    await postModel.deletePostReviewTransportation(gotReviewRawDetails.id);
+    await postModel.deletePostReviewActivities(gotReviewRawDetails.id);
+    await postModel.deletePostReviewTips(gotReviewRawDetails.id);
+    await postModel.deletePostReviewAvoids(gotReviewRawDetails.id);
+    await postModel.updateInternetAccessReview(
+      gotReviewRawDetails.internetAccessID,
+      review.internetAccess
+    );
+    await postModel.updateFinanceReview(
+      gotReviewRawDetails.financeID,
+      review.finance
+    );
+    await Promise.all(
+      review.restaurants.map(
+        async (restaurant) =>
+          await postModel.saveRestaurantReview(
+            gotReviewRawDetails.id,
+            restaurant
+          )
+      )
+    );
+    await Promise.all(
+      review.lodgings.map(
+        async (lodging) =>
+          await postModel.saveLodgingReview(gotReviewRawDetails.id, lodging)
+      )
+    );
+    await Promise.all(
+      review.transportation.map(
+        async (item) =>
+          await postModel.saveTransportationReview(gotReviewRawDetails.id, item)
+      )
+    );
+    await Promise.all(
+      review.activities.map(
+        async (activity) =>
+          await postModel.saveActivityReview(gotReviewRawDetails.id, activity)
+      )
+    );
+    await Promise.all(
+      review.tips.map(
+        async (tip) =>
+          await postModel.saveTipReview(gotReviewRawDetails.id, tip)
+      )
+    );
+    await Promise.all(
+      review.avoids.map(
+        async (avoid) =>
+          await postModel.saveAvoidReview(gotReviewRawDetails.id, avoid)
+      )
+    );
+  },
+
   async updateFiles(
     postID: number,
     files: Express.Multer.File[]
@@ -492,7 +601,7 @@ const postService = {
       await postModel.deleteFiles(postID);
       await this.saveFiles(postID, files);
     }
-    return postModel.getBaseSoftDetails(postID);
+    return postModel.getRawDetails(postID);
   },
 
   async updateTravelStoryDraft(
@@ -518,6 +627,40 @@ const postService = {
     await this.saveCategories(updatedDetails.id, input.categories);
     await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
     return await postModel.getTravelStoryDetails(updatedDetails.id);
+  },
+
+  async updateItineraryDraft(
+    postID: number,
+    isDraft: boolean,
+    input: IPostServiceUpdateItineraryDraftInput
+  ) {
+    const updateDetailsPayload: IPostModelUpdateDetailsPayload = {
+      title: input.title,
+      text: input.text,
+      type: "itinerary",
+      isDraft,
+      accountID: 0,
+    };
+    const updatedDetails = await postModel.updateDetails(
+      postID,
+      updateDetailsPayload
+    );
+    const gotItineraryRawDetails = await postModel.getItineraryRawDetailsByPostID(
+      updatedDetails.id
+    );
+    await postModel.deleteDestinations(updatedDetails.id);
+    await postModel.deleteCategories(updatedDetails.id);
+    await postModel.deleteTravelEvents(updatedDetails.id);
+    await postModel.deleteItineraryDays(gotItineraryRawDetails.id);
+    await this.updateItineraryDetails(
+      gotItineraryRawDetails.id,
+      input.itinerary
+    );
+    await this.updateReview(postID, input.review);
+    await this.saveDestinations(updatedDetails.id, input.destinationsID);
+    await this.saveCategories(updatedDetails.id, input.categories);
+    await this.saveTravelEvents(updatedDetails.id, input.travelEventsID);
+    return await postModel.getItineraryDetails(postID);
   },
 };
 

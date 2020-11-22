@@ -142,6 +142,13 @@ const postApiService = {
     );
   },
 
+  async updateItineraryDraft(postID, isDraft, form) {
+    return await apiService.put(
+      `/post/update-itinerary-draft/${postID}/${isDraft}`,
+      form
+    );
+  },
+
   async updateFiles(postID, formData) {
     const result = await apiService.put(
       `/post/update-files/${postID}`,
