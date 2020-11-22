@@ -109,8 +109,8 @@
                   >
                   <v-btn
                     color="primary"
-                    @click="createTravelStoryDraft"
-                    :loading="isCreateTravelStoryDraftStart"
+                    @click="createDraft"
+                    :loading="isCreateDraftStart"
                     :disabled="!isCreateFormValid"
                     v-if="mode === 'draft'"
                     >CREATE</v-btn
@@ -208,7 +208,7 @@ export default {
       mode: "",
       isGetTravelStoryDetailsStart: false,
       isUpdateDraftStart: false,
-      isCreateTravelStoryDraftStart: false,
+      isCreateDraftStart: false,
     };
   },
   computed: {
@@ -342,8 +342,8 @@ export default {
       await this.fetchDraftsPreview();
       this.isUpdateDraftStart = false;
     },
-    async createTravelStoryDraft() {
-      this.isCreateTravelStoryDraftStart = true;
+    async createDraft() {
+      this.isCreateDraftStart = true;
       const postID = this.$route.params.postID | 0;
       const payload = {
         postID,
@@ -361,7 +361,7 @@ export default {
           name: "post-details-page",
           params: { postID: createdPost.id, type: "travel-story" },
         });
-      this.isCreateTravelStoryDraftStart = false;
+      this.isCreateDraftStart = false;
     },
   },
   async created() {
