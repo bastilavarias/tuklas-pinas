@@ -1,9 +1,4 @@
 import { ICloudinaryFileMeta } from "../cloudinary/typeDefs";
-import Post from "../../database/entities/Post";
-import Destination from "../../database/entities/Destination";
-import TravelEvent from "../../database/entities/TravelEvent";
-import PostItinerary from "../../database/entities/PostItinerary";
-import PostReview from "../../database/entities/PostReview";
 
 export interface IBasePostInput {
   title: string;
@@ -12,17 +7,6 @@ export interface IBasePostInput {
   travelEventsID: number[];
   categories: string[];
   files: ICloudinaryFileMeta[];
-}
-
-//@ts-ignore
-export interface ITravelStoryPostSoftDetails extends Post {
-  destinations: Destination[];
-  travelEvents: TravelEvent[];
-}
-
-export interface IItineraryPostSoftDetails extends ITravelStoryPostSoftDetails {
-  itinerary: PostItinerary;
-  review: PostReview;
 }
 
 export interface IPostServiceCreateTravelStoryInput extends IBasePostInput {}
@@ -164,10 +148,6 @@ export interface IPostModelSaveReviewInput {
   postInternetAccessReviewID: number;
   postFinanceReviewID: number;
 }
-
-export type IGenericSoftPost =
-  | ITravelStoryPostSoftDetails
-  | IItineraryPostSoftDetails;
 
 export interface IBaseCommentInput {
   text: string;

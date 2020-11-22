@@ -441,6 +441,7 @@ export default {
           );
           return day;
         });
+
         this.form.review = review;
         this.form.review.transportation = review.transportation.map(
           ({ type, text, rating, destination }) => ({
