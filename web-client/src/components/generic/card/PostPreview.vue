@@ -75,7 +75,7 @@
 import CustomRouterLink from "@/components/custom/RouterLink";
 import GenericPostShareDialog from "@/components/generic/dialog/PostShare";
 import GenericPostHeaderCard from "@/components/generic/card/PostHeader";
-import CustomVideoPlayer from "@/components/custom/VideoPlayer";
+import CustomVideoPlayer from "@/components/custom/video-player/VideoPlayer";
 import CustomPostGalleryPreview from "@/components/custom/PostGalleryPreview";
 import commonUtilities from "@/common/utilities";
 import { REMOVE_POST_REACTION, SEND_POST_REACTION } from "@/store/types/post";

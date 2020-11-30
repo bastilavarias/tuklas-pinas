@@ -3,14 +3,10 @@
     <v-card-text>
       <v-row dense>
         <v-col cols="12">
-          <v-autocomplete
-            single-line
+          <generic-geolocations-autocomplete
             label="Search Destination"
-            filled
-            rounded
-            append-icon="mdi-magnify"
-            hide-details
-          ></v-autocomplete>
+            :geoLocation="geoLocation"
+          ></generic-geolocations-autocomplete>
         </v-col>
       </v-row>
     </v-card-text>
@@ -93,14 +89,17 @@
 <script>
 import GenericTravelStoryPostSearchPreviewListItem from "@/components/generic/list-item/TravelStoryPostSearchPreview";
 import GenericItineraryPostSearchPreviewListItem from "@/components/generic/list-item/ItineraryPostSearchPreview";
+import GenericGeolocationsAutocomplete from "@/components/generic/autocomplete/Geolocations";
 export default {
   components: {
+    GenericGeolocationsAutocomplete,
     GenericItineraryPostSearchPreviewListItem,
     GenericTravelStoryPostSearchPreviewListItem,
   },
   data() {
     return {
       isEventsExplorerExpanded: false,
+      geoLocation: null,
     };
   },
 };

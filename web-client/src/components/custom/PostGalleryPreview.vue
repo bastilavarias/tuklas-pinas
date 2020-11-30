@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import CustomVideoPlayer from "@/components/custom/VideoPlayer";
+import CustomVideoPlayer from "@/components/custom/video-player/VideoPlayer";
 import Carousel from "vue-owl-carousel";
 import GenericGalleryDialog from "@/components/generic/dialog/Gallery";
 export default {

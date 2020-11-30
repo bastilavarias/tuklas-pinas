@@ -60,7 +60,7 @@
 <script>
 import GenericPostHeaderCard from "@/components/generic/card/PostHeader";
 import GenericPostShareDialog from "@/components/generic/dialog/PostShare";
-import CustomVideoPlayer from "@/components/custom/VideoPlayer";
+import CustomVideoPlayer from "@/components/custom/video-player/VideoPlayer";
 import CustomPostGalleryPreview from "@/components/custom/PostGalleryPreview";
 import { REMOVE_POST_REACTION, SEND_POST_REACTION } from "@/store/types/post";
 import commonUtilities from "@/common/utilities";
