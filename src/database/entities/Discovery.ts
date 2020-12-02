@@ -11,7 +11,7 @@ import {
 import Account from "./Account";
 import DiscoveryFile from "./DiscoveryFile";
 import { ColumnCoordinationTransformer } from "../helper";
-import { DiscoveryCoordination } from "../../components/discovery/typeDefs";
+import { IDiscoveryCoordination } from "../../components/discovery/typeDefs";
 
 @Entity()
 export default class Discovery extends BaseEntity {
@@ -22,7 +22,7 @@ export default class Discovery extends BaseEntity {
     nullable: false,
     transformer: ColumnCoordinationTransformer,
   })
-  coordination: DiscoveryCoordination;
+  coordination: IDiscoveryCoordination;
 
   @Index({ fulltext: true })
   @Column("text", { nullable: true })
