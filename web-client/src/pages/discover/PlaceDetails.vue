@@ -61,18 +61,18 @@
         </v-col>
       </v-row>
     </v-card-text>
-    <discover-page-image-uploader-dialog
+    <discover-page-experience-form-dialog
       :is-open.sync="isDialogOpen"
-    ></discover-page-image-uploader-dialog>
+    ></discover-page-experience-form-dialog>
   </v-card>
 </template>
 
 <script>
 import CustomTooltipButton from "@/components/custom/TooltipButton";
 import commonUtilities from "@/common/utilities";
-import DiscoverPageImageUploaderDialog from "@/components/discover-page/ImageUploaderDialog";
+import DiscoverPageExperienceFormDialog from "@/components/discover-page/ExperienceFormDialog";
 export default {
-  components: { DiscoverPageImageUploaderDialog, CustomTooltipButton },
+  components: { DiscoverPageExperienceFormDialog, CustomTooltipButton },
   mixins: [commonUtilities],
   data() {
     return {

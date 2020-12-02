@@ -111,17 +111,17 @@ const routes = [
     children: [
       {
         path: "",
-        component: () => import("@/pages/discover/map/Index"),
+        component: () => import("@/pages/discover/Index"),
         children: [
           {
             path: "",
-            name: "discover-map-dashboard-page",
-            component: () => import("@/pages/discover/map/Dashboard"),
+            name: "discover-dashboard-page",
+            component: () => import("@/pages/discover/Dashboard"),
           },
           {
-            path: "place-details",
-            name: "discover-map-post-details-page",
-            component: () => import("@/pages/discover/map/PlaceDetails"),
+            path: "place-details/:latitude/:longitude",
+            name: "discover-place-details-page",
+            component: () => import("@/pages/discover/PlaceDetails"),
           },
         ],
       },

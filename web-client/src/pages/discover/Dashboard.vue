@@ -5,7 +5,7 @@
         <v-col cols="12">
           <generic-geolocations-autocomplete
             label="Search Destination"
-            :geoLocation="geoLocation"
+            :geoLocation.sync="geoLocation"
           ></generic-geolocations-autocomplete>
         </v-col>
       </v-row>
@@ -101,6 +101,17 @@ export default {
       isEventsExplorerExpanded: false,
       geoLocation: null,
     };
+  },
+  watch: {
+    async geoLocation(val) {
+      const { lat, lon } = val;
+      if (lat && lon) {
+        await this.$router.push({
+          name: "discover-place-details-page",
+          params: { latitude: lat, longitude: lon },
+        });
+      }
+    },
   },
 };
 </script>

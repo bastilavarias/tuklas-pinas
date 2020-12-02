@@ -34,7 +34,7 @@
       <v-btn
         color="transparent"
         depressed
-        :to="{ name: 'discover-map-dashboard-page' }"
+        :to="{ name: 'discover-dashboard-page' }"
         active-class="primary"
       >
         <span class="mr-1 text-capitalize">Discover</span>
