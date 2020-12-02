@@ -11,7 +11,11 @@
       <v-card-text>
         <v-row dense>
           <v-col cols="12">
-            <v-textarea label="Text *" outlined></v-textarea>
+            <v-textarea
+              label="Text *"
+              outlined
+              v-model="form.text"
+            ></v-textarea>
           </v-col>
           <v-col cols="12">
             <custom-file-dropzone
@@ -35,7 +39,13 @@
           @click="isOpenLocal = false"
           >Cancel</v-btn
         >
-        <v-btn color="primary">Submit</v-btn>
+        <v-btn
+          color="primary"
+          @click="submitExperience"
+          :loading="isSubmitExperienceStart"
+          :disabled="!isFormValid"
+          >Submit</v-btn
+        >
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -44,6 +54,8 @@
 <script>
 import CustomFileDropzone from "@/components/custom/FileDropzone";
 import CustomRating from "@/components/custom/Rating";
+import { CREATE_DISCOVERY } from "@/store/types/discovery";
+import commonValidation from "@/common/validation";
 
 const defaultForm = {
   text: "",
@@ -65,7 +77,20 @@ export default {
       isOpenLocal: false,
       form: Object.assign({}, defaultForm),
       defaultForm,
+      isSubmitExperienceStart: false,
     };
+  },
+  computed: {
+    isFormValid() {
+      const { text, files } = this.form;
+      return text && files.length > 0;
+    },
+    latitude() {
+      return this.$route.params.latitude;
+    },
+    longitude() {
+      return this.$route.params.longitude;
+    },
   },
   watch: {
     isOpen(val) {
@@ -75,6 +100,27 @@ export default {
       this.$emit("update:isOpen", val);
     },
   },
+  methods: {
+    async submitExperience() {
+      this.isSubmitExperienceStart = true;
+      const payload = {
+        latitude: this.latitude,
+        longitude: this.longitude,
+        ...this.form,
+      };
+      const submittedExperience = await this.$store.dispatch(
+        CREATE_DISCOVERY,
+        payload
+      );
+      this.isSubmitExperienceStart = false;
+      const isObjectValid = this.validateObject(submittedExperience);
+      if (isObjectValid) {
+        this.isOpenLocal = false;
+        this.form = Object.assign({}, this.defaultForm);
+      }
+    },
+  },
+  mixins: [commonValidation],
   created() {
     this.isOpenLocal = this.isOpen;
   },

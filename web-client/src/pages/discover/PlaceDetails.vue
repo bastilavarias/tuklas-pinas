@@ -35,8 +35,8 @@
       </v-list-item-content>
       <v-list-item-action>
         <custom-tooltip-button
-          icon="mdi-upload-multiple"
-          text="Upload"
+          icon="mdi-plus"
+          text="Add your Experience"
           :action="() => (this.isDialogOpen = true)"
         ></custom-tooltip-button>
       </v-list-item-action>
@@ -44,20 +44,7 @@
     <v-card-text>
       <v-row dense>
         <v-col cols="12">
-          <span class="subtitle-1">Images</span>
-        </v-col>
-        <v-col cols="12">
-          <masonry :cols="2" :gutter="5">
-            <template v-for="(image, index) in images">
-              <v-img
-                :key="index"
-                width="100%"
-                height="auto"
-                :src="image"
-                class="mb-1"
-              ></v-img>
-            </template>
-          </masonry>
+          <span class="subtitle-2 font-weight-regular">Experiences(20)</span>
         </v-col>
       </v-row>
     </v-card-text>
@@ -76,14 +63,6 @@ export default {
   mixins: [commonUtilities],
   data() {
     return {
-      images: [
-        "https://images.pexels.com/photos/902288/pexels-photo-902288.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "https://images.pexels.com/photos/2604843/pexels-photo-2604843.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "https://images.pexels.com/photos/1076240/pexels-photo-1076240.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "https://images.pexels.com/photos/210367/pexels-photo-210367.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        "https://images.pexels.com/photos/2475386/pexels-photo-2475386.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        "https://images.pexels.com/photos/1364554/pexels-photo-1364554.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-      ],
       isDialogOpen: false,
     };
   },

@@ -1,10 +1,10 @@
 import apiService from "@/services/api";
 
 const discoveryApiService = {
-  async create({ latitude, longitude, text, rating, files }) {
+  async create(latitude, longitude, formData) {
     const result = await apiService.post(
       `/discovery/create/${latitude}/${longitude}`,
-      { text, rating, files }
+      formData
     );
     return result.data || {};
   },
