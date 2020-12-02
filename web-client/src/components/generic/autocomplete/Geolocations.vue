@@ -19,12 +19,13 @@
     clearable
     return-object
     ref="geolocation"
+    no-data-text="No available GeoLocations."
   >
   </v-autocomplete>
 </template>
 
 <script>
-import { DISCOVER_SEARCH_GEOLOCATIONS } from "@/store/types/discover";
+import { DISCOVERY_SEARCH_GEOLOCATIONS } from "@/store/types/discovery";
 
 let timeout = null;
 export default {
@@ -68,7 +69,7 @@ export default {
       timeout = setTimeout(async () => {
         this.isSearchStart = true;
         this.locations = await this.$store.dispatch(
-          DISCOVER_SEARCH_GEOLOCATIONS,
+          DISCOVERY_SEARCH_GEOLOCATIONS,
           this.search
         );
         this.isSearchStart = false;
