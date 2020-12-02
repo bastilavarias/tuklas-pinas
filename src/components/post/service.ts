@@ -119,7 +119,7 @@ const postService = {
     await this.saveItineraryDetails(updatedDetails.id, input.itinerary);
     await this.saveReview(updatedDetails.id, input.review);
     // @ts-ignore
-    return postModel.getItinerarySoftDetails(updatedDetails.id);
+    return postModel.getItineraryDetails(updatedDetails.id);
   },
 
   async sendComment(
