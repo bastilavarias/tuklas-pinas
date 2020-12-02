@@ -6,7 +6,6 @@
         v-model="ratingLocal"
         color="primary"
         background-color="grey darken-1"
-        hover
         class="mr-2"
       ></v-rating>
       <span class="grey--text subtitle-2"> ({{ ratingLocal }}) </span>

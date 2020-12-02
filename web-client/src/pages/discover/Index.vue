@@ -3,7 +3,7 @@
     <l-map
       v-if="showMap"
       :zoom="zoom"
-      :center="center"
+      :center.sync="center"
       :options="mapOptions"
       height="100%"
       class="map"
@@ -13,7 +13,7 @@
         <l-marker
           :key="index"
           :lat-lng="latLng(location.latitude, location.longitude)"
-          @click="$router.push({ name: 'discover-map-post-details-page' })"
+          @click="$router.push({ name: 'discover-place-details-page' })"
         >
         </l-marker>
       </template>
@@ -79,6 +79,28 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    latitude() {
+      return this.$route.params.latitude;
+    },
+    longitude() {
+      return this.$route.params.longitude;
+    },
+  },
+  watch: {
+    latitude() {
+      if (this.latitude && this.longitude) {
+        this.center = latLng(this.latitude, this.longitude);
+        this.zoom = 8;
+      }
+    },
+    longitude() {
+      if (this.latitude && this.longitude) {
+        this.center = latLng(this.latitude, this.longitude);
+        this.zoom = 8;
+      }
+    },
   },
 };
 </script>
