@@ -51,13 +51,10 @@ const discoveryModel = {
   async fetchCoordination(): Promise<IDiscoveryCoordination[]> {
     return await getRepository(Discovery)
       .createQueryBuilder("discovery")
-      .distinctOn(["coordination"])
+      .distinctOn([`"placeName"`])
       .select(["coordination"])
       .getRawMany()
-      .then((coords) => {
-        //@ts-ignore
-        return coords;
-      });
+      .then((results) => results.map((result) => result.coordination));
   },
 };
 
