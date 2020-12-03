@@ -5,6 +5,12 @@ export interface IDiscoveryCoordination {
   longitude: any;
 }
 
+export interface IDiscoveryServiceCreatePayload {
+  coordination: IDiscoveryCoordination;
+  placeName: string;
+  country: string;
+}
+
 export interface IDiscoveryServiceCreateInput {
   files: Express.Multer.File[];
   text: string;

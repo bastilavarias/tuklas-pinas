@@ -22,7 +22,7 @@ const discoveryStore = {
 
     async [CREATE_DISCOVERY](
       { commit },
-      { latitude, longitude, text, rating, files }
+      { placeName, country, latitude, longitude, text, rating, files }
     ) {
       try {
         const formData = new FormData();
@@ -30,6 +30,8 @@ const discoveryStore = {
         formData.append("text", text);
         formData.append("rating", rating);
         const createdDiscovery = await discoveryApiService.create(
+          placeName,
+          country,
           latitude,
           longitude,
           formData

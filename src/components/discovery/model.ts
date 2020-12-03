@@ -3,18 +3,23 @@ import {
   IDiscoveryCoordination,
   IDiscoveryModelSaveFilePayload,
   IDiscoveryServiceCreateInput,
+  IDiscoveryServiceCreatePayload,
 } from "./typeDefs";
 import DiscoveryFile from "../../database/entities/DiscoveryFile";
+import { getRepository } from "typeorm";
 
 const discoveryModel = {
   async saveDetails(
-    coordination: IDiscoveryCoordination,
     authorID: number,
+    payload: IDiscoveryServiceCreatePayload,
     input: IDiscoveryServiceCreateInput
   ): Promise<Discovery> {
+    const { placeName, coordination, country } = payload;
     const { text, rating } = input;
     return await Discovery.create({
       author: { id: authorID },
+      placeName,
+      country,
       coordination,
       text,
       rating,
@@ -41,6 +46,18 @@ const discoveryModel = {
     //@ts-ignore
     delete gotDetails.author.password;
     return gotDetails!;
+  },
+
+  async fetchCoordination(): Promise<IDiscoveryCoordination[]> {
+    return await getRepository(Discovery)
+      .createQueryBuilder("discovery")
+      .distinctOn(["coordination"])
+      .select(["coordination"])
+      .getRawMany()
+      .then((coords) => {
+        //@ts-ignore
+        return coords;
+      });
   },
 };
 

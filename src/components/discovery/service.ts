@@ -2,6 +2,7 @@ import {
   IDiscoveryCoordination,
   IDiscoveryModelSaveFilePayload,
   IDiscoveryServiceCreateInput,
+  IDiscoveryServiceCreatePayload,
 } from "./typeDefs";
 import discoveryModel from "./model";
 import cloudinaryService from "../cloudinary/service";
@@ -10,13 +11,13 @@ import Discovery from "../../database/entities/Discovery";
 
 const discoveryService = {
   async create(
-    coordination: IDiscoveryCoordination,
     authorID: number,
+    payload: IDiscoveryServiceCreatePayload,
     input: IDiscoveryServiceCreateInput
   ): Promise<Discovery> {
     const savedDetails = await discoveryModel.saveDetails(
-      coordination,
       authorID,
+      payload,
       input
     );
     if (input.files.length > 0) {
@@ -38,6 +39,10 @@ const discoveryService = {
       );
     }
     return await discoveryModel.getDetails(savedDetails.id);
+  },
+
+  async fetchCoordination(): Promise<IDiscoveryCoordination[]> {
+    return await discoveryModel.fetchCoordination();
   },
 };
 
