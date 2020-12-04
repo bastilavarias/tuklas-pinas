@@ -1,5 +1,4 @@
 import {
-  IDiscoveryCoordination,
   IDiscoveryModelSaveFilePayload,
   IDiscoveryServiceCreateInput,
   IDiscoveryServiceCreatePayload,
@@ -41,8 +40,8 @@ const discoveryService = {
     return await discoveryModel.getDetails(savedDetails.id);
   },
 
-  async fetchCoordination(): Promise<IDiscoveryCoordination[]> {
-    return await discoveryModel.fetchCoordination();
+  async fetchDiscoveries(): Promise<Discovery[]> {
+    return await discoveryModel.fetchDiscoveries();
   },
 };
 

@@ -3,6 +3,7 @@ import geolocationService from "@/services/geolocation";
 import {
   CREATE_DISCOVERY,
   DISCOVERY_SEARCH_GEOLOCATIONS,
+  FETCH_DISCOVERIES,
 } from "@/store/types/discovery";
 import discoveryApiService from "@/services/api/modules/discovery";
 
@@ -42,6 +43,18 @@ const discoveryStore = {
           color: "success",
         });
         return createdDiscovery;
+      } catch (error) {
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Something went wrong to the server. Please try again.",
+          color: "error",
+        });
+      }
+    },
+
+    async [FETCH_DISCOVERIES]({ commit }) {
+      try {
+        return await discoveryApiService.fetchDiscoveries();
       } catch (error) {
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,

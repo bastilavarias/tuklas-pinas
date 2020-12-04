@@ -11,6 +11,6 @@ discoveryRouter.post(
   discoveryController.create
 );
 
-discoveryRouter.get("/coordination", discoveryController.fetchCoordination);
+discoveryRouter.get("/", discoveryController.fetchDiscoveries);
 
 export default discoveryRouter;

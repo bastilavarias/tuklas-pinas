@@ -8,6 +8,11 @@ const discoveryApiService = {
     );
     return result.data || {};
   },
+
+  async fetchDiscoveries() {
+    const result = await apiService.get("/discovery");
+    return result.data || [];
+  },
 };
 
 export default discoveryApiService;

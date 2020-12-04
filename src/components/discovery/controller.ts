@@ -32,9 +32,9 @@ const discoveryController = {
     }
   },
 
-  async fetchCoordination(_: Request, response: Response) {
+  async fetchDiscoveries(_: Request, response: Response) {
     try {
-      const fetchedCoordination = await discoveryService.fetchCoordination();
+      const fetchedCoordination = await discoveryService.fetchDiscoveries();
       response.status(200).json(fetchedCoordination);
     } catch (error) {
       console.log(error);

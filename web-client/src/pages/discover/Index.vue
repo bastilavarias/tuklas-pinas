@@ -3,17 +3,18 @@
     <l-map
       v-if="showMap"
       :zoom="zoom"
-      :center.sync="center"
+      :center="center"
       :options="mapOptions"
       height="100%"
       class="map"
+      ref="map"
     >
       <l-tile-layer :url="url" :attribution="attribution" />
-      <template v-for="(location, index) in sampleMarkerLocations">
+      <template v-for="(discovery, index) in discoveries">
         <l-marker
           :key="index"
-          :lat-lng="latLng(location.latitude, location.longitude)"
-          @click="$router.push({ name: 'discover-place-details-page' })"
+          :lat-lng="latLng(discovery.coordination.x, discovery.coordination.y)"
+          @click="goToPlaceDetails(discovery)"
         >
         </l-marker>
       </template>
@@ -34,6 +35,7 @@ import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from "vue2-leaflet";
 import DiscoverPagePostsToolbar from "@/components/discover-page/PostsToolbar";
 import GenericItineraryPostSearchPreviewListItem from "@/components/generic/list-item/ItineraryPostSearchPreview";
 import GenericTravelStoryPostSearchPreviewListItem from "@/components/generic/list-item/TravelStoryPostSearchPreview";
+import { FETCH_DISCOVERIES } from "@/store/types/discovery";
 
 export default {
   components: {
@@ -60,24 +62,7 @@ export default {
       },
       isSideDrawerOpen: false,
       showMap: true,
-      sampleMarkerLocations: [
-        {
-          latitude: 9.834949,
-          longitude: 118.738358,
-        },
-        {
-          latitude: 20.448507,
-          longitude: 121.97081,
-        },
-        {
-          latitude: 14.599512,
-          longitude: 120.984222,
-        },
-        {
-          latitude: 10.315699,
-          longitude: 123.885437,
-        },
-      ],
+      discoveries: [],
     };
   },
   computed: {
@@ -87,20 +72,50 @@ export default {
     longitude() {
       return this.$route.params.longitude;
     },
+    routeName() {
+      return this.$route.name;
+    },
   },
   watch: {
+    routeName(val) {
+      if (val === "discover-dashboard-page") {
+        try {
+          this.center = latLng(14.63, 120.977);
+          setTimeout(() => (this.zoom = 6), 500);
+        } catch (_) {}
+      }
+    },
     latitude() {
-      if (this.latitude && this.longitude) {
+      if (this.routeName === "discover-place-details-page") {
         this.center = latLng(this.latitude, this.longitude);
-        this.zoom = 8;
+        setTimeout(() => (this.zoom = 8), 500);
       }
     },
-    longitude() {
-      if (this.latitude && this.longitude) {
-        this.center = latLng(this.latitude, this.longitude);
-        this.zoom = 8;
-      }
+  },
+  methods: {
+    async fetchDiscoveries() {
+      this.showMap = false;
+      this.discoveries = await this.$store.dispatch(FETCH_DISCOVERIES);
+      this.showMap = true;
     },
+    async goToPlaceDetails({ placeName, country, coordination }) {
+      await this.$router.push({
+        name: "discover-place-details-page",
+        params: {
+          placeName,
+          country,
+          latitude: coordination.x,
+          longitude: coordination.y,
+        },
+      });
+    },
+  },
+  async created() {
+    if (this.routeName === "discover-place-details-page") {
+      this.center = latLng(this.latitude, this.longitude);
+      setTimeout(() => (this.zoom = 8), 500);
+    }
+    await this.fetchDiscoveries();
   },
 };
 </script>

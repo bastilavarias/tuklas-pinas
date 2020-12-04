@@ -1,6 +1,5 @@
 import Discovery from "../../database/entities/Discovery";
 import {
-  IDiscoveryCoordination,
   IDiscoveryModelSaveFilePayload,
   IDiscoveryServiceCreateInput,
   IDiscoveryServiceCreatePayload,
@@ -48,13 +47,12 @@ const discoveryModel = {
     return gotDetails!;
   },
 
-  async fetchCoordination(): Promise<IDiscoveryCoordination[]> {
+  async fetchDiscoveries(): Promise<Discovery[]> {
     return await getRepository(Discovery)
       .createQueryBuilder("discovery")
       .distinctOn([`"placeName"`])
-      .select(["coordination"])
-      .getRawMany()
-      .then((results) => results.map((result) => result.coordination));
+      .select([`"placeName"`, "country", "coordination"])
+      .getRawMany();
   },
 };
 
