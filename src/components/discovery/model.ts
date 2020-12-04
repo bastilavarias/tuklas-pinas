@@ -48,18 +48,6 @@ const discoveryModel = {
     return gotDetails!;
   },
 
-  async getByCoordination(
-    coordination: IDiscoveryCoordination
-  ): Promise<Discovery> {
-    const gotDetails = await Discovery.findOne({
-      where: { coordination },
-      relations: ["author", "author.profile", "files"],
-    });
-    //@ts-ignore
-    delete gotDetails.author.password;
-    return gotDetails!;
-  },
-
   async fetch(): Promise<Discovery[]> {
     return await getRepository(Discovery)
       .createQueryBuilder("discovery")
@@ -73,15 +61,16 @@ const discoveryModel = {
   ): Promise<Discovery[]> {
     return await getRepository(Discovery)
       .createQueryBuilder("discovery")
-      .select(["id", `"placeName"`, "country", "coordination"])
+      .select(["id"])
       .where(
         `coordination ~= '${coordination.latitude},${coordination.longitude}'`
       )
       .getRawMany()
-      .then((result) => {
-        console.log(result);
-        return result;
-      });
+      .then(async (results) =>
+        Promise.all(
+          results.map(async (discovery) => await this.get(discovery.id))
+        )
+      );
   },
 };
 

@@ -49,23 +49,22 @@ const discoveryService = {
   async getPlaceDetails(
     coordination: IDiscoveryCoordination
   ): Promise<IDiscoveryServiceGetPlaceDetailsResult> {
-    const fetchDiscoveries = await discoveryModel.fetchByCoordination(
+    const fetchedDiscoveries = await discoveryModel.fetchByCoordination(
       coordination
     );
-    if (fetchDiscoveries.length > 0) {
-      const firstSelection = fetchDiscoveries[0];
+    if (fetchedDiscoveries.length > 0) {
+      const firstSelection = fetchedDiscoveries[0];
       return {
         name: firstSelection.placeName,
         country: firstSelection.country,
         coordination: firstSelection.coordination,
-        experiences: fetchDiscoveries,
+        experiences: fetchedDiscoveries,
       };
     }
-    const gotDiscovery = await discoveryModel.getByCoordination(coordination);
     return {
-      name: gotDiscovery.placeName,
-      country: gotDiscovery.country,
-      coordination: gotDiscovery.coordination,
+      name: "",
+      country: "",
+      coordination: { latitude: 0.0, longitude: 0.0 },
       experiences: [],
     };
   },
