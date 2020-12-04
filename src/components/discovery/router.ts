@@ -10,7 +10,10 @@ discoveryRouter.post(
   passport.authenticate("jwt", { session: false }),
   discoveryController.create
 );
-
-discoveryRouter.get("/", discoveryController.fetchDiscoveries);
+discoveryRouter.get("/", discoveryController.fetch);
+discoveryRouter.get(
+  "/place-details/:latitude/:longitude",
+  discoveryController.getPlaceDetails
+);
 
 export default discoveryRouter;
