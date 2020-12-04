@@ -5,10 +5,12 @@ import passport from "passport";
 const discoveryRouter = express.Router();
 
 discoveryRouter.post(
-  "/create/:latitude/:longitude",
+  "/create/:placeName/:country/:latitude/:longitude",
   multer.array("files"),
   passport.authenticate("jwt", { session: false }),
   discoveryController.create
 );
+
+discoveryRouter.get("/", discoveryController.fetchDiscoveries);
 
 export default discoveryRouter;

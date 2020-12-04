@@ -1,20 +1,24 @@
 import Discovery from "../../database/entities/Discovery";
 import {
-  IDiscoveryCoordination,
   IDiscoveryModelSaveFilePayload,
   IDiscoveryServiceCreateInput,
+  IDiscoveryServiceCreatePayload,
 } from "./typeDefs";
 import DiscoveryFile from "../../database/entities/DiscoveryFile";
+import { getRepository } from "typeorm";
 
 const discoveryModel = {
   async saveDetails(
-    coordination: IDiscoveryCoordination,
     authorID: number,
+    payload: IDiscoveryServiceCreatePayload,
     input: IDiscoveryServiceCreateInput
   ): Promise<Discovery> {
+    const { placeName, coordination, country } = payload;
     const { text, rating } = input;
     return await Discovery.create({
       author: { id: authorID },
+      placeName,
+      country,
       coordination,
       text,
       rating,
@@ -41,6 +45,14 @@ const discoveryModel = {
     //@ts-ignore
     delete gotDetails.author.password;
     return gotDetails!;
+  },
+
+  async fetchDiscoveries(): Promise<Discovery[]> {
+    return await getRepository(Discovery)
+      .createQueryBuilder("discovery")
+      .distinctOn([`"placeName"`])
+      .select([`"placeName"`, "country", "coordination"])
+      .getRawMany();
   },
 };
 

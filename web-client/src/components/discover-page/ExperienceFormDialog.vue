@@ -91,6 +91,12 @@ export default {
     longitude() {
       return this.$route.params.longitude;
     },
+    placeName() {
+      return this.$route.params.placeName;
+    },
+    country() {
+      return this.$route.params.country;
+    },
   },
   watch: {
     isOpen(val) {
@@ -106,6 +112,8 @@ export default {
       const payload = {
         latitude: this.latitude,
         longitude: this.longitude,
+        placeName: this.placeName,
+        country: this.country,
         ...this.form,
       };
       const submittedExperience = await this.$store.dispatch(

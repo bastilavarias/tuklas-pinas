@@ -18,6 +18,13 @@ export default class Discovery extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Index({ fulltext: true })
+  @Column("text", { nullable: true })
+  placeName: string;
+
+  @Column({ nullable: false })
+  country: string;
+
   @Column("point", {
     nullable: false,
     transformer: ColumnCoordinationTransformer,

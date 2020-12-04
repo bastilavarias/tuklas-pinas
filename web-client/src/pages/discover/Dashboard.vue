@@ -104,11 +104,16 @@ export default {
   },
   watch: {
     async geoLocation(val) {
-      const { lat, lon } = val;
-      if (lat && lon) {
+      const { display_name, address, lat, lon } = val;
+      if (display_name && lat && lon) {
         await this.$router.push({
           name: "discover-place-details-page",
-          params: { latitude: lat, longitude: lon },
+          params: {
+            placeName: display_name,
+            country: address.country,
+            latitude: lat,
+            longitude: lon,
+          },
         });
       }
     },

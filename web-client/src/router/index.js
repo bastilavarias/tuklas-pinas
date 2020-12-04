@@ -119,7 +119,7 @@ const routes = [
             component: () => import("@/pages/discover/Dashboard"),
           },
           {
-            path: "place-details/:latitude/:longitude",
+            path: "place-details/:placeName/:country/:latitude/:longitude",
             name: "discover-place-details-page",
             component: () => import("@/pages/discover/PlaceDetails"),
           },
