@@ -1,33 +1,12 @@
 <template>
   <v-card color="transparent" flat tile>
-    <div
-      class="search-field"
-      :style="{
-        backgroundImage: `url('${require('@/assets/temp/cover-photo.jpeg')}')`,
-      }"
-    >
-      <v-hover v-slot:default="{ hover }">
-        <v-card-text class="search-field-child">
-          <v-row dense>
-            <v-col cols="12">
-              <div :class="{ 'white elevation-15': hover }">
-                <v-autocomplete
-                  single-line
-                  label="Search Destination"
-                  append-icon="mdi-magnify"
-                  prepend-inner-icon="mdi-menu"
-                  @click:prepend-inner="goBack"
-                  hide-details
-                  filled
-                  :outlined="!hover"
-                  :dark="!hover"
-                ></v-autocomplete>
-              </div>
-            </v-col>
-          </v-row>
-        </v-card-text>
-      </v-hover>
-    </div>
+    <v-card-title>
+      <custom-tooltip-button
+        icon="mdi-view-dashboard"
+        text="Back to Dashboard"
+        :action="() => goBack()"
+      ></custom-tooltip-button>
+    </v-card-title>
     <v-list-item two-line>
       <v-list-item-content>
         <v-list-item-title class="title">Place Name</v-list-item-title>
@@ -59,27 +38,16 @@ import CustomTooltipButton from "@/components/custom/TooltipButton";
 import commonUtilities from "@/common/utilities";
 import DiscoverPageExperienceFormDialog from "@/components/discover-page/ExperienceFormDialog";
 export default {
-  components: { DiscoverPageExperienceFormDialog, CustomTooltipButton },
+  components: {
+    DiscoverPageExperienceFormDialog,
+    CustomTooltipButton,
+  },
   mixins: [commonUtilities],
   data() {
     return {
       isDialogOpen: false,
+      geoLocation: null,
     };
   },
 };
 </script>
-
-<style scoped>
-.search-field {
-  height: 12rem;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}
-
-.search-field-child {
-  position: absolute;
-  left: 0;
-  width: 100%;
-}
-</style>
