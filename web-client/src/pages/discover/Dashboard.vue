@@ -63,43 +63,62 @@
         </template>
       </v-row>
     </div>
-    <div>
-      <div class="px-4 d-flex justify-space-between align-center mb-5">
-        <span class="subtitle-2 secondary--text">Featured Posts</span>
-        <div class="flex-grow-1"></div>
-        <v-chip>
-          <v-icon left> mdi-tune </v-icon>
-          <span class="font-weight-medium">Filters</span>
-        </v-chip>
-      </div>
-      <template v-for="n in [8, 9]">
-        <generic-travel-story-post-search-preview-list-item
-          :key="n"
-        ></generic-travel-story-post-search-preview-list-item>
-      </template>
-      <template v-for="n in [10, 11]">
-        <generic-itinerary-post-search-preview-list-item
-          :key="n"
-        ></generic-itinerary-post-search-preview-list-item>
-      </template>
+    <div class="px-4 d-flex justify-space-between align-center mb-5">
+      <span class="subtitle-2 secondary--text">Trending Posts</span>
+      <div class="flex-grow-1"></div>
+      <v-chip>
+        <v-icon left> mdi-tune </v-icon>
+        <span class="font-weight-medium">Filters</span>
+      </v-chip>
     </div>
+    <template v-for="(post, index) in posts">
+      <discover-page-post-preview-item
+        :key="index"
+        :type="post.type"
+        :title="post.title"
+        :text="post.text"
+        :reactionsCount="post.reactionsCount"
+        :commentsCount="post.commentsCount"
+        :files="post.files"
+      ></discover-page-post-preview-item>
+    </template>
+    <infinite-loading
+      @infinite="fetchTrendingPosts"
+      :identifier="scrollIdentifier"
+    >
+      <template v-slot:spinner>
+        <generic-please-wait-progress-circular></generic-please-wait-progress-circular>
+      </template>
+      <template v-slot:no-more
+        ><span class="caption">No more posts.</span></template
+      >
+      <template v-slot:no-results
+        ><span class="caption">No posts.</span></template
+      >
+    </infinite-loading>
   </v-card>
 </template>
 
 <script>
-import GenericTravelStoryPostSearchPreviewListItem from "@/components/generic/list-item/TravelStoryPostSearchPreview";
-import GenericItineraryPostSearchPreviewListItem from "@/components/generic/list-item/ItineraryPostSearchPreview";
 import GenericGeolocationsAutocomplete from "@/components/generic/autocomplete/Geolocations";
+import { FETCH_POSTS } from "@/store/types/post";
+import GenericPleaseWaitProgressCircular from "@/components/generic/progress-circular/PleaseWait";
+import DiscoverPagePostPreviewItem from "@/components/discover-page/PostPreviewItem";
 export default {
   components: {
+    DiscoverPagePostPreviewItem,
+    GenericPleaseWaitProgressCircular,
     GenericGeolocationsAutocomplete,
-    GenericItineraryPostSearchPreviewListItem,
-    GenericTravelStoryPostSearchPreviewListItem,
   },
   data() {
     return {
       isEventsExplorerExpanded: false,
       geoLocation: null,
+      postType: "trending",
+      skip: 0,
+      scrollPage: 1,
+      scrollIdentifier: +new Date(),
+      posts: [],
     };
   },
   watch: {
@@ -116,6 +135,20 @@ export default {
           },
         });
       }
+    },
+  },
+  methods: {
+    async fetchTrendingPosts($state) {
+      const payload = {
+        type: this.postType,
+        skip: this.skip,
+      };
+      const fetchedPosts = await this.$store.dispatch(FETCH_POSTS, payload);
+      if (fetchedPosts.length === 0) return $state.complete();
+      this.posts = [...this.posts, ...fetchedPosts];
+      this.skip += 5;
+      this.scrollPage += 1;
+      $state.loaded();
     },
   },
 };
