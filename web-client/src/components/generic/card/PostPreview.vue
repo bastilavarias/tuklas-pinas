@@ -4,7 +4,7 @@
     tile
     :class="`${hasShadow ? 'custom-shadow' : ''} ${className}`"
   >
-    <div class="px-4 py-3 d-flex align-start justify-space-between">
+    <div class="px-4 pt-3 d-flex align-start justify-space-between">
       <div class="mr-2">
         <span class="caption"
           ><span class="text-capitalize">{{
@@ -13,16 +13,6 @@
           - Posted {{ displayPostType }}
           {{ formatRelativeTime(createdAt) }}</span
         >
-        <custom-router-link
-          :to="{ name: 'post-details-page', params: { postID, type } }"
-          v-if="title"
-        >
-          <span class="d-block mb-1 title font-weight-bold secondary--text">{{
-            title
-          }}</span>
-        </custom-router-link>
-
-        <span class="body-2 d-block mb-3" v-if="text">{{ text }}</span>
       </div>
       <v-avatar :size="40">
         <v-img
@@ -30,6 +20,23 @@
           :lazy-src="author.profile.image.display"
         ></v-img>
       </v-avatar>
+    </div>
+    <div class="px-4 pb-3">
+      <div class="mb-1">
+        <custom-router-link
+          :to="{ name: 'post-details-page', params: { postID, type } }"
+          v-if="title"
+        >
+          <span class="d-block title font-weight-bold secondary--text">{{
+            title
+          }}</span>
+        </custom-router-link>
+      </div>
+      <div class="mb-3" v-if="text">
+        <span class="body-2">
+          {{ text }}
+        </span>
+      </div>
     </div>
     <custom-post-gallery-preview
       :type="type"

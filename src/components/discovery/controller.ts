@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import {
+  IDiscoveryCoordination,
   IDiscoveryServiceCreateInput,
   IDiscoveryServiceCreatePayload,
 } from "./typeDefs";
@@ -32,10 +33,26 @@ const discoveryController = {
     }
   },
 
-  async fetchDiscoveries(_: Request, response: Response) {
+  async fetch(_: Request, response: Response) {
     try {
-      const fetchedCoordination = await discoveryService.fetchDiscoveries();
+      const fetchedCoordination = await discoveryService.fetch();
       response.status(200).json(fetchedCoordination);
+    } catch (error) {
+      console.log(error);
+      response.status(400).json(error);
+    }
+  },
+
+  async getPlaceDetails(request: Request, response: Response) {
+    try {
+      const coordination: IDiscoveryCoordination = {
+        latitude: parseFloat(request.params.latitude) || 0.0,
+        longitude: parseFloat(request.params.longitude) || 0.0,
+      };
+      const gotPlaceDetails = await discoveryService.getPlaceDetails(
+        coordination
+      );
+      response.status(200).json(gotPlaceDetails);
     } catch (error) {
       console.log(error);
       response.status(400).json(error);

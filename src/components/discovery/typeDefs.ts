@@ -1,4 +1,5 @@
 import { ICloudinaryFileMeta } from "../cloudinary/typeDefs";
+import Discovery from "../../database/entities/Discovery";
 
 export interface IDiscoveryCoordination {
   latitude: any;
@@ -21,4 +22,11 @@ export interface IDiscoveryModelSaveFilePayload extends ICloudinaryFileMeta {
   name: string;
   size: number;
   type: string;
+}
+
+export interface IDiscoveryServiceGetPlaceDetailsResult {
+  name: string;
+  country: string;
+  coordination: IDiscoveryCoordination;
+  experiences: Discovery[];
 }

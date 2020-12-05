@@ -1,5 +1,6 @@
 import Discovery from "../../database/entities/Discovery";
 import {
+  IDiscoveryCoordination,
   IDiscoveryModelSaveFilePayload,
   IDiscoveryServiceCreateInput,
   IDiscoveryServiceCreatePayload,
@@ -38,21 +39,39 @@ const discoveryModel = {
     }).save();
   },
 
-  async getDetails(discoveryID: number): Promise<Discovery> {
+  async get(discoveryID: number): Promise<Discovery> {
     const gotDetails = await Discovery.findOne(discoveryID, {
-      relations: ["author", "author.profile", "files"],
+      relations: ["author", "author.profile", "author.profile.image", "files"],
     });
     //@ts-ignore
     delete gotDetails.author.password;
     return gotDetails!;
   },
 
-  async fetchDiscoveries(): Promise<Discovery[]> {
+  async fetch(): Promise<Discovery[]> {
     return await getRepository(Discovery)
       .createQueryBuilder("discovery")
       .distinctOn([`"placeName"`])
       .select([`"placeName"`, "country", "coordination"])
       .getRawMany();
+  },
+
+  async fetchByCoordination(
+    coordination: IDiscoveryCoordination
+  ): Promise<Discovery[]> {
+    return await getRepository(Discovery)
+      .createQueryBuilder("discovery")
+      .select(["id"])
+      .where(
+        `coordination ~= '${coordination.latitude},${coordination.longitude}'`
+      )
+      .orderBy(`"createdAt"`, "DESC")
+      .getRawMany()
+      .then(async (results) =>
+        Promise.all(
+          results.map(async (discovery) => await this.get(discovery.id))
+        )
+      );
   },
 };
 

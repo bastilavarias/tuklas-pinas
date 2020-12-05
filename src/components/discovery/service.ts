@@ -1,7 +1,9 @@
 import {
+  IDiscoveryCoordination,
   IDiscoveryModelSaveFilePayload,
   IDiscoveryServiceCreateInput,
   IDiscoveryServiceCreatePayload,
+  IDiscoveryServiceGetPlaceDetailsResult,
 } from "./typeDefs";
 import discoveryModel from "./model";
 import cloudinaryService from "../cloudinary/service";
@@ -37,11 +39,34 @@ const discoveryService = {
         })
       );
     }
-    return await discoveryModel.getDetails(savedDetails.id);
+    return await discoveryModel.get(savedDetails.id);
   },
 
-  async fetchDiscoveries(): Promise<Discovery[]> {
-    return await discoveryModel.fetchDiscoveries();
+  async fetch(): Promise<Discovery[]> {
+    return await discoveryModel.fetch();
+  },
+
+  async getPlaceDetails(
+    coordination: IDiscoveryCoordination
+  ): Promise<IDiscoveryServiceGetPlaceDetailsResult> {
+    const fetchedDiscoveries = await discoveryModel.fetchByCoordination(
+      coordination
+    );
+    if (fetchedDiscoveries.length > 0) {
+      const firstSelection = fetchedDiscoveries[0];
+      return {
+        name: firstSelection.placeName,
+        country: firstSelection.country,
+        coordination: firstSelection.coordination,
+        experiences: fetchedDiscoveries,
+      };
+    }
+    return {
+      name: "",
+      country: "",
+      coordination: { latitude: 0.0, longitude: 0.0 },
+      experiences: [],
+    };
   },
 };
 

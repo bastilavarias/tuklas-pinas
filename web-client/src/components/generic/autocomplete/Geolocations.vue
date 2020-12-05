@@ -20,6 +20,7 @@
     return-object
     ref="geolocation"
     no-data-text="No available GeoLocations."
+    :dark="dark"
   >
   </v-autocomplete>
 </template>
@@ -38,6 +39,10 @@ export default {
     geoLocation: {
       type: Object | null,
       required: true,
+    },
+    dark: {
+      type: Boolean,
+      required: false,
     },
   },
   data() {

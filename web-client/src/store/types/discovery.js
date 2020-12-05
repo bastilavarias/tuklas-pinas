@@ -1,3 +1,5 @@
 export const DISCOVERY_SEARCH_GEOLOCATIONS = "discovery/SEARCH_GEOLOCATIONS";
 export const CREATE_DISCOVERY = "discovery/CREATE";
 export const FETCH_DISCOVERIES = "discovery/FETCH_COORDINATION";
+export const DISCOVERY_GET_PLACE_DETAILS = "discovery/GET_PLACE_DETAILS";
+export const SET_DISCOVERIES = "discover/SET_DISCOVERIES";

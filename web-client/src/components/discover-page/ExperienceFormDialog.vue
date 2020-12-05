@@ -25,7 +25,7 @@
           </v-col>
           <v-col cols="12">
             <v-row justify="center" align="center">
-              <custom-rating :rating="form.rating"></custom-rating>
+              <custom-rating :rating.sync="form.rating"></custom-rating>
             </v-row>
           </v-col>
         </v-row>
@@ -54,7 +54,7 @@
 <script>
 import CustomFileDropzone from "@/components/custom/FileDropzone";
 import CustomRating from "@/components/custom/Rating";
-import { CREATE_DISCOVERY } from "@/store/types/discovery";
+import { CREATE_DISCOVERY, FETCH_DISCOVERIES } from "@/store/types/discovery";
 import commonValidation from "@/common/validation";
 
 const defaultForm = {
@@ -71,6 +71,10 @@ export default {
       type: Boolean,
       required: true,
     },
+    experiences: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
@@ -78,12 +82,13 @@ export default {
       form: Object.assign({}, defaultForm),
       defaultForm,
       isSubmitExperienceStart: false,
+      experiencesLocal: [],
     };
   },
   computed: {
     isFormValid() {
-      const { text, files } = this.form;
-      return text && files.length > 0;
+      const { text, files, rating } = this.form;
+      return text && files.length > 0 && rating > 0;
     },
     latitude() {
       return this.$route.params.latitude;
@@ -105,6 +110,12 @@ export default {
     isOpenLocal(val) {
       this.$emit("update:isOpen", val);
     },
+    experiences(val) {
+      this.experiencesLocal = val;
+    },
+    experiencesLocal(val) {
+      this.$emit("update:experiences", val);
+    },
   },
   methods: {
     async submitExperience() {
@@ -124,6 +135,8 @@ export default {
       const isObjectValid = this.validateObject(submittedExperience);
       if (isObjectValid) {
         this.isOpenLocal = false;
+        this.experiencesLocal = [submittedExperience, ...this.experiencesLocal];
+        await this.$store.dispatch(FETCH_DISCOVERIES);
         this.form = Object.assign({}, this.defaultForm);
       }
     },
