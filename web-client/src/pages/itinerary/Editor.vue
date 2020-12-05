@@ -391,7 +391,7 @@ export default {
         });
       this.isCreateDraftStart = false;
     },
-    async get(postID) {
+    async getDetails(postID) {
       this.isGetDetailsStart = true;
       const {
         title,

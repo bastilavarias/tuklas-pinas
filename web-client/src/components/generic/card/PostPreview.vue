@@ -22,7 +22,9 @@
           }}</span>
         </custom-router-link>
 
-        <span class="body-2 d-block mb-3" v-if="text">{{ text }}</span>
+        <span class="body-2 d-block mb-3 text-truncate" v-if="text">{{
+          text
+        }}</span>
       </div>
       <v-avatar :size="40">
         <v-img
