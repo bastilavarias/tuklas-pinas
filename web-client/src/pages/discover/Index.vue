@@ -62,7 +62,6 @@ export default {
       },
       isSideDrawerOpen: false,
       showMap: true,
-      discoveries: [],
     };
   },
   computed: {
@@ -74,6 +73,9 @@ export default {
     },
     routeName() {
       return this.$route.name;
+    },
+    discoveries() {
+      return this.$store.state.discovery.list;
     },
   },
   watch: {
@@ -95,7 +97,7 @@ export default {
   methods: {
     async fetchDiscoveries() {
       this.showMap = false;
-      this.discoveries = await this.$store.dispatch(FETCH_DISCOVERIES);
+      await this.$store.dispatch(FETCH_DISCOVERIES);
       this.showMap = true;
     },
     async goToPlaceDetails({ placeName, country, coordination }) {

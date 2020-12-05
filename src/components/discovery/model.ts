@@ -41,7 +41,7 @@ const discoveryModel = {
 
   async get(discoveryID: number): Promise<Discovery> {
     const gotDetails = await Discovery.findOne(discoveryID, {
-      relations: ["author", "author.profile", "files"],
+      relations: ["author", "author.profile", "author.profile.image", "files"],
     });
     //@ts-ignore
     delete gotDetails.author.password;
@@ -65,6 +65,7 @@ const discoveryModel = {
       .where(
         `coordination ~= '${coordination.latitude},${coordination.longitude}'`
       )
+      .orderBy(`"createdAt"`, "DESC")
       .getRawMany()
       .then(async (results) =>
         Promise.all(

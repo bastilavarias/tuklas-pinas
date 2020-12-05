@@ -304,7 +304,7 @@ export default {
       );
       this.isFetchDraftsPreviewStart = false;
     },
-    async get(postID) {
+    async getDetails(postID) {
       this.isGetTravelStoryDetailsStart = true;
       const {
         title,

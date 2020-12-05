@@ -5,10 +5,21 @@ import {
   DISCOVERY_GET_PLACE_DETAILS,
   DISCOVERY_SEARCH_GEOLOCATIONS,
   FETCH_DISCOVERIES,
+  SET_DISCOVERIES,
 } from "@/store/types/discovery";
 import discoveryApiService from "@/services/api/modules/discovery";
 
 const discoveryStore = {
+  state: {
+    list: [],
+  },
+
+  mutations: {
+    [SET_DISCOVERIES](state, discoveries) {
+      state.list = discoveries;
+    },
+  },
+
   actions: {
     async [DISCOVERY_SEARCH_GEOLOCATIONS]({ commit }, query) {
       try {
@@ -55,7 +66,9 @@ const discoveryStore = {
 
     async [FETCH_DISCOVERIES]({ commit }) {
       try {
-        return await discoveryApiService.fetchDiscoveries();
+        const fetchedDiscoveries = await discoveryApiService.fetchDiscoveries();
+        commit(SET_DISCOVERIES, fetchedDiscoveries);
+        return fetchedDiscoveries;
       } catch (error) {
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,
