@@ -2,6 +2,7 @@ import { SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS } from "@/store/types/generic";
 import geolocationService from "@/services/geolocation";
 import {
   CREATE_DISCOVERY,
+  DISCOVERY_GET_PLACE_DETAILS,
   DISCOVERY_SEARCH_GEOLOCATIONS,
   FETCH_DISCOVERIES,
 } from "@/store/types/discovery";
@@ -55,6 +56,18 @@ const discoveryStore = {
     async [FETCH_DISCOVERIES]({ commit }) {
       try {
         return await discoveryApiService.fetchDiscoveries();
+      } catch (error) {
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Something went wrong to the server. Please try again.",
+          color: "error",
+        });
+      }
+    },
+
+    async [DISCOVERY_GET_PLACE_DETAILS]({ commit }, { latitude, longitude }) {
+      try {
+        return await discoveryApiService.getPlaceDetails(latitude, longitude);
       } catch (error) {
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,

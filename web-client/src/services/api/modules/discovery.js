@@ -13,6 +13,13 @@ const discoveryApiService = {
     const result = await apiService.get("/discovery");
     return result.data || [];
   },
+
+  async getPlaceDetails(latitude, longitude) {
+    const result = await apiService.get(
+      `/discovery/place-details/${latitude}/${longitude}`
+    );
+    return result.data || {};
+  },
 };
 
 export default discoveryApiService;
