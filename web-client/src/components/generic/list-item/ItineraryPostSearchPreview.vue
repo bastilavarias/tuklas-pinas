@@ -38,8 +38,8 @@
               class="mr-1"
             ></v-rating>
             <span class="grey--text caption mr-2"> (63) </span>
-          </span></v-list-item-title
-        >
+          </span>
+        </v-list-item-title>
         <v-list-item-subtitle>18 Destinations • 4 Events</v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>

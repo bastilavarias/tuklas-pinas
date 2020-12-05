@@ -72,7 +72,7 @@ export default {
   },
   computed: {
     postType() {
-      return this.type === "itinerary" ? "Itinerary" : "Travel Story";
+      return this.type === "itinerary" ? "Itinerary Post" : "Travel Story Post";
     },
   },
 };

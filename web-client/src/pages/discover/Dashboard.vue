@@ -144,7 +144,6 @@ export default {
         skip: this.skip,
       };
       const fetchedPosts = await this.$store.dispatch(FETCH_POSTS, payload);
-      console.log(fetchedPosts);
       if (fetchedPosts.length === 0) return $state.complete();
       this.posts = [...this.posts, ...fetchedPosts];
       this.skip += 5;
