@@ -54,6 +54,7 @@
     <template v-for="(post, index) in posts">
       <discover-page-post-preview-item
         :key="index"
+        :postID="post.id"
         :type="post.type"
         :title="post.title"
         :text="post.text"
@@ -61,6 +62,7 @@
         :commentsCount="post.commentsCount"
         :files="post.files"
       ></discover-page-post-preview-item>
+      <v-divider v-if="index !== posts.length - 1"></v-divider>
     </template>
     <infinite-loading
       @infinite="fetchTrendingPosts"

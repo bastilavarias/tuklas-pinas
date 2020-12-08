@@ -21,7 +21,13 @@
           {{ postType }}</v-list-item-subtitle
         >
         <v-list-item-title>
-          <span class="font-weight-bold d-block">{{ title || "" }}</span>
+          <custom-router-link
+            :to="{ name: 'post-details-page', params: { postID, type } }"
+          >
+            <span class="font-weight-medium black--text d-block mb-1">{{
+              title || ""
+            }}</span>
+          </custom-router-link>
           <span>{{ text || "" }}</span>
         </v-list-item-title>
         <v-list-item-subtitle>
@@ -42,9 +48,15 @@
 </template>
 
 <script>
+import CustomRouterLink from "@/components/custom/RouterLink";
 export default {
   name: "discover-page-post-preview-item",
+  components: { CustomRouterLink },
   props: {
+    postID: {
+      type: Number,
+      required: true,
+    },
     type: {
       type: String,
       required: true,
