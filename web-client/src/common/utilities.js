@@ -47,6 +47,18 @@ const commonUtilities = {
     scrollToTop() {
       window.scrollTo(0, 0);
     },
+    getTravelEventIcon(name) {
+      const iconSet = {
+        "Chasing Waterfalls": "mdi-hydro-power",
+        "Food Trippers": "mdi-food",
+        Backpackers: "mdi-bag-personal",
+        Mountaineers: "mdi-hiking",
+        "Solo Trip": "mdi-human-handsup",
+        "Couple Adventure": "mdi-human-male-female",
+        "Barkada Adventure": "mdi-human-queue",
+      };
+      return iconSet[name];
+    },
   },
 
   mounted() {

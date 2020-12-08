@@ -18,62 +18,43 @@
           <v-icon>mdi-weather-cloudy</v-icon>
         </span>
       </div>
-      <v-row dense>
-        <template v-for="n in 3">
-          <v-col cols="3" :key="n">
-            <div class="text-center">
-              <v-avatar color="primary" class="mb-2">
-                <v-icon color="white">mdi-food-apple-outline</v-icon>
-              </v-avatar>
-              <span class="caption d-block">Event {{ n }}</span>
-            </div>
-          </v-col>
-        </template>
-        <v-col cols="3" v-if="!isEventsExplorerExpanded">
-          <div
-            class="text-center cursor-pointer"
-            @click="isEventsExplorerExpanded = true"
-          >
-            <v-avatar color="secondary" class="mb-2">
-              <v-icon color="white">mdi-dots-horizontal-circle</v-icon>
+      <v-row dense v-if="isFetchTravelEventsStart">
+        <v-col cols="3">
+          <div class="text-center">
+            <v-avatar color="primary" class="mb-2">
+              <span class="white--text font-weight-bold">81</span>
             </v-avatar>
-            <span class="caption d-block">More</span>
+            <span class="caption d-block">Project 81</span>
           </div>
         </v-col>
-        <v-col cols="3" v-if="isEventsExplorerExpanded">
-          <div
-            class="text-center cursor-pointer"
-            @click="isEventsExplorerExpanded = false"
-          >
-            <v-avatar color="secondary" class="mb-2">
-              <v-icon color="white">mdi-chevron-up</v-icon>
-            </v-avatar>
-            <span class="caption d-block">Less</span>
-          </div>
-        </v-col>
-        <template v-for="n in 5" v-if="isEventsExplorerExpanded">
-          <v-col cols="3" :key="n + 3">
+        <template v-for="(event, index) in filteredTravelEvents">
+          <v-col cols="3" :key="index">
             <div class="text-center">
               <v-avatar color="primary" class="mb-2">
-                <v-icon color="white">mdi-food-apple-outline</v-icon>
+                <v-icon color="white">{{
+                  getTravelEventIcon(event.name)
+                }}</v-icon>
               </v-avatar>
-              <span class="caption d-block">Event {{ n + 3 }}</span>
+              <span class="caption d-block">{{ event.name }}</span>
             </div>
           </v-col>
         </template>
       </v-row>
+      <v-row
+        justify="center"
+        align-content="center"
+        v-if="!isFetchTravelEventsStart"
+      >
+        <generic-please-wait-progress-circular></generic-please-wait-progress-circular>
+      </v-row>
     </div>
     <div class="px-4 d-flex justify-space-between align-center mb-5">
       <span class="subtitle-2 secondary--text">Trending Posts</span>
-      <div class="flex-grow-1"></div>
-      <v-chip>
-        <v-icon left> mdi-tune </v-icon>
-        <span class="font-weight-medium">Filters</span>
-      </v-chip>
     </div>
     <template v-for="(post, index) in posts">
       <discover-page-post-preview-item
         :key="index"
+        :postID="post.id"
         :type="post.type"
         :title="post.title"
         :text="post.text"
@@ -81,6 +62,7 @@
         :commentsCount="post.commentsCount"
         :files="post.files"
       ></discover-page-post-preview-item>
+      <v-divider v-if="index !== posts.length - 1"></v-divider>
     </template>
     <infinite-loading
       @infinite="fetchTrendingPosts"
@@ -104,12 +86,15 @@ import GenericGeolocationsAutocomplete from "@/components/generic/autocomplete/G
 import { FETCH_POSTS } from "@/store/types/post";
 import GenericPleaseWaitProgressCircular from "@/components/generic/progress-circular/PleaseWait";
 import DiscoverPagePostPreviewItem from "@/components/discover-page/PostPreviewItem";
+import { FETCH_GENERIC_TRAVEL_EVENTS } from "@/store/types/generic";
+import commonUtilities from "@/common/utilities";
 export default {
   components: {
     DiscoverPagePostPreviewItem,
     GenericPleaseWaitProgressCircular,
     GenericGeolocationsAutocomplete,
   },
+  mixins: [commonUtilities],
   data() {
     return {
       isEventsExplorerExpanded: false,
@@ -119,7 +104,17 @@ export default {
       scrollPage: 1,
       scrollIdentifier: +new Date(),
       posts: [],
+      isFetchTravelEventsStart: false,
     };
+  },
+  computed: {
+    travelEvents() {
+      return this.$store.state.generic.travelEvents;
+    },
+
+    filteredTravelEvents() {
+      return this.travelEvents.filter((event) => event.name !== "Project 81");
+    },
   },
   watch: {
     async geoLocation(val) {
@@ -150,6 +145,15 @@ export default {
       this.scrollPage += 1;
       $state.loaded();
     },
+    async fetchTravelEvents() {
+      this.isFetchTravelEventsStart = false;
+      await this.$store.dispatch(FETCH_GENERIC_TRAVEL_EVENTS);
+      console.log(this.travelEvents);
+      this.isFetchTravelEventsStart = true;
+    },
+  },
+  async created() {
+    await this.fetchTravelEvents();
   },
 };
 </script>
