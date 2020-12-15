@@ -703,6 +703,26 @@ const postModel = {
     return gotDetails!;
   },
 
+  async getAccountPosts(accountID: number) {
+    const isDeleted = false;
+    const isDraft = false;
+    const raw = await getRepository(Post)
+      .createQueryBuilder("post")
+      .select(["id", "type"])
+      .where(`post."authorId" = :accountID`, { accountID })
+      .andWhere(`post."isDeleted" = :isDeleted`, { isDeleted })
+      .andWhere(`post."isDraft" = :isDraft`, { isDraft })
+      .orderBy(`post."createdAt"`, "DESC")
+      .getRawMany();
+    return await Promise.all(
+      raw.map(async (item) =>
+        item.type === "travel-story"
+          ? await this.getTravelStoryDetails(item.id)
+          : await this.getItineraryDetails(item.id)
+      )
+    );
+  },
+
   async updateDetails(
     postID: number,
     input: IPostModelUpdateDetailsPayload
