@@ -33,6 +33,7 @@
                 :reactions.sync="post.reactions"
               ></generic-post-preview-card>
             </template>
+
             <infinite-loading
               @infinite="fetchPosts"
               :identifier="scrollIdentifier"
