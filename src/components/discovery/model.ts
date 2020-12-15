@@ -73,6 +73,15 @@ const discoveryModel = {
         )
       );
   },
+
+  async getAccountCoordination(accountID: number) {
+    return await getRepository(Discovery)
+      .createQueryBuilder("discovery")
+      .distinctOn([`"placeName"`])
+      .select(["coordination"])
+      .where(`"authorId" = :accountID`, { accountID })
+      .getRawMany();
+  },
 };
 
 export default discoveryModel;

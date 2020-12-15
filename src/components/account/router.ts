@@ -9,4 +9,10 @@ accountRouter.get(
   accountController.getPosts
 );
 
+accountRouter.get(
+  "/discovery-coordination/:accountID",
+  passport.authenticate("jwt", { session: false }),
+  accountController.getDiscoveryCoordination
+);
+
 export default accountRouter;
