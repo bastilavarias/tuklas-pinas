@@ -148,7 +148,6 @@ export default {
     async fetchTravelEvents() {
       this.isFetchTravelEventsStart = false;
       await this.$store.dispatch(FETCH_GENERIC_TRAVEL_EVENTS);
-      console.log(this.travelEvents);
       this.isFetchTravelEventsStart = true;
     },
   },

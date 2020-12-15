@@ -167,7 +167,7 @@ const routes = [
         component: () => import("../pages/profile/Index"),
         children: [
           {
-            path: "",
+            path: ":accountID",
             name: "profile-general-page",
             component: () => import("../pages/profile/General"),
           },

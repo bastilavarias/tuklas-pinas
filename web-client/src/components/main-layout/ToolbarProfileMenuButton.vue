@@ -37,14 +37,24 @@
         </custom-router-link>
         <v-list-item-content>
           <v-list-item-title>
-            <custom-router-link :to="{ name: 'profile-general-page' }">
+            <custom-router-link
+              :to="{
+                name: 'profile-general-page',
+                params: { accountID: credentials.id },
+              }"
+            >
               <span class="font-weight-bold secondary--text text-capitalize"
                 >{{ displayFirstName }} {{ displayLastName }}.</span
               >
             </custom-router-link>
           </v-list-item-title>
           <v-list-item-subtitle>
-            <custom-router-link :to="{ name: 'profile-general-page' }">
+            <custom-router-link
+              :to="{
+                name: 'profile-general-page',
+                params: { accountID: credentials.id },
+              }"
+            >
               <span class="secondary--text">See Profile</span>
             </custom-router-link>
           </v-list-item-subtitle>
