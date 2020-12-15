@@ -163,11 +163,11 @@ const routes = [
     component: () => import("../layouts/Main"),
     children: [
       {
-        path: "",
+        path: ":accountID",
         component: () => import("../pages/profile/Index"),
         children: [
           {
-            path: ":accountID",
+            path: "",
             name: "profile-general-page",
             component: () => import("../pages/profile/General"),
           },

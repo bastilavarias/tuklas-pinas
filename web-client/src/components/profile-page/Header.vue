@@ -31,7 +31,7 @@
         <v-tab
           :key="index"
           class="text-capitalize"
-          :to="tab.to"
+          :to="{ name: tab.to.name, params: { accountID } }"
           exact
           exact-active-class="primary--text"
           >{{ tab.text }}</v-tab
@@ -57,12 +57,16 @@ export default {
       isUpdateProfileFormDialogShow: false,
       tabSelections: [
         {
-          text: `Posts`,
-          to: { name: "profile-general-page" },
+          text: "Posts",
+          to: {
+            name: "profile-general-page",
+          },
         },
         {
           text: "Travel History",
-          to: { name: "profile-travel-history-page" },
+          to: {
+            name: "profile-travel-history-page",
+          },
         },
       ],
     };
@@ -73,6 +77,10 @@ export default {
     },
     profile() {
       return this.credentials.profile;
+    },
+
+    accountID() {
+      return parseInt(this.$route.params.accountID) || null;
     },
   },
 };

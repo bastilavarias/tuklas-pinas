@@ -24,25 +24,29 @@
       <span class="subtitle-2 text-capitalize">{{ profile.nationality }}</span>
     </div>
     <v-card-text>
-      <div class="mb-5">
-        <div class="d-flex justify-space-around align-center">
-          <div class="text-center">
-            <h2 class="subtitle-2 secondary--text">Followers</h2>
-            <span class="caption">99</span>
-          </div>
-          <v-divider vertical></v-divider>
-          <div class="text-center">
-            <h2 class="subtitle-2 secondary--text">Following</h2>
-            <span class="caption">99</span>
-          </div>
-        </div>
-      </div>
+      <!--      <div class="mb-5">-->
+      <!--        <div class="d-flex justify-space-around align-center">-->
+      <!--          <div class="text-center">-->
+      <!--            <h2 class="subtitle-2 secondary&#45;&#45;text">Followers</h2>-->
+      <!--            <span class="caption">99</span>-->
+      <!--          </div>-->
+      <!--          <v-divider vertical></v-divider>-->
+      <!--          <div class="text-center">-->
+      <!--            <h2 class="subtitle-2 secondary&#45;&#45;text">Following</h2>-->
+      <!--            <span class="caption">99</span>-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--      -->
       <v-btn
         color="secondary"
         text
         class="text-capitalize"
         block
-        :to="{ name: 'profile-general-page' }"
+        :to="{
+          name: 'profile-general-page',
+          params: { accountID: this.credentials.id },
+        }"
         >View Profile</v-btn
       >
     </v-card-text>
