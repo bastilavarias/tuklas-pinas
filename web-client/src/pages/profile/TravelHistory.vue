@@ -1,63 +1,28 @@
 <template>
-  <v-row>
-    <v-col cols="12" md="3">
-      <v-row>
-        <v-col cols="12">
-          <profile-page-events-side-card></profile-page-events-side-card>
-        </v-col>
-        <v-col cols="12">
-          <generic-sticky-footer></generic-sticky-footer>
-        </v-col>
-      </v-row>
-    </v-col>
-    <v-col cols="12" md="9">
-      <v-row>
-        <v-col cols="12">
-          <v-card outlined>
-            <v-card-title class="font-weight-bold">Travel Map</v-card-title>
-            <v-toolbar flat>
-              <v-text-field
-                append-icon="mdi-magnify"
-                single-line
-                hide-details
-                dense
-                filled
-                rounded
-                flat
-                label="Search"
-                class="mr-3"
-              ></v-text-field>
-              <v-chip>
-                <v-icon left> mdi-tune </v-icon>
-                <span class="font-weight-medium">Filters</span>
-              </v-chip>
-            </v-toolbar>
-            <v-card-text>
-              <div class="map-holder">
-                <l-map
-                  v-if="showMap"
-                  :zoom="zoom"
-                  :center="center"
-                  :options="mapOptions"
-                  height="100%"
-                  class="map"
-                >
-                  <l-tile-layer :url="url" :attribution="attribution" />
-                  <template v-for="(location, index) in sampleMarkerLocations">
-                    <l-marker
-                      :key="index"
-                      :lat-lng="latLng(location.latitude, location.longitude)"
-                    >
-                    </l-marker>
-                  </template>
-                </l-map>
-              </div>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-col>
-  </v-row>
+  <v-card flat color="white" tile>
+    <v-card-title class="font-weight-bold">Travel Map</v-card-title>
+    <v-card-text>
+      <div class="map-holder">
+        <l-map
+          v-if="showMap"
+          :zoom="zoom"
+          :center="center"
+          :options="mapOptions"
+          height="100%"
+          class="map"
+        >
+          <l-tile-layer :url="url" :attribution="attribution" />
+          <template v-for="(location, index) in sampleMarkerLocations">
+            <l-marker
+              :key="index"
+              :lat-lng="latLng(location.latitude, location.longitude)"
+            >
+            </l-marker>
+          </template>
+        </l-map>
+      </div>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>
@@ -65,6 +30,8 @@ import { latLng } from "leaflet";
 import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from "vue2-leaflet";
 import ProfilePageEventsSideCard from "@/components/profile-page/EventsSideCard";
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
+import { GET_ACCOUNT_DISCOVERY_COORDINATION } from "@/store/types/account";
+import commonUtilities from "@/common/utilities";
 export default {
   components: {
     GenericStickyFooter,
@@ -90,25 +57,33 @@ export default {
       showMap: true,
       isSideDrawerOpen: false,
       isEventsExplorerExpanded: false,
-      sampleMarkerLocations: [
-        {
-          latitude: 8.928487,
-          longitude: 837.791459,
-        },
-        {
-          latitude: 13.742053,
-          longitude: 844.274466,
-        },
-        {
-          latitude: 11.888853,
-          longitude: 841.4381,
-        },
-        {
-          latitude: 10.898042,
-          longitude: 843.98863,
-        },
-      ],
+      sampleMarkerLocations: [],
     };
+  },
+
+  mixins: [commonUtilities],
+
+  computed: {
+    accountID() {
+      return parseInt(this.$route.params.accountID) || null;
+    },
+  },
+
+  methods: {
+    async getAccountDiscoveryCoordination() {
+      const gotCoordination = await this.$store.dispatch(
+        GET_ACCOUNT_DISCOVERY_COORDINATION,
+        this.accountID
+      );
+      this.sampleMarkerLocations = gotCoordination.map(({ coordination }) => ({
+        latitude: coordination.x,
+        longitude: coordination.y,
+      }));
+    },
+  },
+
+  async created() {
+    await this.getAccountDiscoveryCoordination();
   },
 };
 </script>
