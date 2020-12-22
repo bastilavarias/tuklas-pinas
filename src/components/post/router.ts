@@ -113,6 +113,12 @@ postRouter.get(
   postController.getItineraryDetails
 );
 
+postRouter.get(
+  "/top-categories",
+  passport.authenticate("jwt", { session: false }),
+  postController.getTopCategories
+);
+
 postRouter.delete(
   "/remove-reaction/:postID",
   passport.authenticate("jwt", { session: false }),
