@@ -1,5 +1,6 @@
 import {
   GET_ACCOUNT_DISCOVERY_COORDINATION,
+  GET_ACCOUNT_INFORMATION,
   GET_ACCOUNT_POSTS,
 } from "@/store/types/account";
 import { SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS } from "@/store/types/generic";
@@ -22,6 +23,18 @@ const accountStore = {
     async [GET_ACCOUNT_DISCOVERY_COORDINATION]({ commit }, accountID) {
       try {
         return accountApiService.getDiscoveryCoordination(accountID);
+      } catch (error) {
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Something went wrong to the server. Please try again.",
+          color: "error",
+        });
+      }
+    },
+
+    async [GET_ACCOUNT_INFORMATION]({ commit }, accountID) {
+      try {
+        return accountApiService.getAccountInformation(accountID);
       } catch (error) {
         commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
           isOpen: true,

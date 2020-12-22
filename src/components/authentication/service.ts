@@ -117,8 +117,6 @@ const authenticationService = {
       token: "",
     };
     const gotAccountDetails = await accountModel.getDetailsByID(accountID);
-    // @ts-ignore
-    delete gotAccountDetails.password;
     const generatedJsonWebToken = jsonwebtoken.sign(
       JSON.stringify(gotAccountDetails),
       <jsonwebtoken.Secret>process.env.JWT_SECRET_OR_KEY

@@ -2,7 +2,9 @@
   <v-row>
     <v-col cols="12" md="3">
       <v-row>
-        <v-col cols="12"> </v-col>
+        <v-col cols="12">
+          <generic-top-categories-side-card></generic-top-categories-side-card>
+        </v-col>
       </v-row>
     </v-col>
     <v-col cols="12" md="6">
@@ -45,6 +47,9 @@
     <v-col cols="12" md="3" ref="stickyParent">
       <v-row>
         <v-col cols="12">
+          <generic-mini-events-explorer-side-card></generic-mini-events-explorer-side-card>
+        </v-col>
+        <v-col cols="12">
           <generic-suggested-people-side-card></generic-suggested-people-side-card>
         </v-col>
         <v-col cols="12">
@@ -69,8 +74,12 @@ import commonUtilities from "@/common/utilities";
 import { GET_ACCOUNT_POSTS } from "@/store/types/account";
 import GenericPleaseWaitProgressCircular from "@/components/generic/progress-circular/PleaseWait";
 import GenericPostPreviewCard from "@/components/generic/card/PostPreview";
+import GenericMiniEventsExplorerSideCard from "@/components/generic/card/MiniEventsExplorer";
+import GenericTopCategoriesSideCard from "@/components/generic/card/TopCategories";
 export default {
   components: {
+    GenericTopCategoriesSideCard,
+    GenericMiniEventsExplorerSideCard,
     GenericPostPreviewCard,
     GenericPleaseWaitProgressCircular,
     GenericStickyFooter,

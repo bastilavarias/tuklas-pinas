@@ -25,6 +25,17 @@ const accountController = {
       response.status(400).json(error);
     }
   },
+
+  async getInformation(request: Request, response: Response) {
+    try {
+      const accountID = parseInt(request.params.accountID) || 0;
+      const gotInformation = await accountService.getInformation(accountID);
+      response.status(200).json(gotInformation);
+    } catch (error) {
+      console.log(error);
+      response.status(400).json(error);
+    }
+  },
 };
 
 export default accountController;

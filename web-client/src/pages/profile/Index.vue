@@ -5,17 +5,17 @@
         <profile-page-display-images-input
           :height="250"
           class-name="mb-15"
-          :cover-photo-preview="profile.image.cover"
-          :display-image-preview="profile.image.display"
+          :cover-photo-preview="coverImage"
+          :display-image-preview="displayImage"
           operation="update"
         ></profile-page-display-images-input>
         <v-list-item two-line>
           <v-list-item-content>
             <v-list-item-title class="font-weight-bold title text-capitalize">{{
-              formatName(profile.firstName, profile.lastName)
+              this.name
             }}</v-list-item-title>
           </v-list-item-content>
-          <v-list-item-action>
+          <v-list-item-action v-if="isUser">
             <v-btn
               color="secondary"
               outlined
@@ -27,7 +27,6 @@
             </v-btn>
           </v-list-item-action>
         </v-list-item>
-        <v-divider></v-divider>
         <v-tabs color="primary">
           <template v-for="(tab, index) in tabSelections">
             <v-tab
@@ -56,6 +55,7 @@ import {
 import commonUtilities from "@/common/utilities";
 import ProfilePageDisplayImagesInput from "@/components/profile-page/DisplayImagesInput";
 import ProfilePageUpdateFormDialog from "@/components/profile-page/UpdateFormDialog";
+import { GET_ACCOUNT_INFORMATION } from "@/store/types/account";
 export default {
   components: {
     ProfilePageUpdateFormDialog,
@@ -79,6 +79,9 @@ export default {
           },
         },
       ],
+      displayImage: null,
+      coverImage: null,
+      name: null,
     };
   },
 
@@ -92,14 +95,45 @@ export default {
     profile() {
       return this.credentials.profile;
     },
+    isUser() {
+      return this.credentials.id === this.accountID;
+    },
+  },
+
+  watch: {
+    async accountID(value) {
+      if (value) {
+        await this.getAccountInformation();
+      }
+    },
+    async "$store.state.authentication.credentials.profile"(test) {
+      if (test) {
+        await this.getAccountInformation();
+      }
+    },
   },
 
   mixins: [commonUtilities],
+
+  methods: {
+    async getAccountInformation() {
+      const information = await this.$store.dispatch(
+        GET_ACCOUNT_INFORMATION,
+        this.accountID
+      );
+      if (!information) return this.goBack();
+      const { profile } = information;
+      this.displayImage = profile.image.display;
+      this.coverImage = profile.image.cover;
+      this.name = this.formatName(profile.firstName, profile.lastName);
+    },
+  },
 
   async created() {
     if (this.accountID) {
       await this.$store.dispatch(FETCH_GENERIC_NATIONALITIES);
       await this.$store.dispatch(FETCH_GENERIC_SEXES);
+      await this.getAccountInformation();
       return;
     }
     await this.goBack();

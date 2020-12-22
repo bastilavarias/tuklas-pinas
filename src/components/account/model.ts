@@ -15,6 +15,8 @@ const accountModel = {
       where: { id: accountID },
       relations: ["profile", "profile.image"],
     });
+    // @ts-ignore
+    delete gotDetails.password;
     return gotDetails!;
   },
 
