@@ -723,6 +723,17 @@ const postModel = {
     );
   },
 
+  async getTopCategories(): Promise<PostCategory[]> {
+    const raw = await getRepository(PostCategory)
+      .createQueryBuilder("category")
+      .groupBy("name")
+      .select(["name", "count(name) as uses"])
+      .orderBy("uses", "DESC")
+      .limit(5)
+      .getRawMany();
+    return raw;
+  },
+
   async updateDetails(
     postID: number,
     input: IPostModelUpdateDetailsPayload

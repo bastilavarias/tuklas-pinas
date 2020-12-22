@@ -20,12 +20,18 @@ import {
   SAVE_ITINERARY_POST_DRAFT,
   GET_ITINERARY_POST_DETAILS,
   UPDATE_ITINERARY_POST_DRAFT,
+  SET_POST_TOP_CATEGORIES,
+  GET_POST_TOP_CATEGORIES,
 } from "@/store/types/post";
 import postApiService from "@/services/api/modules/post";
 import { SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS } from "@/store/types/generic";
 import { FETCH_ITINERARY_POST_DRAFTS_PREVIEW } from "@/store/types/post";
 
 const postStore = {
+  state: {
+    topCategories: [],
+  },
+
   actions: {
     async [CREATE_TRAVEL_STORY_POST](
       { commit },
@@ -352,6 +358,18 @@ const postStore = {
         });
       }
     },
+    async [GET_POST_TOP_CATEGORIES]({ commit }) {
+      try {
+        const categories = await postApiService.getTopCategories();
+        commit(SET_POST_TOP_CATEGORIES, categories);
+      } catch (error) {
+        commit(SET_GENERIC_GLOBAL_SNACKBAR_CONFIGS, {
+          isOpen: true,
+          text: "Something went wrong to the server. Please try again.",
+          color: "error",
+        });
+      }
+    },
     async [REMOVE_POST_REACTION]({ commit }, postID) {
       try {
         const isRemoved = await postApiService.removeReaction(postID);
@@ -485,6 +503,12 @@ const postStore = {
           color: "error",
         });
       }
+    },
+  },
+
+  mutations: {
+    [SET_POST_TOP_CATEGORIES](state, categories) {
+      state.topCategories = categories;
     },
   },
 };

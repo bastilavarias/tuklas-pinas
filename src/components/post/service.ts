@@ -31,6 +31,7 @@ import PostReaction from "../../database/entities/PostReaction";
 import PostCommentReaction from "../../database/entities/PostCommentReaction";
 import PostCommentReplyReaction from "../../database/entities/PostCommentReplyReaction";
 import utilityService from "../utility/service";
+import PostCategory from "../../database/entities/PostCategory";
 
 const postService = {
   async createTravelStory(
@@ -298,6 +299,10 @@ const postService = {
 
   async getItineraryDetails(postID: number): Promise<Post> {
     return await postModel.getItineraryDetails(postID);
+  },
+
+  async getTopCategories(): Promise<PostCategory[]> {
+    return await postModel.getTopCategories();
   },
 
   async uploadFiles(

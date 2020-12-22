@@ -270,6 +270,16 @@ const postController = {
     }
   },
 
+  async getTopCategories(_request: Request, response: Response) {
+    try {
+      const gotCategories = await postService.getTopCategories();
+      response.status(200).json(gotCategories);
+    } catch (error) {
+      console.log(error);
+      response.status(400).json(error);
+    }
+  },
+
   async removeReaction(request: Request, response: Response) {
     try {
       // @ts-ignore

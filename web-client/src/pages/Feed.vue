@@ -83,7 +83,7 @@ import GenericSuggestedPeopleSideCard from "@/components/generic/card/SuggestedP
 import GenericStickyFooter from "@/components/generic/footer/Sticky";
 import commonUtilities from "@/common/utilities";
 import FeedPagePostsTypeTabs from "@/components/feed-page/PostsTypeTabs";
-import { FETCH_POSTS } from "@/store/types/post";
+import { FETCH_POSTS, GET_POST_TOP_CATEGORIES } from "@/store/types/post";
 import GenericPleaseWaitProgressCircular from "@/components/generic/progress-circular/PleaseWait";
 import GenericPostPreviewCard from "@/components/generic/card/PostPreview";
 export default {
@@ -132,6 +132,10 @@ export default {
       this.scrollPage += 1;
       $state.loaded();
     },
+  },
+
+  created() {
+    this.$store.dispatch(GET_POST_TOP_CATEGORIES);
   },
 };
 </script>
