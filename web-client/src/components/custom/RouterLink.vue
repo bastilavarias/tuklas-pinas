@@ -2,6 +2,7 @@
   <router-link
     :style="{
       textDecoration: 'none',
+      cursor: 'pointer',
     }"
     :to="to"
   >

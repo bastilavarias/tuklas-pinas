@@ -9,9 +9,25 @@
       <div class="d-flex align-start justify-space-between mb-2">
         <div class="mr-2">
           <div class="caption">
-            <span class="text-capitalize">{{
-              formatName(author.profile.firstName, author.profile.lastName)
-            }}</span>
+            <custom-router-link
+              :to="{
+                name: 'profile-general-page',
+                params: { accountID: author.id },
+              }"
+            >
+              <span class="text-capitalize">
+                <span
+                  class="black--text text-capitalize text-decoration-underline"
+                >
+                  {{
+                    formatName(
+                      author.profile.firstName,
+                      author.profile.lastName
+                    )
+                  }}
+                </span>
+              </span>
+            </custom-router-link>
             - {{ formatRelativeTime(createdAt) }}
           </div>
           <div class="mb-3">
@@ -136,10 +152,15 @@ import {
 import commonValidation from "@/common/validation";
 import GenericCommentReplyMedia from "@/components/generic/media/CommentReply";
 import GenericPleaseWaitProgressCircular from "@/components/generic/progress-circular/PleaseWait";
+import CustomRouterLink from "@/components/custom/RouterLink";
 
 export default {
   name: "generic-comment-media",
-  components: { GenericPleaseWaitProgressCircular, GenericCommentReplyMedia },
+  components: {
+    CustomRouterLink,
+    GenericPleaseWaitProgressCircular,
+    GenericCommentReplyMedia,
+  },
   props: {
     commentID: {
       type: Number,
