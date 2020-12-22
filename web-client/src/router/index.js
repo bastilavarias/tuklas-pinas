@@ -92,20 +92,6 @@ const routes = [
     },
   },
   {
-    path: "/tour-guides",
-    component: () => import("../layouts/Main"),
-    children: [
-      {
-        path: "",
-        name: "tour-guides-page",
-        component: () => import("../pages/TourGuides"),
-      },
-    ],
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
     path: "/discover",
     component: () => import("../layouts/Main"),
     children: [
