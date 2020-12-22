@@ -27,11 +27,9 @@
       >
     </v-app-bar>
     <home-page-header></home-page-header>
-    <home-page-popular-itineraries-div></home-page-popular-itineraries-div>
     <home-page-search-destination-div></home-page-search-destination-div>
     <home-page-highest-rated-guides-div></home-page-highest-rated-guides-div>
     <generic-about-local-tour-guides-div></generic-about-local-tour-guides-div>
-    <home-page-featured-travel-stories-div></home-page-featured-travel-stories-div>
     <generic-how-it-works-div></generic-how-it-works-div>
     <generic-basic-footer></generic-basic-footer>
   </v-app>
@@ -40,11 +38,9 @@
 <script>
 import commonUtilities from "@/common/utilities";
 import HomePageHeader from "@/components/home-page/Header";
-import HomePagePopularItinerariesDiv from "@/components/home-page/PopularItinerariesDiv";
 import HomePageSearchDestinationDiv from "@/components/home-page/SearchDestinationDiv";
 import HomePageHighestRatedGuidesDiv from "@/components/home-page/HighestRatedGuidesDiv";
 import GenericAboutLocalTourGuidesDiv from "@/components/generic/div/AboutLocalTourGuides";
-import HomePageFeaturedTravelStoriesDiv from "@/components/home-page/FeaturedTravelStoriesSection";
 import GenericHowItWorksDiv from "@/components/generic/div/HowItWorksSection";
 import GenericBasicFooter from "@/components/generic/footer/Basic";
 import CustomRouterLink from "@/components/custom/RouterLink";
@@ -58,11 +54,9 @@ export default {
     CustomRouterLink,
     GenericBasicFooter,
     GenericHowItWorksDiv,
-    HomePageFeaturedTravelStoriesDiv,
     GenericAboutLocalTourGuidesDiv,
     HomePageHighestRatedGuidesDiv,
     HomePageSearchDestinationDiv,
-    HomePagePopularItinerariesDiv,
     HomePageHeader,
   },
 };
