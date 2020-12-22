@@ -61,6 +61,8 @@
         :reactionsCount="post.reactionsCount"
         :commentsCount="post.commentsCount"
         :files="post.files"
+        :createdAt="post.createdAt"
+        :author="post.author"
       ></discover-page-post-preview-item>
       <v-divider v-if="index !== posts.length - 1"></v-divider>
     </template>
