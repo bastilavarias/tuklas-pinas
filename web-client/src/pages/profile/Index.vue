@@ -136,6 +136,7 @@ export default {
       await this.$store.dispatch(FETCH_GENERIC_SEXES);
       await this.$store.dispatch(GET_POST_TOP_CATEGORIES);
       await this.getAccountInformation();
+      this.scrollToTop();
       return;
     }
     await this.goBack();

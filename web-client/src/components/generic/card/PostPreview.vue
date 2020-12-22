@@ -6,10 +6,21 @@
   >
     <div class="px-4 pt-3 d-flex align-start justify-space-between">
       <div class="mr-2">
-        <span class="caption"
-          ><span class="text-capitalize">{{
-            formatName(author.profile.firstName, author.profile.lastName)
-          }}</span>
+        <span class="caption">
+          <custom-router-link
+            :to="{
+              name: 'profile-general-page',
+              params: { accountID: author.id },
+            }"
+          >
+            <span
+              class="text-capitalize black--text text-decoration-underline"
+              >{{
+                formatName(author.profile.firstName, author.profile.lastName)
+              }}</span
+            >
+          </custom-router-link>
+
           - Posted {{ displayPostType }}
           {{ formatRelativeTime(createdAt) }}</span
         >

@@ -3,7 +3,24 @@
     <div class="px-4 pt-3">
       <div class="d-flex align-start justify-space-between">
         <div class="mr-2">
-          <span class="caption">Sebastian Curtis T. Lavarias - 6 hrs ago</span>
+          <span class="caption">
+            <custom-router-link
+              :to="{
+                name: 'profile-general-page',
+                params: { accountID: author.id },
+              }"
+            >
+              <span
+                class="text-capitalize black--text text-decoration-underline"
+              >
+                {{
+                  formatName(author.profile.firstName, author.profile.lastName)
+                }}
+              </span>
+            </custom-router-link>
+
+            - 6 hrs ago</span
+          >
         </div>
         <v-avatar :size="40">
           <v-img
@@ -49,9 +66,11 @@
 
 <script>
 import CustomRouterLink from "@/components/custom/RouterLink";
+import commonUtilities from "@/common/utilities";
 export default {
   name: "discover-page-post-preview-item",
   components: { CustomRouterLink },
+  mixins: [commonUtilities],
   props: {
     postID: {
       type: Number,
@@ -79,6 +98,14 @@ export default {
     },
     files: {
       type: Array,
+      required: true,
+    },
+    createdAt: {
+      type: String,
+      required: true,
+    },
+    author: {
+      type: Object,
       required: true,
     },
   },

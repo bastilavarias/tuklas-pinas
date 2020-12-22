@@ -181,6 +181,7 @@ import {
   FETCH_POST_COMMENTS,
   GET_POST_SOFT_DETAILS,
   SEND_POST_COMMENT,
+  GET_POST_TOP_CATEGORIES,
 } from "@/store/types/post";
 import CustomTooltipButton from "@/components/custom/TooltipButton";
 import GenericPleaseWaitProgressCircular from "@/components/generic/progress-circular/PleaseWait";
@@ -313,6 +314,7 @@ export default {
     const parametersNotValid = !postID || !type;
     if (parametersNotValid) return this.goBack();
     await this.getPostDetails(postID, type);
+    await this.$store.dispatch(GET_POST_TOP_CATEGORIES);
     if (section === "comment-area")
       return await this.$vuetify.goTo("#comment-area", { offset: 150 });
     this.scrollToTop();
