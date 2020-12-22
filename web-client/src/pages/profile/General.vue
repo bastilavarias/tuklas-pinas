@@ -101,6 +101,14 @@ export default {
     },
   },
 
+  watch: {
+    async accountID(value) {
+      if (value) {
+        await this.getAccountPosts();
+      }
+    },
+  },
+
   methods: {
     async getAccountPosts() {
       this.isGetAccountPostsStart = true;
