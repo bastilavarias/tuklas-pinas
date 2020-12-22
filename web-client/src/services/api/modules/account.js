@@ -12,6 +12,11 @@ const accountApiService = {
     );
     return result.data || [];
   },
+
+  async getAccountInformation(accountID) {
+    const result = await apiService.get(`/account/${accountID}`);
+    return result.data || {};
+  },
 };
 
 export default accountApiService;

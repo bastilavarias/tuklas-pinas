@@ -109,11 +109,9 @@ export default {
       required: false,
     },
     coverPhotoPreview: {
-      type: String,
       required: true,
     },
     displayImagePreview: {
-      type: String,
       required: true,
     },
     operation: {
