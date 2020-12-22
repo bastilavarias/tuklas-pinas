@@ -255,7 +255,9 @@ export default {
       this.form = Object.assign({}, this.defaultTravelStoryForm);
     },
     async "$route.params.postID"(val) {
-      await this.getDetails(val);
+      if (val) {
+        await this.getDetails(val);
+      }
     },
   },
   methods: {
