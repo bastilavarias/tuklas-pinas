@@ -56,6 +56,7 @@ import commonUtilities from "@/common/utilities";
 import ProfilePageDisplayImagesInput from "@/components/profile-page/DisplayImagesInput";
 import ProfilePageUpdateFormDialog from "@/components/profile-page/UpdateFormDialog";
 import { GET_ACCOUNT_INFORMATION } from "@/store/types/account";
+import { GET_POST_TOP_CATEGORIES } from "@/store/types/post";
 export default {
   components: {
     ProfilePageUpdateFormDialog,
@@ -133,6 +134,7 @@ export default {
     if (this.accountID) {
       await this.$store.dispatch(FETCH_GENERIC_NATIONALITIES);
       await this.$store.dispatch(FETCH_GENERIC_SEXES);
+      await this.$store.dispatch(GET_POST_TOP_CATEGORIES);
       await this.getAccountInformation();
       return;
     }
