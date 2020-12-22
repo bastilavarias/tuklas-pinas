@@ -309,7 +309,9 @@ export default {
       this.clearForm();
     },
     async "$route.params.postID"(val) {
-      await this.getDetails(val);
+      if (val) {
+        await this.getDetails(val);
+      }
     },
   },
   methods: {
