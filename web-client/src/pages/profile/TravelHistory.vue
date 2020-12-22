@@ -1,28 +1,23 @@
 <template>
-  <v-card flat color="white" tile>
-    <v-card-title class="font-weight-bold">Travel Map</v-card-title>
-    <v-card-text>
-      <div class="map-holder">
-        <l-map
-          v-if="showMap"
-          :zoom="zoom"
-          :center="center"
-          :options="mapOptions"
-          height="100%"
-          class="map"
+  <div class="map-holder mt-5">
+    <l-map
+      v-if="showMap"
+      :zoom="zoom"
+      :center="center"
+      :options="mapOptions"
+      height="100%"
+      class="map"
+    >
+      <l-tile-layer :url="url" :attribution="attribution" />
+      <template v-for="(location, index) in sampleMarkerLocations">
+        <l-marker
+          :key="index"
+          :lat-lng="latLng(location.latitude, location.longitude)"
         >
-          <l-tile-layer :url="url" :attribution="attribution" />
-          <template v-for="(location, index) in sampleMarkerLocations">
-            <l-marker
-              :key="index"
-              :lat-lng="latLng(location.latitude, location.longitude)"
-            >
-            </l-marker>
-          </template>
-        </l-map>
-      </div>
-    </v-card-text>
-  </v-card>
+        </l-marker>
+      </template>
+    </l-map>
+  </div>
 </template>
 
 <script>
